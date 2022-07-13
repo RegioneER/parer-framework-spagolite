@@ -1,0 +1,89 @@
+package it.eng.spagoLite.form.tab;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import it.eng.spagoLite.form.Component;
+import it.eng.spagoLite.form.base.BaseComponent;
+
+public class TabElement extends BaseComponent {
+
+    private static final long serialVersionUID = 1L;
+    private boolean current;
+    private boolean hidden;
+    private boolean disabled;
+    private List<String> iconUrlList = new ArrayList<String>();
+
+    public TabElement(Component parent, String name, String description) {
+        this(parent, name, description, false, false, false, null);
+    }
+
+    /**
+     * 
+     * @param parent
+     * @param name
+     * @param description
+     * @param current
+     * @param hidden
+     * @param disabled
+     * @param iconUrls
+     *            url separati da spazio
+     */
+    public TabElement(Component parent, String name, String description, boolean current, boolean hidden,
+            boolean disabled, String iconUrls) {
+        super(parent, name, description);
+        this.current = current;
+        this.hidden = hidden;
+        this.disabled = disabled;
+        setIconUrlList(iconUrls);
+
+    }
+
+    public boolean isCurrent() {
+        return current;
+    }
+
+    public void setCurrent(boolean current) {
+        this.current = current;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public List<String> getIconUrlList() {
+        return iconUrlList;
+    }
+
+    public void setIconUrlList(List<String> iconUrlList) {
+        this.iconUrlList = iconUrlList;
+    }
+
+    /**
+     * 
+     * @param iconUrls
+     *            {@link String} di url separati da spazio
+     */
+    public void setIconUrlList(String iconUrls) {
+        if (iconUrls != null) {
+            String[] split = iconUrls.split(" ");
+            iconUrlList = Arrays.asList(split);
+        } else {
+            iconUrlList = null;
+        }
+    }
+
+}

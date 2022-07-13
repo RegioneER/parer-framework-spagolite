@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Form Description="Lista Eventi Oggetto" xmlns="http://www.spagoLite.eng.it/xmlbean/form" xmlns:xsi="http://www.w3.org/2001/XMLSchema" 
+      xsi:schemaLocation="http://www.spagoLite.eng.it/xmlbean/form http://ibc3850.ente.regione.emr.it/xsd/latest/Form.xsd">
+    
+    <Fields Name="OggettoDetail" Description="Oggetto corrente" >
+        <Input Name="nmApp" Type="STRING" Description="Nome applicazione" Required="true" />        
+        <Input Name="idOggetto" Type="INTEGER" Description="Tipo oggetto" Required="true" Readonly="true"/>        
+        <Input Name="nm_tipo_oggetto" Type="STRING" Description="Tipo oggetto" Required="true" Readonly="true"/>        
+        <Input Name="nm_ambiente" Type="STRING" Description="Ambiente" Required="false" Readonly="true"/>        
+        <Input Name="nm_ente" Type="STRING" Description="Ente" Required="false" Readonly="true"/>        
+        <Input Name="nm_strut" Type="STRING" Description="Struttura" Required="false" Readonly="true"/>        
+        <Input Name="nm_oggetto" Type="STRING" Description="Nome oggetto" Required="true" Readonly="true"/>        
+        <Input Name="nm_versatore" Type="STRING" Description="Versatore" Required="true" Readonly="true"/>        
+    </Fields>
+
+    <List Name="ListaEventi" Description="Lista eventi" >
+        <Input Name="id_oggetto_evento" Type="INTEGER" Description="Id evento oggetto" Required="true" Readonly="true" Hidden="true"/>        
+        <Input Name="dt_reg_evento" Type="DATETIME" Description="Data" Required="true" Readonly="true"/>        
+        <Input Name="nm_tipo_evento" Type="STRING" Description="Evento" Required="true" Readonly="true" />        
+<!--        <Link Name="pippo" Description="" Type="STRING" Target="azioneMetodo" Tooltip="Visualizza pippo" isTargetList="false" VisibilityProperty="condizione" /> -->
+        <Input Name="calc_azione" Type="STRING" Description="Azione" Required="true" Readonly="true"/>        
+<!--        <Input Name="nm_agente" Type="STRING" Description="Agente" Required="true" Readonly="true"/>        -->
+<!--        <Input Name="id_transazione" Type="INTEGER" Description="Id transazione" Required="true" Readonly="true"/>    -->
+        <Link  Name="id_transazione" Description="Identificativo transazione" Type="INTEGER" Target="visualizzaDettaglioTransazioneDaListaEventi" Tooltip="Visualizza dettaglio transazione" isTargetList="false" />
+            
+    </List>
+
+    <Fields Name="EventoDetail" Description="Dettaglio evento" >
+        <Input Name="dt_reg_evento" Type="DATETIME" Description="Data" Required="true" Readonly="true"/>        
+        <Input Name="nm_tipo_evento" Type="STRING" Description="Evento" Required="true" Readonly="true"/>        
+        <Input Name="calc_azione" Type="STRING" Description="Azione" Required="true" Readonly="true"/>         
+        <Input Name="nm_agente" Type="STRING" Description="Agente" Required="true" Readonly="true"/>        
+        <Input Name="calc_ruoli" Type="STRING" Description="Ruolo agente" Required="true" Readonly="true"/>        
+        <Input Name="id_transazione" Type="INTEGER" Description="Id transazione" Required="true" Readonly="true"/>        
+        <Button Name="visualizzaFoto" Description="Visualizza foto" Type="STRING"/>
+        <Button Name="visualizzaDatiCompleti" Description="Visualizza dati completi" Type="STRING"/>
+    </Fields>
+
+    <List Name="ListaModifiche" Description="Lista modifiche" >
+        <Input Name="path" Type="STRING" Description="Lista tipi record padre" Required="false" Readonly="true"/>        
+        <Input Name="path_key" Type="STRING" Description="Chiave record padre" Required="false" Readonly="true"/>        
+        <Input Name="nm_tipo_record" Type="STRING" Description="Tipo record" Required="false" Readonly="true"/>        
+        <Input Name="ds_chiave_tipo_record" Type="STRING" Description="Chiave record" Required="false" Readonly="true"/>        
+        <Input Name="tipo_modifica" Type="STRING" Description="Tipo modifica" Required="true" Readonly="true"/>        
+        <Input Name="ds_modifica" Type="STRING" Description="Dato modificato" Required="false" Readonly="true"/>
+        <Link  Name="mostraValoriTipo1" Description="Esame valori troppo grandi" Type="STRING" Target="visualizzaValoriGrandi" Tooltip="Esame valori troppo grandi" isTargetList="false" VisibilityProperty="fl_link_valore_tipo_1"/>
+        <Link  Name="mostraValoriTipo2" Description="Esame valori clob" Type="STRING" Target="visualizzaValoriClob" Tooltip="Esame valori clob" isTargetList="false" VisibilityProperty="fl_link_valore_tipo_2"/>
+    </List>
+
+    <Fields Name="ValoreDetail" Description="Dettaglio contenuto Valori" >
+        <Input Name="ds_vecchio_valore" Type="STRING" Description="Vecchio valore" Required="true" Readonly="true" MaxLength="4000"/> 
+        <Input Name="ds_nuovo_valore" Type="STRING" Description="nuovo valore" Required="true" Readonly="true" MaxLength="4000"/> 
+        <TextArea Name="cl_vecchio_valore" Description="Vecchio valore clob"  Type="STRING" Rows="10" Cols="100" MaxLength="32000"  />
+        <TextArea Name="cl_nuovo_valore" Description="Nuovo valore clob"  Type="STRING" Rows="10" Cols="100" MaxLength="32000"  />
+    </Fields>
+
+    <Fields Name="ValoreXml" Description="Dettaglio xml" >
+        <TextArea Name="cl_xml" Description="Dettaglio xml"  Type="STRING" Rows="10" Cols="100" MaxLength="32000"  />
+    </Fields>
+        
+    <!-- Ricerca log eventi -->
+    <Fields Name="FiltriRicercaEventi" Description="Filtri ricerca eventi di log" >
+        <ComboBox  Type="INTEGER" Description="Organizzazione" Name="organizzazione" Trigger="false" Required="false"/>
+        <ComboBox  Type="INTEGER" Description="Tipo oggetto" Name="tipoOggetto" Trigger="false" Required="false"/>
+        <ComboBox  Type="STRING" Description="Classe evento" Name="tipoClasseEvento" Trigger="false" Required="false"/>
+        <Input Type="STRING" Description="Nome oggetto" Name="nm_oggetto_ricerca" Required="false" Readonly="false" MaxLength="254"/> 
+        <Input Type="DATE" Description="Data riferimento da" Name="dt_rif_da" Required="false"/>
+        <Input Type="INTEGER" Description="" Name="ora_rif_da" Required="false"/>
+        <Input Type="INTEGER" Description="" Name="min_rif_da" Required="false"/>
+        <Input Type="DATE" Description="Data riferimento a" Name="dt_rif_a" Required="false"/>       
+        <Input Type="INTEGER" Description="" Name="ora_rif_a" Required="false"/>
+        <Input Type="INTEGER" Description="" Name="min_rif_a" Required="false"/>
+        <Button Name="ricercaEventi" Description="Ricerca eventi" Type="STRING" />
+    </Fields>
+
+    <List Name="RicercaEventiList" Description="Lista eventi di log" >
+        <Input Name="nm_organizzazione" Type="STRING" Description="Organizzazione" Required="false" Readonly="true"/>        
+        <Input Name="dt_reg_evento" Type="DATETIME" Description="Data" Required="false" Readonly="true"/>        
+        <Input Name="nm_tipo_evento" Type="STRING" Description="Evento" Required="false" Readonly="true"/>        
+        <Input Name="nm_oggetto" Type="STRING" Description="Nome oggetto" Required="false" Readonly="true"/>        
+        <Input Name="azione_composita" Type="STRING" Description="Azione" Required="false" Readonly="true"/>        
+<!--        <Input Name="nm_agente" Type="STRING" Description="Agente" Required="false" Readonly="true"/> -->
+        <Input Name="nm_tipo_oggetto" Type="STRING" Description="Tipo oggetto" Required="true" Readonly="true"/>        
+        <Input Name="tipo_classe_evento" Type="STRING" Description="Classe evento" Required="true" Readonly="true"/>        
+        <Link  Name="id_transazione" Description="Identificativo transazione" Type="INTEGER" Target="visualizzaDettaglioTransazione" Tooltip="Visualizza dettaglio transazione" isTargetList="false" />
+    </List>
+
+    <Fields Name="EventoPrincipale" Description="Evento principale" >
+        <Input Type="INTEGER" Description="Identificatore transazione" Name="id_transazione" Required="false"/>
+        <Input Type="DATETIME" Description="Data" Name="dt_reg_evento" Required="false"/>       
+        <Input Type="STRING" Description="Evento" Name="nm_tipo_evento" Required="false"/>
+        <Input Type="STRING" Description="Azione" Name="azione_composita" Required="false"/>
+        <Input Type="STRING" Description="Agente" Name="nm_agente" Required="false"/>
+        <Button Name="visualizzaDatiCompletiTransazione" Description="Visualizza dati completi" Type="STRING"/>
+    </Fields>
+
+    <List Name="OggettiEventoPrincipaleList" Description="Lista oggetti evento principale" >
+        <Input Name="nm_organizzazione" Type="STRING" Description="Organizzazione" Required="false" Readonly="true"/>        
+        <Input Name="nm_tipo_oggetto" Type="STRING" Description="Tipo oggetto" Required="false" Readonly="true"/>        
+        <Input Name="nm_oggetto" Type="STRING" Description="Oggetto" Required="false" Readonly="true"/>        
+    </List>
+
+    <List Name="EventiSuccessiviList" Description="Lista eventi successivi" >
+        <Input Name="dt_reg_evento" Type="DATETIME" Description="Data" Required="false" Readonly="true"/>       
+        <Input Name="nm_tipo_evento" Type="STRING" Description="Evento" Required="false" Readonly="true"/>
+        <Input Name="nm_tipo_oggetto" Type="STRING" Description="Tipo oggetto" Required="false" Readonly="true"/>        
+        <Input Name="nm_oggetto" Type="STRING" Description="Oggetto" Required="false" Readonly="true"/>        
+    </List>
+                                                                
+</Form>

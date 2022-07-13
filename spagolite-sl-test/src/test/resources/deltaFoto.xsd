@@ -1,0 +1,77 @@
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<!-- Record Master -->
+	<xs:complexType name="recordMasterType">
+		<xs:sequence>
+			<xs:element name="tipoRecord" type="xs:string" minOccurs="1"
+				maxOccurs="1" />
+			<xs:element name="idRecord" type="xs:integer" minOccurs="1"
+				maxOccurs="1" />
+			<xs:element name="keyRecord" type="keyRecordType"
+				minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="datoKeyType">
+		<xs:sequence>
+			<xs:element name="colonnaKey" type="xs:string" minOccurs="1"
+				maxOccurs="1" />
+			<xs:element name="labelKey" type="xs:string" minOccurs="1"
+				maxOccurs="1" />	
+			<xs:element name="valoreKey" type="xs:string" minOccurs="1"
+				maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="keyRecordType">
+		<xs:sequence>
+			<xs:element name="datoKey" type="datoKeyType" minOccurs="1"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Record delle asserzioni -->
+	<xs:complexType name="recType">
+		<xs:all>
+			<xs:element name="idRecord" type="xs:integer" minOccurs="1"
+				maxOccurs="1" /> 
+			<xs:element name="tipoAsserzione" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="campoEliminato" />
+						<xs:enumeration value="campoImpostato" />
+						<xs:enumeration value="campoModificato" />
+						<xs:enumeration value="chiaveModificata" />
+						<xs:enumeration value="recordCancellato" />
+						<xs:enumeration value="datoRecordCancellato" />
+						<xs:enumeration value="recordInserito" />
+						<xs:enumeration value="datoRecordInserito" />
+						<xs:enumeration value="datoRecordModificato" />
+						<xs:enumeration value="chiaveRecordModificata" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element type="xs:string" name="valoreOld" minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="valoreNew" minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="label" minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:byte" name="livello" minOccurs="1" maxOccurs="1"/>
+			<xs:element type="xs:string" name="dsChiaveTipoRecord" minOccurs="0" maxOccurs="1" />
+			<xs:element type="xs:string" name="nmTipoRecord" minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="path" minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:integer" name="idRecordFiglio" minOccurs="0" maxOccurs="1" />
+			<xs:element type="xs:integer" name="idRecordPadre" minOccurs="0" maxOccurs="1" />
+		</xs:all>
+	</xs:complexType>
+
+	<xs:element name="asserzioni">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="recordMaster" type="recordMasterType"
+					minOccurs="1" maxOccurs="1" />
+				<xs:element name="rec" type="recType" maxOccurs="unbounded" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+</xs:schema>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>it.eng.parer</groupId>
+        <artifactId>spagofat</artifactId>
+        <version>4.1.27-SNAPSHOT</version>
+    </parent>
+    <artifactId>spagofat-timer-wrapper-common</artifactId>
+    <name>Spagolite Timer wrapper - common</name>
+    <packaging>jar</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencies>
+        <dependency>  
+            <groupId>org.jboss.spec</groupId>  
+            <artifactId>jboss-javaee-6.0</artifactId>  
+            <type>pom</type>  
+            <scope>provided</scope>  
+        </dependency>
+    </dependencies>
+</project>

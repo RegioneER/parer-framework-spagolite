@@ -1,0 +1,55 @@
+<fotoOggetto>
+    <versioneLogRecord>1.0</versioneLogRecord>
+    <recordMaster>
+        <tipoRecord>Registro</tipoRecord>
+        <idRecord>4</idRecord>
+        <keyRecord>
+            <datoKey>
+                <colonnaKey>nm_ambiente</colonnaKey>
+                <valoreKey>AMBIENTE PROVA 1</valoreKey>
+            </datoKey>
+            <datoKey>
+                <colonnaKey>nm_ente</colonnaKey>
+                <valoreKey>ENTE PROVA 1</valoreKey>
+            </datoKey>
+            <datoKey>
+                <colonnaKey>nm_strut</colonnaKey>
+                <valoreKey>STRUTTURA PROVA test on-line</valoreKey>
+            </datoKey>
+            <datoKey>
+                <colonnaKey>cd_registro_unita_doc</colonnaKey>
+                <valoreKey>PROTOCOLLO</valoreKey>
+            </datoKey>
+        </keyRecord>
+        <datoRecord>
+            <colonnaDato>ds_registro_unita_doc</colonnaDato>
+            <labelDato>Descrizione registro Unità Doc</labelDato>
+            <valoreDato>Regitro di protocollo</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>fl_registro_fisc</colonnaDato>
+            <labelDato>Flag registro fiscale</labelDato>
+            <valoreDato>false</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>dt_istituz</colonnaDato>
+            <labelDato>Data istituzione</labelDato>
+            <valoreDato>2013-03-12</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>dt_soppres</colonnaDato>
+            <labelDato>Data soppressione</labelDato>
+            <valoreDato>2444-12-31</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>fl_crea_serie</colonnaDato>
+            <labelDato>Flag creazione serie</labelDato>
+            <valoreDato>true</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>ni_anni_conserv</colonnaDato>
+            <labelDato>Numero anni conservazione</labelDato>
+            <valoreDato>9999</valoreDato>
+        </datoRecord>
+    </recordMaster>
+</fotoOggetto>

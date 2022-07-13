@@ -1,0 +1,606 @@
+/*
+  La struttura grafica della pagina Ã¨ composta, sostanzialmente, da 5 box
+  1. l'header in alto
+  2. il menu laterale aperto
+  3. il menu laterale chiuso
+  4. il contenuto principale
+  5. il footer in basso
+*/
+
+/* Global */
+
+body { padding-right: 0px; padding-left: 0px; font-size: 11px; padding-bottom: 0px; margin: 0px; color: #000000; padding-top: 0px; font-family: verdana,arial,tahoma, sans-serif; background-color: #ffffff; margin: 0;}
+
+a { text-decoration: none; color: #000000;}
+a:link { text-decoration: underline; color: #000000;}
+a:hover { text-decoration: none; color: #000000; text-decoration: underline;}
+a:active { text-decoration: none; color: #000000;}
+a:visited { text-decoration: none;}
+
+a.Doc { background-image: url("../img/toolBar/dettaglioD.png");
+        background-repeat: no-repeat;
+        padding-right : 1.5em;
+        text-decoration: none;
+        display: inline-block;
+        width: 22px;
+        height: 24px;
+}
+a.UnitaDoc { background-image: url("../img/toolBar/dettaglioUD.png");
+             background-repeat: no-repeat;
+             padding-right : 1.5em;
+             text-decoration: none;
+             display: inline-block;
+             width: 22px;
+             height: 24px;
+}
+a.Vol { background-image: url("../img/toolBar/dettaglioVol.png");
+        background-repeat: no-repeat;
+        padding-right : 1.5em;
+        text-decoration: none;
+        display: inline-block;
+        width: 22px;
+        height: 24px;
+}
+
+a.InviaMessaggio { background-image: url("../img/toolBar/inviaMsg.png");
+               background-repeat: no-repeat;
+               padding-right : 1.5em;
+               text-decoration: none;
+			   display: inline-block;
+			    width: 22px;
+				height: 24px;
+}
+
+a.ProveCons, a.ProveConsa { background-image: url("../img/toolBar/download.png");
+              background-repeat: no-repeat;
+              padding-right : 1.5em;
+              text-decoration: none;
+              display: inline-block;
+			  width: 22px;
+			  height: 24px;
+}
+
+a.DupStruttura, a.DupVersatore, a.DupFormato, a.DuplicaCrit, a.DuplicaRegistro { background-image: url("../img/toolBar/duplica.png");
+                                               background-repeat: no-repeat;
+                                               padding-right : 1.5em;
+                                               text-decoration: none;
+											   display: inline-block;
+											   width: 22px;
+												height: 24px;										
+}
+
+a.VolumiErrore, a.VolumiFirma, a.VolumiFirmatiNoMarcati, a.DownloadFileSessione, a.ScaricaDip { background-image: url("../img/toolBar/download.png");
+              background-repeat: no-repeat;
+              padding-right : 1.5em;
+              text-decoration: none;
+			  display: inline-block;
+			  width: 22px;
+			  height: 24px;			
+}
+
+a.ModStrutturaWizard { background-image: url("../img/toolBar/updateWizard.png");
+              background-repeat: no-repeat;
+              padding-right : 1.5em;
+              text-decoration: none;
+              display: inline-block;
+			  width: 22px;
+			  height: 24px;	
+}
+
+a.ShowErrArkList, a.Elenco { background-image: url("../img/toolBar/dettaglioE.png");
+        background-repeat: no-repeat;
+        padding-right : 1.5em;
+        text-decoration: none;
+        display: inline-block;
+        width: 22px;
+        height: 24px;
+}
+
+a.ShowPathElabList { background-image: url("../img/toolBar/dettaglioP.png");
+        background-repeat: no-repeat;
+        padding-right : 1.5em;
+        text-decoration: none;
+        display: inline-block;
+        width: 22px;
+        height: 24px;
+}
+
+a.linkButton{
+                background-color: #D3101C;
+                color: white;
+                font-weight: bold;
+                font-size:10px;
+                width: auto;
+                border: 0px none;
+                height: 20px;
+                padding-left: 6px;
+                padding-right: 6px;
+                padding-bottom: 5px;
+                padding-top: 4px;
+                cursor: pointer;
+                margin-left: 3px;
+                text-decoration: none;
+}
+
+.listToolBar a:link {
+	text-decoration: none;
+}
+
+.listToolBar span.activeRecords {
+	height: 27px;
+	background-color: #D3101C; color: white; 
+	font-weight: bold; font-size:10px; width: auto; border: 0px none; height: 20px; 
+	padding-left: 6px; padding-right: 6px; 
+	padding-bottom: 3px; cursor: pointer; margin-left: 3px;		
+}
+
+.listToolBar span.activeRecords a:link { text-decoration: none; color: white; }
+.listToolBar span.activeRecords a:hover { text-decoration: none; color: white; }
+.listToolBar span.activeRecords a:active { text-decoration: none; color: white;}
+.listToolBar span.activeRecords a:visited { text-decoration: none; color: white;}
+
+button { background: none repeat scroll 0% 0% transparent; border: thin none;padding:0px;}
+
+img { background: none repeat scroll 0% 0% transparent; border: medium none; vertical-align: text-bottom;}
+form { /*font-size: 90%;*/ padding-top: 0.3em;}
+
+h1 { text-align: right;  padding-top: 0.2em; padding: 0.4em 1em 0.1em 1em; font-size: 1em; color: #07752C; margin :0px;}
+h2 { font-size: 11px;  font-weight: bold; margin: 0px; padding: 0.4em 1em 0.1em 0.4em; color: #000000; }
+h3 { margin: 0px; padding: 0px; font-weight: bold; font-size: 100%; color: #D4101C; font-weight: bold;}
+h4 { margin: 0px 0px 0px 4px; font-weight: normal; font-size: x-small; color: #515151; }
+/* Classi globale */
+.floatLeft{float: left;}
+span.floatLeft{ padding-right: 0.2em;}
+.floatRight{float: right;}
+.displayNone{display: none;}
+.skipLink{display: block; background: transparent; background-image: none; border: none; height: 1px; overflow: hidden; padding: 0; margin: -1px 0 0 -1px; width: 1px;}
+.logo{
+    width: 16%;
+    float: left;
+}
+
+img.logoImg {
+
+}
+
+/* Header */
+div.header { width: 99%; clear: both; height: 35px; padding-left: 10px; padding-top: 10px; padding-bottom: 30px; display: block; }
+
+/* Menu */
+a.nostyle {text-decoration: none;background-color: white;  color:#07752C;cursor: default;}
+.menuButton { margin-top: 0.2em;height: 2em; }
+
+#menu {background-color: #515151; color: white; float: left; max-width: 270px; width: 18%; font-size: 10px; height: auto !important;}
+#menu .nome {font-size: 12px; font-weight: bold;}
+#menu .username {font-size: 11px; font-weight: bold; font-style: italic; display: block; }
+#menu img{padding-right: 5px;}
+#menu .cambioPassword {font-size: 11px; font-weight: bold;   }
+#menu .home {float: left;}
+#menu .user {line-height: 1.5em; padding: 2em 0.8em 0.8em 1.8em; border-bottom: 1px solid white; }
+#menu .user label{color: white; margin: 0 3px 0 0;}
+#menu a {color:white; text-decoration: none;}
+#menu .user a {color:white; text-decoration: underline;}
+.openClose {float: right; cursor: pointer; margin-top: 15px}
+#menu ul {list-style-type: none; padding: 0px;margin-left:0px;}
+/* Thanks to the MS IE  BUG */
+#menu ul li{ margin-left:0px; padding: 2px 0px 2px 0px; }
+#menu h2 {background-color: #07752C; font-weight: bold; color: white; padding: 2px 2px 2px 10px; background-position: left center; background-repeat: no-repeat;}
+#menu h2:hover{ cursor: pointer; text-decoration: underline}
+#menu .version{border-bottom: 1px solid white; padding-left: 4px;}
+a.selezionato { font-style: italic; text-decoration: underline; color: #515151 !important;}
+ul.selezionato{ background-color: #ffffff;}
+.menu .voce,.menu .menu {  color: #ffffff; text-indent: 0.4em;}
+.menu .voce { padding: 3px 0px 0px 0px;}
+.menu .menu .voce,.menu .menu .menu {  color: #ffffff; }
+/*.menu .menu .voce { padding: 0px 0px 0px 0px;text-indent: 1.2em;background-color: #EFEFEF;}*/
+.menu .menu .voce { padding: 0px 0px 0px 0px;text-indent: 1.2em;}
+.menu .menu .menu .voce,.menu .menu .menu .menu { background-color: #EFEFEF; color: #ffffff; text-indent: 1.2em}
+.menu .menu .menu .voce { padding: 3px 0px 3px 0px; background-color: #EFEFEF;}
+
+/* Footer */
+/*div.footer { width: 99%;clear: both; border-top: #07752C 2px solid; font-size: 90%; color: #03587c; height: 3em; background-color: #EFEFEF; text-align: center;}*/
+div.footer { width: 99%; clear: both;  font-size: 90%; color: #03587c; height: 3em; padding: 2em 0 1em 0;text-align: center; }
+div.footer div.left { width: 15%; float: left; text-align: left;}
+div.footer div.center { width: 69%; float: left; padding-top: 0.4em; text-align: center;}
+div.footer div.right { float: right; text-align: right; padding: 0;}
+.right {float: right; text-align: right; display: inline; padding: 3px 6px 1px 6px; color: #FFF; font-size: 16px;}
+.right a {color:#FFF;}
+
+/* Content centered */
+.center {margin-left: 10%; margin-right: 10%; text-align: center;}
+.center form {margin-left: auto; margin-right: auto;  padding-top: 3em;    width: 40%;}
+.center form fieldset {font-weight: bold; color: #07752C;}
+.center form fieldset legend {font-size: 1.5em;}
+.loginForm {padding-left: 1em; background-color: #515151; color:white; font-weight: bold;}
+.loginForm label{float: left; text-align: right;}
+.loginForm span {color:white; font-size: 20px;  font-weight: bold; text-align: left; font-family: Calibri; display: block; padding-top: 1em;}
+.loginForm input {padding-left: 3px; background-color: #ffffff; color: #515151; border: 0px none; font-weight: normal; float: left;}
+div#loginPage{padding-top: 8em;}
+
+div#contenuto{padding-left: 5em; margin-left: 5em; border-left: 1px solid; border-color: #515151}
+
+/* Content */
+div#content {line-height:1.4em;  /*border-left:1px solid #D4101C;*/font-size: 11px; margin: 0px; padding: 0em 0em 1em 0.5em;  width: 81%; float: left;min-height: 23em;}
+div#content .contentTitle{padding-top:0.2em ;height: 2em; /*background-color:#EFEFEF; border-bottom: 2px solid #07752C;*/}
+div#content .contentTitle h2 {display: inline; font-size: 13px; color: #333333; font-weight: bold;}
+div#content fieldset {border: 1px solid #999999; margin-top: 0.2em; padding: 1em 0 1em 0;   margin-bottom: 0.2em;}
+div#content fieldset span.legend { color: #D3101C; font-weight: bold; font-size: 12px; text-align: left; display: block; padding: 0.5em;}
+div#content fieldset span.legend span { float:right; padding-right: 3em; cursor: pointer;}
+div#content fieldset legend { color: #D4101C; font-weight: bold;}
+div#content fieldset.noborder { border: 0px; padding: 0;}
+.pulsantiera { text-align: left; margin: 0.4em 0em 0.4em 0em; clear: both; padding-top: 0.3em; padding-bottom: 0.2em;}
+.pulsantiera input{ background-color: #D3101C; color: #FFFFFF; font-weight: bold; font-size:10px; width: auto; border: 0px none; height: 20px; padding-left: 6px; padding-right: 6px; padding-bottom: 3px;}
+div#content .pulsantiera input.ricerca{}
+div#content .pulsantiera input.pulisci{}
+div#content .pulsantiera input.inserisci{}
+/* Deprecated (the line below)*/
+div  input.pulsante:parent { width: auto !important; margin-left: 4em;}
+div#content input.pulsante:disabled {background-color : gray;}
+div#content input.pulsante  { background-color: #D3101C; color: white; font-weight: bold; font-size:10px; width: auto; border: 0px none; height: 20px; padding-left: 6px; padding-right: 6px; padding-bottom: 3px; cursor: pointer; margin-left: 3px;}
+div#content div.listToolBar input.pulsante  { font-size: 0.9em; font-weight: normal; height: 27px; }
+
+div#content .intestazione-dettaglio{font-size:small; border-bottom: 1px solid #e3e3e3; width: 60%; margin-top:0.4em; margin-bottom:0.4em;}
+div#content .footnote{font-size: 80%;}
+
+div#content .tabs { border:0 none; margin:0; padding: 0 0 0 20px;}
+div#content .tabs .nonCurrent {color:#000000; background-color: #676F7A; border : 1px solid #999999; padding-bottom: 3px;}
+div#content .tabs .current    {color:#333333; background-color: #ffffff; border : 1px solid #999999; border-bottom:1px solid #ffffff; padding-bottom: 3px;}
+div#content .tabs .current span {border:0; background-color: transparent; padding: 2px; margin: 0; font-weight: bold;}
+div#content .tabs .nonCurrent input {cursor:pointer; border:0; background-color: transparent; height: 19px; margin: 0; color: white; box-shadow: none; font-weight:  bold;}
+div#content .tabs .nonCurrent span {border:0; background-color: transparent; padding: 2px; margin: 0}
+div#content .tabs-content{ /*border: 1px solid #e3e3e3;*/ margin:0; padding: 0em 0.2em 0.2em 0.2em; z-index: -1; }
+div#content .list{ border: 1px solid #999999; width: 100%; margin-top: 2px;}
+div#content .list td,div#content .list th {padding: 0 3px 0 3px;}
+div#content .list td span.longline{white-space: nowrap;overflow: hidden;text-overflow : ellipsis; -ms-text-overflow : ellipsis; -o-text-overflow : ellipsis;max-width: 100px;display:block;}
+div#content .infoVariazione{ display: inline; font-size:small;}
+div#content button.windowButton { display: none; background: none; border: none; cursor:pointer;}
+div#content button.isLoadOpened { display : inline; background: none; border: none; cursor:pointer;}
+div#content .importantContainer{/*border : 1px solid #D4101C; */
+    background-color: #F3F3F3;
+    border: 0px none;
+    /*                   background: url("../img/important.png") repeat scroll 50% 50% transparent; */
+    padding: 0.2em 0em 0.8em 0; margin-left:0; margin-bottom: 15px;margin-right: 0; }
+div#content .importantContainer > fieldset { margin-left: 10px; margin-right: 0; padding-left: 0;}
+.listToolBar, .wizardBar {border:0; line-height: 1.6em; font-size:9px; text-align: left; padding-left:0.5em;  padding-top: 2px}
+
+div#content .wizardBar .nextLink{
+    background: url("../img/toolBar/next.gif") no-repeat right;
+    padding: 0 1em 0 0.3em; border: 1px solid #CCC;	font-weight: bold;
+}
+div#content .wizardBar .nextDisabledLink{
+    background: url("../img/toolBar/nextDisabled.gif") no-repeat right;
+    padding: 0 1em 0 0.3em; border: 1px solid #CCC;
+}
+div#content .wizardBar .prevLink{
+    background: url("../img/toolBar/prev.gif") no-repeat left;
+    padding: 0 0.1em 0 1em; border: 1px solid #CCC;
+}
+div#content .wizardBar .prevDisabledLink{
+    background: url("../img/toolBar/prevDisabled.gif") no-repeat left;
+    padding: 0 0.1em 0 1em; border: 1px solid #CCC;
+}
+
+.wizardTitle {color: #07752C; font-size: 120%;} 
+.wizard {border: 2px double #ffffff; border-bottom: 0px solid #ffffff;} 
+/*
+border-right: 1px solid #D4D4D4; border-top: 1px solid #D4D4D4;
+div#content .wizard {border: 1px solid blue;}
+div#content .wizard .step{border: 1px solid black;}
+div#content .wizard .endPage{border: 1px dotted black;}
+*/
+
+fieldset {border: 1px solid #e3e3e3; margin-top: 0.2em;  margin-bottom: 0.2em;}
+
+input.next{background-image: url("../img/toolBar/frecciaDx.png");}
+input.prev{background-image: url("../img/toolBar/frecciaSx.png");}
+input[type="checkbox"]{width: 20px !important;  height: 15px !important; border: none;}
+input {
+    /* -moz-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) inset;*/
+    height: 20px;
+    margin-right: 2px !important;
+}
+
+input, textarea, select {
+    border: 1px solid #E0E0E0;
+    /*border-radius: 3px 3px 3px 3px;*/
+    color: black;
+    display: inline-block;
+    font-size: 11px;    
+    line-height: 18px;
+    padding: 0px;
+    font-family: verdana,arial,tahoma, sans-serif;
+}
+
+/* message */
+/*div#content div.messages{background-color:  #F3D8D8; border: 1px solid #D4101C;}*/
+div.alertBox .ui-widget-header{border:0 none;}
+div.alertBox .ui-dialog-buttonpane {background-color: #ffffff; border: 0 none;}
+/*div.alertBox .ui-dialog-content {background-color: #515151}*/
+div.alertBox .ui-state-focus {background-color: #515151}
+div.alertBox {background: none repeat scroll 0 0 white; border:1px solid #D3D3D3; padding: 3px 6px 0 6px;}
+li.message{text-align: left; margin-left: 1.5em; padding-left:1em;}
+li.info{list-style-image: url("../img/messages/info.png");}
+li.warning{ list-style-image: url("../img/messages/warning.png");}
+li.error{list-style-image: url("../img/messages/error.png");}
+li.fatal{list-style-image: url("../img/messages/error.png");}
+div.plainInfo{background: url("../img/messages/infobg.png") repeat scroll 50% 50% transparent; border: 1px solid #3077d3;}
+div.plainWarning{background-color:#FFFFE0; border: 1px solid #FFA500;}
+div.plainError{background: url("../img/messages/errorbg.png") repeat scroll 50% 50% transparent; border: 1px solid #D4101C;}
+div.plainFatal{background: url("../img/messages/errorbg.png") repeat scroll 50% 50% transparent; border: 1px solid #D4101C; overflow-x: auto; overflow-y: auto;}
+/*
+div.infoBox{background: url("../img/messages/infoBig.png") no-repeat scroll 1% 1% transparent}
+div.warningBox{background: url("../img/messages/warningBig.png") no-repeat scroll 1% 1% transparent}
+div.errorBox{background: url("../img/messages/errorBig.png") no-repeat scroll 1% 1% transparent}
+*/
+/* Liste */
+.list th {background-color: #676F7A; border-left: 1px solid #e3e3e3; color: #ffffff; font-size:10px;}
+.list th a {color: #ffffff;}
+.rigaPari{background-color:#EFEFEF;}
+.rigaPariDark{background-color:#e3e3e3;}
+.rigaDispari{background-color: #ffffff;}
+.rigaCorrente {/*background-color: #036F2B; color: white; font-weight: bold;*/}
+
+input.crud{padding-bottom:4px;background-color: transparent;  background-repeat: no-repeat;    border: 0 none;    cursor: pointer;   padding-top: 1px;  padding-left: 24px; height: 20px; box-shadow: none}
+input.save{background-image: url("../img/toolBar/save.png");}
+input.cancel{background-image: url("../img/toolBar/cancel.png");}
+img.backImg{vertical-align: middle;}
+.insert{background-image: url("../img/toolBar/insert.png");}
+.update{background-image: url("../img/toolBar/update.png");}
+.delete{background-image: url("../img/toolBar/delete.png");}
+.select{background-image: url("../img/toolBar/select.png");}
+.deselect{background-image: url("../img/toolBar/deselect.png");}
+.backButtton{background-image: url("../img/toolBar/back.png");}
+
+.list input.select{background-image: url("../img/toolBar/select2.png");}
+.listToolBar input{font-weight: bold;font-size: 10px; text-decoration: underline;}
+.listToolBar .navBarBackLink{
+    background: url("../img/toolBar/back.png") no-repeat top left;
+    padding: 2px 10px 0px 21px; text-decoration: underline !important; font-weight: bold;
+    float: right;
+}
+.listToolBar .navBarPrevLink{
+    background: url("../img/toolBar/prev.png") no-repeat center;
+    padding-left: 21px; padding-top: 0px; /* border: 1px solid #CCC;*/
+}
+.listToolBar .navBarPrevDisabledLink{
+    /* background: url("../img/toolBar/prevDisabled.gif") no-repeat center;*/
+    padding-left: 21px; padding-top: 0px; /* border: 1px solid #CCC;*/
+}
+.listToolBar .navBarPrevPageLink{
+    background: url("../img/toolBar/prevPage.png") no-repeat center;
+    padding-left: 21px; padding-top: 0px; /* border: 1px solid #CCC;*/
+}
+.listToolBar .navBarPrevPageDisabledLink{
+    /*background: url("../img/toolBar/prevPageDisabled.gif") no-repeat center;*/
+    padding-left: 21px; padding-top: 0px;/* border: 1px solid #CCC;*/
+}
+
+.listToolBar .navBarNextLink{
+    background: url("../img/toolBar/next.png") no-repeat center;
+    padding-left: 21px; padding-top: 0px; /* border: 1px solid #CCC;*/
+}
+.listToolBar .navBarNextDisabledLink{
+    /*background: url("../img/toolBar/nextDisabled.gif") no-repeat center;*/
+    padding-left: 21px; padding-top: 0px; /* border: 1px solid #CCC;*/
+}
+.listToolBar .navBarNextPageLink{
+    background: url("../img/toolBar/nextPage.png") no-repeat center;
+    padding-left: 21px; padding-top: 0px; /* border: 1px solid #CCC;*/
+}
+.listToolBar .navBarNextPageDisabledLink{
+    /*background: url("../img/toolBar/nextPageDisabled.gif") no-repeat center;*/
+    padding-left: 21px; padding-top: 0px; /* border: 1px solid #CCC;*/
+}
+
+.listToolBar .navBarLastPageLink{
+    background: url("../img/toolBar/last.png") no-repeat center;
+    padding-left: 21px; padding-top: 0px; /* border: 1px solid #CCC;*/
+}
+.listToolBar .navBarLastPageDisabledLink{
+    /* background: url("../img/toolBar/lastDisabled.gif") no-repeat center;*/
+    padding-left: 21px; padding-top: 0px; /* border: 1px solid #CCC;*/
+}
+
+.listToolBar .navBarFirstPageLink{
+    background: url("../img/toolBar/first.png") no-repeat center;
+    padding-left: 21px; padding-top: 0px; /* border: 1px solid #CCC;*/
+}
+.listToolBar .navBarFirstPageDisabledLink{
+    /* background: url("../img/toolBar/firstDisabled.gif") no-repeat center;*/
+    padding-left: 21px; padding-top: 0px; /* border: 1px solid #CCC;*/
+}
+.listToolBar .navBarExportExcelLink{
+    background: url("../img/toolBar/exportExcel.png") no-repeat top left;
+    padding-left: 21px; padding-top: 0px; /* border: 1px solid #CCC;*/
+    font-weight: bold; padding-bottom: 2px;
+}
+
+.listToolBar .listLabel{background-color: #676F7A; color: #ffffff; font-weight: bold; padding: 0 5px;}
+
+pre{
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: auto;
+    max-height: 50em;
+    max-width: 140em;
+    font-size: 11px;
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+	font-family: verdana,arial,tahoma, sans-serif;
+}
+
+select {
+    width: auto !important;
+    max-width: 100%;
+    height: 22px;
+    word-wrap: normal !important;
+}
+select[multiple]{
+    width: 100% !important;;
+    height: auto;    
+}
+
+/* Griglie */
+.grid th {background-color: #676F7A; color: #ffffff;}
+.grid td {color: #000000;}
+.grid .livello3 {background-color: #07752C; color: white;}
+.grid .livello2 {background-color: #e3e3e3;}
+.grid .livello1 {background-color:#ffffff;}
+
+
+/* Forms*/
+.w10 {width: 9%}
+.w15 {width: 14.5%}
+.w20 {width: 19.5%}
+.w25 {width: 24%}
+.w30 {width: 29%}
+.w33 {width: 32%}
+.w40 {width: 39%}
+.w50 {width: 49%}
+.w60 {width: 59%}
+.w66 {width: 64%}
+.w70 {width: 69%}
+.w80 {width: 79.5%}
+.w90 {width: 89%}
+.w100 {width: 99%}
+
+/* Label  */
+.wlbl {width: 13.8%}
+
+/* Controller su 4 colonne */
+.w1ctr {width: 10.45%}
+.w2ctr {width: 34.7%;  margin-right: 3px !important;}
+.w4ctr {width: 83.2%}
+
+/* Controller su 3 colonne */
+.w3ctr {width: 18.5%}
+
+
+
+.sintTitolo {border-bottom: solid #999999 1px; font-weight: bold; color: #D4101C; margin: 5px 0px 5px 0px;}
+.sintRiga {padding-left: 10px; min-height: 1.5em;}
+
+.containerLeft {float: left; margin: 0.1em 0em 0.1em 0em; padding: 0; }
+.containerRight {float: right; min-height: 1.5em; margin: 0; padding: 0; }
+.slLabel {float: left; color: #333333;    margin: 1px 3px 0 0; padding: 0;  text-align: right; font-weight: bold}
+.slLabelRight {float: left; color: #07752C; margin:0; padding:0; text-align: left; font-weight: bold}
+.slText {float: left; color: #000000; margin:0; padding:0; word-wrap: break-word}
+input.slText {padding-left: 3px;}
+.slTextRight {float: left; color: #000000; margin:0; padding:0; text-align: right;}
+/*.slText:hover {background-color: #EFEFEF; }*/
+
+.slElenco {}
+.slElenco td {vertical-align: middle;}
+
+.slTab {border: 0; padding: 0px; margin: 0px;}
+/*.slTab input {padding: 0; margin: 0; height: 1.7em; background-color: #999999; padding: 0px 3px 0px 3px; cursor: pointer; border: 1px solid #999999;}*/
+.slTab input.selected {color: #D4101C; font-weight: bold; background-color: transparent; border-bottom: 0}
+.slTabContainer {margin: 0; padding: 5px; border: 1px solid #999999; border-top: 0px solid blue;}
+
+.newLine {float: none; clear: both; height: 0px}
+.skipLine {height: 1.2em;}
+
+.cruscottoElemento{margin-bottom: 0.2em; padding-right: 0.2em;}
+.panel-dt{ font-weight: bold; margin-bottom: 0.2em;}
+.panel-dt a{text-decoration: underline;}
+.panel-dl{text-decoration: underline; font-weight: bold; margin-bottom: 0.2em;}
+.panel-dd, .panel-dd-2{margin-bottom: 0.4em;}
+.panel-dd a, .panel-dd-2 a{color: black;}
+.panel-dd a:hover, .panel-dd-2 a:hover{text-decoration: underline;}
+.panel-dd-2{text-indent:20px}
+
+.multiSemaphoreLabel{padding-left: 1em;}
+.list-container {list-style-type: none; overflow-y: hidden; height: auto; }
+.filterBox{border: 1px solid #cccccc; padding: 0.3em; }
+
+.toolBar{background-color: #07752C; font-size: 10px; font-weight: bold; display: block; height: 28px; margin-bottom: 2px; width: 100%;}
+.toolBar h2{color: #FFFFFF; display: inline; padding: 8px 8px 0 8px;}
+
+#loading{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5000;
+    background-color: #D3101C;
+    font-size: 120%;
+    color: white;
+    padding: 2px;
+    display:none;
+}
+
+span.tablesection:hover{ cursor: pointer; text-decoration: underline;}
+span.tablesection { background-repeat:no-repeat;
+              background-position:left center;
+              padding:2px 2px 2px 10px;
+              color: #055122;}
+.closed {
+    background-image: url("../img/toolBar/closeGreen.png");
+}
+.opened {
+    background-image: url("../img/toolBar/openGreen.png");
+}
+/*img.totale:hover{ cursor: pointer; background-repeat: no-repeat}*/
+
+.titleFiltri {
+	font-size: 11px;  font-weight: bold; margin: 0px; padding: 0.4em 1em 0.1em 0.4em; color: #000000;
+}
+
+/* Modifica css relativa agli alberi, sfondo e colore del font  */
+.jstree-default {
+    background: #ffffff !important;
+}
+
+.jstree-locked {
+    opacity: 1.0 !important;
+}
+
+.jstree-default .jstree-locked a {
+    color:black !important;
+}
+
+/* Tooltip question mark */
+.tooltip {
+	position: absolute;
+	display: inline-block;
+	border-bottom: 0px dotted black;
+	margin-left: 3px;
+}
+
+.tooltip .tooltiptext {
+	visibility: hidden;
+	width: 400px;
+	background-color: #555;
+	color: #fff;
+	text-align: justify;
+	border-radius: 6px;
+	padding: 5px 0;
+	position: absolute;
+	z-index: 1;
+	bottom: 180%;
+	left: 50%;
+	margin-left: -210px;
+	opacity: 0;
+	transition: opacity 0.3s;
+	padding: 10px;
+	line-height: normal;
+}
+
+.tooltip .tooltiptext::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+	opacity: 1;
+}

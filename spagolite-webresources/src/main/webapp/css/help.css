@@ -1,0 +1,325 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24-nov-2015, 14.10.42
+    Author     : Iacolucci_M
+*/
+
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	font-size:11.0pt;
+	font-family:"Verdana","sans-serif";}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	font-size:9.0pt;
+	font-family:"Verdana","sans-serif";
+	color:#4F81BD;
+	font-weight:bold;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{mso-style-link:"Titolo Carattere";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:15.0pt;
+	margin-left:0cm;
+	border:none;
+	padding:0cm;
+	font-size:26.0pt;
+	font-family:"Verdana","sans-serif";
+	color:#17365D;
+	letter-spacing:.25pt;}
+p.MsoTitleCxSpFirst, li.MsoTitleCxSpFirst, div.MsoTitleCxSpFirst
+	{mso-style-link:"Titolo Carattere";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	border:none;
+	padding:0cm;
+	font-size:26.0pt;
+	font-family:"Verdana","sans-serif";
+	color:#17365D;
+	letter-spacing:.25pt;}
+p.MsoTitleCxSpMiddle, li.MsoTitleCxSpMiddle, div.MsoTitleCxSpMiddle
+	{mso-style-link:"Titolo Carattere";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	border:none;
+	padding:0cm;
+	font-size:26.0pt;
+	font-family:"Verdana","sans-serif";
+	color:#17365D;
+	letter-spacing:.25pt;}
+p.MsoTitleCxSpLast, li.MsoTitleCxSpLast, div.MsoTitleCxSpLast
+	{mso-style-link:"Titolo Carattere";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:15.0pt;
+	margin-left:0cm;
+	border:none;
+	padding:0cm;
+	font-size:26.0pt;
+	font-family:"Verdana","sans-serif";
+	color:#17365D;
+	letter-spacing:.25pt;}
+p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
+	{mso-style-link:"Sottotitolo Carattere";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:"Verdana","sans-serif";
+	color:#4F81BD;
+	letter-spacing:.75pt;
+	font-weight:bold;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-link:"Testo fumetto Carattere";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:8.0pt;
+	font-family:"Verdana","sans-serif";}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:97.2pt;
+	text-indent:-18.0pt;
+	font-size:11.0pt;
+	font-family:"Verdana","sans-serif";}
+p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-left:97.2pt;
+	margin-bottom:5pt;
+	text-indent:-18.0pt;
+	font-size:11.0pt;
+	font-family:"Verdana","sans-serif";}
+p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:97.2pt;
+	margin-bottom:.0001pt;
+	text-indent:-18.0pt;
+	font-size:11.0pt;
+	font-family:"Verdana","sans-serif";}
+p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:97.2pt;
+	text-indent:-18.0pt;
+	font-size:11.0pt;
+	font-family:"Verdana","sans-serif";}
+p.Titolo-Help, li.Titolo-Help, div.Titolo-Help
+	{mso-style-name:"Titolo - Help";
+	mso-style-link:"Titolo - Help Carattere";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:15.0pt;
+	margin-left:0cm;
+	border:none;
+	padding:0cm;
+	font-size:16.0pt;
+	font-family:"Verdana","sans-serif";
+	color:#17365D;
+	letter-spacing:.25pt;}
+p.Titolo-HelpCxSpFirst, li.Titolo-HelpCxSpFirst, div.Titolo-HelpCxSpFirst
+	{mso-style-name:"Titolo - HelpCxSpFirst";
+	mso-style-link:"Titolo - Help Carattere";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	border:none;
+	padding:0cm;
+	font-size:16.0pt;
+	font-family:"Verdana","sans-serif";
+	color:#17365D;
+	letter-spacing:.25pt;}
+p.Titolo-HelpCxSpMiddle, li.Titolo-HelpCxSpMiddle, div.Titolo-HelpCxSpMiddle
+	{mso-style-name:"Titolo - HelpCxSpMiddle";
+	mso-style-link:"Titolo - Help Carattere";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	border:none;
+	padding:0cm;
+	font-size:16.0pt;
+	font-family:"Verdana","sans-serif";
+	color:#17365D;
+	letter-spacing:.25pt;}
+p.Titolo-HelpCxSpLast, li.Titolo-HelpCxSpLast, div.Titolo-HelpCxSpLast
+	{mso-style-name:"Titolo - HelpCxSpLast";
+	mso-style-link:"Titolo - Help Carattere";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	border:none;
+	padding:0cm;
+	font-size:16.0pt;
+	font-family:"Verdana","sans-serif";
+	color:#17365D;
+	letter-spacing:.25pt;}
+span.Titolo-HelpCarattere
+	{mso-style-name:"Titolo - Help Carattere";
+	mso-style-link:"Titolo - Help";
+	font-family:"Verdana","sans-serif";
+	color:#17365D;
+	letter-spacing:.25pt;}
+p.Sottotitolo-Help, li.Sottotitolo-Help, div.Sottotitolo-Help
+	{mso-style-name:"Sottotitolo - Help";
+	mso-style-link:"Sottotitolo - Help Carattere";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:"Verdana","sans-serif";
+	color:#4F81BD;
+	letter-spacing:.75pt;
+	font-weight:bold;}
+span.Sottotitolo-HelpCarattere
+	{mso-style-name:"Sottotitolo - Help Carattere";
+	mso-style-link:"Sottotitolo - Help";
+	font-family:"Verdana","sans-serif";
+	color:#4F81BD;
+	letter-spacing:.75pt;
+	font-weight:bold;}
+p.Titolo1-Help, li.Titolo1-Help, div.Titolo1-Help
+	{mso-style-name:"Titolo 1 - Help";
+	mso-style-link:"Titolo 1 - Help Carattere";
+	margin-top:24.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Verdana","sans-serif";
+	font-weight:bold;}
+span.Titolo1-HelpCarattere
+	{mso-style-name:"Titolo 1 - Help Carattere";
+	mso-style-link:"Titolo 1 - Help";
+	font-family:"Verdana","sans-serif";
+	color:#365F91;
+	font-weight:bold;}
+p.Titolo2-Help, li.Titolo2-Help, div.Titolo2-Help
+	{mso-style-name:"Titolo 2 - Help";
+	mso-style-link:"Titolo 2 - Help Carattere";
+	margin-top:10.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:13.0pt;
+	font-family:"Verdana","sans-serif";
+	font-weight:bold;}
+span.Titolo2-HelpCarattere
+	{mso-style-name:"Titolo 2 - Help Carattere";
+	mso-style-link:"Titolo 2 - Help";
+	font-family:"Verdana","sans-serif";
+	color:#4F81BD;
+	font-weight:bold;}
+p.Titolo3-Help, li.Titolo3-Help, div.Titolo3-Help
+	{mso-style-name:"Titolo 3 - Help";
+	mso-style-link:"Titolo 3 - Help Carattere";
+	margin-top:10.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	font-family:"Verdana","sans-serif";
+	font-weight:bold;}
+span.Titolo3-HelpCarattere
+	{mso-style-name:"Titolo 3 - Help Carattere";
+	mso-style-link:"Titolo 3 - Help";
+	font-family:"Verdana","sans-serif";
+	color:#4F81BD;
+	font-weight:bold;}
+p.Titolo4-Help, li.Titolo4-Help, div.Titolo4-Help
+	{mso-style-name:"Titolo 4 - Help";
+	mso-style-link:"Titolo 4 - Help Carattere";
+	margin-top:10.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	font-family:"Verdana","sans-serif";
+	font-weight:bold;
+	font-style:italic;}
+span.Titolo4-HelpCarattere
+	{mso-style-name:"Titolo 4 - Help Carattere";
+	mso-style-link:"Titolo 4 - Help";
+	font-family:"Verdana","sans-serif";
+	color:#4F81BD;
+	font-weight:bold;
+	font-style:italic;}
+p.Normale-Help, li.Normale-Help, div.Normale-Help
+	{mso-style-name:"Normale - Help";
+	margin-top:0.2cm;
+	margin-right:0cm;
+	margin-bottom:7.0pt;
+	margin-left:0cm;
+	font-size:11.0pt;
+	font-family:"Verdana","sans-serif";}
+p.ParagrafoElenco-Help, li.ParagrafoElenco-Help, div.ParagrafoElenco-Help
+	{mso-style-name:"Paragrafo Elenco - Help";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:36.0pt;
+	text-indent:-18.0pt;
+	font-size:11.0pt;
+	font-family:"Verdana","sans-serif";}
+p.ParagrafoElenco-HelpCxSpFirst, li.ParagrafoElenco-HelpCxSpFirst, div.ParagrafoElenco-HelpCxSpFirst
+	{mso-style-name:"Paragrafo Elenco - HelpCxSpFirst";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-18.0pt;
+	font-size:11.0pt;
+	font-family:"Verdana","sans-serif";}
+p.ParagrafoElenco-HelpCxSpMiddle, li.ParagrafoElenco-HelpCxSpMiddle, div.ParagrafoElenco-HelpCxSpMiddle
+	{mso-style-name:"Paragrafo Elenco - HelpCxSpMiddle";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-18.0pt;
+	font-size:11.0pt;
+	font-family:"Verdana","sans-serif";}
+p.ParagrafoElenco-HelpCxSpLast, li.ParagrafoElenco-HelpCxSpLast, div.ParagrafoElenco-HelpCxSpLast
+	{mso-style-name:"Paragrafo Elenco - HelpCxSpLast";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:36.0pt;
+	text-indent:-18.0pt;
+	font-size:11.0pt;
+	font-family:"Verdana","sans-serif";}
+.MsoChpDefault
+	{font-family:"Verdana","sans-serif";}
+.MsoPapDefault
+	{margin-bottom:10.0pt;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:70.85pt 2.0cm 2.0cm 2.0cm;}
+div.WordSection1
+	{page:WordSection1;}
+-->

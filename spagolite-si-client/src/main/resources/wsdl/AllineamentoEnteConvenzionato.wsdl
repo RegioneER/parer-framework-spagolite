@@ -1,0 +1,61 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://ws.saceriam.eng.it/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="AllineamentoEnteConvenzionato" targetNamespace="http://ws.saceriam.eng.it/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.saceriam.eng.it/" elementFormDefault="unqualified" targetNamespace="http://ws.saceriam.eng.it/" version="1.0">
+            <xs:element name="ricalcoloServiziErogati" type="tns:ricalcoloServiziErogati"/>
+            <xs:element name="ricalcoloServiziErogatiResponse" type="tns:ricalcoloServiziErogatiResponse"/>
+            <xs:complexType name="ricalcoloServiziErogati">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="idEnteConvenz" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ricalcoloServiziErogatiResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:rispostaWSAllineamentoEnteConvenzionato"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="rispostaWSAllineamentoEnteConvenzionato">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+                    <xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+                    <xs:element minOccurs="0" name="esito" type="tns:esitoEnum"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="esitoEnum">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="OK"/>
+                    <xs:enumeration value="WARNING"/>
+                    <xs:enumeration value="ERROR"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="ricalcoloServiziErogatiResponse">
+        <wsdl:part element="tns:ricalcoloServiziErogatiResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ricalcoloServiziErogati">
+        <wsdl:part element="tns:ricalcoloServiziErogati" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="AllineamentoEnteConvenzionato">
+        <wsdl:operation name="ricalcoloServiziErogati">
+            <wsdl:input message="tns:ricalcoloServiziErogati" name="ricalcoloServiziErogati"></wsdl:input>
+            <wsdl:output message="tns:ricalcoloServiziErogatiResponse" name="ricalcoloServiziErogatiResponse"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="AllineamentoEnteConvenzionatoSoapBinding" type="tns:AllineamentoEnteConvenzionato">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="ricalcoloServiziErogati">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="ricalcoloServiziErogati">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ricalcoloServiziErogatiResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="AllineamentoEnteConvenzionato">
+        <wsdl:port binding="tns:AllineamentoEnteConvenzionatoSoapBinding" name="AllineamentoEnteConvenzionatoPort">
+            <soap:address location="http://localhost:8080/saceriam/AllineamentoEnteConvenzionato"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

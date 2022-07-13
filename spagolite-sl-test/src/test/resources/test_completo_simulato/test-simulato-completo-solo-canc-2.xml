@@ -1,0 +1,190 @@
+<fotoOggetto>
+    <versioneLogRecord>1.0</versioneLogRecord>
+    <recordMaster>
+        <tipoRecord>Registro</tipoRecord>
+        <idRecord>4</idRecord>
+        <keyRecord>
+            <datoKey>
+                <colonnaKey>colonna chiave 1</colonnaKey>
+                <valoreKey>valore colonna chiave 1</valoreKey>
+            </datoKey>
+        </keyRecord>
+        <datoRecord>
+            <colonnaDato>colonna dato record master 1</colonnaDato>
+            <labelDato>label dato record master 1</labelDato>
+            <valoreDato>valore dato record master 1</valoreDato>
+        </datoRecord>
+    </recordMaster>
+    <!--                            -->
+    <!-- CASI DI CANCELLAZIONE VARI -->
+    <!--                            -->
+    <recordChild>
+        <tipoRecord>RECORD_CHILD_1</tipoRecord>
+        <child>
+            <idRecord>1</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>chiave record 1 posizione 1</colonnaKey>
+                    <valoreKey>valore chiave record 1 posizione 1</valoreKey>
+                </datoKey>
+                <datoKey>
+                    <colonnaKey>chiave record 1 posizione 2</colonnaKey>
+                    <valoreKey>valore chiave record 1 posizione 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 1 record 1</colonnaDato>
+                <labelDato>label dato 1 record 1</labelDato>
+                <valoreDato>valore dato 1 record 1</valoreDato>
+            </datoRecord>
+            <!-- ho cancellato il dato con nome 'nome colonna dato 2 record 1' -->
+        </child>
+    </recordChild>
+    <!-- Cancellato tutto il ramo record child 'RECORD_CHILD_2' -->
+    <!-- da questo record sono stati cancellati una colonna ed un record -->
+    <recordChild>
+        <tipoRecord>RECORD_CHILD_3</tipoRecord>
+        <child>
+            <idRecord>3</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>chiave record 3 posizione 1</colonnaKey>
+                    <valoreKey>valore chiave record 3 posizione 1</valoreKey>
+                </datoKey>
+                <datoKey>
+                    <colonnaKey>chiave record 3 posizione 2</colonnaKey>
+                    <valoreKey>valore chiave record 3 posizione 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 1 record 3</colonnaDato>
+                <labelDato>label dato 1 record 3</labelDato>
+                <valoreDato>valore dato 1 record 3</valoreDato>
+            </datoRecord>
+            <!-- E' stato eliminata la colonna 'nome colonna dato 2 record 3' -->
+            <!-- da questo child verrà eliminato il secondo record ed eliminato il primo dato del primo record -->
+            <recordChild>
+                <tipoRecord>RECORD_CHILD_3_1</tipoRecord>
+                <child>
+                    <idRecord>5</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>chiave record 5 posizione 1</colonnaKey>
+                            <valoreKey>valore chiave record 5 posizione 1</valoreKey>
+                        </datoKey>
+                        <datoKey>
+                            <colonnaKey>chiave record 5 posizione 2</colonnaKey>
+                            <valoreKey>valore chiave record 5 posizione 2</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <!-- E' stato eliminata la colonna 'nome colonna dato 1 record 5' -->
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 2 record 5</colonnaDato>
+                        <labelDato>label dato 2 record 5</labelDato>
+                        <valoreDato>valore dato 2 record 5</valoreDato>
+                    </datoRecord>
+                </child>
+                <!-- E' stato eliminato il secondo record con id '6' -->
+            </recordChild>
+        </child>
+        <!-- E' stato eliminato il Record con id '7' -->
+    </recordChild>
+    <!-- da questo record cancellerò una colonna da un child figlio -->
+    <recordChild>
+        <tipoRecord>RECORD_CHILD_4</tipoRecord>
+        <child>
+            <idRecord>8</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>chiave record 8 posizione 1</colonnaKey>
+                    <valoreKey>valore chiave record 8 posizione 1</valoreKey>
+                </datoKey>
+                <datoKey>
+                    <colonnaKey>chiave record 8 posizione 2</colonnaKey>
+                    <valoreKey>valore chiave record 8 posizione 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 1 record 8</colonnaDato>
+                <labelDato>label dato 1 record 8</labelDato>
+                <valoreDato>valore dato 1 record 8</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 2 record 8</colonnaDato>
+                <labelDato>label dato 2 record 8</labelDato>
+                <valoreDato>valore dato 2 record 8</valoreDato>
+            </datoRecord>
+            <recordChild>
+                <tipoRecord>RECORD_CHILD_4_1</tipoRecord>
+                <child>
+                    <idRecord>9</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>chiave record 9 posizione 1</colonnaKey>
+                            <valoreKey>valore chiave record 9 posizione 1</valoreKey>
+                        </datoKey>
+                        <datoKey>
+                            <colonnaKey>chiave record 9 posizione 2</colonnaKey>
+                            <valoreKey>valore chiave record 9 posizione 2</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 1 record 9</colonnaDato>
+                        <labelDato>label dato 1 record 9</labelDato>
+                        <valoreDato>valore dato 1 record 9</valoreDato>
+                    </datoRecord>
+                    <!-- Eliminata la colonna del child profondo con nome 'nome colonna dato 2 record 9' -->
+                </child>
+                <child>
+                    <idRecord>10</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>chiave record 10 posizione 1</colonnaKey>
+                            <valoreKey>valore chiave record 10 posizione 1</valoreKey>
+                        </datoKey>
+                        <datoKey>
+                            <colonnaKey>chiave record 10 posizione 2</colonnaKey>
+                            <valoreKey>valore chiave record 10 posizione 2</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 1 record 10</colonnaDato>
+                        <labelDato>label dato 1 record 10</labelDato>
+                        <valoreDato>valore dato 1 record 10</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 2 record 10</colonnaDato>
+                        <labelDato>label dato 2 record 10</labelDato>
+                        <valoreDato>valore dato 2 record 10</valoreDato>
+                    </datoRecord>
+                </child>
+            </recordChild>
+        </child>
+        <child>
+            <idRecord>11</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>chiave record 11 posizione 1</colonnaKey>
+                    <valoreKey>valore chiave record 11 posizione 1</valoreKey>
+                </datoKey>
+                <datoKey>
+                    <colonnaKey>chiave record 11 posizione 2</colonnaKey>
+                    <valoreKey>valore chiave record 11 posizione 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 1 record 11</colonnaDato>
+                <labelDato>label dato 1 record 11</labelDato>
+                <valoreDato>valore dato 1 record 11</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 2 record 11</colonnaDato>
+                <labelDato>label dato 2 record 11</labelDato>
+                <valoreDato>valore dato 2 record 11</valoreDato>
+            </datoRecord>
+        </child>
+    </recordChild>
+    <!--                                 -->
+    <!-- FINE CASI DI CANCELLAZIONE VARI -->
+    <!--                                 -->
+</fotoOggetto>

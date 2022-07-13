@@ -1,0 +1,152 @@
+<xs:schema xmlns:tns="http://ws.saceriam.eng.it/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.saceriam.eng.it/">
+
+    <xs:element name="cancellaOrganizzazione" type="tns:cancellaOrganizzazione"/>
+
+    <xs:element name="cancellaOrganizzazioneResponse" type="tns:cancellaOrganizzazioneResponse"/>
+
+    <xs:element name="inserimentoOrganizzazione" type="tns:inserimentoOrganizzazione"/>
+
+    <xs:element name="inserimentoOrganizzazioneResponse" type="tns:inserimentoOrganizzazioneResponse"/>
+
+    <xs:element name="modificaOrganizzazione" type="tns:modificaOrganizzazione"/>
+
+    <xs:element name="modificaOrganizzazioneResponse" type="tns:modificaOrganizzazioneResponse"/>
+
+    <xs:complexType name="modificaOrganizzazione">
+        <xs:sequence>
+            <xs:element name="nmApplic" type="xs:string" minOccurs="1"/>
+            <xs:element name="idOrganizApplic" type="xs:int" minOccurs="1"/>
+            <xs:element name="nmTipoOrganiz" type="xs:string" minOccurs="1"/>
+            <xs:element name="idEnteConserv" type="xs:int" minOccurs="0"/>
+            <xs:element name="idEnteGestore" type="xs:int" minOccurs="0"/>
+            <xs:element name="nmOrganiz" type="xs:string" minOccurs="1"/>
+            <xs:element name="dsOrganiz" type="xs:string" minOccurs="1"/>
+            <xs:element name="idOrganizApplicPadre" type="xs:int" minOccurs="0"/>
+            <xs:element name="nmTipoOrganizPadre" type="xs:string" minOccurs="0"/>
+            <xs:element name="idEnteConvenz" type="xs:int" minOccurs="0"/>
+            <xs:element name="dtIniVal" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="dtFineVal" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="listaTipiDato" type="tns:listaTipiDato" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="listaTipiDato">
+        <xs:sequence>
+            <xs:element name="tipoDato" type="tns:tipoDato" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="tipoDato">
+        <xs:sequence>
+            <xs:element name="dsTipoDato" type="xs:string" minOccurs="1"/>
+            <xs:element name="idTipoDatoApplic" type="xs:int" minOccurs="1"/>
+            <xs:element name="nmClasseTipoDato" type="xs:string" minOccurs="1"/>
+            <xs:element name="nmTipoDato" type="xs:string" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="modificaOrganizzazioneResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:modificaOrganizzazioneRisposta" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="modificaOrganizzazioneRisposta">
+        <xs:complexContent>
+            <xs:extension base="tns:replicaOrganizzazioneRispostaAbstract">
+                <xs:sequence>
+                    <xs:element name="dsOrganiz" type="xs:string" minOccurs="0"/>
+                    <xs:element name="idOrganizApplicPadre" type="xs:int" minOccurs="0"/>
+                    <xs:element name="listaTipiDato" type="tns:listaTipiDato" minOccurs="0"/>
+                    <xs:element name="nmOrganiz" type="xs:string" minOccurs="0"/>
+                    <xs:element name="nmTipoOrganizPadre" type="xs:string" minOccurs="0"/>
+                    <xs:element name="idEnteConvenz" type="xs:int" minOccurs="0"/>
+                    <xs:element name="dtIniVal" type="xs:dateTime" minOccurs="0"/>
+                    <xs:element name="dtFineVal" type="xs:dateTime" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="replicaOrganizzazioneRispostaAbstract" abstract="true">
+        <xs:sequence>
+            <xs:element name="cdErr" type="xs:string" minOccurs="0"/>
+            <xs:element name="cdEsito" type="tns:esitoServizio" minOccurs="0"/>
+            <xs:element name="dsErr" type="xs:string" minOccurs="0"/>
+            <xs:element name="idOrganizApplic" type="xs:int" minOccurs="0"/>
+            <xs:element name="nmApplic" type="xs:string" minOccurs="0"/>
+            <xs:element name="nmTipoOrganiz" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="cancellaOrganizzazione">
+        <xs:sequence>
+            <xs:element name="nmApplic" type="xs:string" minOccurs="0"/>
+            <xs:element name="idOrganizApplic" type="xs:int" minOccurs="0"/>
+            <xs:element name="nmTipoOrganiz" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="cancellaOrganizzazioneResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:cancellaOrganizzazioneRisposta" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="cancellaOrganizzazioneRisposta">
+        <xs:complexContent>
+            <xs:extension base="tns:replicaOrganizzazioneRispostaAbstract">
+                <xs:sequence/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="inserimentoOrganizzazione">
+        <xs:sequence>
+            <xs:element name="nmApplic" type="xs:string" minOccurs="1"/>
+            <xs:element name="idOrganizApplic" type="xs:int" minOccurs="1"/>
+            <xs:element name="nmTipoOrganiz" type="xs:string" minOccurs="1"/>
+            <xs:element name="idEnteConserv" type="xs:int" minOccurs="0"/>
+            <xs:element name="idEnteGestore" type="xs:int" minOccurs="0"/>
+            <xs:element name="idOrganizApplicPadre" type="xs:int" minOccurs="0"/>
+            <xs:element name="nmTipoOrganizPadre" type="xs:string" minOccurs="0"/>
+            <xs:element name="nmOrganiz" type="xs:string" minOccurs="1"/>
+            <xs:element name="dsOrganiz" type="xs:string" minOccurs="1"/>
+            <xs:element name="idEnteConvenz" type="xs:int" minOccurs="0"/>
+            <xs:element name="dtIniVal" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="dtFineVal" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="listaTipiDato" type="tns:listaTipiDato" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="inserimentoOrganizzazioneResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:inserimentoOrganizzazioneRisposta" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="inserimentoOrganizzazioneRisposta">
+        <xs:complexContent>
+            <xs:extension base="tns:replicaOrganizzazioneRispostaAbstract">
+                <xs:sequence>
+                    <xs:element name="dsOrganiz" type="xs:string" minOccurs="0"/>
+                    <xs:element name="idOrganizApplicPadre" type="xs:int" minOccurs="0"/>
+                    <xs:element name="listaTipiDato" type="tns:listaTipiDato" minOccurs="0"/>
+                    <xs:element name="nmOrganiz" type="xs:string" minOccurs="0"/>
+                    <xs:element name="nmTipoOrganizPadre" type="xs:string" minOccurs="0"/>
+                    <xs:element name="idEnteConvenz" type="xs:int" minOccurs="0"/>
+                    <xs:element name="dtIniVal" type="xs:dateTime" minOccurs="0"/>
+                    <xs:element name="dtFineVal" type="xs:dateTime" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:simpleType name="esitoServizio">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="OK"/>
+            <xs:enumeration value="KO"/>
+            <xs:enumeration value="WARN"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

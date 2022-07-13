@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.2.0-1 (tags/2.2.0u1-7139; 2012-06-02T10:55:19+0000) JAXWS-RI/2.2.6-2 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://ws.saceriam.eng.it/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.saceriam.eng.it/">
+
+    <xs:element name="AuthWSException" type="tns:AuthWSException"/>
+
+    <xs:element name="recuperoAutorizzazioniPerID" type="tns:recuperoAutorizzazioniPerID"/>
+
+    <xs:element name="recuperoAutorizzazioniPerIDResponse" type="tns:recuperoAutorizzazioniPerIDResponse"/>
+
+    <xs:element name="recuperoAutorizzazioniPerNome" type="tns:recuperoAutorizzazioniPerNome"/>
+
+    <xs:element name="recuperoAutorizzazioniPerNomeResponse" type="tns:recuperoAutorizzazioniPerNomeResponse"/>
+
+    <xs:complexType name="recuperoAutorizzazioniPerNome">
+        <xs:sequence>
+            <xs:element name="nmUserIam" type="xs:string" minOccurs="0"/>
+            <xs:element name="nmApplic" type="xs:string" minOccurs="0"/>
+            <xs:element name="idOrganiz" type="xs:int" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="recuperoAutorizzazioniPerNomeResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:recuperoAutorizzazioniRisposta" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="recuperoAutorizzazioniRisposta">
+        <xs:sequence>
+            <xs:element name="azioniList" type="tns:azione" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="cdErr" type="xs:string" minOccurs="0"/>
+            <xs:element name="cdEsito" type="tns:esitoServizio" minOccurs="0"/>
+            <xs:element name="dsErr" type="xs:string" minOccurs="0"/>
+            <xs:element name="idOrganizApplic" type="xs:int" minOccurs="0"/>
+            <xs:element name="idUserIam" type="xs:int" minOccurs="0"/>
+            <xs:element name="menuList" type="tns:menu" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="nmApplic" type="xs:string" minOccurs="0"/>
+            <xs:element name="nmOrganizApplic" type="xs:string" minOccurs="0"/>
+            <xs:element name="nmUserIam" type="xs:string" minOccurs="0"/>
+            <xs:element name="pagineList" type="tns:pagina" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="azione">
+        <xs:sequence>
+            <xs:element name="nmAzionePagina" type="xs:string" minOccurs="0"/>
+            <xs:element name="nmPaginaWeb" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="menu">
+        <xs:sequence>
+            <xs:element name="dsEntryMenu" type="xs:string" minOccurs="0"/>
+            <xs:element name="dsLinkEntryMenu" type="xs:string" minOccurs="0"/>
+            <xs:element name="niLivelloEntryMenu" type="xs:int" minOccurs="0"/>
+            <xs:element name="niOrdEntryMenu" type="xs:int" minOccurs="0"/>
+            <xs:element name="nmEntryMenu" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="pagina">
+        <xs:sequence>
+            <xs:element name="flHelpPresente" type="xs:boolean"/>    
+            <xs:element name="nmPaginaWeb" type="xs:string" minOccurs="0"/>
+            <xs:element name="helpDipsList" type="tns:helpDips" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="helpDips">
+        <xs:sequence>
+            <xs:element name="nmEntryMenu" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AuthWSException">
+        <xs:sequence>
+            <xs:element name="codiceErrore" type="tns:codiceErrore" minOccurs="0"/>
+            <xs:element name="descrizioneErrore" type="xs:string" minOccurs="0"/>
+            <xs:element name="message" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="recuperoAutorizzazioniPerID">
+        <xs:sequence>
+            <xs:element name="idUserIam" type="xs:int" minOccurs="0"/>
+            <xs:element name="nmApplic" type="xs:string" minOccurs="0"/>
+            <xs:element name="idOrganiz" type="xs:int" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="recuperoAutorizzazioniPerIDResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:recuperoAutorizzazioniRisposta" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="esitoServizio">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="OK"/>
+            <xs:enumeration value="KO"/>
+            <xs:enumeration value="WARN"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="codiceErrore">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LOGIN_FALLITO"/>
+            <xs:enumeration value="UTENTE_NON_ATTIVO"/>
+            <xs:enumeration value="UTENTE_SCADUTO"/>
+            <xs:enumeration value="UTENTE_NON_AUTORIZZATO"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

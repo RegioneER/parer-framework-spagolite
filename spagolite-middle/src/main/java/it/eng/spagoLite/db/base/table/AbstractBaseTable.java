@@ -1,0 +1,426 @@
+package it.eng.spagoLite.db.base.table;
+
+import it.eng.spagoLite.FrameElement;
+import it.eng.spagoLite.db.base.BaseRowInterface;
+import it.eng.spagoLite.db.base.BaseTableInterface;
+import it.eng.spagoLite.db.base.sorting.RowComparator;
+import it.eng.spagoLite.db.base.sorting.SortingRule;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import org.dom4j.Element;
+
+public abstract class AbstractBaseTable<T extends BaseRowInterface> extends FrameElement
+        implements BaseTableInterface<T> {
+
+    protected static final String BASE_NAME = "ROWS";
+    public static final String ABSOLUTE_INDEX = "ABSOLUTE_INDEX";
+
+    private String name;
+    protected List<T> list;
+    protected int rigaCorrente;
+    protected int pageSize;
+    protected RowComparator rowComparator;
+    protected SortingRule lastSortingRule;
+    protected LazyListBean lazyListBean;
+
+    public AbstractBaseTable() {
+        clear();
+        this.pageSize = 10;
+        this.rowComparator = new RowComparator();
+        this.lastSortingRule = new SortingRule();
+    }
+
+    protected abstract T createRow();
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void first() {
+        this.rigaCorrente = 0;
+    }
+
+    public void prevPage() {
+        int capoPrevPag = (int) (Math.floor(this.rigaCorrente / getPageSize()) - 1) * getPageSize();
+        if (getPageSize() > 0) {
+            this.rigaCorrente = capoPrevPag >= 0 ? capoPrevPag : getFirstRowPageIndex();
+        }
+    }
+
+    public void prev() {
+        setCurrentRowIndex(getCurrentRowIndex() - 1);
+    }
+
+    public void next() {
+        setCurrentRowIndex(getCurrentRowIndex() + 1);
+    }
+
+    public void goPage(int page) {
+        int capoNextPag = (int) (Math.floor(this.rigaCorrente / getPageSize()) + page) * getPageSize();
+        if (getPageSize() > 0) {
+            // this.rigaCorrente = capoNextPag < this.list.size() ? capoNextPag
+            this.rigaCorrente = capoNextPag < this.size() ? capoNextPag : getFirstRowPageIndex();
+        }
+    }
+
+    public void nextPage() {
+        int capoNextPag = (int) (Math.floor(this.rigaCorrente / getPageSize()) + 1) * getPageSize();
+        if (getPageSize() > 0) {
+            // this.rigaCorrente = capoNextPag < this.list.size() ? capoNextPag
+            this.rigaCorrente = capoNextPag < this.size() ? capoNextPag : getFirstRowPageIndex();
+        }
+    }
+
+    public void last() {
+        this.rigaCorrente = size() - 1;
+    }
+
+    public int getCurrentRowIndex() {
+        return this.rigaCorrente;
+    }
+
+    public void setCurrentRowIndex(int rigaCorrente) {
+        // if (rigaCorrente >= this.list.size()) {
+        // this.rigaCorrente = this.list.size() - 1;
+        if (rigaCorrente >= this.size()) {
+            this.rigaCorrente = this.size() - 1;
+            return;
+        }
+        if (rigaCorrente < 0) {
+            this.rigaCorrente = 0;
+            return;
+        }
+        this.rigaCorrente = rigaCorrente;
+    }
+
+    // FIXME: controllare bene!!!!
+    // public void setCurrentRow(T row){
+    // if (this.list != null){
+    // int i = 0;
+    // for (T riga : this.list) {
+    // if (riga.equals(row)){
+    // this.rigaCorrente = ++i;
+    // }
+    // }
+    // }
+    //
+    // }
+    public int getPageSize() {
+        return this.pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getCurrentPageIndex() {
+        if (lazyListBean != null) {
+            return (int) Math.ceil((lazyListBean.getFirstResult() + getCurrentRowIndex()) / getPageSize()) + 1;
+        }
+        return (int) Math.ceil(getCurrentRowIndex() / getPageSize()) + 1;
+    }
+
+    public int getFirstRowPageIndex() {
+        // if (lazyListBean != null)
+        // return ((int) Math.floor(getCurrentRowIndex() / getPageSize())
+        // * getPageSize())-LazyListBean.maxResult();
+        return (int) Math.floor(getCurrentRowIndex() / getPageSize()) * getPageSize();
+    }
+
+    public int getLastRowPageIndex() {
+        return getFirstRowPageIndex() + getPageSize() - 1;
+    }
+
+    public int size() {
+        // if (lazyListBean != null)
+        // return this.lazyListBean.getCountResultSize();
+        return this.list.size();
+    }
+
+    public int fullSize() {
+        if (lazyListBean != null) {
+            return this.lazyListBean.getCountResultSize();
+        }
+        return this.list.size();
+    }
+
+    public int getPages() {
+        return (int) Math.ceil((double) fullSize() / (double) getPageSize());
+    }
+
+    public boolean isEmpty() {
+        return this.list.isEmpty();
+    }
+
+    public void clear() {
+        this.list = new ArrayList<T>();
+        this.rigaCorrente = 0;
+    }
+
+    public void load(BaseTableInterface<?> table) {
+        clear();
+
+        for (BaseRowInterface row : table) {
+            add().copyFromBaseRow(row);
+        }
+    }
+
+    // public void load(ISelectQuery query) throws EMFError, EMFError {
+    // load(null, query);
+    // }
+    //
+    // public void load(DataConnection dataConnection, ISelectQuery query)
+    // throws EMFError, EMFError {
+    // clear();
+    // query.select(dataConnection, this);
+    // }
+
+    public T add() {
+        return add(null);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see it.eng.spagoLite.db.base.BaseTableInterface#add(it.eng.spagoLite.db.base.BaseRowInterface)
+     */
+    public T add(BaseRowInterface baseRowInterface) {
+        T row = createRow();
+
+        if (baseRowInterface != null) {
+            row.copyFromBaseRow(baseRowInterface);
+        }
+
+        if (getCurrentRowIndex() + 1 < size()) {
+            this.list.add(getCurrentRowIndex() + 1, row);
+        } else {
+            this.list.add(row);
+        }
+        next();
+        return row;
+    }
+
+    /**
+     * Aggiunge record di un tablebean a un tablebean preesistente
+     *
+     * @param table
+     */
+    public void addAll(BaseTableInterface<?> table) {
+        for (BaseRowInterface row : table) {
+            add().copyFromBaseRow(row);
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see it.eng.spagoLite.db.base.BaseTableInterface#addFullIdx(it.eng.spagoLite.db.base.BaseRowInterface)
+     */
+    public T addFullIdx(BaseRowInterface baseRowInterface) {
+        T row = createRow();
+
+        if (baseRowInterface != null) {
+            row.copyFromBaseRow(baseRowInterface);
+        }
+        if (lazyListBean != null) {
+            lazyListBean.incCountResultSize();
+            int rowIndex = (Integer) baseRowInterface.getObject(ABSOLUTE_INDEX);
+            baseRowInterface.setObject(ABSOLUTE_INDEX, null);
+            if (lazyListBean.getFirstResult() <= rowIndex
+                    && rowIndex < lazyListBean.getFirstResult() + lazyListBean.getMaxResult()) {
+                this.list.add(rowIndex - lazyListBean.getFirstResult(), row);
+            }
+        } else {
+            if (getCurrentRowIndex() + 1 < size()) {
+                this.list.add(getCurrentRowIndex() + 1, row);
+            } else {
+                this.list.add(row);
+            }
+        }
+        next();
+        return row;
+    }
+
+    public T remove() {
+        return remove(getCurrentRowIndex());
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see it.eng.spagoLite.db.base.BaseTableInterface#remove(int)
+     */
+    public T remove(int rowIndex) {
+        if (size() > 0 && rowIndex < size()) {
+            if (lazyListBean != null) {
+                lazyListBean.decCountResultSize();
+            }
+            T row = this.list.remove(rowIndex);
+            if (row.getObject(ABSOLUTE_INDEX) == null) {
+                row.setObject(ABSOLUTE_INDEX, (lazyListBean != null ? lazyListBean.getFirstResult() : 0) + rowIndex);
+            }
+            setCurrentRowIndex(getCurrentRowIndex());
+            return row;
+        }
+        return null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see it.eng.spagoLite.db.base.BaseTableInterface#removeFullIdx(int)
+     */
+    public T removeFullIdx(int rowIndex) {
+        if (lazyListBean != null) {
+            lazyListBean.decCountResultSize();
+            if (lazyListBean.getFirstResult() <= rowIndex
+                    && rowIndex < lazyListBean.getFirstResult() + lazyListBean.getMaxResult()) {
+                T row = this.list.remove(rowIndex - lazyListBean.getFirstResult());
+                setCurrentRowIndex(getCurrentRowIndex());
+                // row.setObject(ABSOLUTE_INDEX, rowIndex);
+                return row;
+            }
+        } else if (size() > 0 && rowIndex < size()) {
+            T row = this.list.remove(rowIndex);
+            setCurrentRowIndex(getCurrentRowIndex());
+            return row;
+        }
+
+        return null;
+    }
+
+    public void removeAll() {
+        while (size() > 0) {
+            remove();
+        }
+    }
+
+    public T getCurrentRow() {
+        return getRow(getCurrentRowIndex());
+    }
+
+    public T getRow(int index) {
+        if (index < 0) {
+            return null;
+        }
+
+        if (index > (size() - 1)) {
+            return null;
+        }
+        return (T) this.list.get(index);
+
+    }
+
+    public Iterator<T> iterator() {
+        return this.list.iterator();
+    }
+
+    public boolean contains(T o) {
+        return this.list.contains(o);
+    }
+
+    public void addSortingRule(String columnName, int sortType) {
+        this.addSortingRule(new SortingRule(columnName, sortType));
+    }
+
+    public void addSortingRule(String columnName) {
+        this.addSortingRule(new SortingRule(columnName, SortingRule.ASC));
+    }
+
+    public void addSortingRule(SortingRule sortingRule) {
+        if (sortingRule == null) {
+            return;
+        }
+        this.rowComparator.addRule(sortingRule);
+    }
+
+    public void addSortingRule(SortingRule[] sortingRules) {
+        if (sortingRules == null) {
+            return;
+        }
+        for (int i = 0; i < sortingRules.length; i++) {
+            addSortingRule(sortingRules[i]);
+        }
+    }
+
+    public void clearSortingRule() {
+        this.rowComparator.clearRule();
+        this.lastSortingRule = new SortingRule();
+    }
+
+    @SuppressWarnings("unchecked")
+    public void sort() {
+        if (size() > 0) {
+            BaseRowInterface currentRow = getCurrentRow();
+            Collections.sort(this.list, this.rowComparator);
+
+            int i = 0;
+            for (T row : this) {
+                if (row == currentRow) {
+                    setCurrentRowIndex(i++);
+                    return;
+                }
+            }
+        }
+
+    }
+
+    public SortingRule getLastSortingRule() {
+        return rowComparator.getLastSortingRule();
+    }
+
+    @Override
+    public Element asXml() {
+        Element element = super.asXml();
+        element.addAttribute("size", "" + size());
+
+        for (BaseRowInterface row : list) {
+            element.add(row.asXml());
+        }
+
+        return element;
+    }
+
+    public BigDecimal sum(String columnName) {
+        BigDecimal somma = null;
+        for (T row : this) {
+            if (row.getObject(columnName) != null && row.getObject(columnName) instanceof BigDecimal) {
+                if (somma == null) {
+                    somma = row.getBigDecimal(columnName);
+                } else {
+                    somma = somma.add(row.getBigDecimal(columnName));
+                }
+            }
+        }
+
+        return somma;
+    }
+
+    public List<Object> toList(String fieldName, SortingRule[] sortingRules) {
+        List<Object> result = null;
+        if (this.list != null) {
+            addSortingRule(sortingRules);
+            sort();
+            result = new ArrayList<Object>();
+            for (T row : this.list) {
+                result.add(row.getObject(fieldName));
+            }
+        }
+        return result;
+    }
+
+    public List<Object> toList(String fieldName) {
+        return toList(fieldName, new SortingRule[] { getLastSortingRule() });
+    }
+
+    public LazyListBean getLazyListBean() {
+        return lazyListBean;
+    }
+
+    public void setLazyListBean(LazyListBean lazyListBean) {
+        this.lazyListBean = lazyListBean;
+    }
+}

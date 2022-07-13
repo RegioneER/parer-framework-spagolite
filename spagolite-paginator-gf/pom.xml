@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>spagofat-paginator-gf</artifactId>
+    <name>Spagolite paginator (eclipselink)</name>
+    <parent>
+        <groupId>it.eng.parer</groupId>
+        <artifactId>spagofat</artifactId>
+        <version>4.1.27-SNAPSHOT</version>
+    </parent>
+    <dependencies>
+        <dependency>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-6.0</artifactId>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>it.eng.parer</groupId>
+            <artifactId>spagofat-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>it.eng.parer</groupId>
+            <artifactId>spagofat-middle</artifactId>
+        </dependency>
+        <!--
+<dependency> 
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+</dependency> 
+                -->
+        <dependency> 
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency> 
+                
+        <dependency>
+            <groupId>org.glassfish.main.persistence</groupId>
+            <artifactId>eclipselink-wrapper</artifactId>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/ejb-jar-TEMPLATE.xml</exclude>
+                </excludes>
+            </resource>
+        </resources>
+    </build>
+</project>

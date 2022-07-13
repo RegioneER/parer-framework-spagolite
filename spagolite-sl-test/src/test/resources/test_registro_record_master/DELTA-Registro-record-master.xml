@@ -1,0 +1,120 @@
+<risultato>
+    <recordMaster>
+        <tipoRecord>Registro</tipoRecord>
+        <idRecord>4</idRecord>
+        <keyRecord>
+            <datoKey>
+                <colonnaKey>nm_ambiente</colonnaKey>
+                <valoreKey>AMBIENTE PROVA 1</valoreKey>
+            </datoKey>
+            <datoKey>
+                <colonnaKey>nm_ente</colonnaKey>
+                <valoreKey>ENTE PROVA 1</valoreKey>
+            </datoKey>
+            <datoKey>
+                <colonnaKey>nm_strut</colonnaKey>
+                <valoreKey>STRUTTURA PROVA test on-line</valoreKey>
+            </datoKey>
+            <datoKey>
+                <colonnaKey>cd_registro_unita_doc</colonnaKey>
+                <valoreKey>PROTOCOLLO</valoreKey>
+            </datoKey>
+        </keyRecord>
+        <chiaviModificate>
+            <chiaveModificata>
+                <vecchioKeyRecord>
+                    <datoKey>
+                        <colonnaKey>nm_ente</colonnaKey>
+                        <valoreKey>ENTE PROVA 1</valoreKey>
+                    </datoKey>
+                </vecchioKeyRecord>
+                <nuovoKeyRecord>
+                    <datoKey>
+                        <colonnaKey>nm_ente</colonnaKey>
+                        <valoreKey>ENTE PROVA 1 X</valoreKey>
+                    </datoKey>
+                </nuovoKeyRecord>
+            </chiaveModificata>
+            <chiaveModificata>
+                <vecchioKeyRecord>
+                    <datoKey>
+                        <colonnaKey>nm_strut</colonnaKey>
+                        <valoreKey>STRUTTURA PROVA test on-line</valoreKey>
+                    </datoKey>
+                </vecchioKeyRecord>
+                <nuovoKeyRecord>
+                    <datoKey>
+                        <colonnaKey>nm_strut</colonnaKey>
+                        <valoreKey>STRUTTURA PROVA test on-line X</valoreKey>
+                    </datoKey>
+                </nuovoKeyRecord>
+            </chiaveModificata>
+            <chiaveModificata>
+                <vecchioKeyRecord>
+                    <datoKey>
+                        <colonnaKey>cd_registro_unita_doc</colonnaKey>
+                        <valoreKey>PROTOCOLLO</valoreKey>
+                    </datoKey>
+                </vecchioKeyRecord>
+                <nuovoKeyRecord>
+                    <datoKey>
+                        <colonnaKey>cd_registro_unita_doc</colonnaKey>
+                        <valoreKey>FATTURE X</valoreKey>
+                    </datoKey>
+                </nuovoKeyRecord>
+            </chiaveModificata>
+        </chiaviModificate>
+        <campiEliminati>
+            <campoEliminato>
+                <colonnaDato>ni_anni_conserv</colonnaDato>
+                <labelDato>Numero anni conservazione</labelDato>
+                <valoreDato>9999</valoreDato>
+            </campoEliminato>
+        </campiEliminati>
+        <campiImpostati>
+            <campoImpostato>
+                <colonnaDato>fl_crea_serie_NUOVO</colonnaDato>
+                <labelDato>Flag creazione serie NUOVO</labelDato>
+                <valoreDato>true</valoreDato>
+            </campoImpostato>
+        </campiImpostati>
+        <campiModificati>
+            <campoModificato>
+                <vecchioDatoRecord>
+                    <colonnaDato>ds_registro_unita_doc</colonnaDato>
+                    <labelDato>Descrizione registro Unità Doc</labelDato>
+                    <valoreDato>Regitro di protocollo</valoreDato>
+                </vecchioDatoRecord>
+                <nuovoDatoRecord>
+                    <colonnaDato>ds_registro_unita_doc</colonnaDato>
+                    <labelDato>Descrizione registro Unità Doc</labelDato>
+                    <valoreDato>FATTURE</valoreDato>
+                </nuovoDatoRecord>
+            </campoModificato>
+            <campoModificato>
+                <vecchioDatoRecord>
+                    <colonnaDato>fl_registro_fisc</colonnaDato>
+                    <labelDato>Flag registro fiscale</labelDato>
+                    <valoreDato>false</valoreDato>
+                </vecchioDatoRecord>
+                <nuovoDatoRecord>
+                    <colonnaDato>fl_registro_fisc</colonnaDato>
+                    <labelDato>Flag registro fiscale</labelDato>
+                    <valoreDato>true</valoreDato>
+                </nuovoDatoRecord>
+            </campoModificato>
+            <campoModificato>
+                <vecchioDatoRecord>
+                    <colonnaDato>fl_crea_serie</colonnaDato>
+                    <labelDato>Flag creazione serie</labelDato>
+                    <valoreDato>true</valoreDato>
+                </vecchioDatoRecord>
+                <nuovoDatoRecord>
+                    <colonnaDato>fl_crea_serie</colonnaDato>
+                    <labelDato>Flag creazione serie</labelDato>
+                    <valoreDato>false</valoreDato>
+                </nuovoDatoRecord>
+            </campoModificato>
+        </campiModificati>
+    </recordMaster>
+</risultato>

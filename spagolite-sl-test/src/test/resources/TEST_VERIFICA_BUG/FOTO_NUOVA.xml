@@ -1,0 +1,607 @@
+<fotoOggetto>
+    <versioneLogRecord>1.0</versioneLogRecord>
+    <recordMaster>
+        <tipoRecord>Tipo struttura documento</tipoRecord>
+        <idRecord>44</idRecord>
+        <keyRecord>
+            <datoKey>
+                <colonnaKey>nm_ambiente</colonnaKey>
+                <labelKey>Ambiente</labelKey>
+                <valoreKey>AMBIENTE PROVA 1</valoreKey>
+            </datoKey>
+            <datoKey>
+                <colonnaKey>nm_ente</colonnaKey>
+                <labelKey>Ente</labelKey>
+                <valoreKey>ENTE PROVA 1</valoreKey>
+            </datoKey>
+            <datoKey>
+                <colonnaKey>nm_strut</colonnaKey>
+                <labelKey>Struttura</labelKey>
+                <valoreKey>STRUTTURA PROVA test on-line</valoreKey>
+            </datoKey>
+            <datoKey>
+                <colonnaKey>nm_tipo_strut_doc</colonnaKey>
+                <labelKey>Tipo struttura documento</labelKey>
+                <valoreKey>PROTOCOLLO</valoreKey>
+            </datoKey>
+        </keyRecord>
+        <datoRecord>
+            <colonnaDato>ds_tipo_strut_doc</colonnaDato>
+            <labelDato>Descrizione tipo struttura documento</labelDato>
+            <valoreDato>Struttura per protocollo</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>dt_istituz</colonnaDato>
+            <labelDato>Data istituzione</labelDato>
+            <valoreDato>01/05/2011</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>dt_soppres</colonnaDato>
+            <labelDato>Data soppressione</labelDato>
+            <valoreDato>31/12/2444</valoreDato>
+        </datoRecord>
+    </recordMaster>
+    <recordChild>
+        <tipoRecord>Tipi componenti</tipoRecord>
+        <child>
+            <idRecord>46</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>nm_tipo_comp_doc</colonnaKey>
+                    <labelKey>Tipo componente</labelKey>
+                    <valoreKey>DOCUMENTO PROTOCOLLATO</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>ds_tipo_comp_doc</colonnaDato>
+                <labelDato>Descrizione</labelDato>
+                <valoreDato>Documento protocollato</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>tipo_uso_comp_doc</colonnaDato>
+                <labelDato>Descrizione</labelDato>
+                <valoreDato>CONTENUTO</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>dt_istituz</colonnaDato>
+                <labelDato>Data istituzione</labelDato>
+                <valoreDato>01/05/2011</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>dt_soppres</colonnaDato>
+                <labelDato>Data soppressione</labelDato>
+                <valoreDato>31/12/2444</valoreDato>
+            </datoRecord>
+            <recordChild>
+                <tipoRecord>XSD dati specifici</tipoRecord>
+                <child>
+                    <idRecord>10853</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>cd_versione_xsd</colonnaKey>
+                            <labelKey>Versione XSD</labelKey>
+                            <valoreKey>1.0</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <datoRecord>
+                        <colonnaDato>dt_istituz</colonnaDato>
+                        <labelDato>Data istituzione</labelDato>
+                        <valoreDato>20/01/2016</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>dt_soppres</colonnaDato>
+                        <labelDato>Data soppressione</labelDato>
+                        <valoreDato>25/01/2017</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ds_versione_xsd</colonnaDato>
+                        <labelDato>Descrizione versione</labelDato>
+                        <valoreDato>xx</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>bl_xsd</colonnaDato>
+                        <labelDato>Xsd</labelDato>
+                        <valoreDato><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="DatiSpecifici" type="DatiSpecificiType"/>
+  <xs:complexType name="DatiSpecificiType">
+    <xs:sequence>
+      <xs:element name="VersioneDatiSpecifici" type="xs:token"/>
+      <xs:element name="Destinatario" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+]]></valoreDato>
+                    </datoRecord>
+                    <recordChild>
+                        <tipoRecord>Attributi dati specifici</tipoRecord>
+                        <child>
+                            <idRecord>60001</idRecord>
+                            <keyRecord>
+                                <datoKey>
+                                    <colonnaKey>nm_attrib_dati_spec</colonnaKey>
+                                    <labelKey>Nome attributo</labelKey>
+                                    <valoreKey>Destinatario</valoreKey>
+                                </datoKey>
+                            </keyRecord>
+                            <datoRecord>
+                                <colonnaDato>ni_ord_attrib</colonnaDato>
+                                <labelDato>Numero ordine</labelDato>
+                                <valoreDato>1</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>ds_attrib_dati_spec</colonnaDato>
+                                <labelDato>Descrizione attributo</labelDato>
+                                <valoreDato>Destinatario1</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>ti_attrib_dati_spec</colonnaDato>
+                                <labelDato>Tipo dato</labelDato>
+                                <valoreDato>null</valoreDato>
+                            </datoRecord>
+                        </child>
+                    </recordChild>
+                </child>
+                <child>
+                    <idRecord>10854</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>cd_versione_xsd</colonnaKey>
+                            <labelKey>Versione XSD</labelKey>
+                            <valoreKey>2.0</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <datoRecord>
+                        <colonnaDato>dt_istituz</colonnaDato>
+                        <labelDato>Data istituzione</labelDato>
+                        <valoreDato>23/01/2017</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>dt_soppres</colonnaDato>
+                        <labelDato>Data soppressione</labelDato>
+                        <valoreDato>31/12/2444</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ds_versione_xsd</colonnaDato>
+                        <labelDato>Descrizione versione</labelDato>
+                        <valoreDato>null</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>bl_xsd</colonnaDato>
+                        <labelDato>Xsd</labelDato>
+                        <valoreDato><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="DatiSpecifici" type="DatiSpecificiType"/>
+  <xs:complexType name="DatiSpecificiType">
+    <xs:sequence>
+      <xs:element name="VersioneDatiSpecifici" type="xs:token"/>
+      <xs:element name="Destinatario" type="xs:string"/>
+	  <xs:element name="Oggetto" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+]]></valoreDato>
+                    </datoRecord>
+                    <recordChild>
+                        <tipoRecord>Attributi dati specifici</tipoRecord>
+                        <child>
+                            <idRecord>60001</idRecord>
+                            <keyRecord>
+                                <datoKey>
+                                    <colonnaKey>nm_attrib_dati_spec</colonnaKey>
+                                    <labelKey>Nome attributo</labelKey>
+                                    <valoreKey>Destinatario</valoreKey>
+                                </datoKey>
+                            </keyRecord>
+                            <datoRecord>
+                                <colonnaDato>ni_ord_attrib</colonnaDato>
+                                <labelDato>Numero ordine</labelDato>
+                                <valoreDato>1</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>ds_attrib_dati_spec</colonnaDato>
+                                <labelDato>Descrizione attributo</labelDato>
+                                <valoreDato>Destinatario1</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>ti_attrib_dati_spec</colonnaDato>
+                                <labelDato>Tipo dato</labelDato>
+                                <valoreDato>null</valoreDato>
+                            </datoRecord>
+                        </child>
+                        <child>
+                            <idRecord>60002</idRecord>
+                            <keyRecord>
+                                <datoKey>
+                                    <colonnaKey>nm_attrib_dati_spec</colonnaKey>
+                                    <labelKey>Nome attributo</labelKey>
+                                    <valoreKey>Oggetto</valoreKey>
+                                </datoKey>
+                            </keyRecord>
+                            <datoRecord>
+                                <colonnaDato>ni_ord_attrib</colonnaDato>
+                                <labelDato>Numero ordine</labelDato>
+                                <valoreDato>6</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>ds_attrib_dati_spec</colonnaDato>
+                                <labelDato>Descrizione attributo</labelDato>
+                                <valoreDato>Oggetto</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>ti_attrib_dati_spec</colonnaDato>
+                                <labelDato>Tipo dato</labelDato>
+                                <valoreDato>null</valoreDato>
+                            </datoRecord>
+                        </child>
+                    </recordChild>
+                </child>
+            </recordChild>
+            <recordChild>
+                <tipoRecord>Formati ammessi</tipoRecord>
+                <child>
+                    <idRecord>21582</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>CRL</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21583</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>CRL.DOCX</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21584</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>CSS</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21585</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>CSV</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21586</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>DOC</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21587</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>DOC.P7M</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21588</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>DOCX</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>35131</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>DOC_CORROTTO</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21589</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>EML</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21590</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>ENC</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21591</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>EXCEL</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21592</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>GZ</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21593</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>JPEG</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21594</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>LNK</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>35132</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>OFFICE_CORROTTO</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21595</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>P7M</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21596</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>PDF</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21597</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>PDF.P7M</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21598</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>RTF</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21599</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>RTF.M7M</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21600</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>TSR</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21601</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>UNKNOWN</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21602</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>WORD</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21603</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>XML</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21604</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>XML.P7M</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21605</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>XSL</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>21606</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>XSLT</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+            </recordChild>
+            <recordChild>
+                <tipoRecord>Tipi rappresentazione ammessi</tipoRecord>
+                <child>
+                    <idRecord>2150</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_tipo_rappr_comp</colonnaKey>
+                            <labelKey>Tipo rappresentazione</labelKey>
+                            <valoreKey>TrasformatoreXSLT_HTML</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>35009</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_tipo_rappr_comp</colonnaKey>
+                            <labelKey>Tipo rappresentazione</labelKey>
+                            <valoreKey>XML + XSLT</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+            </recordChild>
+        </child>
+        <child>
+            <idRecord>47</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>nm_tipo_comp_doc</colonnaKey>
+                    <labelKey>Tipo componente</labelKey>
+                    <valoreKey>SEGNATURA</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>ds_tipo_comp_doc</colonnaDato>
+                <labelDato>Descrizione</labelDato>
+                <valoreDato>Segnatura di protocollo</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>tipo_uso_comp_doc</colonnaDato>
+                <labelDato>Descrizione</labelDato>
+                <valoreDato>SEGNATURA</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>dt_istituz</colonnaDato>
+                <labelDato>Data istituzione</labelDato>
+                <valoreDato>01/05/2011</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>dt_soppres</colonnaDato>
+                <labelDato>Data soppressione</labelDato>
+                <valoreDato>31/12/2444</valoreDato>
+            </datoRecord>
+            <recordChild>
+                <tipoRecord>XSD dati specifici</tipoRecord>
+            </recordChild>
+            <recordChild>
+                <tipoRecord>Formati ammessi</tipoRecord>
+                <child>
+                    <idRecord>10059</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>PDF.P7M</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+                <child>
+                    <idRecord>73</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_formato_file_doc</colonnaKey>
+                            <labelKey>Formato versato</labelKey>
+                            <valoreKey>XML</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+            </recordChild>
+            <recordChild>
+                <tipoRecord>Tipi rappresentazione ammessi</tipoRecord>
+                <child>
+                    <idRecord>2281</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_tipo_rappr_comp</colonnaKey>
+                            <labelKey>Tipo rappresentazione</labelKey>
+                            <valoreKey>PROVA TIPO RAPPR COMPONENTE</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </child>
+            </recordChild>
+        </child>
+    </recordChild>
+</fotoOggetto>

@@ -1,0 +1,46 @@
+<fotoOggetto>
+    <versioneLogRecord>1.0</versioneLogRecord>
+    <recordMaster>
+        <tipoRecord>Registro</tipoRecord>
+        <idRecord>4</idRecord>
+    </recordMaster>
+    <recordChild>
+        <tipoRecord>RECORD_CHILD_1</tipoRecord>
+        <child>
+            <idRecord>1</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>nm_tipo_unita_doc_1</colonnaKey>
+                    <valoreKey>Fattura 1</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>dato_figlio_1</colonnaDato>
+                <labelDato>LABEL_DATO_figlio_1</labelDato>
+                <valoreDato>VALORE_DATO_figlio_1</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>dato_figlio_50</colonnaDato>
+                <labelDato>LABEL_DATO_figlio_50</labelDato>
+                <valoreDato>VALORE_DATO_figlio_50</valoreDato>
+            </datoRecord>
+        </child>
+    </recordChild>
+    <recordChild>
+        <tipoRecord>RECORD_CHILD_2</tipoRecord>
+        <child>
+            <idRecord>2</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>nm_tipo_unita_doc_2</colonnaKey>
+                    <valoreKey>Fattura 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>dato_figlio_2</colonnaDato>
+                <labelDato>LABEL_DATO_figlio_2</labelDato>
+                <valoreDato>VALORE_DATO_figlio_2</valoreDato>
+            </datoRecord>
+        </child>
+    </recordChild>
+</fotoOggetto>

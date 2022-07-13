@@ -1,0 +1,96 @@
+<risultato>
+    <recordMaster>
+        <tipoRecord>Registro</tipoRecord>
+        <idRecord>4</idRecord>
+    </recordMaster>
+    <datiRecordCancellati>
+        <recordFigli>
+            <path>RECORD_CHILD_1</path>
+            <pathId></pathId>
+            <recordCancellato>
+                <idRecord>1</idRecord>
+                <keyRecord>
+                    <datoKey>
+                        <colonnaKey>nm_tipo_unita_doc_1</colonnaKey>
+                        <valoreKey>Fattura 1</valoreKey>
+                    </datoKey>
+                </keyRecord>
+            </recordCancellato>
+            <recordCancellato>
+                <idRecord>2</idRecord>
+                <keyRecord>
+                    <datoKey>
+                        <colonnaKey>nm_tipo_unita_doc_2</colonnaKey>
+                        <valoreKey>Fattura 2</valoreKey>
+                    </datoKey>
+                </keyRecord>
+            </recordCancellato>
+            <recordCancellato>
+                <idRecord>3</idRecord>
+                <keyRecord>
+                    <datoKey>
+                        <colonnaKey>nm_tipo_unita_doc_3</colonnaKey>
+                        <valoreKey>Fattura 3</valoreKey>
+                    </datoKey>
+                </keyRecord>
+                <recordFigli>
+                    <path>RECORD_CHILD_1/RECORD_CHILD_1_1</path>
+                    <pathId>3</pathId>
+                    <recordCancellato>
+                        <idRecord>11111</idRecord>
+                        <keyRecord>
+                            <datoKey>
+                                <colonnaKey>nm_tipo_unita_doc_1_1</colonnaKey>
+                                <valoreKey>Fattura 1_1</valoreKey>
+                            </datoKey>
+                        </keyRecord>
+                    </recordCancellato>
+                </recordFigli>
+            </recordCancellato>
+        </recordFigli>
+        <recordFigli>
+            <path>RECORD_CHILD_2</path>
+            <pathId></pathId>
+            <recordCancellato>
+                <idRecord>22</idRecord>
+                <keyRecord>
+                    <datoKey>
+                        <colonnaKey>nm_tipo_unita_doc_22</colonnaKey>
+                        <valoreKey>Fattura 22</valoreKey>
+                    </datoKey>
+                </keyRecord>
+            </recordCancellato>
+            <recordFigli>
+                <path>RECORD_CHILD_2/RECORD_CHILD_2_2</path>
+                <pathId>33</pathId>
+                <recordCancellato>
+                    <idRecord>3344</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_tipo_unita_doc_3344</colonnaKey>
+                            <valoreKey>Fattura 3344</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                </recordCancellato>
+            </recordFigli>
+        </recordFigli>
+        <recordFigli>
+            <path>RECORD_CHILD_DATI_CANCELLATI</path>
+            <pathId></pathId>
+            <datiCancellati>
+                <idRecord>45</idRecord>
+                <keyRecord>
+                    <datoKey>
+                        <colonnaKey>nm_tipo_unita_doc_DATI_CANCELLATI</colonnaKey>
+                        <valoreKey>Fattura DATI_CANCELLATI</valoreKey>
+                    </datoKey>
+                </keyRecord>
+                <datoCancellato>
+                    <colonnaDato>dato_figlio_DATI_CANCELLATI_2</colonnaDato>
+                    <labelDato>LABEL_DATO_figlio_DATI_CANCELLATI_2</labelDato>
+                    <valoreDato>VALORE_DATO_figlio_DATI_CANCELLATI_2</valoreDato>
+                </datoCancellato>
+            </datiCancellati>
+        </recordFigli>
+    </datiRecordCancellati>
+</risultato>

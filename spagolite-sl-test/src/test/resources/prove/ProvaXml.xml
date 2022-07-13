@@ -1,0 +1,25 @@
+<risultato>
+    <datiRecordAggiunti>
+        <recordFigli>
+            <tipoRecord>RECORD_CHILD_1</tipoRecord>
+            <nuovoDato>dato 1</nuovoDato>
+        </recordFigli>
+        <recordFigli>
+            <tipoRecord>RECORD_CHILD_2</tipoRecord>
+            <nuovoDato>dato 2</nuovoDato>
+        </recordFigli>
+        <recordFigli>
+            <tipoRecord>RECORD_CHILD_3</tipoRecord>
+            <nuovoDato>dato 3</nuovoDato>
+        </recordFigli>
+    </datiRecordAggiunti>
+    <datiRecordCancellati>
+        <recordFigli>
+            <tipoRecord>RECORD_CHILD_3</tipoRecord>
+            <datoCancellato>dato 33333</datoCancellato>
+        </recordFigli>
+        <recordFigli>
+            <tipoRecord>RECORD_CHILD_4</tipoRecord>
+        </recordFigli>
+    </datiRecordCancellati>
+</risultato>

@@ -1,0 +1,7 @@
+/* Menu */
+#menuContainerOpen { display: none; }
+#menuContainerClose { display: none; }
+
+
+ /* Content */
+div#content {line-height:1.4em;  border-left:1px solid #132352;font-size: 90%; margin: 0px; padding: 0em 0em 1em 0.5em;  width: 100%; float: left;}

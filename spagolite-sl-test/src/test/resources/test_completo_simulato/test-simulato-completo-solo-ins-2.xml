@@ -1,0 +1,296 @@
+<fotoOggetto>
+    <versioneLogRecord>1.0</versioneLogRecord>
+    <recordMaster>
+        <tipoRecord>Registro</tipoRecord>
+        <idRecord>4</idRecord>
+        <keyRecord>
+            <datoKey>
+                <colonnaKey>colonna chiave 1</colonnaKey>
+                <valoreKey>valore colonna chiave 1</valoreKey>
+            </datoKey>
+        </keyRecord>
+        <datoRecord>
+            <colonnaDato>colonna dato record master 1</colonnaDato>
+            <labelDato>label dato record master 1</labelDato>
+            <valoreDato>valore dato record master 1</valoreDato>
+        </datoRecord>
+    </recordMaster>
+    <!--                            -->
+    <!-- CASI DI INSERIMENTO VARI   -->
+    <!--                            -->
+    <recordChild>
+        <tipoRecord>RECORD_CHILD_20</tipoRecord>
+        <child>
+            <idRecord>20</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>chiave record 20 posizione 1</colonnaKey>
+                    <valoreKey>valore chiave record 20 posizione 1</valoreKey>
+                </datoKey>
+                <datoKey>
+                    <colonnaKey>chiave record 20 posizione 2</colonnaKey>
+                    <valoreKey>valore chiave record 20 posizione 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 1 record 20</colonnaDato>
+                <labelDato>label dato 1 record 20</labelDato>
+                <valoreDato>valore dato 1 record 20</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 2 record 20</colonnaDato>
+                <labelDato>label dato 2 record 20</labelDato>
+                <valoreDato>valore dato 2 record 20</valoreDato>
+            </datoRecord>
+            <!-- Inserito un nuovo dato -->
+            <datoRecord>
+                <colonnaDato>nome colonna dato 3 record 20</colonnaDato>
+                <labelDato>label dato 3 record 20</labelDato>
+                <valoreDato>valore dato 3 record 20</valoreDato>
+            </datoRecord>
+        </child>
+    </recordChild>
+    <recordChild>
+        <tipoRecord>RECORD_CHILD_21</tipoRecord>
+        <child>
+            <idRecord>21</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>chiave record 21 posizione 1</colonnaKey>
+                    <valoreKey>valore chiave record 21 posizione 1</valoreKey>
+                </datoKey>
+                <datoKey>
+                    <colonnaKey>chiave record 21 posizione 2</colonnaKey>
+                    <valoreKey>valore chiave record 21 posizione 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 1 record 21</colonnaDato>
+                <labelDato>label dato 1 record 21</labelDato>
+                <valoreDato>valore dato 1 record 21</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 2 record 21</colonnaDato>
+                <labelDato>label dato 2 record 21</labelDato>
+                <valoreDato>valore dato 2 record 21</valoreDato>
+            </datoRecord>
+            <!-- Inserito un nuovo child -->
+            <recordChild>
+                <tipoRecord>RECORD_CHILD_21_1</tipoRecord>
+                <child>
+                    <idRecord>2111</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>chiave record 2111 posizione 1</colonnaKey>
+                            <valoreKey>valore chiave record 2111 posizione 1</valoreKey>
+                        </datoKey>
+                        <datoKey>
+                            <colonnaKey>chiave record 2111 posizione 2</colonnaKey>
+                            <valoreKey>valore chiave record 2111 posizione 2</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 1 record 2111</colonnaDato>
+                        <labelDato>label dato 1 record 2111</labelDato>
+                        <valoreDato>valore dato 1 record 2111</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 2 record 2111</colonnaDato>
+                        <labelDato>label dato 2 record 2111</labelDato>
+                        <valoreDato>valore dato 2 record 2111</valoreDato>
+                    </datoRecord>
+                </child>
+            </recordChild>
+        </child>
+        <!-- Inserito un nuovo record -->
+        <child>
+            <idRecord>211</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>chiave record 211 posizione 1</colonnaKey>
+                    <valoreKey>valore chiave record 211 posizione 1</valoreKey>
+                </datoKey>
+                <datoKey>
+                    <colonnaKey>chiave record 211 posizione 2</colonnaKey>
+                    <valoreKey>valore chiave record 211 posizione 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 1 record 211</colonnaDato>
+                <labelDato>label dato 1 record 211</labelDato>
+                <valoreDato>valore dato 1 record 211</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 2 record 211</colonnaDato>
+                <labelDato>label dato 2 record 211</labelDato>
+                <valoreDato>valore dato 2 record 211</valoreDato>
+            </datoRecord>
+        </child>
+    </recordChild>
+    <recordChild>
+        <tipoRecord>RECORD_CHILD_22</tipoRecord>
+        <child>
+            <idRecord>22</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>chiave record 22 posizione 1</colonnaKey>
+                    <valoreKey>valore chiave record 22 posizione 1</valoreKey>
+                </datoKey>
+                <datoKey>
+                    <colonnaKey>chiave record 22 posizione 2</colonnaKey>
+                    <valoreKey>valore chiave record 22 posizione 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 1 record 22</colonnaDato>
+                <labelDato>label dato 1 record 22</labelDato>
+                <valoreDato>valore dato 1 record 22</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 2 record 22</colonnaDato>
+                <labelDato>label dato 2 record 22</labelDato>
+                <valoreDato>valore dato 2 record 22</valoreDato>
+            </datoRecord>
+            <recordChild>
+                <tipoRecord>RECORD_CHILD_22_1</tipoRecord>
+                <child>
+                    <idRecord>221</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>chiave record 221 posizione 1</colonnaKey>
+                            <valoreKey>valore chiave record 221 posizione 1</valoreKey>
+                        </datoKey>
+                        <datoKey>
+                            <colonnaKey>chiave record 221 posizione 2</colonnaKey>
+                            <valoreKey>valore chiave record 221 posizione 2</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 1 record 221</colonnaDato>
+                        <labelDato>label dato 1 record 221</labelDato>
+                        <valoreDato>valore dato 1 record 221</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 2 record 221</colonnaDato>
+                        <labelDato>label dato 2 record 221</labelDato>
+                        <valoreDato>valore dato 2 record 221</valoreDato>
+                    </datoRecord>
+                    <!-- Inserito un nuovo dato -->
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 3 record 221</colonnaDato>
+                        <labelDato>label dato 3 record 221</labelDato>
+                        <valoreDato>valore dato 3 record 221</valoreDato>
+                    </datoRecord>
+                </child>
+                <!-- Inserito un nuovo record -->
+                <child>
+                    <idRecord>222</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>chiave record 222 posizione 1</colonnaKey>
+                            <valoreKey>valore chiave record 222 posizione 1</valoreKey>
+                        </datoKey>
+                        <datoKey>
+                            <colonnaKey>chiave record 222 posizione 2</colonnaKey>
+                            <valoreKey>valore chiave record 222 posizione 2</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 1 record 222</colonnaDato>
+                        <labelDato>label dato 1 record 222</labelDato>
+                        <valoreDato>valore dato 1 record 222</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 2 record 222</colonnaDato>
+                        <labelDato>label dato 2 record 222</labelDato>
+                        <valoreDato>valore dato 2 record 222</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 3 record 222</colonnaDato>
+                        <labelDato>label dato 3 record 222</labelDato>
+                        <valoreDato>valore dato 3 record 222</valoreDato>
+                    </datoRecord>
+                </child>
+            </recordChild>
+        </child>
+    </recordChild>
+    <!-- inserito un nuovo child di child con dentro l'inserimento di un solo dato -->
+    <recordChild>
+        <tipoRecord>RECORD_CHILD_23</tipoRecord>
+        <child>
+            <idRecord>23</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>chiave record 22 posizione 1</colonnaKey>
+                    <valoreKey>valore chiave record 22 posizione 1</valoreKey>
+                </datoKey>
+                <datoKey>
+                    <colonnaKey>chiave record 22 posizione 2</colonnaKey>
+                    <valoreKey>valore chiave record 22 posizione 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <recordChild>
+                <tipoRecord>RECORD_CHILD_23_1</tipoRecord>
+                <child>
+                    <idRecord>231</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>chiave record 231 posizione 1</colonnaKey>
+                            <valoreKey>valore chiave record 221 posizione 1</valoreKey>
+                        </datoKey>
+                        <datoKey>
+                            <colonnaKey>chiave record 231 posizione 2</colonnaKey>
+                            <valoreKey>valore chiave record 221 posizione 2</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 1 record 221</colonnaDato>
+                        <labelDato>label dato 1 record 221</labelDato>
+                        <valoreDato>valore dato 1 record 221</valoreDato>
+                    </datoRecord>
+                </child>
+            </recordChild>
+        </child>
+    </recordChild>
+    <!-- inserito un nuovo child di child con dentro l'inserimento di un solo record -->
+    <recordChild>
+        <tipoRecord>RECORD_CHILD_24</tipoRecord>
+        <child>
+            <idRecord>24</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>chiave record 24 posizione 1</colonnaKey>
+                    <valoreKey>valore chiave record 24 posizione 1</valoreKey>
+                </datoKey>
+                <datoKey>
+                    <colonnaKey>chiave record 24 posizione 2</colonnaKey>
+                    <valoreKey>valore chiave record 24 posizione 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <recordChild>
+                <tipoRecord>RECORD_CHILD_24_1</tipoRecord>
+                <child>
+                    <idRecord>241</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>chiave record 241 posizione 1</colonnaKey>
+                            <valoreKey>valore chiave record 241 posizione 1</valoreKey>
+                        </datoKey>
+                        <datoKey>
+                            <colonnaKey>chiave record 241 posizione 2</colonnaKey>
+                            <valoreKey>valore chiave record 241 posizione 2</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 1 record 241</colonnaDato>
+                        <labelDato>label dato 1 record 241</labelDato>
+                        <valoreDato>valore dato 1 record 241</valoreDato>
+                    </datoRecord>
+                </child>
+            </recordChild>
+        </child>
+    </recordChild>
+    <!--                                 -->
+    <!-- FINE CASI DI INSERIMENTO VARI   -->
+    <!--                                 -->
+</fotoOggetto>

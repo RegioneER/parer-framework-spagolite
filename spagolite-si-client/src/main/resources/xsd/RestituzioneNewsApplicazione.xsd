@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.2.0-1 (tags/2.2.0u1-7139; 2012-06-02T10:55:19+0000) JAXWS-RI/2.2.6-2 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://ws.saceriam.eng.it/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.saceriam.eng.it/">
+
+<xs:element name="restituzioneNewsApplicazione" type="tns:restituzioneNewsApplicazione"/>
+
+<xs:element name="restituzioneNewsApplicazioneResponse" type="tns:restituzioneNewsApplicazioneResponse"/>
+
+<xs:complexType name="restituzioneNewsApplicazione">
+<xs:sequence>
+<xs:element name="nmApplic" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="restituzioneNewsApplicazioneResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:restituzioneNewsApplicazioneRisposta" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="restituzioneNewsApplicazioneRisposta">
+<xs:sequence>
+<xs:element name="cdErr" type="xs:string" minOccurs="0"/>
+<xs:element name="cdEsito" type="tns:esitoServizio" minOccurs="0"/>
+<xs:element name="cdPsw" type="xs:string" minOccurs="0"/>
+<xs:element name="dsErr" type="xs:string" minOccurs="0"/>
+<xs:element name="listaNews" type="tns:listaNews" minOccurs="0"/>
+<xs:element name="nmApplic" type="xs:string" minOccurs="0"/>
+<xs:element name="nmUserId" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaNews">
+<xs:sequence>
+<xs:element name="news" type="tns:news" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="news">
+<xs:sequence>
+<xs:element name="dlTesto" type="xs:string" minOccurs="0"/>
+<xs:element name="dsOggetto" type="xs:string" minOccurs="0"/>
+<xs:element name="dtFinPubblic" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="dtIniPubblic" type="xs:dateTime" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="esitoServizio">
+<xs:restriction base="xs:string">
+<xs:enumeration value="OK"/>
+<xs:enumeration value="KO"/>
+<xs:enumeration value="WARN"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>

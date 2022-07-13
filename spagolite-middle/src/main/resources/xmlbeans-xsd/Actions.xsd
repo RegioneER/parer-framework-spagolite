@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.spagoLite.eng.it/spagoLite/action" targetNamespace="http://www.spagoLite.eng.it/spagoLite/action" elementFormDefault="qualified">
+  <complexType name="action">
+    <attribute name="name" type="string" use="required"></attribute>
+    <attribute name="class" type="string" use="required"></attribute>
+    <attribute name="scope" use="required">
+      <simpleType>
+        <restriction base="string">
+          <enumeration value="REQUEST"></enumeration>
+        </restriction>
+      </simpleType>
+    </attribute>
+  </complexType>
+  <element name="actions" type="tns:actions"></element>
+  <complexType name="actions">
+    <sequence>
+      <element name="action" type="tns:action" maxOccurs="unbounded" minOccurs="1"></element>
+    </sequence>
+  </complexType>
+</schema>

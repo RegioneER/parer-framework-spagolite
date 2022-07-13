@@ -1,0 +1,55 @@
+<fotoOggetto>
+    <versioneLogRecord>1.0</versioneLogRecord>
+    <recordMaster>
+        <tipoRecord>Registro</tipoRecord>
+        <idRecord>4</idRecord>
+    </recordMaster>
+    <recordChild>
+        <tipoRecord>RECORD_CHILD_2</tipoRecord>
+        <child>
+            <idRecord>2</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>nm_tipo_unita_doc_2</colonnaKey>
+                    <valoreKey>Fattura 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>dato_figlio_2</colonnaDato>
+                <labelDato>LABEL_DATO_figlio_2</labelDato>
+                <valoreDato>VALORE_DATO_figlio_2</valoreDato>
+            </datoRecord>
+        </child>
+        <child>
+            <idRecord>33</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>nm_tipo_unita_doc_33</colonnaKey>
+                    <valoreKey>Fattura 33</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>dato_figlio_33</colonnaDato>
+                <labelDato>LABEL_DATO_figlio_33</labelDato>
+                <valoreDato>VALORE_DATO_figlio_3</valoreDato>
+            </datoRecord>
+        </child>
+    </recordChild>
+    <recordChild>
+        <tipoRecord>RECORD_CHILD_DATI_CANCELLATI</tipoRecord>
+        <child>
+            <idRecord>45</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>nm_tipo_unita_doc_DATI_CANCELLATI</colonnaKey>
+                    <valoreKey>Fattura DATI_CANCELLATI</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>dato_figlio_DATI_CANCELLATI</colonnaDato>
+                <labelDato>LABEL_DATO_figlio_DATI_CANCELLATI</labelDato>
+                <valoreDato>VALORE_DATO_figlio_DATI_CANCELLATI</valoreDato>
+            </datoRecord>
+        </child>
+    </recordChild>
+</fotoOggetto>

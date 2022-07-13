@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.spagoLite.eng.it/spagoLite/publishers" targetNamespace="http://www.spagoLite.eng.it/spagoLite/publishers" elementFormDefault="qualified">
+
+    <element name="publishers" type="tns:publishers"></element>
+    
+    <complexType name="publisher">
+      <sequence>
+        <element name="rendering" type="tns:rendering"></element>
+      </sequence>
+      <attribute name="name" type="string" use="required"></attribute>
+    </complexType>
+
+    <complexType name="publishers">
+      <sequence maxOccurs="unbounded" minOccurs="1">
+        <element name="publisher" type="tns:publisher"></element>
+      </sequence>
+    </complexType>
+
+    <complexType name="rendering">
+      <sequence>
+        <element name="resources" type="tns:resources"></element>
+      </sequence>
+      <attribute name="channel" use="required">
+        <simpleType>
+          <restriction base="string">
+            <enumeration value="HTTP"></enumeration>
+          </restriction>
+        </simpleType>
+      </attribute>
+      <attribute name="type" use="required">
+        <simpleType>
+          <restriction base="string">
+            <enumeration value="JSP"></enumeration>
+          </restriction>
+        </simpleType>
+      </attribute>
+      <attribute name="mode" use="required">
+        <simpleType>
+          <restriction base="string">
+            <enumeration value="FORWARD"></enumeration>
+            <enumeration value="SENDREDIRECT"></enumeration>
+            <enumeration value="REDIRECT"></enumeration>
+          </restriction>
+        </simpleType>
+      </attribute>
+    </complexType>
+
+    <complexType name="resources">
+      <sequence>
+        <element name="item" type="tns:item" maxOccurs="unbounded" minOccurs="1"></element>
+      </sequence>
+    </complexType>
+
+    <complexType name="item">
+      <attribute name="prog" type="int" use="required"></attribute>
+      <attribute name="resource" type="string" use="required"></attribute>
+    </complexType>
+</schema>

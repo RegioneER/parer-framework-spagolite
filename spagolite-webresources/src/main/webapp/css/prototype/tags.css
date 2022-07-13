@@ -1,0 +1,7 @@
+.MultipleSelectBox { border: 1px solid #aaa;  height: 6em;  list-style: none;  margin: 0;  overflow: auto;  padding: 1px;  width: 45%;  background-color: white;  margin-top: 0.3em;}
+.MultipleSelectBox.selecting {  border: 1px solid black;}
+.MultipleSelectBox li {  border: 1px dotted transparent;  cursor: pointer;}
+.MultipleSelectBox li.disabled {  color: gray;  font-style: italic;}
+.MultipleSelectBox li.selected {  background-color: #004900;  color: white;}
+.MultipleSelectBox li.selecting {  border: 1px dotted black;}
+.MultiSelectTextArea{  width: 17em; height: 6em; overflow :auto; background-color: white; margin-top: 0.3em;}

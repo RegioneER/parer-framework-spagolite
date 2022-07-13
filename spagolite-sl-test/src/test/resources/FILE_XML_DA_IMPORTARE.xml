@@ -1,0 +1,310 @@
+<fotoOggetto>
+    <versioneLogRecord>1.0</versioneLogRecord>
+    <recordMaster>
+        <tipoRecord>Versatore</tipoRecord>
+        <idRecord>1201</idRecord>
+        <keyRecord>
+            <datoKey>
+                <colonnaKey>nm_ambiente_vers</colonnaKey>
+                <labelKey>Ambiente</labelKey>
+                <valoreKey>PARER_TEST</valoreKey>
+            </datoKey>
+            <datoKey>
+                <colonnaKey>nm_vers</colonnaKey>
+                <labelKey>Versatore</labelKey>
+                <valoreKey>NOME_VERSATORE_NUOVO</valoreKey>
+            </datoKey>
+        </keyRecord>
+        <datoRecord>
+            <colonnaDato>ds_vers</colonnaDato>
+            <labelDato>Descrizione versatore</labelDato>
+            <valoreDato>DESCRIZIONE_VERSATORE_NUOVO</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>ds_path_input_ftp</colonnaDato>
+            <labelDato>Path di input dell&apos;area ftp</labelDato>
+            <valoreDato>PATH_INPUT_FTP_NUOVO</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>ds_path_output_ftp</colonnaDato>
+            <labelDato>Path di output dell&apos;area ftp</labelDato>
+            <valoreDato>PATH_OUTPUT_FTP_NUOVO</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>ds_path_trasf</colonnaDato>
+            <labelDato>Path per i file ottenuti da trasformazione</labelDato>
+            <valoreDato>PATH_TRASF_NUOVO</valoreDato>
+        </datoRecord>
+    </recordMaster>
+    <recordChild>
+        <tipoRecord>Tipo oggetto versabile</tipoRecord>
+        <child>
+            <idRecord>1560</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>nm_tipo_object</colonnaKey>
+                    <labelKey>Tipo oggetto versabile</labelKey>
+                    <valoreKey>ujhjhyyjyjy</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>ds_tipo_object</colonnaDato>
+                <labelDato>Descrizione tipo oggetto versabile</labelDato>
+                <valoreDato>jyjyj DESC NUOVA</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>ti_vers_file</colonnaDato>
+                <labelDato>Tipo di versamento</labelDato>
+                <valoreDato>DA_TRASFORMARE</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>ti_calc_key_unita_doc</colonnaDato>
+                <labelDato>Calcolo chiave unità documentaria</labelDato>
+                <valoreDato>null</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>fl_contr_hash</colonnaDato>
+                <labelDato>Controllo hash</labelDato>
+                <valoreDato>1</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>cd_registro_unita_doc_sacer</colonnaDato>
+                <labelDato>Registro unità documentaria sacer</labelDato>
+                <valoreDato>null</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>nm_tipo_unita_doc_sacer</colonnaDato>
+                <labelDato>Tipo unità documentaria sacer</labelDato>
+                <valoreDato>null</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>fl_forza_accettazione_sacer</colonnaDato>
+                <labelDato>Forza accettazione</labelDato>
+                <valoreDato>null</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>fl_forza_conservazione</colonnaDato>
+                <labelDato>Forza conservazione</labelDato>
+                <valoreDato>null</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>fl_forza_collegamento</colonnaDato>
+                <labelDato>Forza collegamento</labelDato>
+                <valoreDato>null</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>ti_conservazione</colonnaDato>
+                <labelDato>Tipo conservazione</labelDato>
+                <valoreDato>null</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>cd_trasf</colonnaDato>
+                <labelDato>Trasformazione</labelDato>
+                <valoreDato>CSE Pre 2015 for real</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>ds_reg_exp_cd_vers</colonnaDato>
+                <labelDato>Regular expression</labelDato>
+                <valoreDato>jyjy</valoreDato>
+            </datoRecord>
+            <recordChild>
+                <tipoRecord>XSD dati specifici per tipo oggetto</tipoRecord>
+                <child>
+                    <idRecord>72561127</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>cd_versione_xsd</colonnaKey>
+                            <labelKey>Versione XSD</labelKey>
+                            <valoreKey>1</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <datoRecord>
+                        <colonnaDato>dt_versione_xsd</colonnaDato>
+                        <labelDato>Data versione xsd</labelDato>
+                        <valoreDato>21/09/2017</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>bl_xsd</colonnaDato>
+                        <labelDato>Xsd</labelDato>
+                        <valoreDato><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="DatiSpecifici" type="DatiSpecificiType"/>
+  <xs:complexType name="DatiSpecificiType">
+    <xs:sequence>
+      <xs:element name="VersioneDatiSpecifici" type="xs:token"/>
+      <xs:element name="Destinatario" type="xs:string"/>
+	  <xs:element name="Oggetto" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+]]></valoreDato>
+                    </datoRecord>
+                    <recordChild>
+                        <tipoRecord>Attributi dati specifici per tipo oggetto</tipoRecord>
+                        <child>
+                            <idRecord>60174541</idRecord>
+                            <keyRecord>
+                                <datoKey>
+                                    <colonnaKey>nm_attrib_dati_spec</colonnaKey>
+                                    <labelKey>Nome attributo</labelKey>
+                                    <valoreKey>Destinatario</valoreKey>
+                                </datoKey>
+                            </keyRecord>
+                            <datoRecord>
+                                <colonnaDato>ni_ord</colonnaDato>
+                                <labelDato>Numero ordine</labelDato>
+                                <valoreDato>10</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>fl_filtro_diario</colonnaDato>
+                                <labelDato>Usabile come filtro di ricerca sul diario</labelDato>
+                                <valoreDato>true</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>fl_vers_sacer</colonnaDato>
+                                <labelDato>Versato a Sacer</labelDato>
+                                <valoreDato>true</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>cd_datatype_xsd</colonnaDato>
+                                <labelDato>Nome datatype xsd</labelDato>
+                                <valoreDato>string</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>nm_col_dati_spec</colonnaDato>
+                                <labelDato>Nome colonna database</labelDato>
+                                <valoreDato>null</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>ti_datatype_col</colonnaDato>
+                                <labelDato>Tipo dato</labelDato>
+                                <valoreDato>ALFANUMERICO</valoreDato>
+                            </datoRecord>
+                        </child>
+                        <child>
+                            <idRecord>91074542</idRecord>
+                            <keyRecord>
+                                <datoKey>
+                                    <colonnaKey>nm_attrib_dati_spec</colonnaKey>
+                                    <labelKey>Nome attributo</labelKey>
+                                    <valoreKey>Oggetto</valoreKey>
+                                </datoKey>
+                            </keyRecord>
+                            <datoRecord>
+                                <colonnaDato>ni_ord</colonnaDato>
+                                <labelDato>Numero ordine</labelDato>
+                                <valoreDato>20</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>fl_filtro_diario</colonnaDato>
+                                <labelDato>Usabile come filtro di ricerca sul diario</labelDato>
+                                <valoreDato>true</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>fl_vers_sacer</colonnaDato>
+                                <labelDato>Versato a Sacer</labelDato>
+                                <valoreDato>true</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>cd_datatype_xsd</colonnaDato>
+                                <labelDato>Nome datatype xsd</labelDato>
+                                <valoreDato>string</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>nm_col_dati_spec</colonnaDato>
+                                <labelDato>Nome colonna database</labelDato>
+                                <valoreDato>null</valoreDato>
+                            </datoRecord>
+                            <datoRecord>
+                                <colonnaDato>ti_datatype_col</colonnaDato>
+                                <labelDato>Tipo dato</labelDato>
+                                <valoreDato>ALFANUMERICO</valoreDato>
+                            </datoRecord>
+                        </child>
+                    </recordChild>
+                </child>
+            </recordChild>
+            <recordChild>
+                <tipoRecord>Tipi file per tipo oggetto</tipoRecord>
+                <child>
+                    <idRecord>1099</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>nm_tipo_file_object</colonnaKey>
+                            <labelKey>Tipo file</labelKey>
+                            <valoreKey>hghgfhfghgf</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <datoRecord>
+                        <colonnaDato>ds_tipo_file_object</colonnaDato>
+                        <labelDato>Descrizione</labelDato>
+                        <valoreDato>e23e2e2e</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>fl_vers_sacer_asinc</colonnaDato>
+                        <labelDato>Versamento a Sacer</labelDato>
+                        <valoreDato>0</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>nm_tipo_doc_sacer</colonnaDato>
+                        <labelDato>Tipo documento in Sacer</labelDato>
+                        <valoreDato>null</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ti_doc_sacer</colonnaDato>
+                        <labelDato>Elemento in Sacer</labelDato>
+                        <valoreDato>null</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>nm_tipo_strut_doc_sacer</colonnaDato>
+                        <labelDato>Tipo struttura documento in Sacer</labelDato>
+                        <valoreDato>null</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>nm_tipo_comp_doc_sacer</colonnaDato>
+                        <labelDato>Tipo componente in Sacer</labelDato>
+                        <valoreDato>null</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>nm_fmt_file_vers_sacer</colonnaDato>
+                        <labelDato>Formato versato in Sacer</labelDato>
+                        <valoreDato>null</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>fl_ver_firma_fmt_sacer</colonnaDato>
+                        <labelDato>Verifica firma e formato in Sacer</labelDato>
+                        <valoreDato></valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>nm_fmt_file_calc_sacer</colonnaDato>
+                        <labelDato>Formato calcolato in Sacer</labelDato>
+                        <valoreDato>null</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ds_fmt_rappr_esteso_calc_sacer</colonnaDato>
+                        <labelDato>Formato di rappresentazione esteso in Sacer</labelDato>
+                        <valoreDato>null</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ds_fmt_rappr_calc_sacer</colonnaDato>
+                        <labelDato>Formato di rappresentazione in Sacer</labelDato>
+                        <valoreDato>null</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>fl_calc_hash_sacer</colonnaDato>
+                        <labelDato>Calcolo hash in Sacer</labelDato>
+                        <valoreDato></valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ti_calc_hash_sacer</colonnaDato>
+                        <labelDato>Modalità di calcolo hash in Preingest</labelDato>
+                        <valoreDato>NOTIFICATO</valoreDato>
+                    </datoRecord>
+                    <recordChild>
+                        <tipoRecord>XSD dati specifici per tipo file</tipoRecord>
+                    </recordChild>
+                </child>
+            </recordChild>
+        </child>
+    </recordChild>
+</fotoOggetto>

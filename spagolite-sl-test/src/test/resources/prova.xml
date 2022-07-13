@@ -1,0 +1,14 @@
+<risultato>
+    <recordinseriti>
+        <recordInserito>
+            <tipoRecord>tipo 1</tipoRecord>
+            <nuovoRecord>record nuovo 1</nuovoRecord>
+        </recordInserito>
+    </recordinseriti>
+    <recordcancellati>
+        <recordcancellato>
+            <tipoRecord>tipo 2</tipoRecord>
+            <vecchioRecord>record vecchio 1</vecchioRecord>
+        </recordcancellato>
+    </recordcancellati>
+</risultato>

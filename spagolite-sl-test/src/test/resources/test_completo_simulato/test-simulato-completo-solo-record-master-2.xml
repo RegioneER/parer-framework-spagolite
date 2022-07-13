@@ -1,0 +1,62 @@
+<fotoOggetto>
+    <versioneLogRecord>1.0</versioneLogRecord>
+    <recordMaster>
+        <tipoRecord>Registro</tipoRecord>
+        <idRecord>4</idRecord>
+        <keyRecord>
+            <datoKey>
+                <colonnaKey>colonna chiave 1</colonnaKey>
+                <valoreKey>valore chiave 1</valoreKey>
+            </datoKey>
+            <!-- modificato il valore di questa chiave -->
+            <datoKey>
+                <colonnaKey>colonna chiave 2</colonnaKey>
+                <valoreKey>valore chiave 2 MODIFICATO</valoreKey>
+            </datoKey>
+            <datoKey>
+                <colonnaKey>colonna chiave 3</colonnaKey>
+                <valoreKey>valore chiave 3</valoreKey>
+            </datoKey>
+            <!-- modificato il valore di questa chiave -->
+            <datoKey>
+                <colonnaKey>colonna chiave 4</colonnaKey>
+                <valoreKey>valore chiave 4 MODIFICATO</valoreKey>
+            </datoKey>
+        </keyRecord>
+        <datoRecord>
+            <colonnaDato>colonna dato record 1</colonnaDato>
+            <labelDato>label dato record 1</labelDato>
+            <valoreDato>valore dato record 1</valoreDato>
+        </datoRecord>
+        <!-- modificato il valore di questo dato -->
+        <datoRecord>
+            <colonnaDato>colonna dato record 2</colonnaDato>
+            <labelDato>label dato record 2 MODIFICATO</labelDato>
+            <valoreDato>valore dato record 2 MODIFICATO</valoreDato>
+        </datoRecord>
+        <!-- eliminato il dato 'colonna dato record 3' -->
+        <!-- modificato il valore di questo dato -->
+        <datoRecord>
+            <colonnaDato>colonna dato record 4</colonnaDato>
+            <labelDato>label dato record 4 MODIFICATO</labelDato>
+            <valoreDato>valore dato record 4 MODIFICATO</valoreDato>
+        </datoRecord>
+        <!-- eliminato il dato 'colonna dato record 5' -->
+        <datoRecord>
+            <colonnaDato>colonna dato record 5</colonnaDato>
+            <labelDato>label dato record 5</labelDato>
+            <valoreDato>valore dato record 5</valoreDato>
+        </datoRecord>
+        <!-- inseriti due nuovi dati -->
+        <datoRecord>
+            <colonnaDato>colonna dato record INSERITO 1</colonnaDato>
+            <labelDato>label dato record INSERITO 1</labelDato>
+            <valoreDato>valore dato record INSERITO 1</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>colonna dato record INSERITO 2</colonnaDato>
+            <labelDato>label dato record INSERITO 2</labelDato>
+            <valoreDato>valore dato record INSERITO 2</valoreDato>
+        </datoRecord>
+    </recordMaster>
+</fotoOggetto>

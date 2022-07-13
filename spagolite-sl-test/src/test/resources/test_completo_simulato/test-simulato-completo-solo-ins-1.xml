@@ -1,0 +1,135 @@
+<fotoOggetto>
+    <versioneLogRecord>1.0</versioneLogRecord>
+    <recordMaster>
+        <tipoRecord>Registro</tipoRecord>
+        <idRecord>4</idRecord>
+        <keyRecord>
+            <datoKey>
+                <colonnaKey>colonna chiave 1</colonnaKey>
+                <valoreKey>valore colonna chiave 1</valoreKey>
+            </datoKey>
+        </keyRecord>
+        <datoRecord>
+            <colonnaDato>colonna dato record master 1</colonnaDato>
+            <labelDato>label dato record master 1</labelDato>
+            <valoreDato>valore dato record master 1</valoreDato>
+        </datoRecord>
+    </recordMaster>
+    <!--                            -->
+    <!-- CASI DI INSERIMENTO VARI   -->
+    <!--                            -->
+    <recordChild>
+        <tipoRecord>RECORD_CHILD_20</tipoRecord>
+        <child>
+            <idRecord>20</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>chiave record 20 posizione 1</colonnaKey>
+                    <valoreKey>valore chiave record 20 posizione 1</valoreKey>
+                </datoKey>
+                <datoKey>
+                    <colonnaKey>chiave record 20 posizione 2</colonnaKey>
+                    <valoreKey>valore chiave record 20 posizione 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 1 record 20</colonnaDato>
+                <labelDato>label dato 1 record 20</labelDato>
+                <valoreDato>valore dato 1 record 20</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 2 record 20</colonnaDato>
+                <labelDato>label dato 2 record 20</labelDato>
+                <valoreDato>valore dato 2 record 20</valoreDato>
+            </datoRecord>
+            <!-- Inseriro' un nuovo dato -->
+        </child>
+    </recordChild>
+    <recordChild>
+        <tipoRecord>RECORD_CHILD_21</tipoRecord>
+        <child>
+            <idRecord>21</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>chiave record 21 posizione 1</colonnaKey>
+                    <valoreKey>valore chiave record 21 posizione 1</valoreKey>
+                </datoKey>
+                <datoKey>
+                    <colonnaKey>chiave record 21 posizione 2</colonnaKey>
+                    <valoreKey>valore chiave record 21 posizione 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 1 record 21</colonnaDato>
+                <labelDato>label dato 1 record 21</labelDato>
+                <valoreDato>valore dato 1 record 21</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 2 record 21</colonnaDato>
+                <labelDato>label dato 2 record 21</labelDato>
+                <valoreDato>valore dato 2 record 21</valoreDato>
+            </datoRecord>
+            <!-- Inseriro' un nuovo child -->
+        </child>
+        <!-- Inseriro' un nuovo record -->
+    </recordChild>
+    <recordChild>
+        <tipoRecord>RECORD_CHILD_22</tipoRecord>
+        <child>
+            <idRecord>22</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>chiave record 22 posizione 1</colonnaKey>
+                    <valoreKey>valore chiave record 22 posizione 1</valoreKey>
+                </datoKey>
+                <datoKey>
+                    <colonnaKey>chiave record 22 posizione 2</colonnaKey>
+                    <valoreKey>valore chiave record 22 posizione 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 1 record 22</colonnaDato>
+                <labelDato>label dato 1 record 22</labelDato>
+                <valoreDato>valore dato 1 record 22</valoreDato>
+            </datoRecord>
+            <datoRecord>
+                <colonnaDato>nome colonna dato 2 record 22</colonnaDato>
+                <labelDato>label dato 2 record 22</labelDato>
+                <valoreDato>valore dato 2 record 22</valoreDato>
+            </datoRecord>
+            <recordChild>
+                <tipoRecord>RECORD_CHILD_22_1</tipoRecord>
+                <child>
+                    <idRecord>221</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>chiave record 221 posizione 1</colonnaKey>
+                            <valoreKey>valore chiave record 221 posizione 1</valoreKey>
+                        </datoKey>
+                        <datoKey>
+                            <colonnaKey>chiave record 221 posizione 2</colonnaKey>
+                            <valoreKey>valore chiave record 221 posizione 2</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 1 record 221</colonnaDato>
+                        <labelDato>label dato 1 record 221</labelDato>
+                        <valoreDato>valore dato 1 record 221</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>nome colonna dato 2 record 221</colonnaDato>
+                        <labelDato>label dato 2 record 221</labelDato>
+                        <valoreDato>valore dato 2 record 221</valoreDato>
+                    </datoRecord>
+                    <!-- Inseriro' un nuovo dato -->
+                </child>
+                <!-- Inseriro' un nuovo record -->
+            </recordChild>
+        </child>
+    </recordChild>
+    <!-- inseriro' un nuovo child di child con dentro l'inserimento di un solo dato -->
+    <!-- inseriro' un nuovo child di child con dentro l'inserimento di un solo record -->
+    <!--                                 -->
+    <!-- FINE CASI DI INSERIMENTO VARI   -->
+    <!--                                 -->
+</fotoOggetto>

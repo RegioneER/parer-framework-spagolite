@@ -1,0 +1,67 @@
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+         
+         
+    <context:annotation-config/>
+    <context:component-scan base-package="ACTIONS_PACKAGE_NAME"/>
+    
+    <!-- Template per chiamate rest con impostazione del timeout -->
+    <bean class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory"
+              p:readTimeout="10000"
+              p:connectTimeout="10000" />
+        </constructor-arg>
+    </bean>
+    <!-- Template da inserire nelle applicazioni che usano SpagoLite e che utilizzano -->
+    <!-- l' Help On line. Deve implementare l'interfaccia IApplicationBasePropertiesSevice -->
+    <!--
+        <bean class="package.ApplicationBasePropertiesSeviceImpl">
+        </bean>
+    -->
+        
+    <bean name="paginator" class="it.eng.paginator.ejb.PaginatorImpl"/>
+    <bean name="/View.html" class="it.eng.spagoLite.actions.RedirectAction" scope="prototype"/>
+
+    <bean name="/Login.html" class="CLASS_NAME" scope="prototype"/>
+    
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix">
+            <value>/jsp/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+    </bean>
+
+</beans> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

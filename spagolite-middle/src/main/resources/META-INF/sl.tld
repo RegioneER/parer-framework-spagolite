@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE taglib
+        PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+        "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+<taglib>
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>1.1</jsp-version>
+	<short-name>sl</short-name>
+	<uri>http://parer.eng.it/spagoLite</uri>
+	<description>Spago Lite Tags</description>
+
+
+	<tag>
+		<name>header</name>
+		<tag-class>it.eng.spagoLite.tag.form.pageLayout.HeaderTag</tag-class>
+		<description>Effettua il render dell'intestazione</description>
+		<attribute>
+			<name>showHomeBtn</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showChangeOrganizationBtn</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>changeOrganizationBtnDescription</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>description</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>content</name>
+		<tag-class>it.eng.spagoLite.tag.form.pageLayout.ContentTag</tag-class>
+		<description>Effettua il render del content</description>
+		<attribute>
+			<name>multipartForm</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>form</name>
+		<tag-class>it.eng.spagoLite.tag.form.pageLayout.SimpleFormTag</tag-class>
+		<description>Effettua il render di una form simple o multipart</description>
+		<attribute>
+			<name>multipartForm</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>html</name>
+		<tag-class>it.eng.spagoLite.tag.HtmlTag</tag-class>
+		<description>
+            <![CDATA[
+            <p><strong>
+                Render  (X)HTML Element
+        </strong></p>
+        		<p>
+        			possible accepted values are:
+        		<ul>
+        			<li> html4t for HTML 4.01 Transitional
+				   	<li> html4f for HTML 4.01 Frameset
+				   	<li> html4s for HTML 4.01 Strict
+				   	<li> xhtml1t for XHTML 1.0 Transitional
+				   	<li> xhtml1f for XHTML 1.0 Frameset
+				   	<li> xhtml1s for XHTML 1.0 Strict
+				   	<li> xhtml11 for XHTML 1.1
+        		</ul>
+				</p>
+                ]]>
+		</description>
+		<attribute>
+			<name>docType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>head</name>
+		<tag-class>it.eng.spagoLite.tag.HeadTag</tag-class>
+		<description>
+            <![CDATA[
+            <p>Render the head tag with every include</p>
+
+                ]]>
+		</description>
+		<attribute>
+			<name>title</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>body</name>
+		<tag-class>it.eng.spagoLite.tag.BodyTag</tag-class>
+		<description>
+            <![CDATA[
+            <p>Render the body Tag</p>
+                ]]>
+		</description>
+
+
+	</tag>
+
+
+	<tag>
+		<name>menu</name>
+		<tag-class>it.eng.spagoLite.tag.MenuTag</tag-class>
+		<body-content>empty</body-content>
+		<description>Visualizza il menu</description>
+		<attribute>
+			<name>showChangePasswordBtn</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>contentTitle</name>
+		<tag-class>it.eng.spagoLite.tag.ContentTitleTag</tag-class>
+		<body-content>empty</body-content>
+		<description>
+            <![CDATA[
+            <p>Render the content Title Tag</p>
+                ]]>
+		</description>
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showHelpBtn</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>codiceMenu</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>codiceOrganizzazione</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>footer</name>
+		<tag-class>it.eng.spagoLite.tag.FooterTag</tag-class>
+		<description>
+            <![CDATA[
+            <p>Render the footer Tag</p>
+                ]]>
+		</description>
+
+	</tag>
+
+	<!-- Gestisce il fine linea per evitare errori di impaginazione -->
+	<tag>
+		<name>newLine</name>
+		<tag-class>it.eng.spagoLite.tag.NewLineTag</tag-class>
+		<body-content>empty</body-content>
+		<description>Esegue il rendering di una riga vuota</description>
+		<attribute>
+			<name>skipLine</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+	</tag>
+
+
+	<tag>
+		<name>userinfo</name>
+		<tag-class>it.eng.spagoLite.tag.UserInfoTag</tag-class>
+		<body-content>empty</body-content>
+		<description>Esegue il rendering delle informazioni dell'utente
+			loggato</description>
+
+	</tag>
+
+	<tag>
+		<name>pulsantiera</name>
+		<tag-class>it.eng.spagoLite.tag.PulsantieraTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>Esegue il rendering delle informazioni dell'utente
+			loggato</description>
+
+	</tag>
+
+</taglib>

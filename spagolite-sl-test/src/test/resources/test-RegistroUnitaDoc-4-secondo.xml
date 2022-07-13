@@ -1,0 +1,240 @@
+<fotoOggetto>
+    <versioneLogRecord>1.0</versioneLogRecord>
+    <recordMaster>
+        <tipoRecord>Registro</tipoRecord>
+        <idRecord>26</idRecord>
+        <keyRecord>
+            <datoKey>
+                <colonnaKey>nm_ambiente</colonnaKey>
+                <valoreKey>AMBIENTE PROVA 1</valoreKey>
+            </datoKey>
+            <datoKey>
+                <colonnaKey>nm_ente</colonnaKey>
+                <valoreKey>ENTE PROVA 1</valoreKey>
+            </datoKey>
+            <datoKey>
+                <colonnaKey>nm_strut</colonnaKey>
+                <valoreKey>STRUTTURA PROVA test on-line</valoreKey>
+            </datoKey>
+            <datoKey>
+                <colonnaKey>cd_registro_unita_doc</colonnaKey>
+                <valoreKey>FATTURE X</valoreKey>
+            </datoKey>
+        </keyRecord>
+        <datoRecord>
+            <colonnaDato>ds_registro_unita_doc</colonnaDato>
+            <labelDato>Descrizione registro Unità Doc</labelDato>
+            <valoreDato>FATTURE</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>fl_registro_fisc</colonnaDato>
+            <labelDato>Flag registro fiscale</labelDato>
+            <valoreDato>true</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>dt_istituz</colonnaDato>
+            <labelDato>Data istituzione</labelDato>
+            <valoreDato>2013-03-12</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>dt_soppres</colonnaDato>
+            <labelDato>Data soppressione</labelDato>
+            <valoreDato>2444-12-31</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>fl_crea_serie</colonnaDato>
+            <labelDato>Flag creazione serie</labelDato>
+            <valoreDato>false</valoreDato>
+        </datoRecord>
+        <datoRecord>
+            <colonnaDato>fl_crea_serie_NUOVO</colonnaDato>
+            <labelDato>Flag creazione serie NUOVO</labelDato>
+            <valoreDato>true</valoreDato>
+        </datoRecord>
+    </recordMaster>
+    <recordChild>
+        <tipoRecord>Tipi unità doc ammessi</tipoRecord>
+        <child>
+            <idRecord>4572</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>nm_tipo_unita_doc</colonnaKey>
+                    <valoreKey>Fattura</valoreKey>
+                </datoKey>
+            </keyRecord>
+        </child>
+        <child>
+            <idRecord>4724</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>nm_tipo_unita_doc</colonnaKey>
+                    <valoreKey>FatturaAttiva 2</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>colonna_1</colonnaDato>
+                <labelDato>Label Colonna 1</labelDato>
+                <valoreDato>valore colonna 1</valoreDato>
+            </datoRecord>
+            <recordChild>
+                <tipoRecord>Tipi unità doc ammessi INNESTATO</tipoRecord>
+                <child>
+                    <idRecord>472589</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>colonna_chiave INNESTATA</colonnaKey>
+                            <valoreKey>FatturaAttiva 3 INNESTATA</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <datoRecord>
+                        <colonnaDato>colonna_1_fattura_3INNESTATA</colonnaDato>
+                        <labelDato>Label Colonna 1 fattura 3INNESTATA</labelDato>
+                        <valoreDato>valore colonna 1 fattura 3INNESTATA</valoreDato>
+                    </datoRecord>
+                </child>
+            </recordChild>            
+        </child>
+        <child>
+            <idRecord>4725</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>colonna_chiave</colonnaKey>
+                    <valoreKey>FatturaAttiva 3</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>colonna_1_fattura_3</colonnaDato>
+                <labelDato>Label Colonna 1 fattura 3</labelDato>
+                <valoreDato>valore colonna 1 fattura 3</valoreDato>
+            </datoRecord>
+        </child>
+    </recordChild>
+    <recordChild>
+        <tipoRecord>Anni validità registro</tipoRecord>
+        <child>
+            <idRecord>1</idRecord>
+            <keyRecord>
+                <datoKey>
+                    <colonnaKey>aa_min_registro_unita_doc</colonnaKey>
+                    <valoreKey>2011</valoreKey>
+                </datoKey>
+            </keyRecord>
+            <datoRecord>
+                <colonnaDato>aa_max_registro_unita_doc</colonnaDato>
+                <labelDato>Anno estremo superiore</labelDato>
+                <valoreDato/>
+            </datoRecord>
+            <recordChild>
+                <tipoRecord>Parti registro</tipoRecord>
+                <child>
+                    <idRecord>228</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>ni_parte_numero_registro</colonnaKey>
+                            <valoreKey>1</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <datoRecord>
+                        <colonnaDato>ds_parte_numero_registro</colonnaDato>
+                        <labelDato>Descrizione parte numero registro</labelDato>
+                        <valoreDato>GENERICO</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>nm_parte_numero_registro</colonnaDato>
+                        <labelDato>Nome parte numero registro</labelDato>
+                        <valoreDato>GENERICO</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ti_char_parte</colonnaDato>
+                        <labelDato>Char parte</labelDato>
+                        <valoreDato>NUMERICO_GENERICO</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ni_min_char_parte</colonnaDato>
+                        <labelDato>Numero minimo char parte</labelDato>
+                        <valoreDato>1</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ni_max_char_parte</colonnaDato>
+                        <labelDato>Numero massimo char parte</labelDato>
+                        <valoreDato/>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ti_pad_sx_parte</colonnaDato>
+                        <labelDato>Tipo pad sx parte</labelDato>
+                        <valoreDato>RIEMPI_0_A_SX_LESS12</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ti_char_sep</colonnaDato>
+                        <labelDato>Tipo carattere separatore</labelDato>
+                        <valoreDato>/</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>dl_valori_parte</colonnaDato>
+                        <labelDato>Descrizione valori parte</labelDato>
+                        <valoreDato>GENERICO</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ti_parte</colonnaDato>
+                        <labelDato>Tipo parte</labelDato>
+                        <valoreDato/>
+                    </datoRecord>
+                </child>
+                <child>
+                    <idRecord>666</idRecord>
+                    <keyRecord>
+                        <datoKey>
+                            <colonnaKey>ni_parte_numero_registro</colonnaKey>
+                            <valoreKey>666</valoreKey>
+                        </datoKey>
+                    </keyRecord>
+                    <datoRecord>
+                        <colonnaDato>ds_parte_numero_registro</colonnaDato>
+                        <labelDato>Descrizione parte numero registro</labelDato>
+                        <valoreDato>GENERICO666</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>nm_parte_numero_registro</colonnaDato>
+                        <labelDato>Nome parte numero registro</labelDato>
+                        <valoreDato>GENERICO666</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ti_char_parte</colonnaDato>
+                        <labelDato>Char parte</labelDato>
+                        <valoreDato>NUMERICO_GENERICO666</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ni_min_char_parte</colonnaDato>
+                        <labelDato>Numero minimo char parte</labelDato>
+                        <valoreDato>1-666</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ni_max_char_parte</colonnaDato>
+                        <labelDato>Numero massimo char parte 666</labelDato>
+                        <valoreDato/>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ti_pad_sx_parte</colonnaDato>
+                        <labelDato>Tipo pad sx parte</labelDato>
+                        <valoreDato>RIEMPI_0_A_SX_LESS12 666</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ti_char_sep</colonnaDato>
+                        <labelDato>Tipo carattere separatore</labelDato>
+                        <valoreDato>/666</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>dl_valori_parte</colonnaDato>
+                        <labelDato>Descrizione valori parte</labelDato>
+                        <valoreDato>GENERICO 666</valoreDato>
+                    </datoRecord>
+                    <datoRecord>
+                        <colonnaDato>ti_parte</colonnaDato>
+                        <labelDato>Tipo parte</labelDato>
+                        <valoreDato/>
+                    </datoRecord>
+                </child>
+            </recordChild>
+        </child>
+    </recordChild>
+</fotoOggetto>

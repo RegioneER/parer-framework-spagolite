@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>spagofat-si-util</artifactId>
+    <name>Spagolite integration - util</name>
+    <packaging>jar</packaging>
+
+    <description>
+        Questo progetto si occupa degli aspetti relativi al recupero dei ruoli degli utenti dopo che l'idp ha consentito l'accesso all'applicazione.
+        Si divide in una parte client ed in una server (che espone anche il classifier "classes").
+        Questo progetto è la parte che si interfaccia con spagolite attraverso la dipendenza
+        dall'uber pom ed è correlato al progetto saceriam-integration-jboss
+    </description>
+    <parent>
+        <groupId>it.eng.parer</groupId>
+        <artifactId>spagofat</artifactId>
+        <version>4.1.27-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>it.eng.parer</groupId>
+            <artifactId>spagofat-middle</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>it.eng.parer</groupId>
+            <artifactId>spagofat-si-client</artifactId>
+        </dependency>
+        <!--        
+        <dependency> 
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+        </dependency> 
+        -->        
+        <dependency> 
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency> 
+        
+    </dependencies>
+</project>

@@ -1,0 +1,41 @@
+/* Chosen PARER custom */
+.chosen-container {
+	font-family: verdana, arial, tahoma, sans-serif;
+	font-size: 10px;
+/* 	font-weight: bold; */
+	position: relative;
+	display: inline-block;
+	width: 100% !important;;
+	height: 1%;
+	zoom: 1;
+	*display: inline;
+	margin-right: 2px !important;
+}
+
+.chosen-container-multi  .chosen-choices {
+	background-color: #fff;
+	border: 1px solid #E0E0E0;
+	height: auto;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+	background: url(chosen-sprite.png) right top no-repeat;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice .search-choice-close:hover {
+	background-position: initial;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice {
+	background-color: #676F7A;
+	background-image: initial;
+	box-shadow: initial;
+	color: #fff;
+	border: initial;
+}
+
+.chosen-container-active .chosen-choices {
+	border: 1px solid #E0E0E0;
+	box-shadow: initial;
+}
+
