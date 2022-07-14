@@ -11,7 +11,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>parer-pom</artifactId>
-        <version>3.0.16</version>
+        <version>3.0.17</version>
     </parent>
     
     <scm>
@@ -23,16 +23,11 @@
         <repository>
             <id>github</id>
             <url>https://maven.pkg.github.com/RegioneER/parer.sacer.parent</url>            
-        </repository>
-        <repository>
-            <id>jakarta.oss.sonatype.org</id>
-            <name>Jakarta OSS Sonatype Staging</name>
-            <url>https://jakarta.oss.sonatype.org/content/repositories/staging</url>
-        </repository>
-		<repository>
+       </repository>
+       <repository>
 			<id>pentaho</id>
 			<url>https://public.nexus.pentaho.org/content/groups/omni</url>
-		</repository>        
+		</repository>
 		<repository>
 			<id>central</id>
 			<url>https://repo1.maven.org/maven2</url>
