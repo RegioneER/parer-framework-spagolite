@@ -5,6 +5,7 @@ import it.eng.spagoCore.util.JavaScript;
 import it.eng.spagoLite.db.base.BaseRowInterface;
 import it.eng.spagoLite.form.Component;
 import it.eng.spagoLite.form.fields.impl.Input;
+import it.eng.spagoLite.form.fields.impl.Link;
 import it.eng.spagoLite.message.Message;
 import it.eng.spagoLite.message.Message.MessageLevel;
 import it.eng.spagoLite.util.Casting.Casting;
@@ -47,7 +48,7 @@ public abstract class SingleValueField<O extends Object> extends Field {
 
     public String getHtmlValue() throws EMFError {
         String htmlValue = JavaScript.stringToHTMLString(getValue());
-        if (this instanceof Input && StringUtils.isNotBlank(htmlValue) && check()) {
+        if ((this instanceof Input || this instanceof Link) && StringUtils.isNotBlank(htmlValue) && check()) {
             if (getType().equals(Type.INTEGER) || getType().equals(Type.DECIMAL)) {
                 DecimalFormat decimalFormatter;
                 DecimalFormatSymbols itSymbols = new DecimalFormatSymbols(Locale.ITALIAN);
@@ -59,8 +60,13 @@ public abstract class SingleValueField<O extends Object> extends Field {
                     decimalFormatter = new DecimalFormat(Format.DECIMAL_FORMAT, itSymbols);
                 }
                 if (isViewMode()) {
-                    Input<O> input = (Input<O>) this;
-                    decimalFormatter.setGroupingUsed(input.isGroupingDecimal());
+                    boolean groupingDecimal = true;
+                    if (this instanceof Input) {
+                        Input<O> input = (Input<O>) this;
+                        groupingDecimal = input.isGroupingDecimal();
+                    }
+                    // Input<O> input = (Input<O>) this;
+                    decimalFormatter.setGroupingUsed(groupingDecimal);
                     decimalFormatter.setGroupingSize(3);
                 }
                 NumberFormat format = NumberFormat.getInstance(Locale.ITALY);

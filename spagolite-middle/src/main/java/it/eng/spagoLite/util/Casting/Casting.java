@@ -119,7 +119,10 @@ public class Casting {
             return null;
         }
 
-        if (!NumberUtils.isDigits(strInteger) || !NumberUtils.isNumber(strInteger)) {
+        // Rimosso isDigits per poter gestire il "-" dei numeri negativi che altrimenti non verrebbero considerati
+        // sostituito isNumber in quanto deprecato
+        // if (!NumberUtils.isDigits(strInteger) || !NumberUtils.isNumber(strInteger)) {
+        if (!NumberUtils.isCreatable(strInteger)) {
             throw new EMFError(EMFError.WARNING, "Errore nella conversione di formato");
         } else {
             return NumberUtils.createBigDecimal(strInteger);
