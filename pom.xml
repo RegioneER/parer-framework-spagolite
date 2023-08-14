@@ -22,19 +22,7 @@
         <repository>
             <id>github</id>
             <url>https://maven.pkg.github.com/RegioneER/parer.sacer.parent</url>            
-       </repository>
-       <repository>
-			<id>pentaho</id>
-			<url>https://public.nexus.pentaho.org/content/groups/omni</url>
-		</repository>
-        <repository>
-            <id>rhga</id>
-            <url>https://maven.repository.redhat.com/ga</url>
-        </repository>
-		<repository>
-			<id>central</id>
-			<url>https://repo1.maven.org/maven2</url>
-		</repository>              
+       </repository>     
 	</repositories>
     
     <properties>
