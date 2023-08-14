@@ -17,9 +17,15 @@ public class ContentTag extends BaseSpagoLiteTag {
 
     protected boolean multipartForm = false;
 
+    protected String action;
+
     @Override
     public int doStartTag() throws JspException {
         String actionUrl = SessionManager.getCurrentActionUrl(pageContext.getSession());
+
+        if (StringUtils.isNotBlank(action)) {
+            actionUrl = action;
+        }
 
         writeln("");
         writeln(" <div id=\"content\">");
@@ -66,5 +72,13 @@ public class ContentTag extends BaseSpagoLiteTag {
         return CsrfHelper.hasTokenFromRequest((HttpServletRequest) this.pageContext.getRequest())
                 ? "?" + CsrfHelper.getCsrfQueryStringToken((HttpServletRequest) this.pageContext.getRequest())
                 : StringUtils.EMPTY;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 }

@@ -56,7 +56,7 @@ public class Format {
         DAY_FORMAT_MINUS_YY("dd-MM-yy"), DAY_FORMAT("dd/MM/yyyy"), WEEK_FORMAT("EEE dd MMM"), MONTH_FORMAT("MM/yyyy"),
         YEAR_FORMAT("yyyy"), TIME_FORMAT("HH:mm");
 
-        private String format;
+        private final String format;
 
         DATE_FORMAT(String format) {
             this.format = format;
@@ -332,6 +332,7 @@ public class Format {
      * Formatta la data secondo il formato WEEK
      *
      * @param date
+     *            timestamp in input
      * 
      * @return la data formattata
      */

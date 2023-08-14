@@ -1,6 +1,5 @@
 package it.eng.spagoLite.tag;
 
-import it.eng.spagoCore.configuration.ConfigSingleton;
 import it.eng.spagoLite.SessionManager;
 
 import it.eng.spagoLite.security.IUser;
@@ -20,26 +19,10 @@ public class ContentTitleTag extends BaseSpagoLiteTag {
      */
     private String codiceMenu;
     private boolean showHelpBtn = true;
-    static final String helpServerURI;
-
-    static {
-        helpServerURI = ConfigSingleton.getHelpServerURI();
-    }
 
     @Override
     public int doStartTag() throws JspException {
 
-        /*
-         * VECCHIA GESTIONE
-         * 
-         * writeln("<div class=\"contentTitle\">"); writeln("<h2> "+ getCompleteTitle()+"</h2>");
-         * if(ConfigSingleton.getEnableHelpOnline() && showHelpBtn){ String href = ""; if(!helpServerURI.equals("")){
-         * href = helpServerURI + SessionManager.getLastPublisher(pageContext.getSession()) + ".html"; }else{ href =
-         * getContextPath() + SessionManager.getLastPublisher(pageContext.getSession()) + ".html"; }
-         * writeln("<a title=\"Vai alla pagina di help online\" href=\""+href+"\">");
-         * writeln("<img src=\""+getContextPath()+"/img/help.png\" title=\"Help online\" alt=\"Help online\" />");
-         * writeln("</a>"); } writeln("</div>"); return EVAL_PAGE;
-         */
         /*
          * NUOVA GESTIONE
          */
@@ -87,15 +70,6 @@ public class ContentTitleTag extends BaseSpagoLiteTag {
                         writeln("</a>");
                     }
                 }
-                /*
-                 * VECCHIA GESTIONE if (ConfigSingleton.getEnableHelpOnline() && showHelpBtn) { String href = ""; if
-                 * (!helpServerURI.equals("")) { href = helpServerURI +
-                 * SessionManager.getLastPublisher(pageContext.getSession()) + ".html"; } else { href = getContextPath()
-                 * + SessionManager.getLastPublisher(pageContext.getSession()) + ".html"; }
-                 * writeln("<a title=\"Vai alla pagina di help online\" href=\"" + href + "\">"); writeln("<img src=\""
-                 * + getContextPath() + "/img/help.png\" title=\"Help online\" alt=\"Help online\" />");
-                 * writeln("</a>"); }
-                 */
             }
         }
         writeln("</div>");

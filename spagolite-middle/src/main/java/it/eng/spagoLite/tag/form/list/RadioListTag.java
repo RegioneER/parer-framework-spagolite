@@ -134,8 +134,8 @@ public class RadioListTag extends AbstractListTag {
                             String checked = (isChecked) ? " checked=\"checked\" " : "";
                             writeln("   <td class=\"" + className + "\"><input type=\"radio\" " + checked + " name=\""
                                     + getName() + "_radio\" value=\"" + getName() + i + "\"/></td>");
-                            writeln("   <td class=\"" + className + "\">"
-                                    + getLink("", ListAction.NE_DETTAGLIO_DELETE, DELETE_IMG, "", "", i, false, true)
+                            writeln("   <td class=\"" + className + "\">" + getLink("",
+                                    ListAction.NE_DETTAGLIO_CONFIRM_DELETE, DELETE_IMG, "", "", i, false, true)
                                     + "</td>"); // cancellazione dell'elemento
                         }
 

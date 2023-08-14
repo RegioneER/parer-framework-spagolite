@@ -1,12 +1,13 @@
 package it.eng.parer.sacerlog.slite.gen.viewbean;
 
+import java.math.BigDecimal;
+
 import it.eng.parer.sacerlog.viewEntity.LogVUsrAbilOrganiz;
+import it.eng.parer.sacerlog.viewEntity.LogVUsrAbilOrganizId;
 import it.eng.spagoLite.db.base.BaseRowInterface;
 import it.eng.spagoLite.db.base.JEEBaseRowInterface;
 import it.eng.spagoLite.db.base.row.BaseRow;
 import it.eng.spagoLite.db.oracle.bean.column.TableDescriptor;
-
-import java.math.BigDecimal;
 
 /**
  * RowBean per la tabella Usr_V_Abil_Organiz
@@ -152,13 +153,13 @@ public class LogVUsrAbilOrganizRowBean extends BaseRow implements BaseRowInterfa
     @Override
     public void entityToRowBean(Object obj) {
         LogVUsrAbilOrganiz entity = (LogVUsrAbilOrganiz) obj;
-        this.setIdUserIam(entity.getIdUserIam());
+        this.setIdUserIam(entity.getLogVUsrAbilOrganizId().getIdUserIam());
         this.setFlAttivo(entity.getFlAttivo());
         this.setIdUsoUserApplic(entity.getIdUsoUserApplic());
         this.setIdApplic(entity.getIdApplic());
         this.setNmApplic(entity.getNmApplic());
         this.setIdDichAbilOrganiz(entity.getIdDichAbilOrganiz());
-        this.setIdOrganizIam(entity.getIdOrganizIam());
+        this.setIdOrganizIam(entity.getLogVUsrAbilOrganizId().getIdOrganizIam());
         this.setIdOrganizApplic(entity.getIdOrganizApplic());
         this.setIdTipoOrganiz(entity.getIdTipoOrganiz());
         this.setNmTipoOrganiz(entity.getNmTipoOrganiz());
@@ -172,13 +173,14 @@ public class LogVUsrAbilOrganizRowBean extends BaseRow implements BaseRowInterfa
     @Override
     public LogVUsrAbilOrganiz rowBeanToEntity() {
         LogVUsrAbilOrganiz entity = new LogVUsrAbilOrganiz();
-        entity.setIdUserIam(this.getIdUserIam());
+        entity.setLogVUsrAbilOrganizId(new LogVUsrAbilOrganizId());
+        entity.getLogVUsrAbilOrganizId().setIdUserIam(this.getIdUserIam());
         entity.setFlAttivo(this.getFlAttivo());
         entity.setIdUsoUserApplic(this.getIdUsoUserApplic());
         entity.setIdApplic(this.getIdApplic());
         entity.setNmApplic(this.getNmApplic());
         entity.setIdDichAbilOrganiz(this.getIdDichAbilOrganiz());
-        entity.setIdOrganizIam(this.getIdOrganizIam());
+        entity.getLogVUsrAbilOrganizId().setIdOrganizIam(this.getIdOrganizIam());
         entity.setIdOrganizApplic(this.getIdOrganizApplic());
         entity.setIdTipoOrganiz(this.getIdTipoOrganiz());
         entity.setNmTipoOrganiz(this.getNmTipoOrganiz());

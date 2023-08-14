@@ -1,16 +1,30 @@
 package it.eng.parer.sacerlog.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Calendar;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the LOG_CHIAVE_ACCESSO_EVENTO database table.
  *
  */
 @Entity
-@Table(name = "SACER_LOG.LOG_CHIAVE_ACCESSO_EVENTO")
+@Table(schema = "SACER_LOG", name = "LOG_CHIAVE_ACCESSO_EVENTO")
 @NamedQueries({ @NamedQuery(name = "LogChiaveAccessoEvento.findAll", query = "SELECT l FROM LogChiaveAccessoEvento l"),
         @NamedQuery(name = "LogChiaveAccessoEvento.deleteAll", query = "DELETE FROM LogChiaveAccessoEvento") })
 public class LogChiaveAccessoEvento implements Serializable {
@@ -27,7 +41,7 @@ public class LogChiaveAccessoEvento implements Serializable {
     }
 
     @Id
-    @SequenceGenerator(name = "LOG_CHIAVE_ACCESSO_EVENTO_IDCHIAVEACCESSOEVENTO_GENERATOR", sequenceName = "SACER_LOG.SLOG_CHIAVE_ACCESSO_EVENTO", allocationSize = 1)
+    @SequenceGenerator(name = "LOG_CHIAVE_ACCESSO_EVENTO_IDCHIAVEACCESSOEVENTO_GENERATOR", schema = "SACER_LOG", sequenceName = "SLOG_CHIAVE_ACCESSO_EVENTO", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_CHIAVE_ACCESSO_EVENTO_IDCHIAVEACCESSOEVENTO_GENERATOR")
     @Column(name = "ID_CHIAVE_ACCESSO_EVENTO")
     public long getIdChiaveAccessoEvento() {

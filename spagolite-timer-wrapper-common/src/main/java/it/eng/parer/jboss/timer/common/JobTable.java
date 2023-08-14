@@ -33,7 +33,7 @@ public interface JobTable extends Serializable {
      *
      * @return id job
      */
-    long getIdJob();
+    Long getIdJob();
 
     /**
      * Primary key della tabella - setter.
@@ -41,7 +41,7 @@ public interface JobTable extends Serializable {
      * @param idJob
      *            id job
      */
-    void setIdJob(long idJob);
+    void setIdJob(Long idJob);
 
     /**
      * Nome job - getter. Chiave alternativa della tabella. Deve essere unico.

@@ -9,7 +9,7 @@ import javax.persistence.*;
  *
  */
 @Entity
-@Table(name = "SACER_LOG.LOG_EVENTO")
+@Table(schema="SACER_LOG" , name="LOG_EVENTO")
 @NamedQueries({
     @NamedQuery(name = "LogEventoPippo.findAllIds", query = "SELECT l.idEvento FROM LogEventoPippo l"),
     @NamedQuery(name = "LogEventoPippo.deleteAll", query = "DELETE FROM LogEventoPippo")
@@ -31,7 +31,7 @@ public class LogEventoPippo implements Serializable {
     }
 
     @Id
-    @SequenceGenerator(name = "LOG_EVENTO_IDEVENTO_GENERATOR", sequenceName = "SACER_LOG.SLOG_EVENTO", allocationSize = 1)
+    @SequenceGenerator(name = "LOG_EVENTO_IDEVENTO_GENERATOR", schema="SACER_LOG" , sequenceName="SLOG_EVENTO", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_EVENTO_IDEVENTO_GENERATOR")
     @Column(name = "ID_EVENTO")
     public long getIdEvento() {

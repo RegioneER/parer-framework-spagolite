@@ -1,34 +1,42 @@
 package it.eng.spagoLite.tag;
 
+import static it.eng.spagoCore.configuration.ConfigProperties.URIProperty.CSS_OVER_RELATIVE;
+import static it.eng.spagoCore.configuration.ConfigProperties.URIProperty.FAV_ICON_RELATIVE;
+
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.TITOLO_APPLICATIVO;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
+
+import org.apache.commons.lang3.StringUtils;
+
 import it.eng.spagoCore.configuration.ConfigSingleton;
 import it.eng.spagoCore.util.JavaScript;
 import it.eng.spagoLite.security.CsrfHelper;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
-import org.apache.commons.lang3.StringUtils;
 
 public class HeadTag extends BaseSpagoLiteTag {
 
-    private static final String IMG_FAVICON = "/img/regione/favicon.ico";
-
     private static final long serialVersionUID = 1L;
+
+    private final ConfigSingleton configSingleton = ConfigSingleton.getInstance();
+
     private String title;
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    /* in caso di pagina inclusa in un'altra e non si vogliono ri-caricare le risorse js per evitare problemi */
+    private boolean excludeStdJs = false;// default value
+    /* creato con stessa logica dei js */
+    private boolean excludeStdCss = false;// default value
 
     @Override
     public int doStartTag() throws JspException {
         String contextPath = this.getContextPath();
         writeln(" <head>");
         writeln(includeTitle(contextPath));
-        writeln(includeCss(contextPath));
-        writeln(includeJs(contextPath));
+        if (!isExcludeStdCss()) {
+            writeln(includeCss(contextPath));
+        }
+        if (!isExcludeStdJs()) {
+            writeln(includeJs(contextPath));
+        }
 
         return EVAL_BODY_INCLUDE;
 
@@ -50,8 +58,8 @@ public class HeadTag extends BaseSpagoLiteTag {
 
         css.append("  <link href=\"" + contextPath + "/css/slForms.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
 
-        css.append(
-                "  <link href=\"" + contextPath + "/css/slForms-over.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
+        css.append("  <link href=\"" + contextPath + configSingleton.getStringValue(CSS_OVER_RELATIVE.name())
+                + "\" rel=\"stylesheet\" type=\"text/css\" />\n");
 
         css.append("  <link href=\"" + contextPath
                 + "/css/slScreen.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
@@ -80,22 +88,22 @@ public class HeadTag extends BaseSpagoLiteTag {
          * 
          */
         css.append("  <link href=\"" + contextPath
-                + "/webjars/font-awesome/4.7.0/css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
+                + "/webjars/font-awesome/6.4.0/css/all.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
 
         css.append("  <link href=\"" + contextPath
-                + "/webjars/highlightjs/9.15.10/styles/magula.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
+                + "/webjars/highlightjs/11.5.0/styles/magula.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
 
         /**
          * Custom
          */
         css.append("  <link href=\"" + contextPath
-                + "/css/custom/jquery-ui-custom/1.12.1/jquery-ui.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
+                + "/css/custom/jquery-ui-custom/1.13.2/jquery-ui.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
 
         css.append("  <link href=\"" + contextPath
                 + "/css/custom/chosen/1.8.7/chosen.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
 
         css.append("  <link href=\"" + contextPath
-                + "/css/custom/highlightjs/9.15.10/highlightjs.custom.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
+                + "/css/custom/highlightjs/11.5.0/highlightjs.custom.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
 
         css.append("  <link href=\"" + contextPath
                 + "/css/custom/select2/4.0.13/select2.custom.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
@@ -106,24 +114,26 @@ public class HeadTag extends BaseSpagoLiteTag {
     protected String includeTitle(String contextPath) {
         String titleHtml = JavaScript.stringToHTMLString(getTitle());
 
-        StringBuilder title = new StringBuilder();
-        if (StringUtils.isNotBlank(ConfigSingleton.getTitolo_applicativo())) {
-            // se è stato indicato un nome per l'applicazione nel file web.xml
+        StringBuilder localTitle = new StringBuilder();
+        if (StringUtils.isNotBlank(configSingleton.getStringValue(TITOLO_APPLICATIVO.name()))) {
+            // se e' stato indicato un nome per l'applicazione nel file web.xml
             // lo racchiudo tra parentesi quadre e lo antepongo al titolo della
             // pagina definito nella JSP
-            title.append("  <title> [" + ConfigSingleton.getTitolo_applicativo() + "] " + titleHtml + "</title>\n");
+            localTitle.append("  <title> [").append(configSingleton.getStringValue(TITOLO_APPLICATIVO.name()))
+                    .append("] ").append(titleHtml).append("</title>\n");
         } else {
-            title.append("  <title>" + titleHtml + "</title>\n");
+            localTitle.append("  <title>").append(titleHtml).append("</title>\n");
         }
-        title.append("  <meta http-equiv=\"Content-Language\" content=\"it\" />\n");
-        title.append("  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n");
+        localTitle.append("  <meta http-equiv=\"Content-Language\" content=\"it\" />\n");
+        localTitle.append("  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n");
+        localTitle.append("  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
         // csrf
-        title.append(includeCsrfToken());
+        localTitle.append(includeCsrfToken());
 
-        title.append(
-                "  <link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"" + contextPath + IMG_FAVICON + "\" />\n");
+        localTitle.append("  <link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"").append(contextPath)
+                .append(configSingleton.getStringValue(FAV_ICON_RELATIVE.name())).append("\" />\n");
 
-        return title.toString();
+        return localTitle.toString();
     }
 
     protected String includeJs(String contextPath) {
@@ -133,14 +143,14 @@ public class HeadTag extends BaseSpagoLiteTag {
          * Webjars
          */
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
-                + "/webjars/jquery/3.4.1/jquery.min.js\"></script>\n");
+                + "/webjars/jquery/3.6.4/jquery.min.js\"></script>\n");
 
         // Static (not updatable to webjar)
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
                 + "/js/jQuery/jquery.base64-min.js\"></script>\n");
 
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
-                + "/webjars/jquery-ui/1.12.1/jquery-ui.min.js\"></script>\n");
+                + "/webjars/jquery-ui/1.13.2/jquery-ui.min.js\"></script>\n");
 
         // Static (not updatable to webjar)
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
@@ -174,7 +184,7 @@ public class HeadTag extends BaseSpagoLiteTag {
          * 
          */
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
-                + "/webjars/highlightjs/9.15.10/highlight.min.js\"></script>\n");
+                + "/webjars/highlightjs/11.5.0/highlight.min.js\"></script>\n");
 
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
                 + "/webjars/highlightjs-line-numbers.js/dist/highlightjs-line-numbers.min.js\"></script>\n");
@@ -190,8 +200,32 @@ public class HeadTag extends BaseSpagoLiteTag {
         return js.toString();
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     private String includeCsrfToken() {
         return CsrfHelper.getCsrfMetaDataToken((HttpServletRequest) this.pageContext.getRequest());
+    }
+
+    public boolean isExcludeStdJs() {
+        return excludeStdJs;
+    }
+
+    public void setExcludeStdJs(boolean excludeStdJs) {
+        this.excludeStdJs = excludeStdJs;
+    }
+
+    public boolean isExcludeStdCss() {
+        return excludeStdCss;
+    }
+
+    public void setExcludeStdCss(boolean excludeStdCss) {
+        this.excludeStdCss = excludeStdCss;
     }
 
 }

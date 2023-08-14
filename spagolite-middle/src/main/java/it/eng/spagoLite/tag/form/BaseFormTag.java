@@ -1,15 +1,18 @@
 package it.eng.spagoLite.tag.form;
 
-import javax.servlet.jsp.JspException;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.DEBUG_AUTHORIZATION;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.DISABLE_SECURITY;
 
 import it.eng.spagoCore.configuration.ConfigSingleton;
+import javax.servlet.jsp.JspException;
+
 import it.eng.spagoLite.form.Component;
 import it.eng.spagoLite.security.IUser;
 import it.eng.spagoLite.security.profile.Pagina;
 
 public abstract class BaseFormTag<T extends Component> extends BaseTag {
 
-    protected static final String CONTEXTPATH = ConfigSingleton.get_contextRoot();
+    protected static final String CONTEXTPATH = ConfigSingleton.getInstance().getContextPath();
     private static final long serialVersionUID = 1L;
 
     private String name;
@@ -42,19 +45,20 @@ public abstract class BaseFormTag<T extends Component> extends BaseTag {
     }
 
     public void debugAuthorization(StringBuilder body, String authorization) {
-        if (ConfigSingleton.getDebugAuthorization()) {
-            body.append(" <!-- pagina: " + getLastPublisher() + " azione: " + authorization + " -->\n");
+        if (ConfigSingleton.getInstance().getBooleanValue(DEBUG_AUTHORIZATION.name())) {
+            body.append(" <!-- pagina: ").append(getLastPublisher()).append(" azione: ").append(authorization)
+                    .append(" -->\n");
         }
     }
 
     public void debugAuthorization(String authorization) throws JspException {
-        if (ConfigSingleton.getDebugAuthorization()) {
+        if (ConfigSingleton.getInstance().getBooleanValue(DEBUG_AUTHORIZATION.name())) {
             writeln(" <!-- pagina: " + getLastPublisher() + " azione: " + authorization + " -->");
         }
     }
 
     public boolean isUserAuthorized(String action) {
-        if (ConfigSingleton.getDisableSecurity()) {
+        if (ConfigSingleton.getInstance().getBooleanValue(DISABLE_SECURITY.name())) {
             return true;
         }
         IUser<?> user = getUser();

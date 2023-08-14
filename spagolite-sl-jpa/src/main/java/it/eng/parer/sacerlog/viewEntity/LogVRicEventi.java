@@ -1,9 +1,15 @@
 package it.eng.parer.sacerlog.viewEntity;
 
-import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * The persistent class for the LOG_V_RIC_EVENTI database table.
@@ -20,11 +26,10 @@ public class LogVRicEventi implements ILogVRicEventi {
     private String dsKeyOggetto;
     private Timestamp dtRegEvento;
     private BigDecimal idAgente;
-    private BigDecimal idAgenteEvento;
+    private LogVRicEventiId logVRicEventiId;
     private BigDecimal idApplic;
     private BigDecimal idEvento;
     private BigDecimal idOggetto;
-    private BigDecimal idOggettoEvento;
     private BigDecimal idOrganizApplic;
     private BigDecimal idTipoEvento;
     private BigDecimal idTipoOggetto;
@@ -49,6 +54,15 @@ public class LogVRicEventi implements ILogVRicEventi {
     private String dsMotivoScript;
 
     public LogVRicEventi() {
+    }
+
+    @EmbeddedId
+    public LogVRicEventiId getLogVRicEventiId() {
+        return logVRicEventiId;
+    }
+
+    public void setLogVRicEventiId(LogVRicEventiId logVRicEventiId) {
+        this.logVRicEventiId = logVRicEventiId;
     }
 
     @Column(name = "DS_KEY_OGGETTO")
@@ -84,16 +98,18 @@ public class LogVRicEventi implements ILogVRicEventi {
         this.idAgente = idAgente;
     }
 
-    @Id
-    @Column(name = "ID_AGENTE_EVENTO")
     @Override
+    @Transient
     public BigDecimal getIdAgenteEvento() {
-        return this.idAgenteEvento;
+        return this.logVRicEventiId.getIdAgenteEvento();
     }
 
     @Override
     public void setIdAgenteEvento(BigDecimal idAgenteEvento) {
-        this.idAgenteEvento = idAgenteEvento;
+        if (this.logVRicEventiId == null) {
+            this.logVRicEventiId = new LogVRicEventiId();
+        }
+        logVRicEventiId.setIdAgenteEvento(idAgenteEvento);
     }
 
     @Column(name = "ID_APPLIC")
@@ -129,16 +145,18 @@ public class LogVRicEventi implements ILogVRicEventi {
         this.idOggetto = idOggetto;
     }
 
-    @Id
-    @Column(name = "ID_OGGETTO_EVENTO")
     @Override
+    @Transient
     public BigDecimal getIdOggettoEvento() {
-        return this.idOggettoEvento;
+        return this.logVRicEventiId.getIdOggettoEvento();
     }
 
     @Override
     public void setIdOggettoEvento(BigDecimal idOggettoEvento) {
-        this.idOggettoEvento = idOggettoEvento;
+        if (this.logVRicEventiId == null) {
+            this.logVRicEventiId = new LogVRicEventiId();
+        }
+        this.logVRicEventiId.setIdOggettoEvento(idOggettoEvento);
     }
 
     @Column(name = "ID_TIPO_EVENTO")

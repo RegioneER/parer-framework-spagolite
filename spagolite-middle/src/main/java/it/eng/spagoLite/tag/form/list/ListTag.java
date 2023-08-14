@@ -302,9 +302,9 @@ public class ListTag extends AbstractListTag {
                     if (isDeleteAction() && !fields.isHideDeleteButton() && !isHideOperationButton()) {
                         debugAuthorization(body, deleteAction);
                         if (isRowDeletable(row)) {
-                            body.append(
-                                    "   <td class=\"" + className + "\">" + getLink("", ListAction.NE_DETTAGLIO_DELETE,
-                                            DELETE_IMG, null, null, i, false, true) + "</td>\n");
+                            body.append("   <td class=\"" + className + "\">" + getLink("",
+                                    ListAction.NE_DETTAGLIO_CONFIRM_DELETE, DELETE_IMG, null, null, i, false, true)
+                                    + "</td>\n");
                         } else {
                             body.append("   <td class=\"" + className + "\"></td>\n");
                         }

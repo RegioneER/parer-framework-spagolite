@@ -1,22 +1,23 @@
 package it.eng.integriam.server.ws;
 
+import javax.ejb.EJB;
+import javax.jws.HandlerChain;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
 import it.eng.integriam.server.ws.reputente.CancellaUtenteRisposta;
 import it.eng.integriam.server.ws.reputente.InserimentoUtenteRisposta;
 import it.eng.integriam.server.ws.reputente.ModificaUtenteRisposta;
 import it.eng.integriam.server.ws.reputente.ReplicaUtenteInterface;
 import it.eng.integriam.server.ws.reputente.Utente;
 
-import javax.inject.Inject;
-import javax.jws.HandlerChain;
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
-
 @WebService(serviceName = "ReplicaUtente")
 @HandlerChain(file = "/ws_handler.xml")
 public class ReplicaUtente {
 
-    @Inject
+    // @Inject
+    @EJB(beanName = "replicaUtenteEjb")
     private ReplicaUtenteInterface repUsr;
 
     @WebMethod(operationName = "inserimentoUtente")

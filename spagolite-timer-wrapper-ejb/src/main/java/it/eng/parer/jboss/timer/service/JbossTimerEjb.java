@@ -1,25 +1,25 @@
 package it.eng.parer.jboss.timer.service;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
+import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.ejb.LocalBean;
+import javax.ejb.NoMoreTimeoutsException;
+import javax.ejb.Stateless;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.eng.parer.jboss.timer.common.CronSchedule;
 import it.eng.parer.jboss.timer.common.JbossJobTimer;
 import it.eng.parer.jboss.timer.common.JobTable;
 import it.eng.parer.jboss.timer.common.JobTable.STATO_TIMER;
 import it.eng.parer.jboss.timer.exception.TimerNotFoundException;
 import it.eng.parer.jboss.timer.helper.JbossTimerHelper;
-import java.lang.management.ManagementFactory;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import javax.ejb.EJB;
-import javax.ejb.EJBException;
-import javax.ejb.LocalBean;
-import javax.ejb.NoMoreTimeoutsException;
-import javax.ejb.Stateless;
-import javax.management.MBeanServer;
-import javax.management.ObjectName;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Service Layer. Qui sono presenti i metodi "a grana grossa" che dialogano con la tabella di gestione dei job. Questa
@@ -45,21 +45,17 @@ public class JbossTimerEjb {
      * @return true se siamo in standalone mode.
      */
     public boolean isStandalone() {
-        boolean standalone = true;
-        // Domain mode o standalone mode?
-        try {
-            MBeanServer server = ManagementFactory.getPlatformMBeanServer();
-            ObjectName query = new ObjectName("jboss.as:core-service=server-environment");
-            String attribute = (String) server.getAttribute(query, "launchType");
-            if (attribute != null && attribute.equalsIgnoreCase("DOMAIN")) {
-                standalone = false;
-            }
-            log.debug(String.format("%s Operazione eseguita in ambiente %s", logPrefix(), attribute));
-        } catch (Exception e) {
-            log.warn(String.format("%s Errore durante l'individuazione del launchType dell'AS (STANDALONE o DOMAIN)",
-                    logPrefix()), e);
-        }
-        return standalone;
+        /*
+         * boolean standalone = true; try { MBeanServer server = ManagementFactory.getPlatformMBeanServer(); ObjectName
+         * query = new ObjectName("jboss.as:core-service=server-environment"); String attribute = (String)
+         * server.getAttribute(query, "launchType"); if (attribute != null && attribute.equalsIgnoreCase("DOMAIN")) {
+         * standalone = false; } log.debug(String.format("%s Operazione eseguita in ambiente %s", logPrefix(),
+         * attribute)); } catch (Exception e) {
+         * log.warn(String.format("%s Errore durante l'individuazione del launchType dell'AS (STANDALONE o DOMAIN)",
+         * logPrefix()), e); } return standalone;
+         */
+        // voglio sempre che usi il DB per sincronizzarsi e lanciare i job
+        return false;
     }
 
     /**

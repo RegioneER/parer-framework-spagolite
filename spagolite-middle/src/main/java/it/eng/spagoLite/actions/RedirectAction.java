@@ -1,8 +1,9 @@
 package it.eng.spagoLite.actions;
 
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.DISABLE_SECURITY;
+
 import it.eng.spagoCore.configuration.ConfigSingleton;
 import it.eng.spagoIFace.model.BaseController;
-import it.eng.spagoIFace.model.PublisherInfo;
 import it.eng.spagoLite.SessionManager;
 import it.eng.spagoLite.security.IUser;
 
@@ -14,8 +15,6 @@ import it.eng.spagoLite.security.IUser;
  * 
  */
 public class RedirectAction extends BaseController {
-
-    private static final long serialVersionUID = 1L;
 
     @Override
     public String getControllerName() {
@@ -30,7 +29,7 @@ public class RedirectAction extends BaseController {
     // Controllo delle autorizzazioni per le pagine
     @Override
     protected final boolean isAuthorized(String pub) {
-        if (ConfigSingleton.getDisableSecurity()) {
+        if (ConfigSingleton.getInstance().getBooleanValue(DISABLE_SECURITY.name())) {
             return true;
         }
         IUser user = SessionManager.getUser(getSession());

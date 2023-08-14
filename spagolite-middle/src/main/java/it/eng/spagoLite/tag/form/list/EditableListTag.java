@@ -204,8 +204,11 @@ public class EditableListTag extends AbstractListTag {
                 }
                 if (isDeleteAction() && !fields.isHideDeleteButton()) {
                     if (isRowDeletable(row)) {
-                        body.append("   <td class=\"" + className + "\">" + getLink("", ListAction.NE_DETTAGLIO_DELETE,
-                                DELETE_IMG, null, null, i, false, getComponent().isMasterList()) + "</td>");
+                        body.append(
+                                "   <td class=\""
+                                        + className + "\">" + getLink("", ListAction.NE_DETTAGLIO_CONFIRM_DELETE,
+                                                DELETE_IMG, null, null, i, false, getComponent().isMasterList())
+                                        + "</td>");
                     } else {
                         body.append("   <td class=\"" + className + "\"></td>");
                     }

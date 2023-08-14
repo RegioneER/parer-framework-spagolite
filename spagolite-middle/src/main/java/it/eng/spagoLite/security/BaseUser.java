@@ -26,6 +26,7 @@ public class BaseUser<T extends Profile> implements IUser<T> {
     private UserType userType = null;
     // ID di un eventiale IDP esterno (Es.: SPID (SpidID)
     private String externalId = null;
+    private String email = null;
 
     public BaseUser(String codice, String descr) {
         this.menu = new Menu(codice, descr);
@@ -151,5 +152,15 @@ public class BaseUser<T extends Profile> implements IUser<T> {
     @Override
     public void setExternalId(String externalId) {
         this.externalId = externalId;
+    }
+
+    @Override
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

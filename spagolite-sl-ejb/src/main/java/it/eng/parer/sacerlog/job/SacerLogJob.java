@@ -1,13 +1,10 @@
 package it.eng.parer.sacerlog.job;
 
-import it.eng.parer.sacerlog.ejb.SacerLogEjb;
-import it.eng.parer.sacerlog.ejb.helper.SacerLogHelper;
-import it.eng.parer.sacerlog.ejb.util.PremisEnums;
-import it.eng.parer.sacerlog.viewEntity.AplVLogInit;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -15,9 +12,15 @@ import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import it.eng.parer.sacerlog.ejb.SacerLogEjb;
+import it.eng.parer.sacerlog.ejb.helper.SacerLogHelper;
+import it.eng.parer.sacerlog.ejb.util.PremisEnums;
+import it.eng.parer.sacerlog.viewEntity.AplVLogInit;
 
 /**
  *

@@ -25,6 +25,7 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
     protected RowComparator rowComparator;
     protected SortingRule lastSortingRule;
     protected LazyListBean lazyListBean;
+    protected LazyListReflectionBean lazyListReflectionBean;
 
     public AbstractBaseTable() {
         clear();
@@ -61,7 +62,6 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
     public void goPage(int page) {
         int capoNextPag = (int) (Math.floor(this.rigaCorrente / getPageSize()) + page) * getPageSize();
         if (getPageSize() > 0) {
-            // this.rigaCorrente = capoNextPag < this.list.size() ? capoNextPag
             this.rigaCorrente = capoNextPag < this.size() ? capoNextPag : getFirstRowPageIndex();
         }
     }
@@ -69,7 +69,6 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
     public void nextPage() {
         int capoNextPag = (int) (Math.floor(this.rigaCorrente / getPageSize()) + 1) * getPageSize();
         if (getPageSize() > 0) {
-            // this.rigaCorrente = capoNextPag < this.list.size() ? capoNextPag
             this.rigaCorrente = capoNextPag < this.size() ? capoNextPag : getFirstRowPageIndex();
         }
     }
@@ -83,8 +82,6 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
     }
 
     public void setCurrentRowIndex(int rigaCorrente) {
-        // if (rigaCorrente >= this.list.size()) {
-        // this.rigaCorrente = this.list.size() - 1;
         if (rigaCorrente >= this.size()) {
             this.rigaCorrente = this.size() - 1;
             return;
@@ -96,18 +93,6 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
         this.rigaCorrente = rigaCorrente;
     }
 
-    // FIXME: controllare bene!!!!
-    // public void setCurrentRow(T row){
-    // if (this.list != null){
-    // int i = 0;
-    // for (T riga : this.list) {
-    // if (riga.equals(row)){
-    // this.rigaCorrente = ++i;
-    // }
-    // }
-    // }
-    //
-    // }
     public int getPageSize() {
         return this.pageSize;
     }
@@ -120,13 +105,14 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
         if (lazyListBean != null) {
             return (int) Math.ceil((lazyListBean.getFirstResult() + getCurrentRowIndex()) / getPageSize()) + 1;
         }
+        if (lazyListReflectionBean != null) {
+            return (int) Math.ceil((lazyListReflectionBean.getFirstResult() + getCurrentRowIndex()) / getPageSize())
+                    + 1;
+        }
         return (int) Math.ceil(getCurrentRowIndex() / getPageSize()) + 1;
     }
 
     public int getFirstRowPageIndex() {
-        // if (lazyListBean != null)
-        // return ((int) Math.floor(getCurrentRowIndex() / getPageSize())
-        // * getPageSize())-LazyListBean.maxResult();
         return (int) Math.floor(getCurrentRowIndex() / getPageSize()) * getPageSize();
     }
 
@@ -135,14 +121,15 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
     }
 
     public int size() {
-        // if (lazyListBean != null)
-        // return this.lazyListBean.getCountResultSize();
         return this.list.size();
     }
 
     public int fullSize() {
         if (lazyListBean != null) {
             return this.lazyListBean.getCountResultSize();
+        }
+        if (lazyListReflectionBean != null) {
+            return this.lazyListReflectionBean.getCountResultSize();
         }
         return this.list.size();
     }
@@ -167,16 +154,6 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
             add().copyFromBaseRow(row);
         }
     }
-
-    // public void load(ISelectQuery query) throws EMFError, EMFError {
-    // load(null, query);
-    // }
-    //
-    // public void load(DataConnection dataConnection, ISelectQuery query)
-    // throws EMFError, EMFError {
-    // clear();
-    // query.select(dataConnection, this);
-    // }
 
     public T add() {
         return add(null);
@@ -207,6 +184,7 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
      * Aggiunge record di un tablebean a un tablebean preesistente
      *
      * @param table
+     *            value
      */
     public void addAll(BaseTableInterface<?> table) {
         for (BaseRowInterface row : table) {
@@ -280,7 +258,6 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
                     && rowIndex < lazyListBean.getFirstResult() + lazyListBean.getMaxResult()) {
                 T row = this.list.remove(rowIndex - lazyListBean.getFirstResult());
                 setCurrentRowIndex(getCurrentRowIndex());
-                // row.setObject(ABSOLUTE_INDEX, rowIndex);
                 return row;
             }
         } else if (size() > 0 && rowIndex < size()) {
@@ -416,11 +393,19 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
         return toList(fieldName, new SortingRule[] { getLastSortingRule() });
     }
 
-    public LazyListBean getLazyListBean() {
-        return lazyListBean;
+    public LazyListInterface getLazyListInterface() {
+        return lazyListBean != null ? lazyListBean : lazyListReflectionBean;
     }
 
     public void setLazyListBean(LazyListBean lazyListBean) {
         this.lazyListBean = lazyListBean;
+    }
+
+    public LazyListReflectionBean getLazyListReflectionBean() {
+        return lazyListReflectionBean;
+    }
+
+    public void setLazyListReflectionBean(LazyListReflectionBean lazyListReflectionBean) {
+        this.lazyListReflectionBean = lazyListReflectionBean;
     }
 }

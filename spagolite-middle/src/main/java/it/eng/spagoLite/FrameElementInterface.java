@@ -1,11 +1,11 @@
 package it.eng.spagoLite;
 
-import it.eng.spagoCore.error.EMFError;
-
 import java.io.Serializable;
 
 import org.codehaus.jettison.json.JSONObject;
 import org.dom4j.Element;
+
+import it.eng.spagoCore.error.EMFError;
 
 public interface FrameElementInterface extends Serializable {
 

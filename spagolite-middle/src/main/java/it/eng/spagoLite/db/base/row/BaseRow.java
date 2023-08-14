@@ -30,6 +30,7 @@ public class BaseRow extends FrameElement implements BaseRowInterface {
      * Crea un nuovo RowBean e lo prepopola
      * 
      * @param row
+     *            value
      */
     public BaseRow(BaseRowInterface row) {
         this.row = new LinkedHashMap<String, Object>();

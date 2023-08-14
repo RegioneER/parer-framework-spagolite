@@ -51,6 +51,7 @@ public class MessageBox extends FrameElement implements Iterable<Message> {
      * livelli del messaggio oracle.
      *
      * @param regexOracle
+     *            value regular expression
      */
     public void addMessagesFromOracle(String regexOracle) {
         if (regexOracle == null || "".equals(regexOracle)) {

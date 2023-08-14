@@ -102,7 +102,7 @@ public class JobDefinition {
         this.dtProssimaAttivazione = dtProssimaAttivazione;
     }
 
-    @Column(name = "FL_DATA_ACCURATA")
+    @Column(name = "FL_DATA_ACCURATA", columnDefinition = "char")
     public String getFlDataAccurata() {
         return flDataAccurata;
     }

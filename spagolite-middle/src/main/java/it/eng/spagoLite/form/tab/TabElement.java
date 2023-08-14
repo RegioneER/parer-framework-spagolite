@@ -22,11 +22,17 @@ public class TabElement extends BaseComponent {
     /**
      * 
      * @param parent
+     *            riferimento genitore
      * @param name
+     *            value
      * @param description
+     *            value
      * @param current
+     *            boolean true/false
      * @param hidden
+     *            boolean true/false
      * @param disabled
+     *            boolean true/false
      * @param iconUrls
      *            url separati da spazio
      */

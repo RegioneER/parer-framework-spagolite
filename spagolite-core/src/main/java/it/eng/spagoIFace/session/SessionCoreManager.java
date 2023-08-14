@@ -3,6 +3,7 @@ package it.eng.spagoIFace.session;
 import javax.servlet.http.HttpSession;
 
 public abstract class SessionCoreManager {
+
     protected static final String ACTION_CONTAINER = "###_ACTION_CONTAINER";
     protected static final String MESSAGE_CONTAINER = "###_MESSAGE_CONTAINER";
     protected static final String FORM_CONTAINER = "###_FORM_CONTAINER";
@@ -14,7 +15,7 @@ public abstract class SessionCoreManager {
 
     /**
      * Ritorna l'url dell'action corrente
-     * 
+     *
      * @param httpSession
      *            sessione http
      * 
@@ -42,7 +43,7 @@ public abstract class SessionCoreManager {
 
     /**
      * Ritorna l'url dell'operazione indicata
-     * 
+     *
      * @param httpSession
      *            sessione http
      * @param operation
@@ -55,7 +56,6 @@ public abstract class SessionCoreManager {
     public static String getOperationUrl(HttpSession httpSession, String operation, String additionalInfo) {
         String actionUrl = getCurrentActionUrl(httpSession);
         if (additionalInfo != null && !additionalInfo.isEmpty()) {
-            // if (StringUtils.isNotBlank(additionalInfo)) {
             return actionUrl + "?operation=" + operation + "&amp;" + additionalInfo;
         } else {
             return actionUrl + "?operation=" + operation;

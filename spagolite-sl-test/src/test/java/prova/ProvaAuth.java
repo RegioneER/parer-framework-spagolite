@@ -13,9 +13,8 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Iacolucci_M
- * Classe finta creata soltanto per darla come risorsa iniettabile a openejb perché una classe di spagolite-middle
- * richiede questa risorsa!
+ * @author Iacolucci_M Classe finta creata soltanto per darla come risorsa iniettabile a openejb perché una classe di
+ *         spagolite-middle richiede questa risorsa!
  */
 @Stateless
 @LocalBean
@@ -23,12 +22,14 @@ public class ProvaAuth extends Authenticator {
 
     @Override
     protected String getAppName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
+                                                                       // Tools | Templates.
     }
 
     @Override
     public User recuperoAutorizzazioni(HttpSession hs) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
+                                                                       // Tools | Templates.
     }
-    
+
 }

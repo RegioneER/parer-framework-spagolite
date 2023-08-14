@@ -235,9 +235,9 @@ public class NestedListTag extends AbstractListTag {
                         }
                         if (!fields.isHideDeleteButton() && !isHideOperationButton()) {
                             if (isRowDeletable(row)) {
-                                body.append("   <td class=\""
-                                        + className + "\" rowspan=\"" + numeroRigheNestedTable + "\">" + getLink("",
-                                                ListAction.NE_DETTAGLIO_DELETE, DELETE_IMG, null, null, i, false, true)
+                                body.append("   <td class=\"" + className + "\" rowspan=\"" + numeroRigheNestedTable
+                                        + "\">" + getLink("", ListAction.NE_DETTAGLIO_CONFIRM_DELETE, DELETE_IMG, null,
+                                                null, i, false, true)
                                         + "</td>\n");
                             } else {
                                 body.append("   <td class=\"" + className + "\" rowspan=\"" + numeroRigheNestedTable

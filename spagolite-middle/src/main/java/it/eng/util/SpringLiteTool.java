@@ -1,19 +1,17 @@
 package it.eng.util;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 import it.eng.spagoLite.xmlbean.form.FormDocument;
 import it.eng.util.actionWriter.ActionWriter;
 import it.eng.util.constantWriter.ConstantWriter;
 import it.eng.util.constantWriter.ScriptWriter;
 import it.eng.util.formWriter.FormWriter;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Vector;
 
 public class SpringLiteTool {
 

@@ -1,16 +1,25 @@
 package it.eng.parer.sacerlog.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the LOG_EVENTO_BY_SCRIPT database table.
  *
  */
 @Entity
-@Table(name = "SACER_LOG.LOG_EVENTO_BY_SCRIPT")
+@Table(schema = "SACER_LOG", name = "LOG_EVENTO_BY_SCRIPT")
 @NamedQueries({
         @NamedQuery(name = "LogEventoByScript.findByTipoOggettoId", query = "SELECT l FROM LogEventoByScript l WHERE l.idTipoOggetto = :idTipoOggetto AND l.idOggetto = :idOggetto"),
         @NamedQuery(name = "LogEventoByScript.deleteAll", query = "DELETE FROM LogEventoByScript")
@@ -39,7 +48,7 @@ public class LogEventoByScript implements Serializable {
     }
 
     @Id
-    @SequenceGenerator(name = "LOG_EVENTO_BY_SCRIPT_IDEVENTOBYSCRIPT_GENERATOR", sequenceName = "SACER_LOG.SLOG_EVENTO_BY_SCRIPT", allocationSize = 1)
+    @SequenceGenerator(name = "LOG_EVENTO_BY_SCRIPT_IDEVENTOBYSCRIPT_GENERATOR", schema = "SACER_LOG", sequenceName = "SLOG_EVENTO_BY_SCRIPT", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_EVENTO_BY_SCRIPT_IDEVENTOBYSCRIPT_GENERATOR")
     @Column(name = "ID_EVENTO_BY_SCRIPT")
     public long getIdEventoByScript() {

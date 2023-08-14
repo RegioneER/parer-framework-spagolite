@@ -5,7 +5,8 @@ import org.codehaus.jettison.json.JSONObject;
 public class PublisherInfo {
 
     public enum Override {
-        forward, actionForward, actionRedirect, actionProfiledRedirect, redirect, ajaxRedirect, freeze
+        forward, actionForward, actionRedirect, actionProfiledRedirect, redirect, ajaxRedirect, freeze,
+        forwardSkipSetLast
     }
 
     private Override type;

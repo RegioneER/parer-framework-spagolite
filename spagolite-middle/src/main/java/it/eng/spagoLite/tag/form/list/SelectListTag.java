@@ -269,8 +269,9 @@ public class SelectListTag extends AbstractListTag {
                             if (isDeleteAction() && !fields.isHideDeleteButton()) {
                                 debugAuthorization(deleteAction);
                                 if (isRowDeletable(row)) {
-                                    writeln("   <td class=\"" + className + "\">" + getLink("",
-                                            ListAction.NE_DETTAGLIO_DELETE, DELETE_IMG, null, null, i, false, true)
+                                    writeln("   <td class=\"" + className + "\">"
+                                            + getLink("", ListAction.NE_DETTAGLIO_CONFIRM_DELETE, DELETE_IMG, null,
+                                                    null, i, false, true)
                                             + "</td>\n");
                                 } else {
                                     writeln("   <td class=\"" + className + "\"></td>\n");

@@ -49,9 +49,9 @@ public interface IUser<T extends Profile> extends Serializable {
     public Map<String, String> getOrganizzazioneMap();
 
     // ***** Aggiunti per la gestione dei diversi tipi di IDP
-    public enum UserType {
+    public static enum UserType {
         SPID_FEDERA, SPID_PUGLIA
-    }
+    };
 
     public UserType getUserType();
 
@@ -60,5 +60,8 @@ public interface IUser<T extends Profile> extends Serializable {
     public String getExternalId();
 
     public void setExternalId(String externalId);
-    // *****
+
+    public String getEmail();
+
+    public void setEmail(String email);
 }

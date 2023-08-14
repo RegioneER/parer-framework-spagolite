@@ -7,7 +7,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>4.1.28-SNAPSHOT</version>
+        <version>4.11.1-SNAPSHOT</version>
     </parent>
     <dependencies>
         <dependency>
@@ -23,23 +23,14 @@
             <groupId>it.eng.parer</groupId>
             <artifactId>spagofat-sl-jpa</artifactId>
         </dependency>
-        <!--        
-        <dependency> 
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-        </dependency> 
-        -->        
         <dependency> 
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-        </dependency> 
-        
-        <dependency>
-            <groupId>org.glassfish.main.persistence</groupId>
-            <artifactId>eclipselink-wrapper</artifactId>
-            <type>pom</type>
-            <scope>provided</scope>
         </dependency>
+		<dependency>
+			<groupId>org.dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+		</dependency>
     </dependencies>
     <build>
         <plugins>
@@ -51,9 +42,9 @@
                         <id>parer-tool-compilation</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <source>1.7</source>
-                            <target>1.7</target>
-                            <compilerVersion>1.7</compilerVersion>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                            <compilerVersion>1.8</compilerVersion>
                             <includes>
                                 <include>it/eng/parer/sacerlog/slite/gen/util/*.java</include>
                             </includes>
@@ -72,9 +63,9 @@
                         <id>createSliteDir</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <tasks>
+                            <target>
                                 <mkdir dir="${project.build.directory}/generated-sources/slite" />
-                            </tasks>
+                            </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>
@@ -105,7 +96,5 @@
             </plugin>
         </plugins>
     </build>
-
-
 
 </project>

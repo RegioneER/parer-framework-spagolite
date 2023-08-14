@@ -1,13 +1,15 @@
 package it.eng.parer.jboss.timer.interceptor;
 
-import it.eng.parer.jboss.timer.common.JbossJobTimer;
-import it.eng.parer.jboss.timer.common.JobTable;
-import it.eng.parer.jboss.timer.service.JbossTimerEjb;
 import javax.ejb.EJB;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import it.eng.parer.jboss.timer.common.JbossJobTimer;
+import it.eng.parer.jboss.timer.common.JobTable;
+import it.eng.parer.jboss.timer.service.JbossTimerEjb;
 
 /**
  * Secondo intercettore della catena. Si occupa di reimpostare lo stato del job.

@@ -1,12 +1,12 @@
 package it.eng.parer.sacerlog.slite.gen.viewbean;
 
+import java.math.BigDecimal;
+
 import it.eng.parer.sacerlog.viewEntity.LogVLisAsserzioniDati;
 import it.eng.spagoLite.db.base.BaseRowInterface;
 import it.eng.spagoLite.db.base.JEEBaseRowInterface;
 import it.eng.spagoLite.db.base.row.BaseRow;
 import it.eng.spagoLite.db.oracle.bean.column.TableDescriptor;
-
-import java.math.BigDecimal;
 
 /**
  * RowBean per la tabella Log_V_Lis_Asserzioni_Dati

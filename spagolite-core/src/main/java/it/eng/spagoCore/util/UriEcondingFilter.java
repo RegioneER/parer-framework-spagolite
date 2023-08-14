@@ -1,23 +1,16 @@
 package it.eng.spagoCore.util;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-
 import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -138,6 +131,7 @@ public class UriEcondingFilter implements Filter {
                     } else {
                         // no value
                         values = new String[] { "" }; // empty
+
                     }
                     // if param exists on the map replacing with old list and new one
                     if (localEncoded.get(paramAndValue[PARAM]) != null) {
@@ -164,7 +158,7 @@ public class UriEcondingFilter implements Filter {
         /**
          * Check if value is a valid JSON or a list of elements separated by one of the separator defined in
          * multiValueSeparator. It manages also array of multiple JSON Object like [{json1},{json2},{json3}].
-         * 
+         *
          * @param value
          *            valore atteso
          * 
@@ -198,5 +192,4 @@ public class UriEcondingFilter implements Filter {
      */
     public void destroy() {
     }
-
 }

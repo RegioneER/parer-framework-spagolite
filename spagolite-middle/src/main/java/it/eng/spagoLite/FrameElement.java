@@ -1,7 +1,5 @@
 package it.eng.spagoLite;
 
-import it.eng.spagoCore.error.EMFError;
-
 import java.io.IOException;
 import java.io.StringWriter;
 
@@ -10,6 +8,8 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
+
+import it.eng.spagoCore.error.EMFError;
 
 public class FrameElement implements FrameElementInterface {
 

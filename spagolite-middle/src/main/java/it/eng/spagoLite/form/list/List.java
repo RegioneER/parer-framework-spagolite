@@ -8,6 +8,7 @@ import it.eng.spagoLite.form.Component;
 import it.eng.spagoLite.form.base.BaseElements;
 import it.eng.spagoLite.form.buttonList.ButtonList;
 import it.eng.spagoLite.form.fields.Field;
+import it.eng.spagoLite.form.fields.Fields;
 import it.eng.spagoLite.form.fields.SingleValueField;
 import it.eng.spagoLite.form.fields.impl.CheckBox;
 import it.eng.spagoLite.message.Message;
@@ -37,6 +38,7 @@ public class List<T extends SingleValueField<?>> extends BaseElements<T> {
     private String visibilityProperty;
     private Boolean filterValidRecords;
     private String excelFileName;
+    private Fields genericFields;
 
     private ButtonList buttonList;
 
@@ -356,6 +358,7 @@ public class List<T extends SingleValueField<?>> extends BaseElements<T> {
      * Compila il row bean con il contenuto della riga corrente
      *
      * @throws EMFError
+     *             eccezione generica
      */
     public void copyToBean() throws EMFError {
         if (table != null && table.size() > 0) {
@@ -371,6 +374,7 @@ public class List<T extends SingleValueField<?>> extends BaseElements<T> {
      *            oggetto bean
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public void copyToBean(BaseRowInterface row) throws EMFError {
         for (Field field : this) {
@@ -421,6 +425,14 @@ public class List<T extends SingleValueField<?>> extends BaseElements<T> {
 
     public void setExcelFileName(String excelFileName) {
         this.excelFileName = excelFileName;
+    }
+
+    public Fields getGenericFields() {
+        return genericFields;
+    }
+
+    public void setGenericFields(Fields genericFields) {
+        this.genericFields = genericFields;
     }
 
 }

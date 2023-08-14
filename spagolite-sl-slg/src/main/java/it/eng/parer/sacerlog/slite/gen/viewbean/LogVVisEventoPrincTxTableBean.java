@@ -1,14 +1,9 @@
 package it.eng.parer.sacerlog.slite.gen.viewbean;
 
-/**
- * ViewBean per la vista Log_V_Vis_Evento_Princ_Tx
- *
- */
-import it.eng.parer.sacerlog.slite.gen.viewbean.LogVVisEventoPrincTxRowBean;
+import java.util.Iterator;
+
 import it.eng.spagoLite.db.base.table.AbstractBaseTable;
 import it.eng.spagoLite.db.oracle.bean.column.TableDescriptor;
-
-import java.util.Iterator;
 
 /**
  * TableBean per la tabella Log_V_Vis_Evento_Princ_Tx

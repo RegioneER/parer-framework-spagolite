@@ -133,7 +133,6 @@ public class FieldTag extends BaseFormTag<SingleValueField<?>> {
                 if (field.getType().equals(Type.FILE)) {
                     input = " <input id=\"" + name + "\" name=\"" + name + "\" class=\"" + className
                             + "\" type=\"file\" value=\"" + value + "\" " + maxLength + "/>";
-
                 } else if (field.getType().equals(Type.PASSWORD)) {
                     input = " <input id=\"" + name + "\" name=\"" + name + "\" class=\"" + className
                             + "\" type=\"password\" value=\"" + value + "\" " + maxLength + " autocomplete=\"off\" />";
@@ -246,7 +245,7 @@ public class FieldTag extends BaseFormTag<SingleValueField<?>> {
             if (combo != null) {
                 for (Object key : combo.keySet()) {
                     String descrizione = JavaScript.stringToHTMLString(combo.getDescrizione(key));
-                    descrizione = org.apache.commons.text.StringEscapeUtils.escapeHtml4(descrizione);
+                    org.apache.commons.text.StringEscapeUtils.escapeHtml4(descrizione);
                     out.append("<option title=\"" + descrizione + "\" value=\"" + key + "\"");
                     // FIXME: ATTENZIONE ALLE COMBO CHE HANNO TIPI DI DATO != da
                     // String!!!
@@ -529,19 +528,20 @@ public class FieldTag extends BaseFormTag<SingleValueField<?>> {
                     /* from tag */ || ((ComboBox) getComponent()).isWithSearchComp())/* from component */) {
                 String name = getComponent().getName();
                 Field field = (ComboBox<?>) getComponent();
-                String editable = !field.isReadonly() && field.isEditMode() ? "" : "readonly:readonly,";
-                writeln(" <script type=\"text/javascript\" >" + "$('#" + name
-                        + "').select2({theme: \"classic\", placeholder: '<i class=\"fa fa-search\"></i> Ricerca e seleziona elemento dalla lista...', allowClear: true, "
-                        + editable + " dropdownCssClass: \"select2-customdrop\", "
-                        + "	       dropdownAutoWidth: true, width: 'auto', \"language\": \"it\", escapeMarkup: function(m){ return m; } })"
-                        + ".on('select2:unselecting', function () {  $(this).data('unselecting', true); }) "
-                        + ".on('select2:opening', function (e) {  if ($(this).data('unselecting')) {  $(this).removeData('unselecting'); e.preventDefault(); } });"
-                        + "</script>");
-                // html5 placeholder
-                writeln(" <script type=\"text/javascript\" > " + "$('#" + name + "')"
-                        + ".on(\"select2:open\", function(e) {$('input.select2-search__field').prop('placeholder', 'Effettua ricerca:'); });"
-                        + " </script>");
-
+                // editable
+                if (!field.isReadonly() && field.isEditMode()) {
+                    writeln(" <script type=\"text/javascript\" >" + "$('#" + name
+                            + "').select2({theme: \"classic\", placeholder: '<i class=\"fa fa-search\"></i> Ricerca e seleziona elemento dalla lista...', allowClear: true, "
+                            + " dropdownCssClass: \"select2-customdrop\", "
+                            + "	       dropdownAutoWidth: true, width: 'auto', \"language\": \"it\", escapeMarkup: function(m){ return m; } })"
+                            + ".on('select2:unselecting', function () {  $(this).data('unselecting', true); }) "
+                            + ".on('select2:opening', function (e) {  if ($(this).data('unselecting')) {  $(this).removeData('unselecting'); e.preventDefault(); } });"
+                            + "</script>");
+                    // html5 placeholder
+                    writeln(" <script type=\"text/javascript\" > " + "$('#" + name + "')"
+                            + ".on(\"select2:open\", function(e) {$('input.select2-search__field').prop('placeholder', 'Effettua ricerca:'); });"
+                            + " </script>");
+                }
             }
         }
 

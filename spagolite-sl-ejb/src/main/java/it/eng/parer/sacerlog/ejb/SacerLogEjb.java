@@ -1,23 +1,5 @@
 package it.eng.parer.sacerlog.ejb;
 
-import it.eng.parer.sacerlog.common.SacerLogEjbType;
-import it.eng.parer.sacerlog.ejb.helper.SacerLogHelper;
-import it.eng.parer.sacerlog.ejb.util.ObjectsToLogBefore;
-import it.eng.parer.sacerlog.ejb.util.PremisEnums;
-import it.eng.parer.sacerlog.entity.LogAgenteEvento;
-import it.eng.parer.sacerlog.entity.LogEvento;
-import it.eng.parer.sacerlog.entity.LogOggettoEvento;
-import it.eng.parer.sacerlog.viewEntity.AplVLogFotoTiEvnOgg;
-import it.eng.parer.sacerlog.viewEntity.AplVLogTiEvn;
-import it.eng.parer.sacerlog.viewEntity.AplVLogTiEvnConOrigine;
-import it.eng.parer.sacerlog.viewEntity.AplVLogTiOgg;
-import it.eng.parer.sacerlog.viewEntity.LogVLogAgente;
-import it.eng.parer.sacerlog.entity.EntityConstraints;
-import it.eng.parer.sacerlog.entity.LogChiaveAccessoEvento;
-import it.eng.parer.sacerlog.entity.LogEventoByScript;
-import it.eng.parer.sacerlog.util.TransactionLogContext;
-import it.eng.parer.sacerlog.viewEntity.AplVLogChiaveTiOgg;
-import it.eng.parer.sacerlog.viewEntity.AplVLogTrigTiEvnOgg;
 import java.io.StringReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -26,11 +8,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
@@ -38,11 +21,31 @@ import javax.persistence.PersistenceContext;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+
+import it.eng.parer.sacerlog.common.SacerLogEjbType;
+import it.eng.parer.sacerlog.ejb.helper.SacerLogHelper;
+import it.eng.parer.sacerlog.ejb.util.ObjectsToLogBefore;
+import it.eng.parer.sacerlog.ejb.util.PremisEnums;
+import it.eng.parer.sacerlog.entity.EntityConstraints;
+import it.eng.parer.sacerlog.entity.LogAgenteEvento;
+import it.eng.parer.sacerlog.entity.LogChiaveAccessoEvento;
+import it.eng.parer.sacerlog.entity.LogEvento;
+import it.eng.parer.sacerlog.entity.LogEventoByScript;
+import it.eng.parer.sacerlog.entity.LogOggettoEvento;
+import it.eng.parer.sacerlog.util.TransactionLogContext;
+import it.eng.parer.sacerlog.viewEntity.AplVLogChiaveTiOgg;
+import it.eng.parer.sacerlog.viewEntity.AplVLogFotoTiEvnOgg;
+import it.eng.parer.sacerlog.viewEntity.AplVLogTiEvn;
+import it.eng.parer.sacerlog.viewEntity.AplVLogTiEvnConOrigine;
+import it.eng.parer.sacerlog.viewEntity.AplVLogTiOgg;
+import it.eng.parer.sacerlog.viewEntity.AplVLogTrigTiEvnOgg;
+import it.eng.parer.sacerlog.viewEntity.LogVLogAgente;
 
 /**
  *
@@ -155,8 +158,8 @@ public class SacerLogEjb {
                 idApplic = tipo.getIdApplic();
             } else {
                 tipoConOrigine = sacerLogHelper.getTipoEventoByApplicFinestraAzione(nmApplic, nmComponente, nmAzione);
-                idTipoEvento = tipoConOrigine.getIdTipoEvento();
-                idApplic = tipoConOrigine.getIdApplic();
+                idTipoEvento = tipoConOrigine.getAplVLogTiEvnConOrigineId().getIdTipoEvento();
+                idApplic = tipoConOrigine.getAplVLogTiEvnConOrigineId().getIdApplic();
             }
             AplVLogTiOgg tiOgg = sacerLogHelper.getTipoOggettoByNome(nmApplic, nmTipoOggetto);
 
@@ -449,7 +452,7 @@ public class SacerLogEjb {
 
             AplVLogTiEvnConOrigine tipoConOrigine = sacerLogHelper.getTipoEventoByApplicFinestraAzione(nmApplic,
                     nmComponente, nmAzione);
-            BigDecimal idTipoEvento = tipoConOrigine.getIdTipoEvento();
+            BigDecimal idTipoEvento = tipoConOrigine.getAplVLogTiEvnConOrigineId().getIdTipoEvento();
 
             AplVLogTiOgg tiOgg = sacerLogHelper.getTipoOggettoByNome(nmApplic, nmTipoOggetto);
             AplVLogFotoTiEvnOgg evnOgg = sacerLogHelper.getFotoByEventoOggetto(idTipoEvento, tiOgg.getIdTipoOggetto());

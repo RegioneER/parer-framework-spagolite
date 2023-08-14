@@ -1,13 +1,13 @@
 package it.eng.parer.sacerlog.slite.gen.viewbean;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+
+import it.eng.parer.sacerlog.viewEntity.LogVVisOggetto;
 import it.eng.spagoLite.db.base.BaseRowInterface;
 import it.eng.spagoLite.db.base.JEEBaseRowInterface;
 import it.eng.spagoLite.db.base.row.BaseRow;
 import it.eng.spagoLite.db.oracle.bean.column.TableDescriptor;
-import it.eng.parer.sacerlog.viewEntity.LogVVisOggetto;
-
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 /**
  * RowBean per la tabella Log_V_Vis_Oggetto

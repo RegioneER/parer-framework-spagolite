@@ -22,15 +22,31 @@ public class MultiSemaphore extends MultiValueField<String> implements IMappable
      * Costruttore. Per default i checkbox del semaforo sono inizialmente tutti ceccati.
      *
      * @param parent
+     *            genitore
      * @param name
+     *            nome
      * @param description
+     *            descrizione
      * @param alias
+     *            value
      * @param type
+     *            tipo
      * @param format
+     *            formato
      * @param required
+     *            boolean true/false se obbligatorio
      * @param hidden
+     *            value
      * @param readonly
+     *            boolean true/false
      * @param trigger
+     *            boolean true/false
+     * @param greenChecked
+     *            boolean true/false
+     * @param yellowChecked
+     *            boolean true/false
+     * @param redChecked
+     *            boolean true/false
      */
     public MultiSemaphore(Component parent, String name, String description, String alias,
             it.eng.spagoLite.xmlbean.form.Field.Type.Enum type, String format, boolean required, boolean hidden,
@@ -168,8 +184,10 @@ public class MultiSemaphore extends MultiValueField<String> implements IMappable
     }
 
     /**
-     *
      * @return string del tipo "VRG" con le iniziali dei semafori checkati (Verde Rosso Giallo)
+     * 
+     * @throws EMFError
+     *             eccezione generica
      */
     public String getConcatFlagSemaforo() throws EMFError {
         String flags = "";

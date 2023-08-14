@@ -91,14 +91,20 @@ public class AbstractWizardTag extends BaseFormTag<Wizard> {
      * @deprecated
      *
      * @param navigationEvent
+     *            evento di navigazione
      * @param linkClass
+     *            rif. classe css
      * @param title
+     *            titolo
      * @param step
+     *            nome step
      * @param textInnerLink
+     *            testo link
      * 
      * @return link elaborato
      * 
      * @throws JspException
+     *             eccezione generica
      */
     protected String getLink(String navigationEvent, String linkClass, String title, String step, String textInnerLink)
             throws JspException {

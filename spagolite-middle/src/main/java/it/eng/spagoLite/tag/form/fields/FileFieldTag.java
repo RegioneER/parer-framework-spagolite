@@ -91,6 +91,7 @@ public class FileFieldTag extends FieldTag {
      * Stampa il container
      * 
      * @throws JspException
+     *             eccezione generica
      */
     protected void writeEndContainer() throws JspException {
         writeln(ContainerTag.Factory.htmlEndContainer());

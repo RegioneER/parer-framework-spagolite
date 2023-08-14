@@ -4,7 +4,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>4.1.28-SNAPSHOT</version>
+        <version>4.11.1-SNAPSHOT</version>
     </parent>
     <artifactId>spagofat-timer-wrapper-ejb</artifactId>
     <name>Spagolite Timer wrapper - ejb</name>
@@ -19,9 +19,9 @@
         </dependency>
         <dependency>  
             <groupId>org.jboss.spec</groupId>  
-            <artifactId>jboss-javaee-6.0</artifactId>  
+            <artifactId>jboss-jakartaee-8.0</artifactId>  
             <type>pom</type>  
-            <scope>provided</scope>  
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>it.eng.parer</groupId>
@@ -34,9 +34,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-ejb-plugin</artifactId>
-                <configuration>
-                    <ejbVersion>3.1</ejbVersion>
-                </configuration>
             </plugin>
         </plugins>
     </build>

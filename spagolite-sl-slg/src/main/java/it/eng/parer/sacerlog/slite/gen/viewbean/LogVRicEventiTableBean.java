@@ -1,18 +1,13 @@
 package it.eng.parer.sacerlog.slite.gen.viewbean;
 
-/**
- * ViewBean per la vista Log_V_Ric_Eventi
- *
- */
-import it.eng.parer.sacerlog.slite.gen.viewbean.LogVRicEventiRowBean;
+import java.util.Iterator;
+
 import it.eng.parer.sacerlog.viewEntity.ILogVRicEventi;
 import it.eng.spagoLite.db.base.table.AbstractBaseTable;
 import it.eng.spagoLite.db.oracle.bean.column.TableDescriptor;
 
-import java.util.Iterator;
-
 /**
- * TableBean per la tabella Log_V_Ric_Eventi & C.
+ * TableBean per la tabella Log_V_Ric_Eventi and C.
  *
  */
 public class LogVRicEventiTableBean<T extends ILogVRicEventi> extends AbstractBaseTable<LogVRicEventiRowBean> {

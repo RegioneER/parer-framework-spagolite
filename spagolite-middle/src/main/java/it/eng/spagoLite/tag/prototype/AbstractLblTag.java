@@ -106,6 +106,7 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
      * Scrive la label
      * 
      * @throws JspException
+     *             eccezione generica
      */
     protected void writeLabel() throws JspException {
         String label = ContainerTag.LEFT.equalsIgnoreCase(getLabelPosition())
@@ -124,6 +125,7 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
      * Scrive il controllo
      * 
      * @throws JspException
+     *             eccezione generica
      */
     protected abstract void writeControl() throws JspException;
 
@@ -131,6 +133,7 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
      * Stampa il container
      * 
      * @throws JspException
+     *             eccezione generica
      */
     protected void writeStartContainer() throws JspException {
         writeln("");
@@ -141,6 +144,7 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
      * Stampa il container
      * 
      * @throws JspException
+     *             eccezione generica
      */
     protected void writeEndContainer() throws JspException {
         writeln(ContainerTag.Factory.htmlEndContainer());

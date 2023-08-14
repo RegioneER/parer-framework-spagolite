@@ -1,38 +1,40 @@
 package it.eng.parer.sacerlog.ejb;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.persistence.criteria.CriteriaQuery;
+
+import it.eng.paginator.helper.LazyListHelper;
+import it.eng.parer.sacerlog.common.SacerLogEjbType;
 import it.eng.parer.sacerlog.ejb.common.helper.ParamApplicHelper;
 import it.eng.parer.sacerlog.ejb.helper.SacerLogHelper;
+import it.eng.parer.sacerlog.slite.gen.viewbean.AplVLogTiOggRowBean;
 import it.eng.parer.sacerlog.slite.gen.viewbean.AplVLogTiOggTableBean;
 import it.eng.parer.sacerlog.slite.gen.viewbean.LogVLisAsserzioniDatiRowBean;
 import it.eng.parer.sacerlog.slite.gen.viewbean.LogVLisAsserzioniDatiTableBean;
 import it.eng.parer.sacerlog.slite.gen.viewbean.LogVLisEventoOggettoRowBean;
 import it.eng.parer.sacerlog.slite.gen.viewbean.LogVLisEventoOggettoTableBean;
-import it.eng.parer.sacerlog.slite.gen.viewbean.LogVRicEventiTableBean;
 import it.eng.parer.sacerlog.slite.gen.viewbean.LogVRicEventiRowBean;
+import it.eng.parer.sacerlog.slite.gen.viewbean.LogVRicEventiTableBean;
+import it.eng.parer.sacerlog.slite.gen.viewbean.LogVUsrAbilOrganizRowBean;
+import it.eng.parer.sacerlog.slite.gen.viewbean.LogVUsrAbilOrganizTableBean;
 import it.eng.parer.sacerlog.slite.gen.viewbean.LogVVisEventoPrincTxRowBean;
 import it.eng.parer.sacerlog.slite.gen.viewbean.LogVVisOggettoRowBean;
+import it.eng.parer.sacerlog.viewEntity.AplVLogTiOgg;
+import it.eng.parer.sacerlog.viewEntity.ILogVRicEventi;
 import it.eng.parer.sacerlog.viewEntity.LogVLisAsserzioniDati;
 import it.eng.parer.sacerlog.viewEntity.LogVLisEventoOggetto;
 import it.eng.parer.sacerlog.viewEntity.LogVRicEventi;
+import it.eng.parer.sacerlog.viewEntity.LogVUsrAbilOrganiz;
 import it.eng.parer.sacerlog.viewEntity.LogVVisEventoPrincTx;
 import it.eng.parer.sacerlog.viewEntity.LogVVisOggetto;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import it.eng.parer.sacerlog.common.SacerLogEjbType;
-import it.eng.parer.sacerlog.slite.gen.viewbean.LogVUsrAbilOrganizTableBean;
-import it.eng.parer.sacerlog.slite.gen.viewbean.AplVLogTiOggRowBean;
-import it.eng.parer.sacerlog.slite.gen.viewbean.LogVUsrAbilOrganizRowBean;
-import it.eng.parer.sacerlog.viewEntity.AplVLogTiOgg;
-import it.eng.parer.sacerlog.viewEntity.ILogVRicEventi;
-import it.eng.parer.sacerlog.viewEntity.LogVUsrAbilOrganiz;
 
 /**
  *
@@ -48,8 +50,8 @@ public class SacerLogWebEjb {
     private SacerLogHelper sacerLogHelper;
     @EJB
     ParamApplicHelper paramApplicHelper;
-
-    private static Logger log = LoggerFactory.getLogger(SacerLogWebEjb.class);
+    @EJB(mappedName = "java:app/paginator/LazyListHelper")
+    protected LazyListHelper lazyListHelper;
 
     /*
      * Estrae il dettaglio da visualizzare nella form di visualizzazione log per oggetto
@@ -97,17 +99,8 @@ public class SacerLogWebEjb {
             riga.setTipoClasseEvento(ogg.getTipoClasseEvento());
             riga.setTipoOrigineAgente(ogg.getTipoOrigineAgente());
             riga.setTipoOrigineEvento(ogg.getTipoOrigineEvento());
-
-            /*
-             * String dsMotivazione = ogg.getDsMotivoScript(); if (ogg.getDsGeneratoreAzione() == null ||
-             * ogg.getDsAzione() == null) { riga.setString("calc_azione", "Azione scaturita da " + ogg.getNmApplic()); }
-             * else { riga.setString("calc_azione", ogg.getDsGeneratoreAzione() + "/" + ogg.getDsAzione() +
-             * (dsMotivazione != null ? " (" + dsMotivazione + ")" : "")); }
-             */
             riga.setString("calc_azione",
                     getStringAzioneCalcolata(ogg.getDsGeneratoreAzione(), ogg.getDsAzione(), ogg.getDsMotivoScript()));
-            // riga.setString("calc_azione", ogg.getDsGeneratoreAzione() + "/" + ogg.getDsAzione()
-            // + (dsMotivazione != null ? " (" + dsMotivazione + ")" : ""));
             riga.setIdTransazione(ogg.getIdTransazione());
             tabella.add(riga);
         }
@@ -143,7 +136,8 @@ public class SacerLogWebEjb {
             riga.setPathKey(ogg.getPathKey());
             riga.setTipoModifica(ogg.getTipoModifica());
             riga.setTipoValore(ogg.getTipoValore());
-            String flg1 = "0", flg2 = "0";
+            String flg1 = "0";
+            String flg2 = "0";
             /*
              * La logica di apparizione dei link per i valori troppo grandi è la seguente:
              * 
@@ -220,9 +214,6 @@ public class SacerLogWebEjb {
         } else {
             LogVVisEventoPrincTxRowBean row = new LogVVisEventoPrincTxRowBean();
             row.entityToRowBean(rec);
-            // String dsMotivazione = rec.getDsMotivoScript();
-            // row.setString("azione_composita", rec.getDsGeneratoreAzione() + "/" + rec.getDsAzione()
-            // + (dsMotivazione != null ? " (" + dsMotivazione + ")" : ""));
             row.setString("azione_composita",
                     getStringAzioneCalcolata(rec.getDsGeneratoreAzione(), rec.getDsAzione(), rec.getDsMotivoScript()));
             return row;
@@ -254,8 +245,12 @@ public class SacerLogWebEjb {
     public LogVRicEventiTableBean getEventiByOrgTipoClasseDates(String nmApplicazione, String nmOggetto,
             BigDecimal idOrganizzazione, BigDecimal idTipoOggetto, String classeEvento, Date DataDa, Date DataA,
             Integer maxResults) {
-        List<ILogVRicEventi> lista = sacerLogHelper.findEventiByOrgTipoClasseDates(nmApplicazione, nmOggetto,
-                idOrganizzazione, idTipoOggetto, classeEvento, DataDa, DataA, maxResults);
+        CriteriaQuery cq = sacerLogHelper.findEventiByOrgTipoClasseDates(nmApplicazione, nmOggetto, idOrganizzazione,
+                idTipoOggetto, classeEvento, DataDa, DataA);
+        return lazyListHelper.getTableBean(cq, maxResults, this::getTableBeanFrom);
+    }
+
+    public LogVRicEventiTableBean getTableBeanFrom(List<ILogVRicEventi> lista) {
         if (lista == null || lista.isEmpty()) {
             return null;
         } else {
@@ -276,9 +271,6 @@ public class SacerLogWebEjb {
                         riga.setString("nm_organizzazione", rec.getNmAmbiente() + "/" + rec.getNmVersatore());
                     }
                 }
-                // String dsMotivazione = rec.getDsMotivoScript();
-                // riga.setString("azione_composita", rec.getNmGeneratoreAzione() + "/" + rec.getNmAzione()
-                // + (dsMotivazione != null ? " (" + dsMotivazione + ")" : ""));
                 riga.setString("azione_composita", getStringAzioneCalcolata(rec.getNmGeneratoreAzione(),
                         rec.getNmAzione(), rec.getDsMotivoScript()));
                 tabella.add(riga);
@@ -310,10 +302,6 @@ public class SacerLogWebEjb {
                         riga.setString("nm_organizzazione", rec.getNmAmbiente() + "/" + rec.getNmVersatore());
                     }
                 }
-                // String dsMotivazione = rec.getDsMotivoScript();
-                // riga.setString("azione_composita", rec.getNmGeneratoreAzione() + "/" + rec.getNmAzione()
-                // + (dsMotivazione != null ? " (" + dsMotivazione + ")" : ""));
-                // riga.setString("azione_composita",rec.getNmGeneratoreAzione()+"/"+rec.getNmAzione());
                 riga.setString("azione_composita", getStringAzioneCalcolata(rec.getNmGeneratoreAzione(),
                         rec.getNmAzione(), rec.getDsMotivoScript()));
                 tabella.add(riga);
@@ -331,9 +319,6 @@ public class SacerLogWebEjb {
             LogVRicEventiTableBean tabella = new LogVRicEventiTableBean();
             for (LogVRicEventi rec : lista) {
                 LogVRicEventiRowBean riga = new LogVRicEventiRowBean();
-                // String dsMotivazione = rec.getDsMotivoScript();
-                // riga.setString("azione_composita", rec.getNmGeneratoreAzione() + "/" + rec.getNmAzione()
-                // + (dsMotivazione != null ? " (" + dsMotivazione + ")" : ""));
                 riga.setString("azione_composita", getStringAzioneCalcolata(rec.getNmGeneratoreAzione(),
                         rec.getNmAzione(), rec.getDsMotivoScript()));
                 riga.entityToRowBean(rec);

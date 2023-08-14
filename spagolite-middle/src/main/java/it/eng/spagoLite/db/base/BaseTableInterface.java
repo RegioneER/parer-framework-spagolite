@@ -1,7 +1,7 @@
 package it.eng.spagoLite.db.base;
 
 import it.eng.spagoLite.db.base.sorting.SortingRule;
-import it.eng.spagoLite.db.base.table.LazyListBean;
+import it.eng.spagoLite.db.base.table.LazyListInterface;
 
 import java.io.Serializable;
 
@@ -16,6 +16,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
      * Imposta riga corrente sulla prima riga della pagina passata come parametro.
      *
      * @param page
+     *            value
      */
     public void goPage(int page);
 
@@ -57,6 +58,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
      * Imposta il numero della riga corrente (0 - n).
      *
      * @param rigaCorrente
+     *            value
      */
     public void setCurrentRowIndex(int rigaCorrente);
 
@@ -108,7 +110,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
     public int getPages();
 
     /**
-     * @return se l'elenco Ë vuoto
+     * @return se l'elenco √® vuoto
      */
     public boolean isEmpty();
 
@@ -121,29 +123,9 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
      * Carica il table bean a partire dalla tbella passata
      *
      * @param table
+     *            value
      */
     void load(BaseTableInterface<?> table);
-
-    /**
-     * Carica il bean da DB
-     *
-     * @param query
-     * 
-     * @throws EMFError
-     * @throws SQLException
-     */
-    // public void load(ISelectQuery query) throws EMFError, EMFError, SQLException;
-
-    /**
-     * Carica il bean da DB
-     *
-     * @param dataConnection
-     * @param query
-     * 
-     * @throws SQLException
-     * @throws EMFError
-     */
-    // public void load(DataConnection dataConnection, ISelectQuery query) throws EMFError, EMFError, SQLException;
 
     /**
      * Aggiunge una riga all'elenco
@@ -156,6 +138,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
      * Aggiunge una riga all'elenco
      *
      * @param row
+     *            value
      * 
      * @return oggetto generico T aggiunto
      */
@@ -170,7 +153,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
 
     /**
      * Rimuove la riga con indice relativo rowIndex dalla lista e decrementa la "fullSize". Ritorna la riga rimossa
-     * aggiungendogli un attributo che indica l'indice assoluto della riga rispetto la lista se tale indice non era gi‡
+     * aggiungendogli un attributo che indica l'indice assoluto della riga rispetto la lista se tale indice non era gi√†
      * stato settato
      *
      * @param rowIndex
@@ -195,9 +178,9 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
     /**
      * Ritorna la riga passata. Se:
      * <ul>
-     * <li>la tabella Ë vuota</li>
-     * <li>o index Ë < 0</li>
-     * <li>o il numero delle righe Ë minore di index</li>
+     * <li>la tabella √® vuota</li>
+     * <li>o index √® minore di 0</li>
+     * <li>o il numero delle righe √® minore di index</li>
      * </ul>
      *
      * ritorna null.
@@ -213,7 +196,9 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
      * Aggiunge un criterio di ordinamento
      *
      * @param columnName
+     *            value
      * @param sortType
+     *            value
      */
     public void addSortingRule(String columnName, int sortType);
 
@@ -235,7 +220,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
      *
      * @return bean per la paginazione.
      */
-    public LazyListBean getLazyListBean();
+    LazyListInterface getLazyListInterface();
 
     /**
      * Rimuove la riga con indice assoluto RowIndex dalla lista e decrementa la "fullsize"
@@ -252,6 +237,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
      * all'interno della riga stessa. Provvede a ripulire l'indice.
      *
      * @param baseRowInterface
+     *            value
      * 
      * @return la riga aggiunta
      */

@@ -273,6 +273,7 @@ public class NestedList<T extends SingleValueField<?>> extends BaseElements<T> {
      * Compila il row bean con il contenuto della riga corrente
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public void copyToBean() throws EMFError {
         if (table != null && table.size() > 0) {
@@ -288,6 +289,7 @@ public class NestedList<T extends SingleValueField<?>> extends BaseElements<T> {
      *            riga oggetto BaseRowInterface
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public void copyToBean(BaseRowInterface row) throws EMFError {
         for (Field field : this) {

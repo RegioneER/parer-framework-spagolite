@@ -1,5 +1,7 @@
 package it.eng.parer.sacerlog.util.web;
 
+import java.math.BigDecimal;
+
 import it.eng.parer.sacerlog.util.LogParam;
 import it.eng.spagoIFace.model.BaseController;
 import it.eng.spagoLite.ExecutionHistory;
@@ -8,7 +10,6 @@ import it.eng.spagoLite.actions.form.FormAction;
 import it.eng.spagoLite.form.Form;
 import it.eng.spagoLite.form.base.BaseComponent;
 import it.eng.spagoLite.form.base.BaseForm;
-import java.math.BigDecimal;
 
 /**
  *

@@ -1,6 +1,7 @@
 package it.eng.parer.sacerlog.viewEntity;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;

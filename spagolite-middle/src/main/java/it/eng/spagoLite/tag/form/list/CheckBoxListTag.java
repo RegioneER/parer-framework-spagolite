@@ -152,8 +152,8 @@ public class CheckBoxListTag extends AbstractListTag {
                             writeln("   <td class=\"" + className + "\"><input type=\"checkBox\" " + checked
                                     + " name=\"" + getName() + i + "_checkBox\" value=\"S\" type=\"" + singleSelection
                                     + "\"/></td>");
-                            writeln("   <td class=\"" + className + "\">"
-                                    + getLink("", ListAction.NE_DETTAGLIO_DELETE, DELETE_IMG, "", "", i, false, true)
+                            writeln("   <td class=\"" + className + "\">" + getLink("",
+                                    ListAction.NE_DETTAGLIO_CONFIRM_DELETE, DELETE_IMG, "", "", i, false, true)
                                     + "</td>"); // cancellazione dell'elemento
                         }
 

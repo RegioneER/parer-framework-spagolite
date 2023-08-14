@@ -1,5 +1,7 @@
 package it.eng.spagoLite.tag.form.list;
 
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.ENABLE_LAZY_SORT;
+
 import it.eng.spagoCore.configuration.ConfigSingleton;
 import it.eng.spagoIFace.Values;
 import it.eng.spagoLite.db.base.BaseRowInterface;
@@ -306,12 +308,12 @@ public class AbstractListTag extends BaseFormTag<List<SingleValueField<?>>> {
     }
 
     public boolean isLazySortEnabled() {
-        return ConfigSingleton.getEnableLazySort();
+        return ConfigSingleton.getInstance().getBooleanValue(ENABLE_LAZY_SORT.name());
     }
 
     public boolean isListInMemory() {
-        return getComponent().getTable().getLazyListBean() == null
-                || getComponent().getTable().size() == getComponent().getTable().getLazyListBean().getCountResultSize();
+        return getComponent().getTable().getLazyListInterface() == null || getComponent().getTable()
+                .size() == getComponent().getTable().getLazyListInterface().getCountResultSize();
     }
 
     public boolean isMultiRowEdit() {

@@ -1,14 +1,9 @@
 package it.eng.parer.sacerlog.slite.gen.viewbean;
 
-/**
- * ViewBean per la vista Usr_V_Abil_Organiz
- *
- */
-import it.eng.parer.sacerlog.slite.gen.viewbean.LogVUsrAbilOrganizRowBean;
+import java.util.Iterator;
+
 import it.eng.spagoLite.db.base.table.AbstractBaseTable;
 import it.eng.spagoLite.db.oracle.bean.column.TableDescriptor;
-
-import java.util.Iterator;
 
 /**
  * TableBean per la tabella Log_V_Usr_Abil_Organiz

@@ -118,6 +118,7 @@ public class Tree<T extends TreeField<?>> extends BaseElements<T> {
      * Compila il row bean con il contenuto della riga corrente
      *
      * @throws EMFError
+     *             eccezione generica
      */
     public void copyToBean() throws EMFError {
         if (table != null && table.size() > 0) {
@@ -130,8 +131,10 @@ public class Tree<T extends TreeField<?>> extends BaseElements<T> {
      * Compila il row bean con il contenuto del form
      *
      * @param row
+     *            dto row
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public void copyToBean(BaseRowInterface row) throws EMFError {
         for (TreeField field : this) {

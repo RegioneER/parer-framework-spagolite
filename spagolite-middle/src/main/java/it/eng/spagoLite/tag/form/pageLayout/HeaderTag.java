@@ -1,9 +1,13 @@
 package it.eng.spagoLite.tag.form.pageLayout;
 
-import it.eng.spagoCore.configuration.ConfigSingleton;
-import it.eng.spagoCore.util.JavaScript;
-import it.eng.spagoLite.tag.NewLineTag;
-import it.eng.spagoLite.tag.form.BaseTag;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_1_ALT;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_1_TITLE;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_1_URL;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_APP_ALT;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_APP_TITLE;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_APP_URL;
+import static it.eng.spagoCore.configuration.ConfigProperties.URIProperty.LOGO_1_RELATIVE;
+import static it.eng.spagoCore.configuration.ConfigProperties.URIProperty.LOGO_APP_RELATIVE;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,28 +15,27 @@ import javax.servlet.jsp.JspException;
 
 import org.apache.commons.lang3.StringUtils;
 
+import it.eng.spagoCore.configuration.ConfigSingleton;
+import it.eng.spagoCore.util.JavaScript;
+import it.eng.spagoLite.tag.NewLineTag;
+import it.eng.spagoLite.tag.form.BaseTag;
+
 public class HeaderTag extends BaseTag {
 
     private static final String IMG_HOME = "/img/base/home.png";
     private static final String IMG_LOGOUT = "/img/base/IconaLogout.png";
     private static final String IMG_CAMBIO_STRUT = "/img/base/IconaCambioStruttura.png";
-    private static final String IMG_SACER = "/img/logo_sacer_small.png";
 
     private static final long serialVersionUID = 1L;
-    private static final String HREF_BASE = "/menu/AdapterHTTP?";
-    private static final String HREF_ACTION = HREF_BASE + "action_name=";
     private static final String HOME_PAGE = "Home.html";
     private boolean showHomeBtn = true;
     private boolean showChangeOrganizationBtn = true;
     private String changeOrganizationBtnDescription = "Cambio organizzazione";
     private String description = "";
 
-    // private static final String HOME_PAGE =
-    // "HOME_ACTION&CURRENT_TOP_MENU_ENTRY=SIPS_GESTIONE&VOID_SESSION=TRUE";
-
     @Override
     public int doStartTag() throws JspException {
-        String description = this.description;
+        ConfigSingleton configSingleton = ConfigSingleton.getInstance();
         HttpServletRequest httpRequest = (HttpServletRequest) pageContext.getRequest();
         if ("".equals(description) && getForm() != null) {
             description = JavaScript.stringToHTMLString(getForm().getDescription());
@@ -48,29 +51,19 @@ public class HeaderTag extends BaseTag {
         writeln("</div>");
         writeln("<!--Header-->");
         writeln("<div class=\"header\">");
-        writeln(" <img class=\"floatLeft\" src=\"" + contextPath + IMG_SACER + "\" alt=\"Logo\"/>");
 
-        if (StringUtils.isNotBlank(ConfigSingleton.getLogo1_url())) {
-            writeln("<a href=\"");
-            writeln(ConfigSingleton.getLogo1_url());
-            writeln("\"  title=\"");
-            writeln(ConfigSingleton.getLogo1_title());
-            writeln("\">");
+        // Logo applicazione (in alto a sinistra)
+        final String logoApplicazione = prepareImage(configSingleton.getStringValue(LOGO_APP_RELATIVE.name()),
+                configSingleton.getStringValue(LOGO_APP_ALT.name()),
+                configSingleton.getStringValue(LOGO_APP_URL.name()),
+                configSingleton.getStringValue(LOGO_APP_TITLE.name()), contextPath, "floatLeft");
+        writeln(logoApplicazione);
 
-            writeln("<img class=\"floatRight\" src=\"");
-            writeln(contextPath + ConfigSingleton.getLogo1_relativePath());
-            writeln("\" alt=\"");
-            writeln(ConfigSingleton.getLogo1_alt());
-            writeln("\"/>");
-
-            writeln("</a>");
-        } else {
-            writeln("<img class=\"floatRight\" src=\"");
-            writeln(contextPath + ConfigSingleton.getLogo1_relativePath());
-            writeln("\" alt=\"");
-            writeln(ConfigSingleton.getLogo1_alt());
-            writeln("\"/>");
-        }
+        // Logo 1 (in alto a destra)
+        final String logo1 = prepareImage(configSingleton.getStringValue(LOGO_1_RELATIVE.name()),
+                configSingleton.getStringValue(LOGO_1_ALT.name()), configSingleton.getStringValue(LOGO_1_URL.name()),
+                configSingleton.getStringValue(LOGO_1_TITLE.name()), contextPath, "floatRight");
+        writeln(logo1);
 
         writeln("  <div class=\"newLine\"></div>");
 
@@ -86,11 +79,6 @@ public class HeaderTag extends BaseTag {
                     + "\" alt=\"Torna alla pagina principale\" title=\"Torna alla pagina principale\" />");
             writeln("    </a>");
             writeln(" <h2 class=\"floatLeft\">");
-            // for(ExecutionHistory his : SessionManager.getExecutionHistory(httpRequest.getSession())){
-            // if(his.getForm()!=null)
-            // writeln( his.getForm().getDescription() +" >> ");
-            // }
-
             writeln(description + "</h2>");
             writeln("<div class=\"right\">");
             if (showChangeOrganizationBtn) {
@@ -107,18 +95,41 @@ public class HeaderTag extends BaseTag {
 
             writeln("</div>");
             writeln("  </div>");
-
-        } else if (!"".equals(this.description)) {
-            writeln(" <h2 class=\"floatLeft\">" + description + "</h2>");
         }
         return SKIP_BODY;
 
     }
 
+    private String prepareImage(String relativePath, String alt, String url, String title, String contextPath,
+            String cssClass) {
+        StringBuilder prepareImage = new StringBuilder();
+
+        StringBuilder img = new StringBuilder();
+        img.append("<img class=\"").append(cssClass).append("\" src=\"");
+        img.append(contextPath).append(relativePath);
+        img.append("\" alt=\"");
+        img.append(alt);
+        img.append("\"/>");
+
+        if (StringUtils.isNotBlank(url)) {
+            prepareImage.append("<a href=\"");
+            prepareImage.append(url);
+            prepareImage.append("\"  title=\"");
+            prepareImage.append(title);
+            prepareImage.append("\">");
+
+            prepareImage.append(img.toString());
+
+            prepareImage.append("</a>");
+        } else {
+            prepareImage.append(img.toString());
+        }
+
+        return prepareImage.toString();
+    }
+
     private String getHomePage(String contextPath) {
-        return contextPath + "/" +
-        // HREF_ACTION +
-                JavaScript.stringToHTMLString(HOME_PAGE);
+        return contextPath + "/" + JavaScript.stringToHTMLString(HOME_PAGE);
     }
 
     public boolean isShowHomeBtn() {
@@ -131,7 +142,6 @@ public class HeaderTag extends BaseTag {
 
     @Override
     public int doEndTag() throws JspException {
-
         return EVAL_PAGE;
     }
 

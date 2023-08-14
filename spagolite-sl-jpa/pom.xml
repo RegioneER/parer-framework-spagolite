@@ -7,29 +7,33 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>4.1.28-SNAPSHOT</version>
+        <version>4.11.1-SNAPSHOT</version>
     </parent>
     <dependencies>
         <dependency>
             <groupId>org.jboss.spec</groupId>
-            <artifactId>jboss-javaee-6.0</artifactId>
+            <artifactId>jboss-jakartaee-8.0</artifactId>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>eclipselink</artifactId>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!--        
-                <dependency> 
-                    <groupId>commons-collections</groupId>
-                    <artifactId>commons-collections</artifactId>
-                </dependency> 
-        -->
+        <dependency> 
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <scope>provided</scope>
+        </dependency> 
         <dependency> 
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
+        </dependency> 
+        <dependency> 
+            <groupId>it.eng.parer</groupId>
+            <artifactId>spagofat-paginator-ejb</artifactId>
+             <type>ejb</type>
         </dependency> 
                 
     </dependencies>

@@ -1,9 +1,9 @@
 package it.eng.parer.sacerlog.job;
 
-import it.eng.parer.jboss.timer.common.CronSchedule;
-import it.eng.parer.jboss.timer.common.JbossJobTimer;
 import static it.eng.parer.sacerlog.job.SacerLogTimer.TIME_DURATION;
+
 import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -15,8 +15,12 @@ import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import it.eng.parer.jboss.timer.common.CronSchedule;
+import it.eng.parer.jboss.timer.common.JbossJobTimer;
 
 /**
  *

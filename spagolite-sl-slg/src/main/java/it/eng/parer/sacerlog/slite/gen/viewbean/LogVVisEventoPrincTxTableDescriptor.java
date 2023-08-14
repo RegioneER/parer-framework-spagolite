@@ -1,12 +1,11 @@
 package it.eng.parer.sacerlog.slite.gen.viewbean;
 
-import it.eng.spagoLite.db.oracle.bean.column.ColumnDescriptor;
-import it.eng.spagoLite.db.oracle.bean.column.TableDescriptor;
-
 import java.sql.Types;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import javax.annotation.Generated;
+
+import it.eng.spagoLite.db.oracle.bean.column.ColumnDescriptor;
+import it.eng.spagoLite.db.oracle.bean.column.TableDescriptor;
 
 /**
  * @author Sloth

@@ -1,8 +1,13 @@
 package it.eng.parer.sacerlog.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the APL_V_LOG_TI_EVN_CON_ORIGINE database table.
@@ -11,15 +16,12 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "APL_V_LOG_TI_EVN_CON_ORIGINE", schema = "SACER_IAM")
 @NamedQueries({ @NamedQuery(name = "AplVLogTiEvnConOrigine.findAll", query = "SELECT a FROM AplVLogTiEvnConOrigine a"),
-        @NamedQuery(name = "AplVLogTiEvnConOrigine.findByApplicIdAzioneCompSw", query = "SELECT a FROM AplVLogTiEvnConOrigine a WHERE a.nmApplic = :nmApplic AND a.idAzionePaginaCompSw = :idAzionePaginaCompSw"),
+        @NamedQuery(name = "AplVLogTiEvnConOrigine.findByApplicIdAzioneCompSw", query = "SELECT a FROM AplVLogTiEvnConOrigine a WHERE a.nmApplic = :nmApplic AND a.id.idAzionePaginaCompSw = :idAzionePaginaCompSw"),
         @NamedQuery(name = "AplVLogTiEvnConOrigine.findByApplicFinestraAzione", query = "SELECT a FROM AplVLogTiEvnConOrigine a WHERE a.nmApplic = :nmApplic AND a.nmPaginaCompSw = :nmPaginaCompSw AND a.nmAzionePaginaCompSw = :nmAzionePaginaCompSw") })
 public class AplVLogTiEvnConOrigine implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private BigDecimal idApplic;
-    private BigDecimal idAzionePaginaCompSw;
-    private BigDecimal idPaginaCompSw;
-    private BigDecimal idTipoEvento;
+    private AplVLogTiEvnConOrigineId aplVLogTiEvnConOrigineId;
     private String nmApplic;
     private String nmAzionePaginaCompSw;
     private String nmPaginaCompSw;
@@ -31,44 +33,13 @@ public class AplVLogTiEvnConOrigine implements Serializable {
     public AplVLogTiEvnConOrigine() {
     }
 
-    @Id
-    @Column(name = "ID_APPLIC")
-    public BigDecimal getIdApplic() {
-        return this.idApplic;
+    @EmbeddedId
+    public AplVLogTiEvnConOrigineId getAplVLogTiEvnConOrigineId() {
+        return aplVLogTiEvnConOrigineId;
     }
 
-    public void setIdApplic(BigDecimal idApplic) {
-        this.idApplic = idApplic;
-    }
-
-    @Id
-    @Column(name = "ID_AZIONE_PAGINA_COMP_SW")
-    public BigDecimal getIdAzionePaginaCompSw() {
-        return this.idAzionePaginaCompSw;
-    }
-
-    public void setIdAzionePaginaCompSw(BigDecimal idAzionePaginaCompSw) {
-        this.idAzionePaginaCompSw = idAzionePaginaCompSw;
-    }
-
-    @Id
-    @Column(name = "ID_PAGINA_COMP_SW")
-    public BigDecimal getIdPaginaCompSw() {
-        return this.idPaginaCompSw;
-    }
-
-    public void setIdPaginaCompSw(BigDecimal idPaginaCompSw) {
-        this.idPaginaCompSw = idPaginaCompSw;
-    }
-
-    @Id
-    @Column(name = "ID_TIPO_EVENTO")
-    public BigDecimal getIdTipoEvento() {
-        return this.idTipoEvento;
-    }
-
-    public void setIdTipoEvento(BigDecimal idTipoEvento) {
-        this.idTipoEvento = idTipoEvento;
+    public void setAplVLogTiEvnConOrigineId(AplVLogTiEvnConOrigineId aplVLogTiEvnConOrigineId) {
+        this.aplVLogTiEvnConOrigineId = aplVLogTiEvnConOrigineId;
     }
 
     @Column(name = "NM_APPLIC")

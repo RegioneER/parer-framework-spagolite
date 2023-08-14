@@ -4,14 +4,19 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the LOG_V_LIS_EVENTO_BY_SCRIPT database table.
  *
  */
 @Entity
-@Table(name = "SACER_LOG.LOG_V_LIS_EVENTO_BY_SCRIPT")
+@Table(schema = "SACER_LOG", name = "LOG_V_LIS_EVENTO_BY_SCRIPT")
 @NamedQueries({
         @NamedQuery(name = "LogVLisEventoByScript.findByTipoOggettoId", query = "SELECT l FROM LogVLisEventoByScript l WHERE l.idTipoOggetto = :idTipoOggetto AND l.idOggetto = :idOggetto"),
         @NamedQuery(name = "LogVLisEventoByScript.findDistinctByNmApplic", query = "SELECT DISTINCT l.idTipoOggetto, l.idOggetto, l.nmTipoOggetto FROM LogVLisEventoByScript l WHERE l.nmApplic = :nmApplic") })

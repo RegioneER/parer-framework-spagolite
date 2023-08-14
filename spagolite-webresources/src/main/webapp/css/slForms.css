@@ -280,6 +280,34 @@ div#content .wizardBar .prevDisabledLink{
     padding: 0 0.1em 0 1em; border: 1px solid #CCC;
 }
 
+/*button con spinner fa integrato (ereditano la stessa grafica/struttura di css di input.pulsante*/
+button.pulsantespin {
+	margin-right: 2px !important;
+	display: inline-block;
+	line-height: 18px;
+	padding: 0px;
+	font-family: verdana, arial, tahoma, sans-serif;
+}
+
+div#content button.pulsantespin:disabled {
+	background-color: gray;
+}
+
+div#content button.pulsantespin {
+	background-color: #D3101C;
+	color: white;
+	font-weight: bold;
+	font-size: 10px;
+	width: auto;
+	border: 0px none;
+	height: 20px;
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-bottom: 3px;
+	cursor: pointer;
+	margin-left: 3px;
+}
+
 .wizardTitle {color: #07752C; font-size: 120%;} 
 .wizard {border: 2px double #ffffff; border-bottom: 0px solid #ffffff;} 
 /*
@@ -603,4 +631,48 @@ span.tablesection { background-repeat:no-repeat;
 .tooltip:hover .tooltiptext {
 	visibility: visible;
 	opacity: 1;
+}
+
+/* loader overlay su tutta la pagina*/
+.overlay {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: #222;
+    opacity:0.3;
+}
+
+.overlay__inner {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.overlay__content {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.spinner {
+    width: 75px;
+    height: 75px;
+    display: inline-block;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.05);
+    border-top-color: #fff;
+    animation: spin 1s infinite linear;
+    border-radius: 100%;
+    border-style: solid;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
 }

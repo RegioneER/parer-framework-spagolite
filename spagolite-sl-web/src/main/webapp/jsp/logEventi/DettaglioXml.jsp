@@ -3,7 +3,14 @@
 
 <sl:html>
     <sl:head title="Dettaglio xml" >
-         <script src="<c:url value='/js/help/inithighlightingjs.js' />" type="text/javascript"></script>    
+        <script src="<c:url value='/js/help/inithighlightingjs.js' />" type="text/javascript"></script>    
+        <script type='text/javascript' >
+            $(document).ready(function () {
+                $("[name='operation__scarica_xml']").click(function () {
+                    $('.overlay').hide();
+                });
+            });
+        </script>
     </sl:head>
     <sl:body>
         <sl:header showChangeOrganizationBtn="false" />
@@ -16,8 +23,10 @@
             <slf:fieldSet borderHidden="false" >
                 <slf:lblField name="<%=GestioneLogEventiForm.ValoreXml.CL_XML%>" colSpan="4" controlWidth="w100" />
                 <sl:newLine />
+                <slf:lblField name="<%=GestioneLogEventiForm.ValoreXml.SCARICA_XML%>" colSpan="4" controlWidth="w100" />
+                <sl:newLine />
             </slf:fieldSet>
-		</sl:content>
+        </sl:content>
         <sl:footer />
     </sl:body>
 </sl:html>

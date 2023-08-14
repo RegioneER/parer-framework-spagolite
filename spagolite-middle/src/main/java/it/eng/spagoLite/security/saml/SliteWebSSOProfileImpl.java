@@ -1,6 +1,9 @@
 package it.eng.spagoLite.security.saml;
 
 import org.opensaml.saml2.core.AuthnRequest;
+import org.opensaml.saml2.core.Issuer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.saml.websso.WebSSOProfileImpl;
 
 /**
@@ -8,6 +11,9 @@ import org.springframework.security.saml.websso.WebSSOProfileImpl;
  * @author MIacolucci
  */
 public class SliteWebSSOProfileImpl extends WebSSOProfileImpl {
+
+    @Autowired
+    private ApplicationContext ctx;
 
     @Override
     protected void buildAuthnContext(AuthnRequest request,
@@ -21,6 +27,19 @@ public class SliteWebSSOProfileImpl extends WebSSOProfileImpl {
         String des = request.getDestination();
         if (des != null && des.contains(".lepida.it")) {
             super.buildAuthnContext(request, options);
+        }
+        /*
+         * Risoluzione problema Puglia che voleva aggiungere al nome dell'Issuer (EntityId) un suffisso riguardante il
+         * tenant
+         */
+
+        String suffissoIssuer = null;
+        if (ctx.containsBean("suffissoIssuerSamlRequest")) {
+            suffissoIssuer = (String) ctx.getBean("suffissoIssuerSamlRequest");
+        }
+        if (suffissoIssuer != null) {
+            Issuer iss = request.getIssuer();
+            iss.setValue(iss.getValue() + suffissoIssuer);
         }
     }
 

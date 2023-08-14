@@ -1,14 +1,9 @@
 package it.eng.parer.sacerlog.slite.gen.viewbean;
 
-/**
- * ViewBean per la vista Apl_V_Tipo_Oggetto
- *
- */
-import it.eng.parer.sacerlog.slite.gen.viewbean.AplVLogTiOggRowBean;
+import java.util.Iterator;
+
 import it.eng.spagoLite.db.base.table.AbstractBaseTable;
 import it.eng.spagoLite.db.oracle.bean.column.TableDescriptor;
-
-import java.util.Iterator;
 
 /**
  * TableBean per la tabella Apl_V_Tipo_Oggetto

@@ -2,15 +2,28 @@ package it.eng.parer.sacerlog.entity;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the LOG_EVENTO database table.
  *
  */
 @Entity
-@Table(name = "SACER_LOG.LOG_EVENTO")
+@Table(schema = "SACER_LOG", name = "LOG_EVENTO")
 @NamedQueries({ @NamedQuery(name = "LogEvento.findAll", query = "SELECT l FROM LogEvento l"),
         @NamedQuery(name = "LogEvento.deleteAll", query = "DELETE FROM LogEvento") })
 public class LogEvento implements Serializable {
@@ -33,7 +46,7 @@ public class LogEvento implements Serializable {
     }
 
     @Id
-    @SequenceGenerator(name = "LOG_EVENTO_IDEVENTO_GENERATOR", sequenceName = "SACER_LOG.SLOG_EVENTO", allocationSize = 1)
+    @SequenceGenerator(name = "LOG_EVENTO_IDEVENTO_GENERATOR", schema = "SACER_LOG", sequenceName = "SLOG_EVENTO", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_EVENTO_IDEVENTO_GENERATOR")
     @Column(name = "ID_EVENTO")
     public long getIdEvento() {

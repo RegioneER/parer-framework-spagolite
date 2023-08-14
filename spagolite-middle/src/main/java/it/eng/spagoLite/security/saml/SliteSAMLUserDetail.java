@@ -19,7 +19,7 @@ import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 
 public class SliteSAMLUserDetail implements SAMLUserDetailsService {
 
-    private static Logger logger = LoggerFactory.getLogger(SliteSAMLUserDetail.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(SliteSAMLUserDetail.class.getName());
     // Costanti attributi SAML valide per PUGLIA E VECCHIO IDP INTERNO PARER
     protected static final String USERID = "urn:oid:0.9.2342.19200300.100.1.1";
     protected static final String COGNOME = "urn:oid:2.5.4.4";
@@ -34,6 +34,7 @@ public class SliteSAMLUserDetail implements SAMLUserDetailsService {
     protected static final String SPID_NOME = "nome";
     protected static final String SPID_COGNOME = "cognome";
     protected static final String SPID_CODICE_FISCALE = "CodiceFiscale";
+    protected static final String SPID_EMAIL = "emailAddressPersonale";
     protected static final String SPID_AUTHENTICATION_METHOD_ENABLED_1 = "Primo Livello SPID";
     protected static final String SPID_AUTHENTICATION_METHOD_ENABLED_2 = "Secondo Livello SPID";
     protected static final String SPID_AUTHENTICATION_METHOD_ENABLED_3 = "Terzo Livello SPID";
@@ -41,6 +42,8 @@ public class SliteSAMLUserDetail implements SAMLUserDetailsService {
     protected static final String SPID_PUGLIA_NOME = "nome";
     protected static final String SPID_PUGLIA_COGNOME = "familyName";
     protected static final String SPID_PUGLIA_CODICE_FISCALE = "fiscalNumber";
+    protected static final String SPID_PUGLIA_EMAIL = "email"; // DA VERIFICARE !!! INserito leggendo il documento di
+                                                               // specifiche di integrazione SPID Puglia
 
     // Messaggi utilizzabili nelle classi derivate nella funziona verificaEsistenzaUtente()
     protected static final String MSG_TROPPE_OCCORRENZE_UTENTE = "Gentile %s %s, non è autorizzato ad accedere ai nostri sistemi tramite utente SPID con codice fiscale %s, sono state rilevate più occorrenze nel database";
@@ -48,7 +51,7 @@ public class SliteSAMLUserDetail implements SAMLUserDetailsService {
     protected static final String MSG_UTENTE_LIVELLO_AUTH_INADEGUATO = "Gentile %s %s, non è autorizzato ad accedere ai nostri sistemi con codice fiscale %s e livello di autorizzazione %s";
     protected static final String MSG_UTENTE_SPID_NON_VALIDO = "Gentile %s %s, non è autorizzato ad accedere ai nostri sistemi con questo utente SPID senza codice fiscale";
     protected static final String MSG_UTENTE_AGGIUNTIVO_RER = ", contatti helpdeskparer@regione.emilia-romagna.it per accedere.";
-    // Inizializza la proprietà di sistema abilita-livello-1-spid sull AppServer
+    // Inizializza la proprietà  di sistema abilita-livello-1-spid sull AppServer
     protected static boolean abilitaLivello1Spid = System.getProperty("abilita-livello-1-spid", "false").equals("true");
 
     @Override
@@ -58,7 +61,7 @@ public class SliteSAMLUserDetail implements SAMLUserDetailsService {
         // String codiceFiscaleSpid = getValue(credential, SPID_CODICE_FISCALE);
         if (verificaSeUtenteSpidValido(credential, u)) {
             /**
-             * * SI TRATTA DI UN UTENTE SPID VALIDO! Ed ho gi� determinato se RER o PUGLIA *
+             * * SI TRATTA DI UN UTENTE SPID VALIDO! Ed ho già determinato se RER o PUGLIA *
              */
             List<UtenteDb> l = null;
             if (u.getUserType().equals(IUser.UserType.SPID_PUGLIA)) {
@@ -76,11 +79,11 @@ public class SliteSAMLUserDetail implements SAMLUserDetailsService {
                 String msg = String.format(getMessaggioUtente(MSG_UTENTE_NON_AUTORIZZATO, u), u.getNome(),
                         u.getCognome(), u.getCodiceFiscale());
                 logger.warn(msg);
-                u.setUtenteDaAssociare(true); // nella prossima action si verr� rediretti su IAM !
+                u.setUtenteDaAssociare(true); // nella prossima action si verrÃ  rediretti su IAM !
             } else {
                 /*
                  * L'utente esiste sul db locale PARER recupero l'id dell'utente e lo setto nell'oggetto utente e lo
-                 * metto in sessione. Modifica fatta perch� idp generici non conoscono l'id dell'utente del db di iam.
+                 * metto in sessione. Modifica fatta perchè idp generici non conoscono l'id dell'utente del db di iam.
                  */
                 UtenteDb ut = l.iterator().next();
                 u.setUsername(ut.getUsername());
@@ -94,21 +97,24 @@ public class SliteSAMLUserDetail implements SAMLUserDetailsService {
              */
             u.setCognome(getValue(credential, COGNOME));
             u.setNome(getValue(credential, NOME));
-            // Al PARER l'ID_UTENTE � quello vero del DB, in PUGLIA � un altro ID che non si sa (forse il codice
+            // Al PARER l'ID_UTENTE è quello vero del DB, in PUGLIA è un altro ID che non si sa (forse il codice
             // fiscale)
             String str = getValue(credential, USERID);
             if (NumberUtils.isCreatable(str)) {
                 u.setIdUtente(Integer.parseInt(getValue(credential, USERID)));
             } else {
-                logger.info("Nell'attributo SAML [{}] non � presente un dato numerico", USERID);
+                logger.info("Nell'attributo SAML [{}] non è presente un dato numerico", USERID);
                 u.setIdUtente(0);
             }
             u.setUsername(getValue(credential, USERNAME));
             // Aggiunge all'utente arrivato da SAML i dati provenienti dal DB
             UtenteDb uDb = getUtentePerUsername(u.getUsername());
-            u.setIdUtente(uDb.getId());
-            u.setScadenzaPwd(uDb.getDataScadenzaPassword());
-            u.setCodiceFiscale(uDb.getCodiceFiscale());
+            /* nel caso di DPI il metodo non è ridefinito e la superclasse torna un null che va controllato! */
+            if (uDb != null) {
+                u.setIdUtente(uDb.getId());
+                u.setScadenzaPwd(uDb.getDataScadenzaPassword());
+                u.setCodiceFiscale(uDb.getCodiceFiscale());
+            }
         }
         String messaggioDiLog = "L'utente " + u.getUsername() + " ha effettuato un login";
         if (getValue(credential, SPID_CODE) != null) {
@@ -182,16 +188,18 @@ public class SliteSAMLUserDetail implements SAMLUserDetailsService {
     }
 
     /*
-     * Determina se un utente � un utente SPID oppure un utente proveniente da un classico IDP normale Inoltre
-     * verifica che se si tratta di un utente RER o PUGLIA e controlla che esista il codice fiscale. Se esiste il codice
-     * fiscale in caso di RER verifica i livelli di autenticazione 1 o 2 e solleva un'eccezione opportuna nel caso in
-     * cui non sia autorizzata. Nel caso di Puglia...
+     * Determina se un utente è un utente SPID oppure un utente proveniente da un classico IDP normale Inoltre verifica
+     * che se si tratta di un utente RER o PUGLIA e controlla che esista il codice fiscale. Se esiste il codice fiscale
+     * in caso di RER verifica i livelli di autenticazione 1 o 2 e solleva un'eccezione opportuna nel caso in cui non
+     * sia autorizzata. Nel caso di Puglia...
      */
     protected boolean verificaSeUtenteSpidValido(SAMLCredential credential, User u) throws UsernameNotFoundException {
         if (getValue(credential, SPID_CODE) != null) {
             // SE PROVIENE DA UN IDP SPID...
             String codiceFiscaleSpid = getValue(credential, SPID_CODICE_FISCALE);
             String codiceFiscaleSpidPuglia = getValue(credential, SPID_PUGLIA_CODICE_FISCALE);
+            String emailSpid = getValue(credential, SPID_EMAIL);
+            String emailSpidPuglia = getValue(credential, SPID_PUGLIA_EMAIL);
             if (codiceFiscaleSpid != null) {
                 // RAMO RER
                 // MAC#26002 - Correzione gestione proprieta di sistema relativa al livello di autenticazione spid
@@ -199,10 +207,11 @@ public class SliteSAMLUserDetail implements SAMLUserDetailsService {
                 u.setCognome(getValue(credential, SPID_COGNOME));
                 u.setNome(getValue(credential, SPID_NOME));
                 u.setCodiceFiscale(codiceFiscaleSpid);
+                u.setEmail(emailSpid);
                 u.setUserType(User.UserType.SPID_FEDERA);
                 /*
-                 * Se � stato abilitato il livello uno allora autorizza uno dei tre metodi di autenticazione 1-2-3
-                 * oppure se non � abilitato il livello uno permette solo i livelli 2-3
+                 * Se è stato abilitato il livello uno allora autorizza uno dei tre metodi di autenticazione 1-2-3
+                 * oppure se non è abilitato il livello uno permette solo i livelli 2-3
                  */
                 if (metodoAutenticazioneSpid != null && ((isAbilitaLivello1Spid()
                         && (metodoAutenticazioneSpid.equalsIgnoreCase(SPID_AUTHENTICATION_METHOD_ENABLED_1)
@@ -227,6 +236,7 @@ public class SliteSAMLUserDetail implements SAMLUserDetailsService {
                 u.setCodiceFiscale(codiceFiscaleSpidPuglia.substring(6));
                 u.setCognome(getValue(credential, SPID_PUGLIA_COGNOME));
                 u.setNome(getValue(credential, SPID_PUGLIA_NOME));
+                u.setEmail(emailSpidPuglia);
                 u.setUserType(User.UserType.SPID_PUGLIA);
             } else { // Interrompe il flusso con un'eccezione!
                 String msg = String.format(getMessaggioUtente(MSG_UTENTE_SPID_NON_VALIDO, u), u.getNome(),

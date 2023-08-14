@@ -66,8 +66,8 @@ public class AbstractListNavBarTag extends AbstractListTag {
     protected void writePrev() throws JspException {
         BaseTableInterface<?> table = getComponent().getTable();
         boolean enabled = table.getCurrentRowIndex() > 0;
-        enabled = (table.getLazyListBean() != null) ? (enabled || table.getLazyListBean().getFirstResult() > 0)
-                : enabled;
+        enabled = (table.getLazyListInterface() != null)
+                ? (enabled || table.getLazyListInterface().getFirstResult() > 0) : enabled;
         if (table != null) {
             if (!modificainCorso() && enabled) {
                 // writeLink(ListAction.NE_PREV, PREV);
@@ -113,8 +113,8 @@ public class AbstractListNavBarTag extends AbstractListTag {
 
     protected void writeNext() throws JspException {
         BaseTableInterface<?> table = getComponent().getTable();
-        boolean enabled = (table.getLazyListBean() != null)
-                ? table.getCurrentRowIndex() + table.getLazyListBean().getFirstResult() < table.fullSize() - 1
+        boolean enabled = (table.getLazyListInterface() != null)
+                ? table.getCurrentRowIndex() + table.getLazyListInterface().getFirstResult() < table.fullSize() - 1
                 : table.getCurrentRowIndex() < table.size() - 1;
         if (table != null) {
             if (!modificainCorso() && enabled) {
@@ -160,9 +160,9 @@ public class AbstractListNavBarTag extends AbstractListTag {
     protected void writeRecordCounter() throws JspException {
         BaseTableInterface<?> table = getComponent().getTable();
         if (table != null && table.size() > 0) {
-            if (table.getLazyListBean() != null) {
+            if (table.getLazyListInterface() != null) {
                 writeln("<span class=\"listLabel\">Record "
-                        + (table.getCurrentRowIndex() + table.getLazyListBean().getFirstResult() + 1) + " di "
+                        + (table.getCurrentRowIndex() + table.getLazyListInterface().getFirstResult() + 1) + " di "
                         + table.fullSize() + "</span>");
             } else {
                 writeln("<span class=\"listLabel\">Record " + (table.getCurrentRowIndex() + 1) + " di "
@@ -185,8 +185,8 @@ public class AbstractListNavBarTag extends AbstractListTag {
 
             if (!isListInMemory() && !isLazySortEnabled()) {
                 writeln("<span class=\"listLabel\">Lista non ordinabile (superati i "
-                        + getComponent().getTable().getLazyListBean().getMaxResult() + " record)</span>");
-            } else if (getComponent().getTable().getLazyListBean() == null) {
+                        + getComponent().getTable().getLazyListInterface().getMaxResult() + " record)</span>");
+            } else if (getComponent().getTable().getLazyListInterface() == null) {
                 // writeln("Lista non ordinabile");
             }
         }
@@ -257,8 +257,8 @@ public class AbstractListNavBarTag extends AbstractListTag {
     protected void writeDelete() throws JspException {
         BaseTableInterface<?> table = getComponent().getTable();
         if (table != null && table.getPageSize() > 0 && table.size() > 0 && isRowDeletable(table.getCurrentRow())) {
-            writeln("<span class=\"floatRight\">" + getLink("", ListAction.NE_DETTAGLIO_DELETE, DELETE_IMG, null, null,
-                    table.getCurrentPageIndex(), false, true, getMainNavTable()) + "</span>");
+            writeln("<span class=\"floatRight\">" + getLink("", ListAction.NE_DETTAGLIO_CONFIRM_DELETE, DELETE_IMG,
+                    null, null, table.getCurrentPageIndex(), false, true, getMainNavTable()) + "</span>");
         }
     }
 

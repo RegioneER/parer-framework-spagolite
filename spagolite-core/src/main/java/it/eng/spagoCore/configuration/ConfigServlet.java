@@ -1,193 +1,256 @@
-/**
-
-    Copyright 2004, 2007 Engineering Ingegneria Informatica S.p.A.
-
-    This file is part of Spago.
-
-    Spago is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    any later version.
-
-    Spago is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with Spago; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
- **/
 package it.eng.spagoCore.configuration;
 
-import java.io.FileNotFoundException;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Stream;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-/*
- * DATE            CONTRIBUTOR/DEVELOPER    NOTE
- * 13-12-2004              Butano   Se afRootPath == null chiamta a getResourcesAsStream()										    
- **/
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Servlet di configurazione di SpagoLite.
+ *
+ * Supporta i parametri di configurazione definiti dalle costanti sottostanti.
+ */
 public class ConfigServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigServlet.class.getName());
 
-    /**
-     * Oggetto che permette di leggere la configurazione tramite il contesto della servlet, indispensabile se
-     * l'applicazione viene rilasciata sotto forma di WAR che non viene espanso.
-     */
-    // class StreamCreatorConfiguration implements IConfigurationCreator {
-    //
-    // public InputStream getInputStream(String resourceName) {
-    // ServletContext context = getServletConfig().getServletContext();
-    // InputStream resourcesStream = context.getResourceAsStream(resourceName);
-    // return resourcesStream;
-    // }
-    //
-    // public SourceBean createConfiguration(String configName) throws SourceBeanException {
-    // SourceBean result = null;
-    // InputStream resourcesStream = getInputStream(configName);
-    //
-    // try {
-    // result = SourceBean.fromXMLStream(new InputSource(resourcesStream));
-    // } finally {
-    // if (resourcesStream != null) {
-    // try {
-    // resourcesStream.close();
-    // } catch (Exception ex) {
-    // throw new SourceBeanException(ex.getMessage());
-    // }
-    // }
-    // }
-    // return result;
-    // }
-    //
-    // }
+    // cache
+    private final Map<String, String> configCache = new HashMap<>();
 
+    @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        ConfigSingleton.set_contextRoot(config.getServletContext().getContextPath());
-        // String afRootPath = config.getInitParameter("AF_ROOT_PATH");
-        String afConfigFile = config.getInitParameter("AF_CONFIG_FILE");
-        // Setto il parametro per l'abilitazione dell'help online
-        if (config.getInitParameter("enableHelpOnline") != null) {
-            Boolean enableHelpOnline = new Boolean(config.getInitParameter("enableHelpOnline"));
-            ConfigSingleton.setEnableHelpOnline(enableHelpOnline);
-            // Setto il parametro con l'URI dove sono deployate le pagine html dell'help
-            if (config.getInitParameter("helpServerURI") != null) {
-                ConfigSingleton.setHelpServerURI(config.getInitParameter("helpServerURI"));
+
+        ConfigSingleton configSingleton = ConfigSingleton.getInstance();
+        configSingleton.setContextPath(config.getServletContext().getContextPath());
+        final String appPrefix = config.getServletContext().getContextPath().replace("/", "");
+
+        // fill cache standard properties
+        Stream.of(ConfigProperties.StandardProperty.values()).forEach(p -> {
+            configCache.put(p.name(), getValue(config, appPrefix, p.getPropName(), p.getPropDefaultValue()));
+        });
+
+        // fill cache URI properties
+        Stream.of(ConfigProperties.URIProperty.values()).forEach(p -> {
+
+            // Imposto i parametri per la visualizzazione dei loghi (risorse URI)
+            final String absolutePath = getValue(config, appPrefix, p.getPropAbsolutePathName(),
+                    p.getPropAbsoluteDefaultValue());
+            String relativePath = getValue(config, appPrefix, p.getPropRelativePathName(),
+                    p.getPropRelativeDefaultValue());
+            // L'absolutePath ha precedenza su tutto
+            if (StringUtils.isNotBlank(absolutePath)) {
+                relativePath = getRelativePathFromExternalResource(absolutePath, p.getDestination(),
+                        p.getPropRelativeDefaultValue());
             }
-        }
-        // Setto il parametro per l'abilitazione dell'help online
-        if (config.getInitParameter("disableSecurity") != null) {
-            Boolean disableSecurity = new Boolean(config.getInitParameter("disableSecurity"));
-            ConfigSingleton.setDisableSecurity(disableSecurity);
-        }
+            configCache.put(p.name(), relativePath);
+        });
 
-        if (config.getInitParameter("enableLazySort") != null) {
-            Boolean enableLazySort = new Boolean(config.getInitParameter("enableLazySort"));
-            ConfigSingleton.setEnableLazySort(enableLazySort);
-        }
-
-        // Setto il parametro per l'abilitazione dell'help online
-        if (config.getInitParameter("debugAuthorization") != null) {
-            Boolean debugAuthorization = new Boolean(config.getInitParameter("debugAuthorization"));
-            ConfigSingleton.setDebugAuthorization(debugAuthorization);
-        }
-
-        // Setto i parametri per la visualizzazione dei loghi
-        if (config.getInitParameter("logo1_relativePath") != null) {
-            ConfigSingleton.setLogo1_relativePath(config.getInitParameter("logo1_relativePath"));
-        }
-        if (config.getInitParameter("logo1_alt") != null) {
-            ConfigSingleton.setLogo1_alt(config.getInitParameter("logo1_alt"));
-        }
-        if (config.getInitParameter("logo1_url") != null) {
-            ConfigSingleton.setLogo1_url(config.getInitParameter("logo1_url"));
-        }
-        if (config.getInitParameter("logo1_title") != null) {
-            ConfigSingleton.setLogo1_title(config.getInitParameter("logo1_title"));
-        }
-        if (config.getInitParameter("logo2_relativePath") != null) {
-            ConfigSingleton.setLogo2_relativePath(config.getInitParameter("logo2_relativePath"));
-        }
-        if (config.getInitParameter("logo2_alt") != null) {
-            ConfigSingleton.setLogo2_alt(config.getInitParameter("logo2_alt"));
-        }
-        if (config.getInitParameter("logo2_url") != null) {
-            ConfigSingleton.setLogo2_url(config.getInitParameter("logo2_url"));
-        }
-        if (config.getInitParameter("logo2_title") != null) {
-            ConfigSingleton.setLogo2_title(config.getInitParameter("logo2_title"));
-        }
-        if (config.getInitParameter("logo3_relativePath") != null) {
-            ConfigSingleton.setLogo3_relativePath(config.getInitParameter("logo3_relativePath"));
-        }
-        if (config.getInitParameter("logo3_alt") != null) {
-            ConfigSingleton.setLogo3_alt(config.getInitParameter("logo3_alt"));
-        }
-        if (config.getInitParameter("logo3_url") != null) {
-            ConfigSingleton.setLogo3_url(config.getInitParameter("logo3_url"));
-        }
-        if (config.getInitParameter("logo3_title") != null) {
-            ConfigSingleton.setLogo3_title(config.getInitParameter("logo3_title"));
-        }
-        if (config.getInitParameter("titolo_applicativo") != null) {
-            ConfigSingleton.setTitolo_applicativo(config.getInitParameter("titolo_applicativo"));
-        }
-
-        // ConfigSingleton.setConfigFileName(afConfigFile);
-        // if (afRootPath == null) {
-        // ConfigSingleton.setConfigurationCreation(new StreamCreatorConfiguration());
-        // ConfigSingleton.setRootPath(config.getServletContext().getRealPath(""));
-        // } else {
-        // ConfigSingleton.setConfigurationCreation(new FileCreatorConfiguration(afRootPath));
-        // ConfigSingleton.setRootPath(afRootPath);
-        // }
+        // set cache
+        configSingleton.setConfigCache(configCache);
 
         // Load MANIFEST.MF, necessary for startup
         Properties prop = new Properties();
-        try {
-            InputStream in = getServletContext().getResourceAsStream("/META-INF/MANIFEST.MF");
-            if (in != null) {
-                prop.load(in);
-            } else {
-                throw new FileNotFoundException("Unable to find /META-INF/MANIFEST.MF file");
+
+        try (InputStream in = getServletContext().getResourceAsStream("/META-INF/MANIFEST.MF");) {
+            prop.load(in);
+            if (!prop.containsKey("App-Version") || !prop.containsKey("App-BuildDate")
+                    || !prop.containsKey("App-Name")) {
+                throw new ServletException(
+                        "File /META-INF/MANIFEST.MF exists, but it doesn't contains necessary metadata");
             }
         } catch (IOException e) {
-            e.printStackTrace();
             throw new ServletException("Error reading /META-INF/MANIFEST.MF file", e);
         }
-        if (!prop.containsKey("App-Version") || !prop.containsKey("App-BuildDate") || !prop.containsKey("App-Name")) {
-            throw new ServletException("File /META-INF/MANIFEST.MF exists, but it doesn't contains necessary metadata");
-        }
 
-        ConfigSingleton.set_appVersion(prop.getProperty("App-Version"));
-        ConfigSingleton.set_appBuildDate(prop.getProperty("App-BuildDate"));
-        ConfigSingleton.set_appName(prop.getProperty("App-Name"));
+        String appVersion = prop.getProperty("App-Version");
+        String appBuildDate = prop.getProperty("App-BuildDate");
+        String appName = prop.getProperty("App-Name");
 
-        // Print system properties
-        // String startupConsoleStr = (String) ConfigSingleton.getInstance().getAttribute("COMMON.startup_console");
-        // if ((startupConsoleStr == null) || (!startupConsoleStr.equalsIgnoreCase("FALSE"))) {
-        // System.out.println("ConfigServlet::init: AF_ROOT_PATH = " + afRootPath);
-        System.out.println("ConfigServlet::init: AF_CONFIG_FILE = " + afConfigFile);
-        System.out.println("ConfigServlet::init: APP_VERSIONE = " + ConfigSingleton.get_appVersion());
-        System.out.println("ConfigServlet::init: APP_BUILD_DATE = " + ConfigSingleton.get_appBuildDate());
+        configSingleton.setAppVersion(appVersion);
+        configSingleton.setAppBuildDate(appBuildDate);
+        configSingleton.setAppName(appName);
+
+        LOGGER.debug("ConfigServlet::init: Init param [APP_VERSION] ottenuto dal MANIFEST.MF con il valore di [{}]",
+                appVersion);
+        LOGGER.debug("ConfigServlet::init: Init param [APP_BUILD_DATE] ottenuto dal MANIFEST.MF con il valore di [{}]",
+                appBuildDate);
+        LOGGER.debug("ConfigServlet::init: Init param [APP_NAME] ottenuto dal MANIFEST.MF con il valore di [{}]",
+                appName);
+
         Properties props = System.getProperties();
-        Enumeration propNames = props.propertyNames();
+        Enumeration<?> propNames = props.propertyNames();
         while (propNames.hasMoreElements()) {
             String name = (String) propNames.nextElement();
-            System.out.println("ConfigServlet::init: " + name + " [" + System.getProperty(name) + "]");
+            LOGGER.trace("ConfigServlet::init: SysProp [{}] con valore [{}]", name, props.getProperty(name));
         }
-        // }
+        handleNotSupportedConfig(config);
 
-        // InitializerManager.init();
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("ConfigServlet::init: ConfigSingleton: {}", configSingleton.toString());
+        }
+    }
+
+    /**
+     * Gestione delle configurazioni di inizializzazione. L'ordine con cui viene scelto il valore del parametro è il
+     * seguente:
+     * <ol>
+     * <li>il parametro è presente sul web.xml;</li>
+     * <li>E' presente un parametro dal nome <em>applicazione-nome_parametro</em> sulle proprietà  di sistema;</li>
+     * <li>E' presente un parametro dal nome <em>nome_parametro</em> sulle proprietà di sistema;</li>
+     * <li>viene utilizzato un valore predefinito per il parametro.</li>
+     * </ol>
+     *
+     * @param config
+     *            ServletConfig, configurazioni della servlet definite su web.xml
+     * @param applicationPrefix
+     *            contesto dell'applicazione senza "/" per esempio <em>saceriam</em>
+     * @param configName
+     *            nome della proprietà  supportata dallla Servlet
+     * 
+     * @return valore della configurazione.
+     */
+    private String getValue(ServletConfig config, String applicationPrefix, String configName, String defaultValue) {
+
+        // web.xml personalizzazione su questo specifico pacchetto
+        String configValue = config.getInitParameter(configName);
+        if (configValue != null && !configValue.isEmpty()) {
+            LOGGER.debug("ConfigServlet::init: Init param [{}] definito in web.xml con il valore di [{}]", configName,
+                    configValue);
+            return configValue;
+        }
+
+        // system property specifica per applicationPrefix per esempio il logo
+        // dell'applicazione
+        configValue = System.getProperty(applicationPrefix + "-" + configName);
+        if (configValue != null) {
+            LOGGER.debug(
+                    "ConfigServlet::init: Init param [{}] definito tramite system property specifica per l'applicazione [{}] (ottenuto come [{}-{}] con il valore di [{}]",
+                    configName, applicationPrefix, applicationPrefix, configName, configValue);
+            return configValue;
+        }
+
+        // system property generica (per esempio "ambiente_deploy")
+        configValue = System.getProperty(configName);
+        if (configValue != null) {
+            LOGGER.debug(
+                    "ConfigServlet::init: Init param [{}}] definito tramite system property generica (ottenuto come [{}]) con il valore di [{}].",
+                    configName, configName, configValue);
+            return configValue;
+        }
+        // valore predefinito
+        configValue = defaultValue;
+        LOGGER.debug("ConfigServlet::init: Init param [{}] non definito. Utilizzo il valore predefinito [{}].",
+                configName, defaultValue);
+
+        return configValue;
+    }
+
+    /**
+     * Carica, internamente all'applicazione in fase di deploy, la risorsa esterna. Per l'applicazione la risorsa sarà,
+     * a tutti gli effetti, interna.
+     * 
+     * @param externalResource
+     *            percorso della risorsa esterna all'applicazione.
+     * @param destinationPath
+     *            percorso <em>relativo</em> della risorsa all'interno dell'applicazione
+     * @param defaultRelativePath
+     *            percorso della risorsa predefinita
+     * 
+     * @return percorso relativo dalle risorsa
+     */
+    private String getRelativePathFromExternalResource(String externalResource, String destinationPath,
+            String defaultRelativePath) {
+        try {
+            loadResource(externalResource, destinationPath);
+            LOGGER.debug("ConfigServlet::init: Risorsa {} correttamente caricata su {}.", externalResource,
+                    destinationPath);
+            return destinationPath;
+
+        } catch (IOException e) {
+            LOGGER.warn("ConfigServlet::init: Impossibile caricare la risorsa {}. Utilizzo il valore predefinito {}.",
+                    externalResource, defaultRelativePath, e);
+
+            return defaultRelativePath;
+        }
+    }
+
+    /**
+     * Carica una risorsa e la mette a disposizione della webapp. Attualmente sono supportati i seguenti schema:
+     * <ul>
+     * <li>file://</li></li> http(s)://</li>
+     * </ul>
+     * 
+     * Esempio di chiamata:
+     * <ul>
+     * <li>loadResource("file:///opt/jboss/logo1_snap.png", "/img/logo1.png")</li>
+     * <li>loadResource("https:///my.beautiful.css/overlay.css", "/css/overlay.css")</li>
+     * </ul>
+     * 
+     * @param resourceURL
+     *            URL della risorsa da caricare
+     * @param destination
+     *            percorso <em>relativo</em> della risorsa su cui copiare
+     */
+    private void loadResource(String resourceURL, String destinationPath) throws IOException {
+        URL url = new URL(resourceURL);
+        String applicationRealPath = getServletContext().getRealPath("/");
+        Path newFile = Paths.get(applicationRealPath + destinationPath);
+        URLConnection connection = url.openConnection();
+        Files.copy(connection.getInputStream(), newFile, REPLACE_EXISTING);
+    }
+
+    /**
+     * Stampa la lista dei parametri forniti ma non supportati dall'applicazione.
+     *
+     * @param config
+     *            configurazione della servlet
+     */
+    private void handleNotSupportedConfig(ServletConfig config) {
+        Enumeration<String> initParameterNames = config.getInitParameterNames();
+        while (initParameterNames.hasMoreElements()) {
+            String name = initParameterNames.nextElement();
+            if (!Arrays.asList(ConfigProperties.StandardProperty.toList()).contains(name)
+                    && !Arrays.asList(ConfigProperties.URIProperty.toList()).contains(name)) {
+                LOGGER.warn("ConfigServlet::init: Init param [{}] con valore [{}] non supportato", name,
+                        config.getInitParameter(name));
+            }
+        }
+    }
+
+    @Override
+    public String getServletInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("La servlet ").append(getClass().getName())
+                .append(" supporta la seguente lista di parametri di inizializzazione:\n");
+        for (String parametro : ConfigProperties.StandardProperty.toList()) {
+            sb.append(" - ").append(parametro).append("\n");
+        }
+        for (String parametro : ConfigProperties.URIProperty.toList()) {
+            sb.append(" - ").append(parametro).append("\n");
+        }
+        return sb.toString();
+
     }
 
 }

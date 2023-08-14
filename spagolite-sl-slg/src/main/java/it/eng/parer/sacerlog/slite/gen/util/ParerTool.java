@@ -1,8 +1,9 @@
 package it.eng.parer.sacerlog.slite.gen.util;
 
-import it.eng.util.SpringLiteTool;
 import java.io.File;
 import java.nio.charset.Charset;
+
+import it.eng.util.SpringLiteTool;
 
 public class ParerTool extends SpringLiteTool {
 
@@ -27,9 +28,9 @@ public class ParerTool extends SpringLiteTool {
         }
         System.out.println("Percorso corrente : " + new File(".").getAbsolutePath());
         System.setProperty("file.encoding", "UTF-8");
-        java.lang.reflect.Field charset = Charset.class.getDeclaredField("defaultCharset");
-        charset.setAccessible(true);
-        charset.set(null, null);
+        // java.lang.reflect.Field charset = Charset.class.getDeclaredField("defaultCharset");
+        // charset.setAccessible(true);
+        // charset.set(null, null);
         String actionPath = basedir.replaceAll("\\\\", "/")
                 + "/../spagolite-sl-web/src/main/java/it/eng/parer/sacerlog/web/action";
         ParerTool myParerTool = new ParerTool(actionPath, null, GEN_PACKAGE, ACTION_PACKAGE, FORM_PACKAGE);

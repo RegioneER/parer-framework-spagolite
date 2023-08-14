@@ -6,7 +6,7 @@ import java.util.List;
 
 public class FileSystemUtil {
 
-    public static final String[] EXLUDE_PATH = { ".svn" };
+    public static final String[] EXLUDE_PATH = { ".svn", ".git" };
 
     /**
      * Verifica se il file passato appartiene alla lista di esclusione passata

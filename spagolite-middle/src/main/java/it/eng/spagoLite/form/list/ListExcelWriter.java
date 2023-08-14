@@ -14,20 +14,25 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-
 package it.eng.spagoLite.form.list;
 
 import it.eng.spagoCore.error.EMFError;
 import it.eng.spagoLite.db.base.BaseRowInterface;
 import it.eng.spagoLite.form.fields.Field;
+import it.eng.spagoLite.form.fields.Fields;
+import it.eng.spagoLite.form.fields.MultiValueField;
 import it.eng.spagoLite.form.fields.SingleValueField;
 import it.eng.spagoLite.form.fields.impl.ComboBox;
+import it.eng.spagoLite.form.fields.impl.Button;
 import it.eng.spagoLite.util.Casting.Casting;
 import it.eng.spagoLite.xmlbean.form.Field.Type;
+import it.eng.spagoLite.form.fields.impl.MultiSelect;
+//import it.eng.spagoLite.xmlbean.form.Button;
 
 import java.io.OutputStream;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -44,19 +49,22 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 
 /**
- * @author Enrico Grillini & Lorenzo Snidero
+ * @author Enrico Grillini / Lorenzo Snidero
  */
 public class ListExcelWriter {
+
     private List<?> list;
+    private Fields<SingleValueField> fields;
 
     // private Workbook wb;
-    private Sheet sheet;
-
+    // private Sheet sheet;
     private static CellStyle TITLE;
     private static CellStyle HEADER;
     private static CellStyle CELL;
     private static CellStyle CELL_DATE;
     private static CellStyle CELL_DATE_TIME;
+    private static CellStyle CELL_DECIMAL_DOTCOMMA;
+    private static CellStyle CELL_DECIMAL_DOT;
 
     public List<?> getList() {
         return list;
@@ -66,11 +74,20 @@ public class ListExcelWriter {
         this.list = list;
     }
 
-    public ListExcelWriter(List<?> list) {
-        this.list = list;
+    public Fields<SingleValueField> getFields() {
+        return fields;
     }
 
-    private void addTitle() {
+    public void setFields(Fields<SingleValueField> fields) {
+        this.fields = fields;
+    }
+
+    public ListExcelWriter(List<?> list) {
+        this.list = list;
+        this.fields = list.getGenericFields();
+    }
+
+    private void addTitle(Sheet sheet) {
         Row titleRow = sheet.createRow(0);
         titleRow.setHeightInPoints(45);
         Cell titleCell = titleRow.createCell(0);
@@ -83,7 +100,7 @@ public class ListExcelWriter {
         // sheet.addMergedRegion(CellRangeAddress.valueOf("$A$1:$L$1"));
     }
 
-    private void addHeaders() {
+    private void addHeaders(Sheet sheet) {
         Row headerRow = sheet.createRow(1);
 
         int i = 0;
@@ -99,7 +116,7 @@ public class ListExcelWriter {
         }
     }
 
-    private void addCells() throws EMFError {
+    private void addCells(Sheet sheet) throws EMFError {
         int size = 0;
 
         int j = 2;
@@ -124,6 +141,12 @@ public class ListExcelWriter {
                         cell.setCellStyle(CELL_DATE);
                     } else if (field.getType().equals(Type.DATETIME)) {
                         cell.setCellStyle(CELL_DATE_TIME);
+                    } else if (field.getType().equals(Type.DECIMAL)) {
+                        if (field.getFormat().equals("#,##0.00")) {
+                            cell.setCellStyle(CELL_DECIMAL_DOTCOMMA);
+                        } else {
+                            cell.setCellStyle(CELL_DECIMAL_DOT);
+                        }
                     } else {
                         cell.setCellStyle(CELL);
                     }
@@ -137,23 +160,106 @@ public class ListExcelWriter {
         }
     }
 
+    private void addHeadersForFields(Sheet sheet) {
+
+        int i = 1;
+        for (Field field : getFields()) {
+            if (!(field instanceof Button)) {
+                Row headerRow = sheet.createRow(i);
+                if (!field.isHidden()) {
+                    Cell headerCell = headerRow.createCell(0);
+                    headerCell.setCellValue(field.getDescription());
+                    headerCell.setCellStyle(HEADER);
+                    sheet.setColumnWidth(i, 10000);
+
+                    i++;
+                }
+            }
+        }
+    }
+
+    private void addCellsForFields(Sheet sheet) throws EMFError {
+        int i = 1;
+        int size = 0;
+
+        for (Field field : getFields()) {
+            if (!(field instanceof Button)) {
+                Row cellRow = sheet.getRow(i);
+                if (!field.isHidden()) {
+                    size++;
+                    Cell cell = cellRow.createCell(1);
+
+                    if (field instanceof ComboBox) {
+                        Casting.setToExcel(cell, ((SingleValueField<?>) field).getDecodedValue(), Type.STRING);
+                    } else if (field instanceof MultiSelect) {
+                        Casting.setToExcelMultiValue(cell, ((MultiValueField<?>) field).getDecodedValues(),
+                                Type.STRING);
+                    } else {
+                        Casting.setToExcel(cell, ((SingleValueField<?>) field).getValue(), field.getType());
+                    }
+
+                    if (field.getType().equals(Type.DATE)) {
+                        cell.setCellStyle(CELL_DATE);
+                    } else if (field.getType().equals(Type.DATETIME)) {
+                        cell.setCellStyle(CELL_DATE_TIME);
+                    } else {
+                        cell.setCellStyle(CELL);
+                    }
+
+                    i++;
+                }
+            }
+        }
+
+        for (int l = 0; l < size; l++) {
+            sheet.autoSizeColumn(l);
+        }
+    }
+
+    private void addTitleForFields(Sheet sheet) {
+        Row titleRow = sheet.createRow(0);
+        titleRow.setHeightInPoints(45);
+        Cell titleCell = titleRow.createCell(0);
+        if (StringUtils.isNotBlank(fields.getName())) {
+            titleCell.setCellValue(fields.getName());
+        } else {
+            titleCell.setCellValue(fields.getDescription());
+        }
+        titleCell.setCellStyle(TITLE);
+    }
+
     public void write(OutputStream outputStream) throws Exception {
         Workbook wb = new HSSFWorkbook();
         createStyles(wb);
 
         // Creo il foglio
-        sheet = wb.createSheet("Elenco");
+        Sheet sheet = wb.createSheet("Elenco");
         PrintSetup printSetup = sheet.getPrintSetup();
         printSetup.setLandscape(true);
         sheet.setFitToPage(true);
         sheet.setHorizontallyCenter(true);
 
-        addHeaders();
-        addCells();
-        addTitle();
+        addHeaders(sheet);
+        addCells(sheet);
+        addTitle(sheet);
+
+        Fields fields = list.getGenericFields();
+        if (fields != null) {
+            // Creo il foglio dei "Fields"
+            Sheet sheet2 = wb.createSheet("Filtri");
+            PrintSetup printSetup2 = sheet2.getPrintSetup();
+            printSetup2.setLandscape(true);
+            sheet2.setFitToPage(true);
+            sheet2.setHorizontallyCenter(true);
+
+            addHeadersForFields(sheet2);
+            addCellsForFields(sheet2);
+            addTitleForFields(sheet2);
+
+            sheet2.createFreezePane(0, 1);
+        }
 
         sheet.createFreezePane(0, 2);
-
         wb.write(outputStream);
     }
 
@@ -231,6 +337,32 @@ public class ListExcelWriter {
         CELL_DATE_TIME.setTopBorderColor(IndexedColors.BLACK.getIndex());
         CELL_DATE_TIME.setBorderBottom(BorderStyle.THIN);
         CELL_DATE_TIME.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+
+        CELL_DECIMAL_DOTCOMMA = wb.createCellStyle();
+        // CELL.setAlignment(CellStyle.ALIGN_CENTER);
+        CELL_DECIMAL_DOTCOMMA.setWrapText(true);
+        CELL_DECIMAL_DOTCOMMA.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0.00"));
+        CELL_DECIMAL_DOTCOMMA.setBorderRight(BorderStyle.THIN);
+        CELL_DECIMAL_DOTCOMMA.setRightBorderColor(IndexedColors.BLACK.getIndex());
+        CELL_DECIMAL_DOTCOMMA.setBorderLeft(BorderStyle.THIN);
+        CELL_DECIMAL_DOTCOMMA.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+        CELL_DECIMAL_DOTCOMMA.setBorderTop(BorderStyle.THIN);
+        CELL_DECIMAL_DOTCOMMA.setTopBorderColor(IndexedColors.BLACK.getIndex());
+        CELL_DECIMAL_DOTCOMMA.setBorderBottom(BorderStyle.THIN);
+        CELL_DECIMAL_DOTCOMMA.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+
+        CELL_DECIMAL_DOT = wb.createCellStyle();
+        // CELL.setAlignment(CellStyle.ALIGN_CENTER);
+        CELL_DECIMAL_DOT.setWrapText(true);
+        CELL_DECIMAL_DOT.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0"));
+        CELL_DECIMAL_DOT.setBorderRight(BorderStyle.THIN);
+        CELL_DECIMAL_DOT.setRightBorderColor(IndexedColors.BLACK.getIndex());
+        CELL_DECIMAL_DOT.setBorderLeft(BorderStyle.THIN);
+        CELL_DECIMAL_DOT.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+        CELL_DECIMAL_DOT.setBorderTop(BorderStyle.THIN);
+        CELL_DECIMAL_DOT.setTopBorderColor(IndexedColors.BLACK.getIndex());
+        CELL_DECIMAL_DOT.setBorderBottom(BorderStyle.THIN);
+        CELL_DECIMAL_DOT.setBottomBorderColor(IndexedColors.BLACK.getIndex());
 
     }
 }

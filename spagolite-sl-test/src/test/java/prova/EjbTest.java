@@ -21,14 +21,13 @@ import javax.persistence.PersistenceContext;
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class EjbTest {
-    
+
     @PersistenceContext
     private EntityManager entityManager;
 
-    
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void operazioneInNuovatgransazione(long id) {
-        LogEvento e=entityManager.find(LogEvento.class, id);
+        LogEvento e = entityManager.find(LogEvento.class, id);
     }
-    
+
 }

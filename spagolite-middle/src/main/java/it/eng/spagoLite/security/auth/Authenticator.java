@@ -26,6 +26,7 @@ public abstract class Authenticator {
      * 
      * 
      * @param utente
+     *            dto
      * 
      * @return true/false se autenticato
      */
