@@ -1,11 +1,36 @@
 # Framework SpagoLite
 
-Bozza di documentazione per il "framework" SpagoLite.
+Fonte template redazione documento:  https://www.makeareadme.com/.
 
-## ConfigServlet (spagofat-core)
+# Descrizione
 
-Attualmente la servlet di configurazione hai il compito d'inizializzare il singleton di ```ConfigSignleton.java```.
-La servlet supporta i seguenti parametri d'inizializzazione:
+Il seguente progetto è utilizzato come **dipendenza** interna.
+Lo scopo è quello di definire un vero e proprio framework basato su modello MVC (Model View Control) con il quale è quindi possibile definire le modalità di interazione client-server per l'implementazioni di applicazion Web (con front-end / UI).
+
+# Installazione
+
+Come già specificato nel paragrafo precedente [Descrizione](# Descrizione) si tratta di un progetto di tipo "libreria", quindi un modulo applicativo utilizzato attraverso la definzione della dipendenza Maven secondo lo standard previsto (https://maven.apache.org/): 
+
+```xml
+<dependency>
+    <groupId>it.eng.parer</groupId>
+    <artifactId>spagofat</artifactId>
+    <version>4.11.0</version>
+    <type>pom</type>
+    <scope>import</scope>
+</dependency>
+```
+
+# Utilizzo
+
+Il framework Spagolite, nasce con l'idea di realizzare un set di moduli (e relative dipendenze) per "standardizzare" e "personalizzare" sviluppi legati ad applicazioni con front-end basate sul modello MVC (Model View Control) che eredita design pattern già noti da framework esistenti come Struts e Spring.
+Lo scopo è quello di definire un vero e proprio framework con il quale le applicazioni web che prevedono front-end (e.g. Sacer), possono definire le modalità di interazione client-server, ereditare il set di librerie standard previsto dalla logica, le risore statiche previste per la definizione di stili, javascript, immagini e molto altro, attraverdso delle implementazioni standard con le quali si definisce l'intero processo.
+
+
+## Personalizzazioni interfaccia web (e parametri applicativi)
+
+Esiste una apposita servlet  [ConfigServlet.java](spagolite-core/src/main/java/it/eng/spagoCore/configuration/ConfigServlet.java) che permette di definire alcune configurazioni legate ad elementi personalizzabili dell'interfaccia grafica (loghi, stili, ecc.) con la quale si possono inoltre modificare parametri applicativi esistenti che sono legati a processi server-side (timeout, URI webservice, ecc.).
+Di seguito viene riportata una tabella riepilogativa.
 
 | Nome parametro| Descrizione| Valore predefinito |
 |------------------------|--------------------------------------------------------------------|--------------------|
@@ -116,3 +141,18 @@ Disposizione dei loghi all'interno della pagina:
 |logo 2 |                     | logo 3 |  
 `--------------------------------------' 
 ```
+# Supporto
+
+Progetto a cura di [Engineering Ingegneria Informatica S.p.A.](https://www.eng.it/).
+
+# Contributi
+
+Se interessati a crontribuire alla crescita del progetto potete scrivere all'indirizzo email <a href="mailto:areasviluppoparer@regione.emilia-romagna.it">areasviluppoparer@regione.emilia-romagna.it</a>.
+
+# Autori
+
+Proprietà intellettuale del progetto di [Regione Emilia-Romagna](https://www.regione.emilia-romagna.it/) e [Polo Archivisitico](https://poloarchivistico.regione.emilia-romagna.it/).
+
+# Licenza
+
+Questo progetto è rilasciato sotto licenza GNU Affero General Public License v3.0 or later ([LICENSE.txt](LICENSE.txt)).
