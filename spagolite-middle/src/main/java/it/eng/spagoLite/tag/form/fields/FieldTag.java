@@ -1,3 +1,20 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.tag.form.fields;
 
 import it.eng.spagoCore.error.EMFError;
@@ -133,7 +150,6 @@ public class FieldTag extends BaseFormTag<SingleValueField<?>> {
                 if (field.getType().equals(Type.FILE)) {
                     input = " <input id=\"" + name + "\" name=\"" + name + "\" class=\"" + className
                             + "\" type=\"file\" value=\"" + value + "\" " + maxLength + "/>";
-
                 } else if (field.getType().equals(Type.PASSWORD)) {
                     input = " <input id=\"" + name + "\" name=\"" + name + "\" class=\"" + className
                             + "\" type=\"password\" value=\"" + value + "\" " + maxLength + " autocomplete=\"off\" />";
@@ -246,7 +262,7 @@ public class FieldTag extends BaseFormTag<SingleValueField<?>> {
             if (combo != null) {
                 for (Object key : combo.keySet()) {
                     String descrizione = JavaScript.stringToHTMLString(combo.getDescrizione(key));
-                    descrizione = org.apache.commons.text.StringEscapeUtils.escapeHtml4(descrizione);
+                    org.apache.commons.text.StringEscapeUtils.escapeHtml4(descrizione);
                     out.append("<option title=\"" + descrizione + "\" value=\"" + key + "\"");
                     // FIXME: ATTENZIONE ALLE COMBO CHE HANNO TIPI DI DATO != da
                     // String!!!
@@ -529,19 +545,20 @@ public class FieldTag extends BaseFormTag<SingleValueField<?>> {
                     /* from tag */ || ((ComboBox) getComponent()).isWithSearchComp())/* from component */) {
                 String name = getComponent().getName();
                 Field field = (ComboBox<?>) getComponent();
-                String editable = !field.isReadonly() && field.isEditMode() ? "" : "readonly:readonly,";
-                writeln(" <script type=\"text/javascript\" >" + "$('#" + name
-                        + "').select2({theme: \"classic\", placeholder: '<i class=\"fa fa-search\"></i> Ricerca e seleziona elemento dalla lista...', allowClear: true, "
-                        + editable + " dropdownCssClass: \"select2-customdrop\", "
-                        + "	       dropdownAutoWidth: true, width: 'auto', \"language\": \"it\", escapeMarkup: function(m){ return m; } })"
-                        + ".on('select2:unselecting', function () {  $(this).data('unselecting', true); }) "
-                        + ".on('select2:opening', function (e) {  if ($(this).data('unselecting')) {  $(this).removeData('unselecting'); e.preventDefault(); } });"
-                        + "</script>");
-                // html5 placeholder
-                writeln(" <script type=\"text/javascript\" > " + "$('#" + name + "')"
-                        + ".on(\"select2:open\", function(e) {$('input.select2-search__field').prop('placeholder', 'Effettua ricerca:'); });"
-                        + " </script>");
-
+                // editable
+                if (!field.isReadonly() && field.isEditMode()) {
+                    writeln(" <script type=\"text/javascript\" >" + "$('#" + name
+                            + "').select2({theme: \"classic\", placeholder: '<i class=\"fa fa-search\"></i> Ricerca e seleziona elemento dalla lista...', allowClear: true, "
+                            + " dropdownCssClass: \"select2-customdrop\", "
+                            + "	       dropdownAutoWidth: true, width: 'auto', \"language\": \"it\", escapeMarkup: function(m){ return m; } })"
+                            + ".on('select2:unselecting', function () {  $(this).data('unselecting', true); }) "
+                            + ".on('select2:opening', function (e) {  if ($(this).data('unselecting')) {  $(this).removeData('unselecting'); e.preventDefault(); } });"
+                            + "</script>");
+                    // html5 placeholder
+                    writeln(" <script type=\"text/javascript\" > " + "$('#" + name + "')"
+                            + ".on(\"select2:open\", function(e) {$('input.select2-search__field').prop('placeholder', 'Effettua ricerca:'); });"
+                            + " </script>");
+                }
             }
         }
 

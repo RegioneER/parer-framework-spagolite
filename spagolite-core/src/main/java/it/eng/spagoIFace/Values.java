@@ -1,66 +1,41 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoIFace;
 
-public class Values {
-    public final static String LOGGED_USER = "LOGGED_USER";
+public final class Values {
+
+    public static final String LOGGED_USER = "LOGGED_USER";
 
     public static final String MENU_STATUS = "MENU_STATUS";
     public static final int MENU_OPEN = 0;
     public static final int MENU_CLOSED = 1;
-    public final static String CURRENT_ACTION = "CURRENT_ACTION";
-    public final static int LIST_DEFAULT_PAGE_SIZE = 10;
-    public final static String OPERATION = "operation";
-    public final static String PUBLISHER_REDIRECT = "REDIRECT";
-    public final static String VOID_SESSION = "VOID_SESSION";
-    public final static String SESSION_ID = "SESSION_ID";
+    public static final String CURRENT_ACTION = "CURRENT_ACTION";
+    public static final int LIST_DEFAULT_PAGE_SIZE = 10;
+    public static final String OPERATION = "operation";
+    public static final String PUBLISHER_REDIRECT = "REDIRECT";
+    public static final String VOID_SESSION = "VOID_SESSION";
+    public static final String SESSION_ID = "SESSION_ID";
     public static final String OPERATION_SEPARATOR = "__";
-    public final static int SELECT_LIST_MAX_ROW = 20;
-    public final static String SUB_LIST = "TABELLA";
+    public static final int SELECT_LIST_MAX_ROW = 20;
+    public static final String SUB_LIST = "TABELLA";
 
-    // public static abstract class Authentication {
-    // private final static String LOCALHOST = "Security.AUTHENTICATION.localhost";
-    // private final static String AUTENTICAZIONE_CENTRALIZZATA =
-    // "Security.AUTHENTICATION.autenticazione_centralizzata";
-    //
-    // public static boolean isLocalHost() {
-    // return "true".equalsIgnoreCase((String) ConfigSingleton.getInstance().getAttribute(LOCALHOST));
-    // }
-    //
-    // public static String autenticazioneCentralizzata() {
-    // return (String) ConfigSingleton.getInstance().getAttribute(AUTENTICAZIONE_CENTRALIZZATA);
-    // }
-    // }
-
-    // public static abstract class Login {
-    // private final static String LOGIN_CLASS = "Security.LOGIN.loginServiceClassname";
-    // private final static String CODE = "Security.LOGIN.cdnApplication";
-    // private final static String NAME = "Security.LOGIN.appName";
-    // private final static String SALT = "Security.LOGIN.appSalt";
-    // private final static String MENU_ROOT = "Security.LOGIN.menuRoot";
-    // private final static String HOME_ACTION = "Security.LOGIN.actionHome";
-    //
-    // public static String loginClass() {
-    // return (String) ConfigSingleton.getInstance().getAttribute(LOGIN_CLASS);
-    // }
-    //
-    // public static String homeAction() {
-    // return (String) ConfigSingleton.getInstance().getAttribute(HOME_ACTION);
-    // }
-    //
-    // public static String menuRoot() {
-    // return (String) ConfigSingleton.getInstance().getAttribute(MENU_ROOT);
-    // }
-    //
-    // public static BigDecimal code() {
-    // return new BigDecimal((String) ConfigSingleton.getInstance().getAttribute(CODE));
-    // }
-    //
-    // public static String name() {
-    // return (String) ConfigSingleton.getInstance().getAttribute(NAME);
-    // }
-    //
-    // public static String salt() {
-    // return (String) ConfigSingleton.getInstance().getAttribute(SALT);
-    // }
-    // }
+    private Values() {
+        throw new IllegalStateException("Impossibile istanziare la classe, contiene solo costanti");
+    }
 
 }

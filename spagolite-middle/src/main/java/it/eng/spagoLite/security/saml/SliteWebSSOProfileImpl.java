@@ -1,6 +1,26 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.security.saml;
 
 import org.opensaml.saml2.core.AuthnRequest;
+import org.opensaml.saml2.core.Issuer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.saml.websso.WebSSOProfileImpl;
 
 /**
@@ -8,6 +28,9 @@ import org.springframework.security.saml.websso.WebSSOProfileImpl;
  * @author MIacolucci
  */
 public class SliteWebSSOProfileImpl extends WebSSOProfileImpl {
+
+    @Autowired
+    private ApplicationContext ctx;
 
     @Override
     protected void buildAuthnContext(AuthnRequest request,
@@ -21,6 +44,19 @@ public class SliteWebSSOProfileImpl extends WebSSOProfileImpl {
         String des = request.getDestination();
         if (des != null && des.contains(".lepida.it")) {
             super.buildAuthnContext(request, options);
+        }
+        /*
+         * Risoluzione problema Puglia che voleva aggiungere al nome dell'Issuer (EntityId) un suffisso riguardante il
+         * tenant
+         */
+
+        String suffissoIssuer = null;
+        if (ctx.containsBean("suffissoIssuerSamlRequest")) {
+            suffissoIssuer = (String) ctx.getBean("suffissoIssuerSamlRequest");
+        }
+        if (suffissoIssuer != null) {
+            Issuer iss = request.getIssuer();
+            iss.setValue(iss.getValue() + suffissoIssuer);
         }
     }
 

@@ -16,7 +16,7 @@
 
         </properties>
         <!-- TODO: aggiungere filtering in fase di compilazione ed indicare il numero di versione con ${project.version} -->
-        <jar-file>../../../spagolite-sl-jpa/target/spagofat-sl-jpa-2.1.5-SNAPSHOT.jar</jar-file>
+        <jar-file>../../../spagolite-sl-jpa/target/spagofat-sl-jpa-4.0.2-SNAPSHOT.jar</jar-file>
 
 <!--        <mapping-file>META-INF/xmldbNativeQueries/xmlQueries.xml</mapping-file> -->
 

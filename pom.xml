@@ -1,8 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>it.eng.parer</groupId>
     <artifactId>spagofat</artifactId>
-    <version>4.1.28-SNAPSHOT</version>
+    <version>4.11.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Spagolite</name>
     <description>Framework utilizzato dalle applicazioni web, si tratta di uno strato software comune contenente anche le dipendenze di terze parti ed ereditato come bom.</description>
@@ -11,27 +10,19 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>parer-pom</artifactId>
-        <version>3.0.16</version>
+        <version>4.2.0</version>
     </parent>
-    
+
     <scm>
-        <developerConnection>scm:git:https://github.com/RegioneER/parer.sacer.framework.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/RegioneER/parer-framework-spagolite.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
     <repositories>
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/RegioneER/parer.sacer.parent</url>            
-       </repository>
-       <repository>
-			<id>pentaho</id>
-			<url>https://public.nexus.pentaho.org/content/groups/omni</url>
-		</repository>
-		<repository>
-			<id>central</id>
-			<url>https://repo1.maven.org/maven2</url>
-		</repository>              
+            <url>https://maven.pkg.github.com/RegioneER/parer-framework-parerpom</url>            
+       </repository>     
 	</repositories>
     
     <properties>
@@ -39,14 +30,22 @@
         <!-- Javadoc skipped by default (temporaneo) -->
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <sonar.projectVersion>${project.version}</sonar.projectVersion>
+        <!-- Hibernate ORM -->
+        <hibernate-core-version>5.3.20.Final-redhat-00001</hibernate-core-version>
+        <hibernate-validator-version>6.0.22.Final-redhat-00002</hibernate-validator-version>	
+        <hibernate-jpamodelgen-version>5.6.14.Final-redhat-00001</hibernate-jpamodelgen-version>
+        <dom4j.version>2.1.3.redhat-00001</dom4j.version>
+        <keycloak-filter.version>21.1.1</keycloak-filter.version>
+        <xml-apis.version>1.4.01</xml-apis.version>
+        <xmlbeans.version>3.1.0</xmlbeans.version>          
         <!-- webjars (framework spago) -->
-        <jquery.version>3.4.1</jquery.version>
-        <jquery-ui.version>1.12.1</jquery-ui.version>
+        <jquery.version>3.6.4</jquery.version>
+        <jquery-ui.version>1.13.2</jquery-ui.version>
         <jstree.version>3.3.8</jstree.version>
         <chosen.version>1.8.7</chosen.version>
         <select2.version>4.0.13</select2.version>
-        <font-awesome.version>4.7.0</font-awesome.version>
-        <highlightjs.version>9.15.10</highlightjs.version>
+        <font-awesome.version>6.4.0</font-awesome.version>
+        <highlightjs.version>11.5.0</highlightjs.version>
         <highlightjs-line-numbers.js.version>2.7.0</highlightjs-line-numbers.js.version>
         <!-- MIT project forked from original: https://github.com/sinattieng/highlightjs-badgejs -->
         <highlightjs-badgejs.version>0.0.5</highlightjs-badgejs.version>
@@ -72,6 +71,13 @@
                 <type>war</type>
                 <scope>runtime</scope>
             </dependency>
+            <dependency>
+                <groupId>it.eng.parer</groupId>
+                <artifactId>spagofat-paginator-ejb</artifactId>
+                <version>${project.version}</version>
+                <type>ejb</type>
+            </dependency>
+
             <dependency>
                 <groupId>it.eng.parer</groupId>
                 <artifactId>spagofat-paginator-gf</artifactId>
@@ -231,10 +237,6 @@
                         <groupId>xml-resolver</groupId>
                     </exclusion>
                     <exclusion>
-                        <artifactId>xml-resolver</artifactId>
-                        <groupId>xml-resolver</groupId>
-                    </exclusion>
-                    <exclusion>
                         <groupId>org.bouncycastle</groupId>
                         <artifactId>bcprov-jdk15on</artifactId>
                     </exclusion>
@@ -253,11 +255,6 @@
                 </exclusions>
             </dependency>
             <!-- Altro -->
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>${log4j.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
@@ -309,11 +306,17 @@
             <!-- JBoss -->
             <dependency>
                 <groupId>org.jboss.spec</groupId>
-                <artifactId>jboss-javaee-6.0</artifactId>
+                <artifactId>jboss-jakartaee-8.0</artifactId>
                 <type>pom</type>
-                <version>${jboss-javaee-6.0.version}</version>
+                <version>${jboss-jakartaee-8.0.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.jboss.bom</groupId>
+                <artifactId>jboss-eap-jakartaee8-with-tools</artifactId>
+                <version>${jboss-eap-jakartaee8-with-tools.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!-- Apache commons -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -331,23 +334,32 @@
                 <version>${commons-net.version}</version>
             </dependency>
 
-            <!-- Eclipselink -->
+            <!-- Hibernate -->
             <dependency>
-                <groupId>org.glassfish.main.persistence</groupId>
-                <artifactId>eclipselink-wrapper</artifactId>
-                <version>${eclipselink-wrapper.version}</version>
-                <type>pom</type>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate-core-version}</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>org.eclipse.persistence</groupId>
-                <artifactId>eclipselink</artifactId>
-                <version>${eclipselink.version}</version>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate-core-version}</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>org.bouncycastle</groupId>
-                <artifactId>bcprov-jdk15on</artifactId>
-                <version>${bcprov-jdk15on.version}</version>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <scope>provided</scope>
+                <version>${hibernate-validator-version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-jpamodelgen</artifactId>
+                <version>${hibernate-jpamodelgen-version}</version>
+                <scope>provided</scope>
+            </dependency>
+			
             <!-- Altro -->
             <dependency>
                 <groupId>org.codehaus.jettison</groupId>
@@ -364,6 +376,7 @@
                 <groupId>org.dom4j</groupId>
                 <artifactId>dom4j</artifactId>
                 <version>${dom4j.version}</version>
+                <scope>provided</scope>
                 <exclusions>
                     <exclusion>
                         <groupId>xml-apis</groupId>
@@ -413,7 +426,6 @@
                 <artifactId>commons-text</artifactId>
                 <version>${commons-text.version}</version>
             </dependency>
-
             <!-- OWASP -->
             <dependency>
                 <groupId>org.owasp.esapi</groupId>
@@ -442,17 +454,11 @@
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
-                <artifactId>jquery-ui-themes</artifactId>
-                <version>${jquery-ui.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
                 <artifactId>jstree</artifactId>
                 <version>${jstree.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.webjars</groupId>
+                <groupId>org.webjars.bower</groupId>
                 <artifactId>chosen</artifactId>
                 <version>${chosen.version}</version>
             </dependency>
@@ -472,7 +478,7 @@
                 <version>${highlightjs-line-numbers.js.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.webjars.bower</groupId>
+                <groupId>org.webjars</groupId>
                 <artifactId>font-awesome</artifactId>
                 <version>${font-awesome.version}</version>
             </dependency>
@@ -483,23 +489,31 @@
             </dependency>
             <!-- UTILS -->
             <dependency>
-                <groupId>com.fasterxml.uuid</groupId>
-                <artifactId>java-uuid-generator</artifactId>
-                <version>${java-uuid-generator.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson-databind.version}</version>
-            </dependency>
+                <groupId>org.keycloak</groupId>
+                <artifactId>keycloak-servlet-filter-adapter</artifactId>
+                <version>${keycloak-filter.version}</version>
+            </dependency>     
         </dependencies>
     </dependencyManagement>
     <dependencies />
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <!-- Esclusione dai javadoc delle classi generate da xmlbeans -->
+                    <excludePackageNames>it.eng.spagoLite.spagoLite.*:it.eng.spagoLite.xmlbean.*:it.eng.integriam.*</excludePackageNames>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <modules>
         <module>spagolite-core</module>
         <module>spagolite-middle</module>
         <module>spagolite-webresources</module>
         <module>spagolite-paginator-gf</module>
+        <module>spagolite-paginator-ejb</module>
         <!-- Saceriam integration -->
         <module>spagolite-si-server</module>
         <module>spagolite-si-client</module>

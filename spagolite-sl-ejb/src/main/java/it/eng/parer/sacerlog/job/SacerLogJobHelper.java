@@ -1,24 +1,45 @@
 /*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package it.eng.parer.sacerlog.job;
 
-import it.eng.parer.sacerlog.ejb.common.AppServerInstance;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.util.Date;
+
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import it.eng.parer.sacerlog.ejb.common.AppServerInstance;
+import it.eng.spagoCore.util.JpaUtils;
 
 /**
  *
@@ -49,8 +70,9 @@ public class SacerLogJobHelper implements Serializable {
         Date now = new Date();
         Timestamp date = new Timestamp(now.getTime());
         PreparedStatement ps = null;
+        Connection con = null;
         try {
-            Connection con = em.unwrap(Connection.class);
+            con = JpaUtils.provideConnectionFrom(em);
             ps = con.prepareStatement(
                     "INSERT INTO APL_V_LOG_JOB (ID_LOG_JOB, NM_JOB, TI_REG_LOG_JOB, DT_REG_LOG_JOB, DL_MSG_ERR, CD_IND_SERVER)"
                             + "VALUES (SSLOG_JOB.nextVal, ?, ?, ?, ?, ?)");
@@ -68,6 +90,11 @@ public class SacerLogJobHelper implements Serializable {
                 if (ps != null) {
                     ps.close();
                 }
+
+                if (con != null) {
+                    con.close();
+                }
+
             } catch (Exception ex) {
 
             }

@@ -1,8 +1,26 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.sacerlog.slite.gen.util;
 
-import it.eng.util.SpringLiteTool;
 import java.io.File;
 import java.nio.charset.Charset;
+
+import it.eng.util.SpringLiteTool;
 
 public class ParerTool extends SpringLiteTool {
 
@@ -27,9 +45,9 @@ public class ParerTool extends SpringLiteTool {
         }
         System.out.println("Percorso corrente : " + new File(".").getAbsolutePath());
         System.setProperty("file.encoding", "UTF-8");
-        java.lang.reflect.Field charset = Charset.class.getDeclaredField("defaultCharset");
-        charset.setAccessible(true);
-        charset.set(null, null);
+        // java.lang.reflect.Field charset = Charset.class.getDeclaredField("defaultCharset");
+        // charset.setAccessible(true);
+        // charset.set(null, null);
         String actionPath = basedir.replaceAll("\\\\", "/")
                 + "/../spagolite-sl-web/src/main/java/it/eng/parer/sacerlog/web/action";
         ParerTool myParerTool = new ParerTool(actionPath, null, GEN_PACKAGE, ACTION_PACKAGE, FORM_PACKAGE);

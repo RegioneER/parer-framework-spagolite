@@ -1,3 +1,20 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.util.Casting;
 
 import it.eng.spagoCore.error.EMFError;
@@ -89,7 +106,8 @@ public class Casting {
      * 
      * @return Timestamp della data in ingresso
      * 
-     * @throws ParseException
+     * @throws EMFError
+     *             eccezione generica
      */
     public static Timestamp parseDate(String strDate) throws EMFError {
         Timestamp result = null;
@@ -112,7 +130,8 @@ public class Casting {
      * 
      * @return BigDecimal della data in ingresso
      * 
-     * @throws ParseException
+     * @throws EMFError
+     *             eccezione generica
      */
     public static BigDecimal parseInteger(String strInteger) throws EMFError {
         if (StringUtils.isBlank(strInteger)) {
@@ -138,6 +157,7 @@ public class Casting {
      * @return BigDecimal della data in ingresso
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public static BigDecimal parseDecimal(String strDecimal) throws EMFError {
         if (StringUtils.isBlank(strDecimal)) {
@@ -162,6 +182,7 @@ public class Casting {
      * @return parsing del CAP fornito
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public static String parseCAP(String cap) throws EMFError {
         if (StringUtils.isBlank(cap)) {
@@ -183,6 +204,7 @@ public class Casting {
      * @return parsing della mail con espressione regolare
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public static String parseEmail(String email) throws EMFError {
         if (StringUtils.isBlank(email)) {
@@ -205,6 +227,7 @@ public class Casting {
      * @return del codice fiscale con espressione regolare
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public static String parseCodFiscale(String codFiscale) throws EMFError {
         if (StringUtils.isBlank(codFiscale)) {
@@ -226,6 +249,7 @@ public class Casting {
      * @return della partiva iva con espressione regolare
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public static String parsePartitaIva(String piva) throws EMFError {
         if (StringUtils.isBlank(piva)) {
@@ -300,6 +324,7 @@ public class Casting {
      * @return del codice fiscale con espressione regolare
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public static String parseCodFiscalePartitaIva(String codice) throws EMFError {
         if (isCodiceFiscale(codice) || isPartitaIva(codice)) {
@@ -338,6 +363,7 @@ public class Casting {
      * @return del telefono con espressione regolare
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public static String parseTelefono(String telefono) throws EMFError {
         if (StringUtils.isBlank(telefono)) {
@@ -393,7 +419,8 @@ public class Casting {
      * 
      * @return risultato della formattazione
      * 
-     * @throws ParseException
+     * @throws EMFError
+     *             eccezione generica
      */
     public static final String format(Object value, Type.Enum type) throws EMFError {
         if (value != null) {
@@ -460,6 +487,7 @@ public class Casting {
      * @return oggetto parsato
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public static final Object parse(String value, Type.Enum type) throws EMFError {
         if (StringUtils.isNotBlank(value)) {
@@ -498,6 +526,40 @@ public class Casting {
 
     public static final void setToExcel(Cell cell, String value, Type.Enum type) throws EMFError {
         if (StringUtils.isNotBlank(value)) {
+            if (type.equals(Type.STRING) || type.equals(Type.CAP) || type.equals(Type.EMAIL)
+                    || type.equals(Type.CODFISCALE) || type.equals(Type.TELEFONO) || type.equals(Type.PARTITAIVA)
+                    || type.equals(Type.CODFISCPIVA) || type.equals(Type.PREFISSOTEL)) {
+                cell.setCellValue(StringUtils.trim(value));
+            } else if (type.equals(Type.DATE) || type.equals(Type.DATETIME)) {
+                cell.setCellValue(parseDate(value));
+            } else if (type.equals(Type.INTEGER) || type.equals(Type.DECIMAL)) {
+                if (StringUtils.isNotBlank(value)) {
+                    try {
+                        Number num = new DecimalFormat("", new DecimalFormatSymbols(Locale.ITALIAN)).parse(value);
+                        cell.setCellValue(num.doubleValue());
+                    } catch (ParseException ex) {
+                        cell.setCellValue("");
+                    }
+                    /*
+                     * if (NumberUtils.isDigits(value)) { cell.setCellValue(Double.parseDouble(value)); } else {
+                     * cell.setCellValue(""); }
+                     */
+                } else {
+                    cell.setCellValue(value);
+                }
+            } else if (type.equals(Type.CURRENCY)) {
+                // FIXME
+                throw new EMFError(EMFError.ERROR, "Conversione di formato da implementare", null);
+            }
+        }
+    }
+
+    public static final void setToExcelMultiValue(Cell cell, Set<String> values, Type.Enum type) throws EMFError {
+        if (values != null && !values.isEmpty()) {
+            String value = "";
+            for (String valueStr : values) {
+                value = value + valueStr + "; ";
+            }
             if (type.equals(Type.STRING) || type.equals(Type.CAP) || type.equals(Type.EMAIL)
                     || type.equals(Type.CODFISCALE) || type.equals(Type.TELEFONO) || type.equals(Type.PARTITAIVA)
                     || type.equals(Type.CODFISCPIVA) || type.equals(Type.PREFISSOTEL)) {

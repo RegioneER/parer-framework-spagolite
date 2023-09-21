@@ -23,7 +23,11 @@
 /**/.project
 /**/.classpath
 /**/.metadata
+/**/*.iml
+**/.idea
+/spagolite-paginator-gf/nbproject/
 /nbactions.xml
+/**/xaDiskHome/
 /**/nbproject
 .idea/
 **/*.iml

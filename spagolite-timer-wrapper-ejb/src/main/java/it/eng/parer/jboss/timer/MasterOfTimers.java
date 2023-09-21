@@ -1,12 +1,26 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.jboss.timer;
 
-import it.eng.parer.jboss.timer.common.CronSchedule;
-import it.eng.parer.jboss.timer.common.JbossJobTimer;
-import it.eng.parer.jboss.timer.common.JobTable;
-import it.eng.parer.jboss.timer.service.JbossTimerEjb;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
@@ -20,8 +34,14 @@ import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import it.eng.parer.jboss.timer.common.CronSchedule;
+import it.eng.parer.jboss.timer.common.JbossJobTimer;
+import it.eng.parer.jboss.timer.common.JobTable;
+import it.eng.parer.jboss.timer.service.JbossTimerEjb;
 
 /**
  * Timer che esegue il pollig dalla tabella di configurazione. Sì, il nome della classe è una citazione.

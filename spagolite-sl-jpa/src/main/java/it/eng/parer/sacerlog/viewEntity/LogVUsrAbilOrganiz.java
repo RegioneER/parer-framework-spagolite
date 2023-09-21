@@ -1,8 +1,31 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.sacerlog.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the LOG_V_USR_ABIL_ORGANIZ database table.
@@ -11,7 +34,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "LOG_V_USR_ABIL_ORGANIZ", schema = "SACER_LOG")
 @NamedQueries({ @NamedQuery(name = "LogVUsrAbilOrganiz.findAll", query = "SELECT u FROM LogVUsrAbilOrganiz u"),
-        @NamedQuery(name = "LogVUsrAbilOrganiz.findByApplicAndUser", query = "SELECT u FROM LogVUsrAbilOrganiz u WHERE u.nmApplic = :nmApplic AND u.idUserIam = :idUserIam ORDER BY u.dlCompositoOrganiz"), })
+        @NamedQuery(name = "LogVUsrAbilOrganiz.findByApplicAndUser", query = "SELECT u FROM LogVUsrAbilOrganiz u WHERE u.nmApplic = :nmApplic AND u.logVUsrAbilOrganizId.idUserIam = :idUserIam ORDER BY u.dlCompositoOrganiz"), })
 public class LogVUsrAbilOrganiz implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,21 +45,30 @@ public class LogVUsrAbilOrganiz implements Serializable {
     private BigDecimal idApplic;
     private BigDecimal idDichAbilOrganiz;
     private BigDecimal idOrganizApplic;
-    private BigDecimal idOrganizIam;
     private BigDecimal idOrganizIamPadre;
     private BigDecimal idTipoOrganiz;
-    private BigDecimal idUserIam;
     private BigDecimal idUsoUserApplic;
     private String nmApplic;
     private String nmOrganiz;
     private String nmTipoOrganiz;
+    private LogVUsrAbilOrganizId logVUsrAbilOrganizId;
 
     public LogVUsrAbilOrganiz() {
     }
 
     public LogVUsrAbilOrganiz(BigDecimal idOrganizIam, BigDecimal idOrganizApplic) {
-        this.idOrganizIam = idOrganizIam;
+        this.logVUsrAbilOrganizId = new LogVUsrAbilOrganizId();
+        logVUsrAbilOrganizId.setIdOrganizIam(idOrganizIam);
         this.idOrganizApplic = idOrganizApplic;
+    }
+
+    @EmbeddedId
+    public LogVUsrAbilOrganizId getLogVUsrAbilOrganizId() {
+        return logVUsrAbilOrganizId;
+    }
+
+    public void setLogVUsrAbilOrganizId(LogVUsrAbilOrganizId logVUsrAbilOrganizId) {
+        this.logVUsrAbilOrganizId = logVUsrAbilOrganizId;
     }
 
     @Column(name = "DL_COMPOSITO_ORGANIZ")
@@ -66,7 +98,7 @@ public class LogVUsrAbilOrganiz implements Serializable {
         this.dsOrganiz = dsOrganiz;
     }
 
-    @Column(name = "FL_ATTIVO")
+    @Column(name = "FL_ATTIVO", columnDefinition = "char")
     public String getFlAttivo() {
         return this.flAttivo;
     }
@@ -102,16 +134,6 @@ public class LogVUsrAbilOrganiz implements Serializable {
         this.idOrganizApplic = idOrganizApplic;
     }
 
-    @Id
-    @Column(name = "ID_ORGANIZ_IAM")
-    public BigDecimal getIdOrganizIam() {
-        return this.idOrganizIam;
-    }
-
-    public void setIdOrganizIam(BigDecimal idOrganizIam) {
-        this.idOrganizIam = idOrganizIam;
-    }
-
     @Column(name = "ID_ORGANIZ_IAM_PADRE")
     public BigDecimal getIdOrganizIamPadre() {
         return this.idOrganizIamPadre;
@@ -128,16 +150,6 @@ public class LogVUsrAbilOrganiz implements Serializable {
 
     public void setIdTipoOrganiz(BigDecimal idTipoOrganiz) {
         this.idTipoOrganiz = idTipoOrganiz;
-    }
-
-    @Id
-    @Column(name = "ID_USER_IAM")
-    public BigDecimal getIdUserIam() {
-        return this.idUserIam;
-    }
-
-    public void setIdUserIam(BigDecimal idUserIam) {
-        this.idUserIam = idUserIam;
     }
 
     @Column(name = "ID_USO_USER_APPLIC")

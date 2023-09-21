@@ -1,23 +1,33 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoCore.util;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-
 import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -138,6 +148,7 @@ public class UriEcondingFilter implements Filter {
                     } else {
                         // no value
                         values = new String[] { "" }; // empty
+
                     }
                     // if param exists on the map replacing with old list and new one
                     if (localEncoded.get(paramAndValue[PARAM]) != null) {
@@ -164,7 +175,7 @@ public class UriEcondingFilter implements Filter {
         /**
          * Check if value is a valid JSON or a list of elements separated by one of the separator defined in
          * multiValueSeparator. It manages also array of multiple JSON Object like [{json1},{json2},{json3}].
-         * 
+         *
          * @param value
          *            valore atteso
          * 
@@ -198,5 +209,4 @@ public class UriEcondingFilter implements Filter {
      */
     public void destroy() {
     }
-
 }

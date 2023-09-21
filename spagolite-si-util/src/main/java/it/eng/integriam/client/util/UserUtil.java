@@ -1,12 +1,30 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.integriam.client.util;
 
-import it.eng.integriam.client.ws.recauth.HelpDips;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import org.dom4j.Element;
 
+import it.eng.integriam.client.ws.recauth.HelpDips;
 import it.eng.integriam.client.ws.recauth.RecuperoAutorizzazioniRisposta;
 import it.eng.spagoLite.FrameElement;
 import it.eng.spagoLite.security.User;
@@ -16,9 +34,12 @@ import it.eng.spagoLite.security.profile.Azione;
 import it.eng.spagoLite.security.profile.MenuDips;
 import it.eng.spagoLite.security.profile.Pagina;
 import it.eng.spagoLite.security.profile.Profile;
-import java.util.HashMap;
 
 public class UserUtil {
+
+    private UserUtil() {
+        throw new IllegalStateException("Impossibile istanziare la classe. Contiene solo metodi statici.");
+    }
 
     public static void fillComponenti(User utente, RecuperoAutorizzazioniRisposta auth) {
         utente.setMenu(populateMenu(auth.getMenuList()));
@@ -88,10 +109,9 @@ public class UserUtil {
 
     public static Menu populateMenu(List<it.eng.integriam.client.ws.recauth.Menu> userMenu) {
         Menu menu = new Menu("", "");
-        List<Node> list = new ArrayList<Node>();
-        // Map<Integer, Node> map = new LinkedHashMap<Integer, Node>();
+        List<Node> list = new ArrayList<>();
         for (it.eng.integriam.client.ws.recauth.Menu entryMenu : userMenu) {
-            int level = entryMenu.getNiLivelloEntryMenu().intValue();
+            int level = entryMenu.getNiLivelloEntryMenu();
             Node node = new Node(entryMenu);
 
             if (list.size() < level) {
@@ -104,7 +124,7 @@ public class UserUtil {
 
             list.set(level - 1, node);
         }
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             for (Node childNode : list.get(0)) {
                 populateMenu(menu, childNode);
             }
@@ -117,13 +137,9 @@ public class UserUtil {
         if (!node.hasChild()) {
             Link childLink = new Link(node.getEntryMenu().getNmEntryMenu(), node.getEntryMenu().getDsEntryMenu(),
                     node.getEntryMenu().getDsLinkEntryMenu());
-            // boolean esisteMenu=node.getEntryMenu().isFlHelpPresente();
-            // childLink.setHelpAvailable(esisteMenu);
             menu.add(childLink);
         } else {
             Menu childMenu = new Menu(node.getEntryMenu().getNmEntryMenu(), node.getEntryMenu().getDsEntryMenu());
-            // boolean esisteMenu=node.getEntryMenu().isFlHelpPresente();
-            // childMenu.setHelpAvailable(esisteMenu);
             menu.add(childMenu);
 
             for (Node childNode : node) {
@@ -134,11 +150,11 @@ public class UserUtil {
 
     private static class Node extends FrameElement implements Iterable<Node> {
 
-        private List<Node> child;
-        private it.eng.integriam.client.ws.recauth.Menu entryMenu;
+        private final List<Node> child;
+        private final it.eng.integriam.client.ws.recauth.Menu entryMenu;
 
         public Node(it.eng.integriam.client.ws.recauth.Menu entryMenu) {
-            this.child = new ArrayList<Node>();
+            this.child = new ArrayList<>();
             this.entryMenu = entryMenu;
         }
 
@@ -147,13 +163,14 @@ public class UserUtil {
         }
 
         public boolean hasChild() {
-            return child.size() > 0;
+            return !child.isEmpty();
         }
 
         public void add(Node node) {
             child.add(node);
         }
 
+        @Override
         public Iterator<Node> iterator() {
             return child.iterator();
         }
@@ -163,8 +180,8 @@ public class UserUtil {
             Element element = super.asXml();
             element.addAttribute("codice", entryMenu.getNmEntryMenu());
 
-            for (Node child : this) {
-                element.add(child.asXml());
+            for (Node c : this) {
+                element.add(c.asXml());
             }
 
             return element;

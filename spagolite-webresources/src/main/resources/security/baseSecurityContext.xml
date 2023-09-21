@@ -275,5 +275,11 @@
     <bean id="parserPool" class="org.opensaml.xml.parse.StaticBasicParserPool" scope="singleton"
               init-method="initialize" />
     <bean id="parserPoolHolder" class="org.springframework.security.saml.parser.ParserPoolHolder" scope="singleton" />
-	
+
+    <!-- Aggiunto per risolvere il problema dell'Issuer della Puglia che voleva accodato il Tenant dopo l'entityId ('@conservazione' ad esempio). -->
+    <!-- Lo spazio accodato l'ho messo per evitare che se non trova la proprietà mi falliva il costruttore! -->
+    <bean id="suffissoIssuerSamlRequest" class="java.lang.String">
+        <constructor-arg value="#{systemProperties['suffisso-issuer-saml-request']}#{''}"/>
+    </bean>
+
 </beans>

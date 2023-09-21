@@ -1,7 +1,25 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.security.auth;
 
 //import java.sql.Date;
 import it.eng.spagoLite.security.exception.AuthWSException;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,17 +72,17 @@ public class WSLoginHandler {
      *            nome del servizio web
      * @param em
      *            EntityManager
-     * 
+     *
      * @return true/false con verifica autorizzazione
-     * 
-     * @throws UserWSNotAuthorizedException
+     *
+     * @throws AuthWSException
      *             eccezione lanciata se l'utente non è autorizzato
      */
     public static boolean checkAuthz(String username, Integer idOrganiz, String servizioWeb, EntityManager em)
             throws AuthWSException {
         Query q2 = em.createQuery(AUTH_QUERY);
         q2.setParameter("username", username);
-        q2.setParameter("idOrganiz", idOrganiz);
+        q2.setParameter("idOrganiz", new BigDecimal(idOrganiz));
         q2.setParameter("servizioWeb", servizioWeb);
         return doCheckAuthz(username, idOrganiz, servizioWeb, q2);
     }
@@ -77,10 +95,15 @@ public class WSLoginHandler {
      *            nome utente
      * @param password
      *            password
+     * @param ipAddress
+     *            indirizzo ip
      * @param em
      *            EntityManager
      *
+     * @return true/false con verifica autorizzazione
      *
+     * @throws AuthWSException
+     *             eccezione lanciata se l'utente non è autorizzato
      */
     public static boolean login(String username, String password, String ipAddress, EntityManager em)
             throws AuthWSException {
@@ -111,17 +134,21 @@ public class WSLoginHandler {
      * Autenticazione e controllo di autorizzazioni ad eseguire un servizio per almeno un'organizzazione
      *
      * @param username
+     *            nome utente
      * @param password
+     *            password
      * @param servizioWeb
+     *            nome servizio
      * @param em
-     * 
+     *            EntityManager
+     * @param ipAddress
+     *            indirizzo ip
+     *
      * @return true se l'utente ha inserito le credenziali corrette ed è autorizzato ad eseguire il servizioWeb per
      *         almeno un'organizzazione
-     * 
-     * @throws UserWSNotAuthorizedException
-     * @throws FailedWSLoginException
-     * @throws AccountWSLockedException
-     * @throws AccountWSExpiredException
+     *
+     * @throws AuthWSException
+     *             eccezione lanciata se l'utente non è autorizzato
      */
     public static boolean loginAndCheckAuthzAtLeastOneOrganiz(String username, String password, String servizioWeb,
             String ipAddress, EntityManager em) throws AuthWSException {
@@ -139,16 +166,20 @@ public class WSLoginHandler {
      * Autenticazione e controllo di autorizzazioni ad eseguire un servizio di Sacer IAM
      *
      * @param username
+     *            nome utente
      * @param password
+     *            password
      * @param servizioWeb
+     *            nome servizio
+     * @param ipAddress
+     *            indirizzo ip
      * @param em
-     * 
+     *            EntityManager
+     *
      * @return true/false con verifica login su iam
-     * 
-     * @throws UserWSNotAuthorizedException
-     * @throws FailedWSLoginException
-     * @throws AccountWSLockedException
-     * @throws AccountWSExpiredException
+     *
+     * @throws AuthWSException
+     *             eccezione lanciata se l'utente non è autorizzato
      */
     public static boolean loginAndCheckAuthzIAM(String username, String password, String servizioWeb, String ipAddress,
             EntityManager em) throws AuthWSException {
@@ -210,17 +241,21 @@ public class WSLoginHandler {
                     throw new AuthWSException(AuthWSException.CodiceErrore.UTENTE_SCADUTO,
                             "Credenziali scadute in data " + formatter.format(expDate));
                 }
-                if (StringUtils.isEmpty(salt)) {
-                    if (!PwdUtil.encodePassword(password).equals(dbPwd)) {
-                        log.warn("Login failed for user: " + username);
-                        throw new AuthWSException(AuthWSException.CodiceErrore.LOGIN_FALLITO, LOGIN_FALLITO_MSG);
-                    }
-                } else {
-                    if (!PwdUtil.encodePBKDF2Password(PwdUtil.decodeUFT8Base64String(salt), password).equals(dbPwd)) {
-                        log.warn("Login failed for user: " + username);
-                        throw new AuthWSException(AuthWSException.CodiceErrore.LOGIN_FALLITO, LOGIN_FALLITO_MSG);
+                if (StringUtils.isNotBlank(password)) { // in caso di autenticazione con Oauth2
+                    if (StringUtils.isEmpty(salt)) {
+                        if (!PwdUtil.encodePassword(password).equals(dbPwd)) {
+                            log.warn("Login failed for user: " + username);
+                            throw new AuthWSException(AuthWSException.CodiceErrore.LOGIN_FALLITO, LOGIN_FALLITO_MSG);
+                        }
+                    } else {
+                        if (!PwdUtil.encodePBKDF2Password(PwdUtil.decodeUFT8Base64String(salt), password)
+                                .equals(dbPwd)) {
+                            log.warn("Login failed for user: " + username);
+                            throw new AuthWSException(AuthWSException.CodiceErrore.LOGIN_FALLITO, LOGIN_FALLITO_MSG);
+                        }
                     }
                 }
+
                 if (ipCheck) {
                     List<String> list = ipListQuery.getResultList();
                     for (String ipAddr : list) {

@@ -1,4 +1,30 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.tag;
+
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_2_ALT;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_2_TITLE;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_2_URL;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_3_ALT;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_3_TITLE;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_3_URL;
+import static it.eng.spagoCore.configuration.ConfigProperties.URIProperty.LOGO_2_RELATIVE;
+import static it.eng.spagoCore.configuration.ConfigProperties.URIProperty.LOGO_3_RELATIVE;
 
 import it.eng.spagoCore.configuration.ConfigSingleton;
 import javax.servlet.jsp.JspException;
@@ -24,57 +50,48 @@ public class FooterTag extends BaseSpagoLiteTag {
     }
 
     private String renderFooterInfo(String contextPath) {
+        ConfigSingleton configSingleton = ConfigSingleton.getInstance();
+
+        StringBuilder img2 = new StringBuilder();
+        img2.append("<img src=\"");
+        img2.append(contextPath).append(configSingleton.getStringValue(LOGO_2_RELATIVE.name()));
+        img2.append("\" alt=\"");
+        img2.append(configSingleton.getStringValue(LOGO_2_ALT.name()));
+        img2.append("\"/>");
+
+        StringBuilder img3 = new StringBuilder();
+        img3.append("<img src=\"");
+        img3.append(contextPath).append(configSingleton.getStringValue(LOGO_3_RELATIVE.name()));
+        img3.append("\" alt=\"");
+        img3.append(configSingleton.getStringValue(LOGO_3_ALT.name()));
+        img3.append("\"/>");
+
         StringBuilder footer = new StringBuilder();
         footer.append("<div class=\"left\">");
-        if (StringUtils.isNotBlank(ConfigSingleton.getLogo2_url())) {
-            footer.append("<a href=\"").append(ConfigSingleton.getLogo2_url()).append("\"  title=\"")
-                    .append(ConfigSingleton.getLogo2_title()).append("\">");
+        if (StringUtils.isNotBlank(configSingleton.getStringValue(LOGO_2_URL.name()))) {
+            footer.append("<a href=\"").append(configSingleton.getStringValue(LOGO_2_URL.name())).append("\"  title=\"")
+                    .append(configSingleton.getStringValue(LOGO_2_TITLE.name())).append("\">");
 
-            footer.append("<img src=\"").append(contextPath + ConfigSingleton.getLogo2_relativePath())
-                    .append("\" alt=\"").append(ConfigSingleton.getLogo2_alt()).append("\"/>");
+            footer.append(img2.toString());
 
             footer.append("</a>");
         } else {
-            footer.append("<img src=\"").append(contextPath + ConfigSingleton.getLogo2_relativePath())
-                    .append("\" alt=\"").append(ConfigSingleton.getLogo2_alt()).append("\"/>");
+            footer.append(img2.toString());
         }
         footer.append("</div>\n");
 
-        if (StringUtils.isNotBlank(ConfigSingleton.getLogo3_relativePath())) {
-            footer.append("<div class=\"right\">");
-            if (StringUtils.isNotBlank(ConfigSingleton.getLogo3_url())) {
-                footer.append("<a href=\"").append(ConfigSingleton.getLogo3_url()).append("\"  title=\"")
-                        .append(ConfigSingleton.getLogo3_title()).append("\">");
+        footer.append("<div class=\"right\">");
+        if (StringUtils.isNotBlank(configSingleton.getStringValue(LOGO_3_URL.name()))) {
+            footer.append("<a href=\"").append(configSingleton.getStringValue(LOGO_2_URL.name())).append("\"  title=\"")
+                    .append(configSingleton.getStringValue(LOGO_3_TITLE.name())).append("\">");
 
-                footer.append("<img src=\"").append(contextPath + ConfigSingleton.getLogo3_relativePath())
-                        .append("\" alt=\"").append(ConfigSingleton.getLogo3_alt()).append("\"/>");
+            footer.append(img3.toString());
 
-                footer.append("</a>");
-            } else {
-                footer.append("<img src=\"").append(contextPath + ConfigSingleton.getLogo3_relativePath())
-                        .append("\" alt=\"").append(ConfigSingleton.getLogo3_alt()).append("\"/>");
-            }
-
-            footer.append("</div>\n");
+            footer.append("</a>");
+        } else {
+            footer.append(img3.toString());
         }
 
-        /*
-         * footer.
-         * append("<div class=\"center\">I cookie ci aiutano a fornire i nostri servizi. Utilizzando tali servizi, accetti l'utilizzo dei cookie da parte nostra. <a id=\"informativa_cookie\" alt=\"Informativa sui cookie\" href=\""
-         * + this.getActionName() + "?operation=mostraInformativa"+ "\">Informazioni</a></div>");
-         */
-
-        // footer.append("<div class=\"right\"></div>");
-        // if(getUser()!=null){
-        // footer.append("<div class=\"center\">");
-        // footer.append(" <a
-        // href=\""+((HttpServletResponse)pageContext.getResponse()).encodeURL("SceltaStrutture.html")+"\">Cambio
-        // struttura</a>");
-        // footer.append(" <a
-        // href=\""+((HttpServletResponse)pageContext.getResponse()).encodeURL("Home.html?operation=changePwd")+"\">Cambio
-        // password</a>");
-        // footer.append("</div>");
-        // }
         return footer.toString();
     }
 }

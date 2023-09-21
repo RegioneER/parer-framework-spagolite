@@ -1,4 +1,21 @@
 /*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -36,7 +53,18 @@ import it.eng.spagoLite.db.base.row.BaseRow;
 import it.eng.spagoLite.db.base.table.BaseTable;
 import it.eng.spagoLite.db.oracle.decode.DecodeMap;
 import it.eng.spagoLite.form.list.List;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
+import jdk.nashorn.internal.objects.Global;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -109,6 +137,7 @@ public class GestioneLogEventiAction extends GestioneLogEventiAbstractAction {
                 getForm().getListaModifiche().getTable().first();
                 getForm().getEventoDetail().getVisualizzaFoto().setEditMode();
                 getForm().getEventoDetail().getVisualizzaDatiCompleti().setEditMode();
+                getForm().getValoreXml().getScarica_xml().setEditMode();
                 /* Memorizza l'idEgentoOggetto per la futura visualizzazione foto */
                 getSession().setAttribute(EVENTO_OGGETTO_PER_LOG, record);
                 // memorizza il nome della lista che servirà alla JSP per visualizzare le frecce di navigazione
@@ -336,6 +365,36 @@ public class GestioneLogEventiAction extends GestioneLogEventiAbstractAction {
         forwardToPublisher(Application.Publisher.DETTAGLIO_XML);
     }
 
+    @Override
+    public void scarica_xml() throws EMFError {
+        BigDecimal idOggettoEvento = null;
+        idOggettoEvento = (BigDecimal) getSession().getAttribute(EVENTO_OGGETTO_PER_LOG);
+        String foto = sacerLogHelper.getXmlFotoByIdEventoOggettoAsString(idOggettoEvento);
+        try {
+            String filename = "LogEventi_Evento_"
+                    + getForm().getEventoDetail().getNm_tipo_evento().parse().replace(" ", "_") + "_IdTransazione_"
+                    + getForm().getEventoDetail().getId_transazione().parse();
+
+            byte[] fotoByte = foto.getBytes(StandardCharsets.UTF_8);
+
+            getResponse().setContentType("application/zip");
+            getResponse().setHeader("Content-Disposition", "attachment; filename=\"" + filename + ".xml");
+
+            OutputStream out = getServletOutputStream();
+            if (fotoByte != null) {
+                out.write(fotoByte);
+            }
+
+            out.flush();
+            out.close();
+            freeze();
+
+        } catch (Exception e) {
+            getMessageBox().addError("Errore durante il download del file XML nel Log eventi");
+            logger.error("Errore durante il download del file XML nel Log eventi", e);
+        }
+    }
+
     public void loadRicercaEventi() throws EMFError {
         logger.debug("**************** loadRicercaEventi ******************");
         getUser().getMenu().reset();
@@ -491,6 +550,7 @@ public class GestioneLogEventiAction extends GestioneLogEventiAbstractAction {
         getForm().getListaModifiche().getTable().first();
         getForm().getEventoDetail().getVisualizzaFoto().setEditMode();
         getForm().getEventoDetail().getVisualizzaDatiCompleti().setEditMode();
+        getForm().getValoreXml().getScarica_xml().setEditMode();
     }
 
     @Override

@@ -1,3 +1,20 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.tag.prototype;
 
 import it.eng.spagoCore.util.JavaScript;
@@ -106,6 +123,7 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
      * Scrive la label
      * 
      * @throws JspException
+     *             eccezione generica
      */
     protected void writeLabel() throws JspException {
         String label = ContainerTag.LEFT.equalsIgnoreCase(getLabelPosition())
@@ -124,6 +142,7 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
      * Scrive il controllo
      * 
      * @throws JspException
+     *             eccezione generica
      */
     protected abstract void writeControl() throws JspException;
 
@@ -131,6 +150,7 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
      * Stampa il container
      * 
      * @throws JspException
+     *             eccezione generica
      */
     protected void writeStartContainer() throws JspException {
         writeln("");
@@ -141,6 +161,7 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
      * Stampa il container
      * 
      * @throws JspException
+     *             eccezione generica
      */
     protected void writeEndContainer() throws JspException {
         writeln(ContainerTag.Factory.htmlEndContainer());

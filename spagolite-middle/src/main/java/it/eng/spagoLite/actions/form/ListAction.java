@@ -1,4 +1,31 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.actions.form;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 
 import it.eng.spagoCore.error.EMFError;
 import it.eng.spagoLite.db.base.BaseTableInterface;
@@ -9,11 +36,6 @@ import it.eng.spagoLite.form.fields.SingleValueField;
 import it.eng.spagoLite.form.list.List;
 import it.eng.spagoLite.message.MessageBox.ViewMode;
 import it.eng.spagoLite.security.IUser;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class ListAction<T extends Form, U extends IUser<?>> extends FormAction<T, U> {
 
@@ -24,6 +46,7 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
     public static final String NE_DETTAGLIO_UPDATE = "update";
     public static final String NE_DETTAGLIO_INSERT = "dettaglioInsert";
     public static final String NE_DETTAGLIO_DELETE = "delete";
+    public static final String NE_DETTAGLIO_CONFIRM_DELETE = "confirmdelete";
     public static final String NE_DETTAGLIO_SELECT = "select";
     public static final String NE_EXPORT_XLS = "esportaExcel";
     public static final String NE_FIRST = "first";
@@ -39,25 +62,8 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
     public static final String NE_UPDATED_ROW = "updatedRow";
     public static final String NE_SHOW_INACTIVE_ROWS = "showInactiveRows";
     public static final String NE_HIDE_INACTIVE_ROWS = "hideInactiveRows";
-    /*
-     * private String tableName; private String navigationEvent; private String riga; private String forceReload;
-     * 
-     * public String getTableName() { return tableName; }
-     * 
-     * public void setTableName(String tableName) { this.tableName = tableName; }
-     * 
-     * public String getNavigationEvent() { return navigationEvent; }
-     * 
-     * public void setNavigationEvent(String navigationEvent) { this.navigationEvent = navigationEvent; }
-     * 
-     * public String getRiga() { return riga; }
-     * 
-     * public void setRiga(String riga) { this.riga = riga; }
-     * 
-     * public String getForceReload() { return forceReload; }
-     * 
-     * public void setForceReload(String forceReload) { this.forceReload = forceReload; }
-     */
+    //
+    private static final String CONFIRM_DELETE_PAGE = "/confirmDeletePage";
     private static final long serialVersionUID = 4683122278656206133L;
 
     public abstract void loadDettaglio() throws EMFError;
@@ -82,8 +88,24 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
 
     public abstract void filterInactiveRecords(List<?> list) throws EMFError;
 
+    //
+    public void confirmDelete() throws EMFError {
+        setParameters();
+        listNavigationOnClick(getTableName(), getNavigationEvent(), getRiga(), getForceReload());
+    }
+
+    public void cancelDelete() {
+        goBack();
+    }
+
     /**
      * Metodo di utility che viene eseguito dopo ogni query di paginazione lazy
+     * 
+     * @param list
+     *            value
+     * 
+     * @throws EMFError
+     *             eccezione generica
      */
     public abstract void postLazyLoad(List<?> list) throws EMFError;
 
@@ -91,6 +113,7 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
      * Gestisce l'ordinamento sull'ordinamento delle liste
      *
      * @throws EMFError
+     *             eccezione generica
      */
     public void listSortOnClick() throws EMFError {
         String tableName = getRequest().getParameter("table");
@@ -117,20 +140,12 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
         forwardToPublisher(getLastPublisher());
     }
 
-    /*
-     * private void setParameters() { setTableName(getRequest().getParameter("table"));
-     * setNavigationEvent(getRequest().getParameter("navigationEvent")); setRiga(getRequest().getParameter("riga"));
-     * setForceReload(getRequest().getParameter("forceReload")); }
-     * 
-     * private void setParameters(String param[]) { setTableName(param[0]); setNavigationEvent(param[1]);
-     * setRiga(param[2]); setForceReload(param[3]); }
-     */
     public void listDetailNavigationOnClick() throws EMFError {
         setParameters();
         listDetailNavigationOnClick(getTableName(), getNavigationEvent(), getRiga(), getForceReload());
     }
 
-    public void listDetailNavigationOnClick(String param[]) throws EMFError {
+    public void listDetailNavigationOnClick(String[] param) throws EMFError {
         setParameters(param);
         listDetailNavigationOnClick(getTableName(), getNavigationEvent(), getRiga(), getForceReload());
     }
@@ -140,8 +155,8 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
         listNavigationOnClick(getTableName(), getNavigationEvent(), getRiga(), getForceReload());
     }
 
-    // probabilmente questa è una submit
-    public void listNavigationOnClick(String param[]) throws EMFError {
+    // probabilmente questa ï¿½ una submit
+    public void listNavigationOnClick(String[] param) throws EMFError {
         setParameters(param);
         listNavigationOnClick(getTableName(), getNavigationEvent(), getRiga(), getForceReload());
     }
@@ -150,29 +165,39 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
      * Gestisce gli eventi di navigazione sulle liste
      *
      * @param tableName
+     *            nome tabella
      * @param navigationEvent
+     *            evento
      * @param riga
+     *            riga
      * @param forceReload
+     *            reload
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     protected void listNavigationOnClick(String tableName, String navigationEvent, String riga, String forceReload)
             throws EMFError {
         List<?> list = (List<?>) getForm().getComponent(tableName);
-        // Forzo il goback se la tabella nella lista è null .. l'utente potrebbe aver cliccato il tasto back del browser
+        // Forzo il goback se la tabella nella lista ï¿½ null .. l'utente potrebbe aver cliccato il tasto back del
+        // browser
         if (list.getTable() == null) {
             getMessageBox().addWarning(
-                    "Si è verificato un errore (probabilmente) a seguito dell'utilizzo del tasto Indietro del browser.\n E' stata recuperata l'ultima pagina aperta correttamente.");
+                    "Si ï¿½ verificato un errore (probabilmente) a seguito dell'utilizzo del tasto Indietro del browser.\n E' stata recuperata l'ultima pagina aperta correttamente.");
             getMessageBox().setViewMode(ViewMode.plain);
             this.goBack(true);
             return;
         }
         calculateAuthorization(tableName);
+        /* aggiunto per garantire il tipo di http method utilizzato in base a navigationEvent */
+        if (!authorizeHttpMethodOnNavigationEvent(navigationEvent)) {
+            return;
+        }
         forwardToPublisher(getLastPublisher());
         if (navigationEvent.equalsIgnoreCase(NE_ELENCO)) {
             elencoOnClick();
         } else if (navigationEvent.equalsIgnoreCase(NE_DETTAGLIO_VIEW)) {
-            list.getTable().setCurrentRowIndex(new Integer(riga));
+            list.getTable().setCurrentRowIndex(Integer.parseInt(riga));
             if ("true".equalsIgnoreCase(forceReload)) {
                 initOnClick();
             }
@@ -181,7 +206,7 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
                 dettaglioOnClick();
             }
         } else if (navigationEvent.equalsIgnoreCase(NE_DETTAGLIO_UPDATE)) {
-            list.getTable().setCurrentRowIndex(new Integer(riga));
+            list.getTable().setCurrentRowIndex(Integer.parseInt(riga));
             loadDettaglio();
             dettaglioOnClick();
             // Check security
@@ -198,11 +223,16 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
             if (list.getRowSmandrupper().isInsertable() && isInsertAction()) {
                 insertDettaglio();
             }
+        } else if (navigationEvent.equalsIgnoreCase(NE_DETTAGLIO_CONFIRM_DELETE)) {
+            list.getTable().setCurrentRowIndex(Integer.parseInt(riga));
+            // Check security
+            list.getRowSmandrupper().smandruppRow(list.getTable().getCurrentRow());
+            if (list.getRowSmandrupper().isDeletable() && isDeleteAction()) {
+                forwardToDeletePage();
+            }
         } else if (navigationEvent.equalsIgnoreCase(NE_DETTAGLIO_DELETE)) {
-            list.getTable().setCurrentRowIndex(new Integer(riga));
-            // loadDettaglio();
+            list.getTable().setCurrentRowIndex(Integer.parseInt(riga));
             dettaglioOnClick();
-
             // Check security
             list.getRowSmandrupper().smandruppRow(list.getTable().getCurrentRow());
             if (list.getRowSmandrupper().isDeletable() && isDeleteAction()) {
@@ -220,8 +250,8 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
             loadDettaglio();
         } else if (navigationEvent.equalsIgnoreCase(NE_PREV)) {
             // evento invocato se sto paginando dal dettaglio
-            // invoco il lazyloading solo se è una tabella paginata e se sono alla prima riga
-            if (list.getTable().getLazyListBean() != null && list.getTable().getCurrentRowIndex() == 0) {
+            // invoco il lazyloading solo se ï¿½ una tabella paginata e se sono alla prima riga
+            if (list.getTable().getLazyListInterface() != null && list.getTable().getCurrentRowIndex() == 0) {
                 this.lazyLoadPrevPage(list);
             } else {
                 list.getTable().prev();
@@ -229,10 +259,10 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
             loadDettaglio();
         } else if (navigationEvent.equalsIgnoreCase(NE_NEXT)) {
             // evento invocato se sto paginando dal dettaglio
-            // invoco il lazyloading solo se è una tabella paginata e se sono all'ultima riga (ie. l'ultima riga della
-            // pagina +1 è maggiore del numero di risultati relativi)
-            if (list.getTable().getLazyListBean() != null && list.getTable().getCurrentRowIndex()
-                    + 1 > list.getTable().getLazyListBean().getMaxResult() - 1) {
+            // invoco il lazyloading solo se ï¿½ una tabella paginata e se sono all'ultima riga (ie. l'ultima riga della
+            // pagina +1 ï¿½ maggiore del numero di risultati relativi)
+            if (list.getTable().getLazyListInterface() != null && list.getTable().getCurrentRowIndex()
+                    + 1 > list.getTable().getLazyListInterface().getMaxResult() - 1) {
                 this.lazyLoadNextPage(list);
             } else {
                 list.getTable().next();
@@ -245,7 +275,7 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
             }
             loadDettaglio();
         } else if (navigationEvent.equalsIgnoreCase(NE_GOTO_ROW)) {
-            list.getTable().setCurrentRowIndex(new Integer(riga));
+            list.getTable().setCurrentRowIndex(Integer.parseInt(riga));
             loadDettaglio();
         } else if (navigationEvent.equalsIgnoreCase(NE_LAST)) {
             if (!this.lazyLoadLastPage(list)) {
@@ -264,10 +294,10 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
         } else if (navigationEvent.equalsIgnoreCase(NE_DETTAGLIO_SAVE)) {
             saveDettaglio();
         } else if (navigationEvent.equalsIgnoreCase(NE_DETTAGLIO_CANCEL)) {
-            list.getTable().setCurrentRowIndex(new Integer(riga));
+            list.getTable().setCurrentRowIndex(Integer.parseInt(riga));
             undoDettaglio();
         } else if (navigationEvent.equalsIgnoreCase(NE_DETTAGLIO_SELECT)) {
-            list.getTable().setCurrentRowIndex(new Integer(riga));
+            list.getTable().setCurrentRowIndex(Integer.parseInt(riga));
             select(list);
         } else if (navigationEvent.equalsIgnoreCase(NE_SET_PAGE_SIZE)) {
             list.getTable().setPageSize(Integer.parseInt(getRiga()));
@@ -281,10 +311,20 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
         postLoad();
     }
 
+    private void forwardToDeletePage() {
+        //
+        getRequest().setAttribute("table", getTableName());
+        getRequest().setAttribute("riga", getRiga());
+        getRequest().setAttribute("forceReload", getForceReload());
+
+        forwardToPublisherSkipSetLast(CONFIRM_DELETE_PAGE);
+    }
+
     private boolean lazySortCurrentPage(List<?> list) throws EMFError {
         BaseTableInterface<?> table = list.getTable();
-        // invoco l'ordinamento lazy se è una tabella paginata
-        if (table.getLazyListBean() != null && (table.size() < table.getLazyListBean().getCountResultSize())) {
+        // invoco l'ordinamento lazy se ï¿½ una tabella paginata
+        if (table.getLazyListInterface() != null
+                && (table.size() < table.getLazyListInterface().getCountResultSize())) {
             table = getPaginator().sort(table);
             list.setTable(table);
             postLazyLoad(list);
@@ -296,10 +336,11 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
 
     private boolean lazyLoadNextPage(List<?> list) throws EMFError {
         BaseTableInterface<?> table = list.getTable();
-        // invoco la paginazione lazy se è una tabella paginata e se la pagina successiva non è contenuta interamente
+        // invoco la paginazione lazy se ï¿½ una tabella paginata e se la pagina successiva non ï¿½ contenuta
+        // interamente
         // nella lista che ho in memoria
-        if (table.getLazyListBean() != null
-                && table.getLastRowPageIndex() + table.getPageSize() + 1 > table.getLazyListBean().getMaxResult()) {
+        if (table.getLazyListInterface() != null && table.getLastRowPageIndex() + table.getPageSize() + 1 > table
+                .getLazyListInterface().getMaxResult()) {
             table = getPaginator().nextPage(table);
             list.setTable(table);
             postLazyLoad(list);
@@ -311,9 +352,10 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
 
     private boolean lazyLoadPrevPage(List<?> list) throws EMFError {
         BaseTableInterface<?> table = list.getTable();
-        // invoco la paginazione lazy se è una tabella paginata e se la pagina successiva non è contenuta interamente
+        // invoco la paginazione lazy se ï¿½ una tabella paginata e se la pagina successiva non ï¿½ contenuta
+        // interamente
         // nella lista che ho in memoria
-        if (table.getLazyListBean() != null && table.getFirstRowPageIndex() - table.getPageSize() < 0) {
+        if (table.getLazyListInterface() != null && table.getFirstRowPageIndex() - table.getPageSize() < 0) {
             table = getPaginator().prevPage(table);
             list.setTable(table);
             postLazyLoad(list);
@@ -324,8 +366,8 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
 
     private boolean lazyLoadLastPage(List<?> list) throws EMFError {
         BaseTableInterface<?> table = list.getTable();
-        if (table.getLazyListBean() != null && table.fullSize() > table.getLazyListBean().getFirstResult()
-                + table.getLazyListBean().getMaxResult()) {
+        if (table.getLazyListInterface() != null && table.fullSize() > table.getLazyListInterface().getFirstResult()
+                + table.getLazyListInterface().getMaxResult()) {
             table = getPaginator().lastPage(table);
             list.setTable(table);
             postLazyLoad(list);
@@ -337,7 +379,7 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
 
     private boolean lazyLoadFirstPage(List<?> list) throws EMFError {
         BaseTableInterface<?> table = list.getTable();
-        if (table.getLazyListBean() != null && table.getLazyListBean().getFirstResult() > 0) {
+        if (table.getLazyListInterface() != null && table.getLazyListInterface().getFirstResult() > 0) {
             table = getPaginator().firstPage(table);
             list.setTable(table);
             postLazyLoad(list);
@@ -349,17 +391,19 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
 
     protected boolean lazyLoadGoPage(List<?> list, int page) throws EMFError {
         BaseTableInterface<?> table = list.getTable();
-        // invoco la paginazione lazy se è una tabella paginata
-        if (table.getLazyListBean() != null && // se il primo index della lista che ho in memoria è maggiore del primo
-                                               // index della pagina di destinazione
-                ((table.getLazyListBean().getFirstResult() > (page - 1) * table.getPageSize()) || // se l'ultimo index
-                                                                                                  // della lista che ho
-                                                                                                  // in memoria è minore
-                                                                                                  // dell'ultimo index
-                                                                                                  // della pagina di
-                                                                                                  // destinazione
-                        (table.getLazyListBean().getFirstResult()
-                                + table.getLazyListBean().getMaxResult() < page * table.getPageSize() - 1))) {
+        // invoco la paginazione lazy se ï¿½ una tabella paginata
+        if (table.getLazyListInterface() != null && // se il primo index della lista che ho in memoria ï¿½ maggiore del
+                                                    // primo
+        // index della pagina di destinazione
+                ((table.getLazyListInterface().getFirstResult() > (page - 1) * table.getPageSize()) || // se l'ultimo
+                                                                                                       // index
+                // della lista che ho
+                // in memoria ï¿½ minore
+                // dell'ultimo index
+                // della pagina di
+                // destinazione
+                        (table.getLazyListInterface().getFirstResult()
+                                + table.getLazyListInterface().getMaxResult() < page * table.getPageSize() - 1))) {
             table = getPaginator().goPage(table, page);
             list.setTable(table);
             postLazyLoad(list);
@@ -373,25 +417,19 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
             String forceReload) throws EMFError {
         List<?> list = (List<?>) getForm().getComponent(tableName);
         forwardToPublisher(getLastPublisher());
-        int newRiga = new Integer(riga);
         if (navigationEvent.equalsIgnoreCase(NE_DETTAGLIO_UPDATE)) {
             if (list.postAndValidate(getRequest(), getMessageBox())) {
                 updateEditableRows(list);
-                list.getTable().setCurrentRowIndex(new Integer(riga)); // Cambio
+                list.getTable().setCurrentRowIndex(Integer.parseInt(riga)); // Cambio
                 // riga
                 update(list);
             }
         } else if (navigationEvent.equalsIgnoreCase(NE_DETTAGLIO_DELETE)) {
-            // if (newRiga != list.getTable().getCurrentRowIndex()) {
-            // if (list.postAndValidate(getRequest(), getMessageBox())) {
-            // updateEditableRows(list);
-            // list.getTable().setCurrentRowIndex(new Integer(riga));
-            // }
-            //
-            // }
-            list.getTable().setCurrentRowIndex(new Integer(riga));
+            list.getTable().setCurrentRowIndex(Integer.parseInt(riga));
             delete(list);
-
+        } else if (navigationEvent.equalsIgnoreCase(NE_DETTAGLIO_CONFIRM_DELETE)) {
+            list.getTable().setCurrentRowIndex(Integer.parseInt(riga));
+            forwardToDeletePage();
         }
     }
 
@@ -404,6 +442,24 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
 
             }
         }
+    }
+
+    // meccanismo di "sicurezza" per garantire che il singolo *navigationEvent* risponda
+    // ad un certo http method (e.g. evitare che la delete di un elemento in lista venga effettuata
+    // via GET anzichï¿½ POST)
+    private boolean authorizeHttpMethodOnNavigationEvent(String navigationEvent) throws EMFError {
+        boolean result = true; // default
+        if (NE_DETTAGLIO_DELETE.equals(navigationEvent)) {
+            result = HttpMethod.POST.name().equalsIgnoreCase(getRequest().getMethod());
+        }
+        if (!result) {
+            try {
+                getResponse().sendError(HttpStatus.METHOD_NOT_ALLOWED.value());
+            } catch (IOException e) {
+                throw new EMFError(EMFError.ERROR, e.getMessage());
+            }
+        }
+        return result;
     }
 
     @Override

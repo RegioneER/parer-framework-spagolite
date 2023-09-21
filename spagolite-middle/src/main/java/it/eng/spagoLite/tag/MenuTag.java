@@ -1,20 +1,36 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.tag;
 
-import java.util.Map;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.AMBIENTE;
 
-import it.eng.spagoCore.configuration.ConfigSingleton;
-import it.eng.spagoCore.util.JavaScript;
-import it.eng.spagoLite.security.User;
-import it.eng.spagoLite.security.menu.MenuEntry;
-import it.eng.spagoLite.security.menu.impl.Link;
-import it.eng.spagoLite.security.menu.impl.Menu;
-import it.eng.spagoLite.util.Casting.Casting;
-import it.eng.spagoLite.util.Format;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
+
+import it.eng.spagoCore.configuration.ConfigSingleton;
+import it.eng.spagoCore.util.JavaScript;
+import it.eng.spagoLite.security.menu.MenuEntry;
+import it.eng.spagoLite.security.menu.impl.Link;
+import it.eng.spagoLite.security.menu.impl.Menu;
+import it.eng.spagoLite.util.Format;
 
 public class MenuTag extends BaseSpagoLiteTag {
 
@@ -30,12 +46,15 @@ public class MenuTag extends BaseSpagoLiteTag {
     public int doStartTag() throws JspException {
         if (getMessageBox() == null || !getMessageBox().hasFatal()) {
 
+            ConfigSingleton configSingleton = ConfigSingleton.getInstance();
+
             Menu menu = getUser().getMenu();
 
             writeln("<!-- Menu -->\n");
             writeln("  <div class=\"menu\" id=\"menu\">");
-            writeln(" <div class=\"version\">" + ConfigSingleton.get_appName() + " v."
-                    + ConfigSingleton.get_appVersion() + " | " + ConfigSingleton.get_appBuildDate() + "</div>");
+            writeln(" <div class=\"version\">" + configSingleton.getAppName() + " "
+                    + configSingleton.getStringValue(AMBIENTE.name()) + " v." + configSingleton.getAppVersion() + " | "
+                    + configSingleton.getAppBuildDate() + "</div>");
             drawUserInfo();
             drawCloseMenu();
             closeUserInfo();
@@ -110,19 +129,6 @@ public class MenuTag extends BaseSpagoLiteTag {
                 infoUtente.append("</div>");
 
             }
-            // String[] nmStrutCompleto = getUser().getSceltaMap().split(",");
-            // infoUtente
-            // .append("<div><label class=\"slLabel\" >AMBIENTE: </label>");
-            // infoUtente.append(nmStrutCompleto[0]);
-            // infoUtente.append("</div>");
-            // infoUtente
-            // .append("<div><label class=\"slLabel\" >ENTE: </label>");
-            // infoUtente.append(nmStrutCompleto[1]);
-            // infoUtente.append("</div>");
-            // infoUtente
-            // .append("<div><label class=\"slLabel\" >STRUTTURA: </label>");
-            // infoUtente.append(nmStrutCompleto[2]);
-            // infoUtente.append("</div>");
         }
         writeln(infoUtente);
     }

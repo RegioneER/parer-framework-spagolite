@@ -1,9 +1,32 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.sacerlog.viewEntity;
 
-import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * The persistent class for the LOG_V_RIC_EVENTI_ORGANIZ database table.
@@ -20,11 +43,9 @@ public class LogVRicEventiOrganiz implements ILogVRicEventi {
     private String dsKeyOggetto;
     private Timestamp dtRegEvento;
     private BigDecimal idAgente;
-    private BigDecimal idAgenteEvento;
     private BigDecimal idApplic;
     private BigDecimal idEvento;
     private BigDecimal idOggetto;
-    private BigDecimal idOggettoEvento;
     private BigDecimal idOrganizApplic;
     private BigDecimal idTipoEvento;
     private BigDecimal idTipoOggetto;
@@ -47,8 +68,18 @@ public class LogVRicEventiOrganiz implements ILogVRicEventi {
     private String tipoClasseEvento;
     private String tipoOrigineAgente;
     private String dsMotivoScript;
+    private LogVRicEventiOrganizId logVRicEventiOrganizId;
 
     public LogVRicEventiOrganiz() {
+    }
+
+    @EmbeddedId
+    public LogVRicEventiOrganizId getLogVRicEventiOrganizId() {
+        return logVRicEventiOrganizId;
+    }
+
+    public void setLogVRicEventiOrganizId(LogVRicEventiOrganizId logVRicEventiOrganizId) {
+        this.logVRicEventiOrganizId = logVRicEventiOrganizId;
     }
 
     @Column(name = "DS_KEY_OGGETTO")
@@ -84,16 +115,22 @@ public class LogVRicEventiOrganiz implements ILogVRicEventi {
         this.idAgente = idAgente;
     }
 
-    @Id
-    @Column(name = "ID_AGENTE_EVENTO")
     @Override
+    @Transient
     public BigDecimal getIdAgenteEvento() {
-        return this.idAgenteEvento;
+        return this.logVRicEventiOrganizId.getIdAgenteEvento();
     }
 
     @Override
     public void setIdAgenteEvento(BigDecimal idAgenteEvento) {
-        this.idAgenteEvento = idAgenteEvento;
+        initId();
+        this.logVRicEventiOrganizId.setIdAgenteEvento(idAgenteEvento);
+    }
+
+    private void initId() {
+        if (logVRicEventiOrganizId == null) {
+            this.logVRicEventiOrganizId = new LogVRicEventiOrganizId();
+        }
     }
 
     @Column(name = "ID_APPLIC")
@@ -129,16 +166,16 @@ public class LogVRicEventiOrganiz implements ILogVRicEventi {
         this.idOggetto = idOggetto;
     }
 
-    @Id
-    @Column(name = "ID_OGGETTO_EVENTO")
     @Override
+    @Transient
     public BigDecimal getIdOggettoEvento() {
-        return this.idOggettoEvento;
+        return this.logVRicEventiOrganizId.getIdOggettoEvento();
     }
 
     @Override
     public void setIdOggettoEvento(BigDecimal idOggettoEvento) {
-        this.idOggettoEvento = idOggettoEvento;
+        initId();
+        this.logVRicEventiOrganizId.setIdOggettoEvento(idOggettoEvento);
     }
 
     @Column(name = "ID_TIPO_EVENTO")

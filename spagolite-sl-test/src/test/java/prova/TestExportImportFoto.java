@@ -1,4 +1,21 @@
 /*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -43,15 +60,14 @@ import org.junit.Assert;
 public class TestExportImportFoto {
 
     private EJBContainer ejbContainer = null;
-            
+
     @EJB
     private ExportImportFotoHelper helper = null;
-    
+
     @Resource
     private UserTransaction userTransaction;
     @PersistenceContext
     public EntityManager entityManager;
-
 
     private static final Logger log = LoggerFactory.getLogger(TestExportImportFoto.class);
 
@@ -72,57 +88,48 @@ public class TestExportImportFoto {
         try {
 
             Properties props = new Properties();
-            String locationPath = TestExportImportFoto.class.getProtectionDomain().getCodeSource().getLocation().getFile();
+            String locationPath = TestExportImportFoto.class.getProtectionDomain().getCodeSource().getLocation()
+                    .getFile();
             String fileProperties = locationPath + "jndi.properties";
 
             in = new FileInputStream(fileProperties);
             props.load(in);
             in.close();
-//            String driver = props.getProperty("saceriamDs.JdbcDriver");
-//            if (driver != null) {
-//                Class.forName(driver);
-//            }
-//             String url = props.getProperty("saceriamDs.JdbcUrl");
-//             String username = props.getProperty("saceriamDs.UserName");
-//             String password = props.getProperty("saceriamDs.Password");
-//             con = DriverManager.getConnection(url, username, password);
+            // String driver = props.getProperty("saceriamDs.JdbcDriver");
+            // if (driver != null) {
+            // Class.forName(driver);
+            // }
+            // String url = props.getProperty("saceriamDs.JdbcUrl");
+            // String username = props.getProperty("saceriamDs.UserName");
+            // String password = props.getProperty("saceriamDs.Password");
+            // con = DriverManager.getConnection(url, username, password);
 
-//             eseguiBatch(fileCaricamento);
+            // eseguiBatch(fileCaricamento);
             // EJB
-            ejbContainer=EJBContainer.createEJBContainer(props);
+            ejbContainer = EJBContainer.createEJBContainer(props);
             ejbContainer.getContext().bind("inject", this);
 
-//          DECOMMENTARE PER PULIRE TUTTE LE TABELLE DEL LOG CON LE FOTO
+            // DECOMMENTARE PER PULIRE TUTTE LE TABELLE DEL LOG CON LE FOTO
 
-/*
-            userTransaction.begin();
-            Query q = entityManager.createNamedQuery("LogFotoOggettoEvento.deleteAll", LogFotoOggettoEvento.class);
-            q.executeUpdate();
-            q = entityManager.createNamedQuery("LogEventoByScript.deleteAll", LogEventoByScript.class);
-            q.executeUpdate();
-            q = entityManager.createNamedQuery("LogChiaveAccessoEvento.deleteAll", LogChiaveAccessoEvento.class);
-            q.executeUpdate();
-            q = entityManager.createNamedQuery("LogOggettoEvento.deleteAll", LogOggettoEvento.class);
-            q.executeUpdate();
-            q = entityManager.createNamedQuery("LogEvento.deleteAll", LogEvento.class);
-            q.executeUpdate();
-            q = entityManager.createNamedQuery("LogAgenteEvento.deleteAll", LogAgenteEvento.class);
-            q.executeUpdate();
-            q = entityManager.createNamedQuery("LogDeltaFoto.deleteAll", LogDeltaFoto.class);
-            q.executeUpdate();
-            userTransaction.commit();
-*/
-            
+            /*
+             * userTransaction.begin(); Query q = entityManager.createNamedQuery("LogFotoOggettoEvento.deleteAll",
+             * LogFotoOggettoEvento.class); q.executeUpdate(); q =
+             * entityManager.createNamedQuery("LogEventoByScript.deleteAll", LogEventoByScript.class);
+             * q.executeUpdate(); q = entityManager.createNamedQuery("LogChiaveAccessoEvento.deleteAll",
+             * LogChiaveAccessoEvento.class); q.executeUpdate(); q =
+             * entityManager.createNamedQuery("LogOggettoEvento.deleteAll", LogOggettoEvento.class); q.executeUpdate();
+             * q = entityManager.createNamedQuery("LogEvento.deleteAll", LogEvento.class); q.executeUpdate(); q =
+             * entityManager.createNamedQuery("LogAgenteEvento.deleteAll", LogAgenteEvento.class); q.executeUpdate(); q
+             * = entityManager.createNamedQuery("LogDeltaFoto.deleteAll", LogDeltaFoto.class); q.executeUpdate();
+             * userTransaction.commit();
+             */
+
         } catch (Exception ex) {
             ex.printStackTrace();
             log.debug(null, ex);
         } finally {
-            /*            
-             try {
-             in.close();
-             } catch (IOException ex) {
-             log.debug(null, ex);
-             }
+            /*
+             * try { in.close(); } catch (IOException ex) { log.debug(null, ex); }
              */
         }
 
@@ -132,113 +139,67 @@ public class TestExportImportFoto {
     public void tearDown() {
         ejbContainer.close();
     }
-/*
-    @Test
-    public void esportaFoto() throws Exception {
-        
-        userTransaction.begin();
-        String str=helper.exportFoto(new BigDecimal(1201), "SACER_PING.ESPORTA_FOTO_VERSATORE");
-        HashMap mappa=new HashMap();
-        mappa.put("NM_AMBIENTE_VERS", "PARER_TEST");
-        mappa.put("NM_VERS", "NOME_VERSATORE_NUOVO");
-        mappa.put("DS_VERS", "DESCRIZIONE_VERSATORE_NUOVO");
-        mappa.put("DS_PATH_INPUT_FTP", "PATH_INPUT_FTP_NUOVO");
-        mappa.put("DS_PATH_OUTPUT_FTP", "PATH_OUTPUT_FTP_NUOVO");
-        mappa.put("DS_PATH_TRASF", "PATH_TRASF_NUOVO");
-        str=helper.sostituisciTutto(str, mappa);
-        scriviFile("FILE_XML_DA_IMPORTARE.xml", str);
-        long idOggetto=helper.importFoto(str, "SACER_PING.IMPORTA_FOTO_VERSATORE");
-        log.info("Oggetto importato con ID {}", idOggetto);
-        userTransaction.commit();
+    /*
+     * @Test public void esportaFoto() throws Exception {
+     * 
+     * userTransaction.begin(); String str=helper.exportFoto(new BigDecimal(1201), "SACER_PING.ESPORTA_FOTO_VERSATORE");
+     * HashMap mappa=new HashMap(); mappa.put("NM_AMBIENTE_VERS", "PARER_TEST"); mappa.put("NM_VERS",
+     * "NOME_VERSATORE_NUOVO"); mappa.put("DS_VERS", "DESCRIZIONE_VERSATORE_NUOVO"); mappa.put("DS_PATH_INPUT_FTP",
+     * "PATH_INPUT_FTP_NUOVO"); mappa.put("DS_PATH_OUTPUT_FTP", "PATH_OUTPUT_FTP_NUOVO"); mappa.put("DS_PATH_TRASF",
+     * "PATH_TRASF_NUOVO"); str=helper.sostituisciTutto(str, mappa); scriviFile("FILE_XML_DA_IMPORTARE.xml", str); long
+     * idOggetto=helper.importFoto(str, "SACER_PING.IMPORTA_FOTO_VERSATORE"); log.info("Oggetto importato con ID {}",
+     * idOggetto); userTransaction.commit();
+     * 
+     * Assert.assertTrue(true);
+     * 
+     * }
+     */
 
-        Assert.assertTrue(true);
+    /*
+     * @Test public void _estraiRuoli() throws Exception { userTransaction.begin(); // DateTime dt = new DateTime(2017,
+     * 9, 30,0,0,0,0); List<String> l=sacerLogHelper.findRuoliUtenteAllaData("SACER_IAM", "SACER", "proffe2", new
+     * Date()); for (String string : l) { log.info(">>>>>>>>>>>>>>>>>>>>Ruolo...: "+string); } userTransaction.commit();
+     * log.info(">>>>>>>>>>>>>>>>>>> Ruoli ottenuti!"); Assert.assertTrue(true); }
+     */
 
-    }
-*/
-
-    
-/*    
-    @Test
-    public void _estraiRuoli() throws Exception {
-        userTransaction.begin();
-//        DateTime dt = new DateTime(2017, 9, 30,0,0,0,0);
-        List<String> l=sacerLogHelper.findRuoliUtenteAllaData("SACER_IAM", "SACER", "proffe2", new Date());
-        for (String string : l) {
-            log.info(">>>>>>>>>>>>>>>>>>>>Ruolo...: "+string);
-        }
-        userTransaction.commit();
-        log.info(">>>>>>>>>>>>>>>>>>> Ruoli ottenuti!");
-        Assert.assertTrue(true);
-    }
- */
-    
     @Test
     public void dummyTest() {
-        
+
     }
     /*
-     private String leggiFile(String path) throws Exception {
-     BufferedReader br = new BufferedReader(new FileReader(path));
-     try {
-     StringBuilder sb = new StringBuilder();
-     String line = br.readLine();
-
-     while (line != null) {
-     sb.append(line);
-     sb.append(System.lineSeparator());
-     line = br.readLine();
-     }
-     return sb.toString();
-     } finally {
-     br.close();
-     }
-     }
+     * private String leggiFile(String path) throws Exception { BufferedReader br = new BufferedReader(new
+     * FileReader(path)); try { StringBuilder sb = new StringBuilder(); String line = br.readLine();
+     * 
+     * while (line != null) { sb.append(line); sb.append(System.lineSeparator()); line = br.readLine(); } return
+     * sb.toString(); } finally { br.close(); } }
      */
-    
-    
-    public void scriviFile(String nomeFile, String contenuto) {
-        String locationPath = TestXml.class.getProtectionDomain().getCodeSource().getLocation().getFile() + "../../src/test/resources/";
-/*
-        File file = new File(locationPath + nomeFile);
-        file.delete();
 
-        RandomAccessFile f = null;
+    public void scriviFile(String nomeFile, String contenuto) {
+        String locationPath = TestXml.class.getProtectionDomain().getCodeSource().getLocation().getFile()
+                + "../../src/test/resources/";
+        /*
+         * File file = new File(locationPath + nomeFile); file.delete();
+         * 
+         * RandomAccessFile f = null; try { f = new RandomAccessFile(locationPath + nomeFile, "rw");
+         * f.writeBytes(contenuto); } catch (Exception ex) { log.error("leggiFile:", ex); } finally { try { f.close(); }
+         * catch (Exception ex) { log.error("Errore chiusura file", ex); } }
+         */
+
         try {
-            f = new RandomAccessFile(locationPath + nomeFile, "rw");
-            f.writeBytes(contenuto);
-        } catch (Exception ex) {
-            log.error("leggiFile:", ex);
-        } finally {
-            try {
-                f.close();
-            } catch (Exception ex) {
-                log.error("Errore chiusura file", ex);
-            }
+            File fileDir = new File(locationPath + nomeFile);
+
+            Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileDir), "UTF8"));
+            out.append(contenuto);
+            out.flush();
+            out.close();
+
+        } catch (UnsupportedEncodingException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-*/        
-        
-        try {
-		File fileDir = new File(locationPath + nomeFile);
-			
-		Writer out = new BufferedWriter(new OutputStreamWriter(
-			new FileOutputStream(fileDir), "UTF8"));
-		out.append(contenuto);
-		out.flush();
-		out.close();
-	        
-	    } 
-	   catch (UnsupportedEncodingException e) 
-	   {
-		System.out.println(e.getMessage());
-	   } 
-	   catch (IOException e) 
-	   {
-		System.out.println(e.getMessage());
-	    }
-	   catch (Exception e)
-	   {
-		System.out.println(e.getMessage());
-	   } 
     }
-    
+
 }

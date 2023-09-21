@@ -1,12 +1,30 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.sacerlog.slite.gen.viewbean;
 
+import java.math.BigDecimal;
+
 import it.eng.parer.sacerlog.viewEntity.LogVUsrAbilOrganiz;
+import it.eng.parer.sacerlog.viewEntity.LogVUsrAbilOrganizId;
 import it.eng.spagoLite.db.base.BaseRowInterface;
 import it.eng.spagoLite.db.base.JEEBaseRowInterface;
 import it.eng.spagoLite.db.base.row.BaseRow;
 import it.eng.spagoLite.db.oracle.bean.column.TableDescriptor;
-
-import java.math.BigDecimal;
 
 /**
  * RowBean per la tabella Usr_V_Abil_Organiz
@@ -152,13 +170,13 @@ public class LogVUsrAbilOrganizRowBean extends BaseRow implements BaseRowInterfa
     @Override
     public void entityToRowBean(Object obj) {
         LogVUsrAbilOrganiz entity = (LogVUsrAbilOrganiz) obj;
-        this.setIdUserIam(entity.getIdUserIam());
+        this.setIdUserIam(entity.getLogVUsrAbilOrganizId().getIdUserIam());
         this.setFlAttivo(entity.getFlAttivo());
         this.setIdUsoUserApplic(entity.getIdUsoUserApplic());
         this.setIdApplic(entity.getIdApplic());
         this.setNmApplic(entity.getNmApplic());
         this.setIdDichAbilOrganiz(entity.getIdDichAbilOrganiz());
-        this.setIdOrganizIam(entity.getIdOrganizIam());
+        this.setIdOrganizIam(entity.getLogVUsrAbilOrganizId().getIdOrganizIam());
         this.setIdOrganizApplic(entity.getIdOrganizApplic());
         this.setIdTipoOrganiz(entity.getIdTipoOrganiz());
         this.setNmTipoOrganiz(entity.getNmTipoOrganiz());
@@ -172,13 +190,14 @@ public class LogVUsrAbilOrganizRowBean extends BaseRow implements BaseRowInterfa
     @Override
     public LogVUsrAbilOrganiz rowBeanToEntity() {
         LogVUsrAbilOrganiz entity = new LogVUsrAbilOrganiz();
-        entity.setIdUserIam(this.getIdUserIam());
+        entity.setLogVUsrAbilOrganizId(new LogVUsrAbilOrganizId());
+        entity.getLogVUsrAbilOrganizId().setIdUserIam(this.getIdUserIam());
         entity.setFlAttivo(this.getFlAttivo());
         entity.setIdUsoUserApplic(this.getIdUsoUserApplic());
         entity.setIdApplic(this.getIdApplic());
         entity.setNmApplic(this.getNmApplic());
         entity.setIdDichAbilOrganiz(this.getIdDichAbilOrganiz());
-        entity.setIdOrganizIam(this.getIdOrganizIam());
+        entity.getLogVUsrAbilOrganizId().setIdOrganizIam(this.getIdOrganizIam());
         entity.setIdOrganizApplic(this.getIdOrganizApplic());
         entity.setIdTipoOrganiz(this.getIdTipoOrganiz());
         entity.setNmTipoOrganiz(this.getNmTipoOrganiz());

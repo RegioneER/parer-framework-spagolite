@@ -17,6 +17,9 @@ $(document).ready(function() {
   
   var linkHandler = new CLinkHandler();
   linkHandler.load();
+
+  var dialogConfirmDeleteHandler = new CDialogConfirmDeleteHandler();
+  dialogConfirmDeleteHandler.load();
   
   var selectChosenHandler = new CSelectChosenHandler();
   selectChosenHandler.load();

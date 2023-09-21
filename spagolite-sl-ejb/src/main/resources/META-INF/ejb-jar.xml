@@ -9,13 +9,14 @@
     
     
     <interceptors>
+        <!--
         <interceptor>
             <interceptor-class>it.eng.paginator.ejb.PaginatorInterceptor</interceptor-class>
             <around-invoke>
                 <method-name>storeInvocation</method-name>
             </around-invoke>
         </interceptor>
-        
+        -->
         <interceptor>
             <interceptor-class>it.eng.parer.jboss.timer.interceptor.JbossTimerNodeInterceptor</interceptor-class>
             <around-invoke>
@@ -46,6 +47,7 @@
     </interceptors>
     
     <assembly-descriptor>
+        <!-- sostituito da LazyListHelper per Hibernate 
         <interceptor-binding>
             <description></description>
             <ejb-name>SacerLogWebEjb</ejb-name>
@@ -54,6 +56,7 @@
                 <method-name>getEventiByOrgTipoClasseDates</method-name>
             </method>
         </interceptor-binding>
+        -->
         
         <!-- SacerLogAllineamentoTimer -->
         

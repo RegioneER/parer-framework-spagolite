@@ -1,3 +1,20 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.sacerlog.web.validator;
 
 import it.eng.parer.sacerlog.common.Constants;
@@ -24,11 +41,17 @@ public class TypeValidator {
      * Metodo di validazione delle date e degli orari inseriti nei filtri di ricerca
      * 
      * @param data_da
+     *            data da
      * @param ore_da
+     *            ore da
      * @param minuti_da
+     *            minuti da
      * @param data_a
+     *            data a
      * @param ore_a
+     *            ore a
      * @param minuti_a
+     *            minuti a
      * @param nm_data_da
      *            descrizione campo data da
      * @param nm_data_a
@@ -37,6 +60,7 @@ public class TypeValidator {
      * @return dateValidate, un array di Date contenente le date da - a validate
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public Date[] validaDate(Date data_da, BigDecimal ore_da, BigDecimal minuti_da, Date data_a, BigDecimal ore_a,
             BigDecimal minuti_a, String nm_data_da, String nm_data_a) throws EMFError {
@@ -167,13 +191,16 @@ public class TypeValidator {
      * Metodo di validazione delle date inserite nei filtri di ricerca e in fase di inserimento dati
      * 
      * @param data_da
+     *            data da
      * @param data_a
+     *            data a
      * @param nm_data_da
      *            descrizione campo data da
      * @param nm_data_a
      *            descrizione campo data a
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public void validaOrdineDateOrari(Date data_da, Date data_a, String nm_data_da, String nm_data_a) throws EMFError {
         if (data_a != null && data_da == null) {

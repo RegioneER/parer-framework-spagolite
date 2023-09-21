@@ -1,3 +1,20 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.tag.form.fields;
 
 import it.eng.spagoCore.error.EMFError;
@@ -97,6 +114,7 @@ public class LblFieldTag extends FieldTag {
      * Stampa il container
      * 
      * @throws JspException
+     *             eccezione generica
      */
     protected void writeEndContainer() throws JspException {
         writeln(ContainerTag.Factory.htmlEndContainer());
@@ -166,26 +184,29 @@ public class LblFieldTag extends FieldTag {
                     StringBuilder select2 = new StringBuilder();
                     String name = getComponent().getName();
                     Field field = (ComboBox<?>) getComponent();
-                    String editable = !field.isReadonly() && field.isEditMode() ? "" : "readonly:readonly,";
-                    select2.append(" <script type=\"text/javascript\" >" + "$('#" + name
-                            + "').select2({theme: \"classic\", placeholder: '<i class=\"fa fa-search\"></i> Ricerca e seleziona elemento dalla lista...', allowClear: true, "
-                            + editable + " dropdownCssClass: \"select2-customdrop\", "
-                            + "		   dropdownAutoWidth: true, width: 'auto', \"language\": \"it\", escapeMarkup: function(m){ return m; } })");
-                    if (getComponent().isTrigger()) {
-                        select2.append(".on('change.select2',function() { " + " newTriggerForSelect2('trigger"
-                                + getComponent().getParent().getName() + name + "OnTriggerAjax' );" + "})");
+                    // editable
+                    if (!field.isReadonly() && field.isEditMode()) {
+                        select2.append(" <script type=\"text/javascript\" >" + "$('#" + name
+                                + "').select2({theme: \"classic\", placeholder: '<i class=\"fa fa-search\"></i> Ricerca e seleziona elemento dalla lista...', allowClear: true, "
+                                + " dropdownCssClass: \"select2-customdrop\", "
+                                + "		   dropdownAutoWidth: true, width: 'auto', \"language\": \"it\", escapeMarkup: function(m){ return m; } })");
+                        if (getComponent().isTrigger()) {
+                            select2.append(".on('change.select2',function() { " + " newTriggerForSelect2('trigger"
+                                    + getComponent().getParent().getName() + name + "OnTriggerAjax' );" + "})");
+                        }
+                        // prevent opening after clear selection {
+                        select2.append(
+                                ".on('select2:unselecting', function () {  $(this).data('unselecting', true); })");
+                        select2.append(
+                                ".on('select2:opening', function (e) {  if ($(this).data('unselecting')) {  $(this).removeData('unselecting'); e.preventDefault(); } });");
+                        select2.append("</script>");
+                        // } prevent opening after clear selection
+                        writeln(select2.toString());
+                        // html5 placeholder
+                        writeln(" <script type=\"text/javascript\" > " + "$('#" + name + "')"
+                                + ".on(\"select2:open\", function(e) {$('input.select2-search__field').prop('placeholder', 'Effettua ricerca'); });"
+                                + " </script>");
                     }
-                    // prevent opening after clear selection {
-                    select2.append(".on('select2:unselecting', function () {  $(this).data('unselecting', true); })");
-                    select2.append(
-                            ".on('select2:opening', function (e) {  if ($(this).data('unselecting')) {  $(this).removeData('unselecting'); e.preventDefault(); } });");
-                    select2.append("</script>");
-                    // } prevent opening after clear selection
-                    writeln(select2.toString());
-                    // html5 placeholder
-                    writeln(" <script type=\"text/javascript\" > " + "$('#" + name + "')"
-                            + ".on(\"select2:open\", function(e) {$('input.select2-search__field').prop('placeholder', 'Effettua ricerca'); });"
-                            + " </script>");
                 }
             }
             writeEndContainer();

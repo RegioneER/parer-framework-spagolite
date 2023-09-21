@@ -1,3 +1,20 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.form.fields;
 
 import it.eng.spagoCore.error.EMFError;
@@ -11,6 +28,7 @@ import it.eng.spagoLite.message.Message.MessageLevel;
 import it.eng.spagoLite.message.MessageBox;
 import java.io.File;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,6 +50,7 @@ public class Fields<T extends Field> extends BaseElements<T> {
     private static final long serialVersionUID = 1L;
 
     private static final int SIZE_THRESHOLD = 1000000;
+    public static final String ERRORE_JSON = "Errore durante il settaggio dell'errore json";
 
     private Status status;
 
@@ -64,7 +83,7 @@ public class Fields<T extends Field> extends BaseElements<T> {
      *             se la dimensione massima del file è stata raggiunta o si è verificato un errore di I/O.
      *
      */
-    public String[] postMultipart(HttpServletRequest servletRequest, int maxFileSize) throws FileUploadException {
+    public String[] postMultipart(HttpServletRequest servletRequest, long maxFileSize) throws FileUploadException {
         return this.postMultipart(servletRequest, new File(System.getProperty("java.io.tmpdir")), maxFileSize);
     }
 
@@ -83,15 +102,15 @@ public class Fields<T extends Field> extends BaseElements<T> {
      *             se la dimensione massima del file è stata raggiunta o si è verificato un errore di I/O.
      *
      */
-    public String[] postMultipart(HttpServletRequest servletRequest, File tempDirRepository, int maxFileSize)
+    public String[] postMultipart(HttpServletRequest servletRequest, File tempDirRepository, long maxFileSize)
             throws FileUploadException {
         if (!ServletFileUpload.isMultipartContent(servletRequest)) {
             throw new IllegalArgumentException(
                     "La request non è di tipo multipart/form-data utilizzare il metodo post(HttpServletRequest servletRequest)");
         }
         String[] paramReturn = null;
-        Map<String, String> paramMap = new HashMap<String, String>();
-        Map<String, FileItem> fileMap = new HashMap<String, FileItem>();
+        Map<String, String> paramMap = new HashMap<>();
+        Map<String, FileItem> fileMap = new HashMap<>();
         // Create a factory for disk-based file items
         DiskFileItemFactory factory = new DiskFileItemFactory(SIZE_THRESHOLD, tempDirRepository);
         // Create a new file upload handler
@@ -101,7 +120,7 @@ public class Fields<T extends Field> extends BaseElements<T> {
 
         for (FileItem item : upload.parseRequest(servletRequest)) {
             if (item.isFormField()) {
-                String value = new String(item.get(), Charset.forName("UTF-8"));
+                String value = new String(item.get(), Charset.forName(StandardCharsets.UTF_8.name()));
                 paramMap.put(item.getFieldName(), value);
                 if (item.getFieldName().toLowerCase().startsWith("operation")) {
                     String[] tmp = StringUtils.split(item.getFieldName(), "_");
@@ -146,6 +165,7 @@ public class Fields<T extends Field> extends BaseElements<T> {
      *            oggetto bean
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public void copyFromBean(BaseRowInterface row) throws EMFError {
         for (Field field : this) {
@@ -163,6 +183,7 @@ public class Fields<T extends Field> extends BaseElements<T> {
      *            oggetto bean
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public void copyToBean(BaseRowInterface row) throws EMFError {
         for (Field field : this) {
@@ -235,6 +256,7 @@ public class Fields<T extends Field> extends BaseElements<T> {
      * @return json object
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public JSONObject asJSON(Message msg) throws EMFError {
         JSONObject json = asJSON();
@@ -255,7 +277,7 @@ public class Fields<T extends Field> extends BaseElements<T> {
                     break;
                 }
             } catch (JSONException ex) {
-                throw new EMFError(EMFError.ERROR, "Errore durante il settaggio dell'errore json", ex);
+                throw new EMFError(EMFError.ERROR, ERRORE_JSON, ex);
             }
         }
         return json;
@@ -271,13 +293,14 @@ public class Fields<T extends Field> extends BaseElements<T> {
      * @return Json object
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public JSONObject asJSON(String funcName) throws EMFError {
         JSONObject json = asJSON();
         try {
             json.put("jsonFunctionName", funcName);
         } catch (JSONException ex) {
-            throw new EMFError(EMFError.ERROR, "Errore durante il settaggio dell'errore json", ex);
+            throw new EMFError(EMFError.ERROR, ERRORE_JSON, ex);
         }
         return json;
     }
@@ -295,13 +318,14 @@ public class Fields<T extends Field> extends BaseElements<T> {
      * @return Json object
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public JSONObject asJSON(Message msg, String funcName) throws EMFError {
         JSONObject json = asJSON(msg);
         try {
             json.put("jsonFunctionName", funcName);
         } catch (JSONException ex) {
-            throw new EMFError(EMFError.ERROR, "Errore durante il settaggio dell'errore json", ex);
+            throw new EMFError(EMFError.ERROR, ERRORE_JSON, ex);
         }
         return json;
     }
@@ -337,7 +361,7 @@ public class Fields<T extends Field> extends BaseElements<T> {
     }
 
     public int compare(BaseRowInterface row, Field[] excludeList) throws EMFError {
-        Set<Field> excludeSet = new HashSet<Field>();
+        Set<Field> excludeSet = new HashSet<>();
         for (Field field : excludeList) {
             excludeSet.add(field);
         }

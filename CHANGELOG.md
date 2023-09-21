@@ -1,4 +1,54 @@
 
+## 4.11.0 (01-08-2023)
+
+
+## 4.10.0 (13-07-2023)
+
+
+## 4.9.0 (19-06-2023)
+
+### Novità: 1
+- [#29501](https://parermine.regione.emilia-romagna.it/issues/29501) Rimozione totale delle tracce degli accessi agli applicativi più vecchie di un anno
+
+## 4.8.0 (01-06-2023)
+
+### Novità: 1
+- [#29686](https://parermine.regione.emilia-romagna.it/issues/29686) Autenticazione tramite OAUTH2 per il servizio di annullamento
+
+## 4.7.0 (31-05-2023)
+
+### Novità: 1
+- [#22913](https://parermine.regione.emilia-romagna.it/issues/22913) Logging accessi SPID non autorizzati 
+## 4.6.0 (21-04-2023)
+
+### Novità: 1
+- [#18340](https://parermine.regione.emilia-romagna.it/issues/18340) Creazione pacchetti unici delle applicazioni del parer
+
+## 4.5.0 (20-02-2023)
+
+### Novità: 1
+- [#22913](https://parermine.regione.emilia-romagna.it/issues/22913) Logging accessi SPID non autorizzati 
+## 4.4.0 (01-02-2023)
+
+
+## 4.3.1 (08-11-2022)
+
+### Novità: 1
+- [#27945](https://parermine.regione.emilia-romagna.it/issues/27945) Modifica lettura CIG per estrazione righe per fatture
+
+## 4.3.0 (20-10-2022)
+
+### Novità: 2
+- [#27750](https://parermine.regione.emilia-romagna.it/issues/27750) Aggiornamento framework javascript (JQuery) e di alcuni plugin
+- [#27393](https://parermine.regione.emilia-romagna.it/issues/27393)  Analisi librerie obsolete 2022 - branch hibernate
+
+## 4.2.29 (14-09-2022)
+
+### Bugfix: 1
+- [#27675](https://parermine.regione.emilia-romagna.it/issues/27675) Correzione di un errore nella gestione della cancellazione da lista
+
+## 4.2.28 (09-09-2022)
+
 ## 4.1.27 (18-07-2022)
 
 ### Bugfix: 1
@@ -9,35 +59,99 @@
 ### Novità: 1
 - [#27367](https://parermine.regione.emilia-romagna.it/issues/27367) allineamento del framework 4.1.6 versione non hibernate  alla versione 4.2.6 hibernae
 
+## 4.2.26 (21-06-2022)
+
+### Bugfix: 1
+- [#27364](https://parermine.regione.emilia-romagna.it/issues/27364) Risoluzione Errore critico di funzionalità da "Visualizza dettaglio transazione" dal log eventi in dettaglio ente non convenzionato
+
+### Novità: 2
+- [#27366](https://parermine.regione.emilia-romagna.it/issues/27366) Nuova pagina gestione JOB 
+- [#27365](https://parermine.regione.emilia-romagna.it/issues/27365) Integrazione della gestione di SPID della Puglia nell'attuale gestione SPID in RER
+
+## 4.2.25 (28-03-2022)
+
+### Novità: 1
+- [#27012](https://parermine.regione.emilia-romagna.it/issues/27012) Aggiornamento librerie: BouncyCastle JCE/Varie
+
 ## 4.1.25 (24-03-2022)
 
 ### Novità: 1
 - [#26717](https://parermine.regione.emilia-romagna.it/issues/26717) Aggiornamento librerie: BouncyCastle JCE/Varie
+
+## 4.2.24 (10-02-2022)
+
+### Novità: 1
+- [#26660](https://parermine.regione.emilia-romagna.it/issues/26660) aggiornamento librerie obsolete primo quadrimestre 2021
 
 ## 4.1.24
 
 ### Novità: 1
 - [#26661](https://parermine.regione.emilia-romagna.it/issues/26661) aggiornamento librerie obsolete primo quadrimestre 2021
 
+## 4.2.23
+
+### Novità: 1
+- [#26702](https://parermine.regione.emilia-romagna.it/issues/26702) Gestione accordi: introduzione nuova pagina di ricerca 
+
 ## 4.1.23
 
 ### Novità: 1
 - [#26465](https://parermine.regione.emilia-romagna.it/issues/26465) Aggiunto tooltip per fornire indicazioni per compilazione campi di tipo input - textarea - checkbox
+
+## 4.2.22
+
+### Novità: 1
+- [#26294](https://redmine.ente.regione.emr.it/issues/26294)  Autenticazione sui web services di recupero con certificato client
 
 ## 4.1.22
 
 ### Novità: 1
 - [#26293](https://parermine.regione.emilia-romagna.it/issues/26293) Autenticazione sui web services di recupero con certificato client
 
+## 4.2.21 (27-10-2021)
+
+### Bugfix: 1
+- [#26131](https://redmine.ente.regione.emr.it/issues/26131) Correzione errore login  con livello 2 e 3 di SPID
+
+## 4.2.20 (25-10-2021)
+
+### Bugfix: 1
+- [#26108](https://redmine.ente.regione.emr.it/issues/26108) Sostiuzione del messaggio di caricamento con un loader overlay
+## 4.2.19
+
+### Novità: 1
+- [#26070](https://redmine.ente.regione.emr.it/issues/26070) Aggiornamento link di default del logo PARER
+
+### Novità: 1
+- [#26070](https://redmine.ente.regione.emr.it/issues/26070) Aggiornamento link di default del logo PARER
+
+## 4.2.18 (06-10-2021)
+
+### Bugfix: 1
+- [#26002](https://redmine.ente.regione.emr.it/issues/26002) Correzione gestione proprieta di sistema relativa al livello di autenticazione spid
+
 ## 4.1.18
 
 ### Bugfix: 1
 - [#26171](https://parermine.regione.emilia-romagna.it/issues/26171) Correzione gestione proprietà di sistema relativa al livello di autenticazione SPID 
 
+## 4.2.17
+
+### Novità: 1
+- [#25771](https://redmine.ente.regione.emr.it/issues/25771) Modifica per la gestione di diversi livelli di accesso con credenziali SPID 
+
 ## 4.1.17 (21-10-2021)
 
 ### Bugfix: 1
 - [#26101](https://parermine.regione.emilia-romagna.it/issues/26101) Introduzione livelli accesso spid
+
+## 4.2.16
+
+### Bugfix: 1
+- [#25304](https://redmine.ente.regione.emr.it/issues/25304) risoluzione lettura parametri all'interno della combo box con ricerca incrementale.
+
+### Novità: 1
+- [#25475](https://redmine.ente.regione.emr.it/issues/25475) Associazione utente SPID con anagrafica utenti
 
 ## 4.1.16
 

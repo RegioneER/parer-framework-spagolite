@@ -1,23 +1,55 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.sacerlog.entity;
 
 import java.io.Serializable;
-import java.sql.Clob;
 import java.util.Calendar;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.ColumnTransformer;
 
 /**
  * The persistent class for the LOG_DELTA_FOTO database table.
  *
  */
 @Entity
-@Table(name = "SACER_LOG.LOG_DELTA_FOTO")
+@Table(schema = "SACER_LOG", name = "LOG_DELTA_FOTO")
 @NamedQueries({ @NamedQuery(name = "LogDeltaFoto.findAll", query = "SELECT l FROM LogDeltaFoto l"),
         @NamedQuery(name = "LogDeltaFoto.deleteAll", query = "DELETE FROM LogDeltaFoto") })
 public class LogDeltaFoto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private long idDeltaFoto;
-    private Clob blDeltaFoto;
+    private String blDeltaFoto;
     private Calendar dtRegEvento;
     private LogOggettoEvento logOggettoEvento1;
     private LogOggettoEvento logOggettoEvento2;
@@ -26,7 +58,7 @@ public class LogDeltaFoto implements Serializable {
     }
 
     @Id
-    @SequenceGenerator(name = "LOG_DELTA_FOTO_IDDELTAFOTO_GENERATOR", sequenceName = "SACER_LOG.SLOG_DELTA_FOTO", allocationSize = 1)
+    @SequenceGenerator(name = "LOG_DELTA_FOTO_IDDELTAFOTO_GENERATOR", schema = "SACER_LOG", sequenceName = "SLOG_DELTA_FOTO", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_DELTA_FOTO_IDDELTAFOTO_GENERATOR")
     @Column(name = "ID_DELTA_FOTO")
     public long getIdDeltaFoto() {
@@ -37,12 +69,13 @@ public class LogDeltaFoto implements Serializable {
         this.idDeltaFoto = idDeltaFoto;
     }
 
-    @Column(name = "BL_DELTA_FOTO")
-    public Clob getBlDeltaFoto() {
+    @ColumnTransformer(read = "to_clob(columnName)", write = "?")
+    @Column(name = "BL_DELTA_FOTO", columnDefinition = "XMLType")
+    public String getBlDeltaFoto() {
         return this.blDeltaFoto;
     }
 
-    public void setBlDeltaFoto(Clob blDeltaFoto) {
+    public void setBlDeltaFoto(String blDeltaFoto) {
         this.blDeltaFoto = blDeltaFoto;
     }
 

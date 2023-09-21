@@ -1,6 +1,22 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.tag;
 
-import it.eng.spagoCore.configuration.ConfigSingleton;
 import it.eng.spagoLite.SessionManager;
 
 import it.eng.spagoLite.security.IUser;
@@ -20,26 +36,10 @@ public class ContentTitleTag extends BaseSpagoLiteTag {
      */
     private String codiceMenu;
     private boolean showHelpBtn = true;
-    static final String helpServerURI;
-
-    static {
-        helpServerURI = ConfigSingleton.getHelpServerURI();
-    }
 
     @Override
     public int doStartTag() throws JspException {
 
-        /*
-         * VECCHIA GESTIONE
-         * 
-         * writeln("<div class=\"contentTitle\">"); writeln("<h2> "+ getCompleteTitle()+"</h2>");
-         * if(ConfigSingleton.getEnableHelpOnline() && showHelpBtn){ String href = ""; if(!helpServerURI.equals("")){
-         * href = helpServerURI + SessionManager.getLastPublisher(pageContext.getSession()) + ".html"; }else{ href =
-         * getContextPath() + SessionManager.getLastPublisher(pageContext.getSession()) + ".html"; }
-         * writeln("<a title=\"Vai alla pagina di help online\" href=\""+href+"\">");
-         * writeln("<img src=\""+getContextPath()+"/img/help.png\" title=\"Help online\" alt=\"Help online\" />");
-         * writeln("</a>"); } writeln("</div>"); return EVAL_PAGE;
-         */
         /*
          * NUOVA GESTIONE
          */
@@ -87,15 +87,6 @@ public class ContentTitleTag extends BaseSpagoLiteTag {
                         writeln("</a>");
                     }
                 }
-                /*
-                 * VECCHIA GESTIONE if (ConfigSingleton.getEnableHelpOnline() && showHelpBtn) { String href = ""; if
-                 * (!helpServerURI.equals("")) { href = helpServerURI +
-                 * SessionManager.getLastPublisher(pageContext.getSession()) + ".html"; } else { href = getContextPath()
-                 * + SessionManager.getLastPublisher(pageContext.getSession()) + ".html"; }
-                 * writeln("<a title=\"Vai alla pagina di help online\" href=\"" + href + "\">"); writeln("<img src=\""
-                 * + getContextPath() + "/img/help.png\" title=\"Help online\" alt=\"Help online\" />");
-                 * writeln("</a>"); }
-                 */
             }
         }
         writeln("</div>");

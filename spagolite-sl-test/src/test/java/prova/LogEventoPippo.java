@@ -1,3 +1,20 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package prova;
 
 import java.io.Serializable;
@@ -9,7 +26,7 @@ import javax.persistence.*;
  *
  */
 @Entity
-@Table(name = "SACER_LOG.LOG_EVENTO")
+@Table(schema="SACER_LOG" , name="LOG_EVENTO")
 @NamedQueries({
     @NamedQuery(name = "LogEventoPippo.findAllIds", query = "SELECT l.idEvento FROM LogEventoPippo l"),
     @NamedQuery(name = "LogEventoPippo.deleteAll", query = "DELETE FROM LogEventoPippo")
@@ -31,7 +48,7 @@ public class LogEventoPippo implements Serializable {
     }
 
     @Id
-    @SequenceGenerator(name = "LOG_EVENTO_IDEVENTO_GENERATOR", sequenceName = "SACER_LOG.SLOG_EVENTO", allocationSize = 1)
+    @SequenceGenerator(name = "LOG_EVENTO_IDEVENTO_GENERATOR", schema="SACER_LOG" , sequenceName="SLOG_EVENTO", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_EVENTO_IDEVENTO_GENERATOR")
     @Column(name = "ID_EVENTO")
     public long getIdEvento() {

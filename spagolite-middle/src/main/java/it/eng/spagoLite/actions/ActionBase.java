@@ -1,3 +1,20 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.actions;
 
 import it.eng.spagoCore.configuration.ConfigSingleton;
@@ -15,14 +32,14 @@ import it.eng.spagoLite.security.Secure;
 import it.eng.spagoLite.security.SuppressLogging;
 import it.eng.spagoLite.security.profile.Pagina;
 
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.DISABLE_SECURITY;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +48,7 @@ import org.dom4j.Element;
 
 public abstract class ActionBase<U extends IUser<?>> extends BaseController {
 
-    private static final long serialVersionUID = 1L;
-    private static Logger logger = LoggerFactory.getLogger(ActionBase.class.getName());
+    private static Logger log = LoggerFactory.getLogger(ActionBase.class.getName());
 
     public static final String JSON_OBJECT = "###_JSON_OBJECT";
     public static final String CLEAN_HISTORY = "cleanhistory";
@@ -90,7 +106,7 @@ public abstract class ActionBase<U extends IUser<?>> extends BaseController {
             init();
 
         } catch (Throwable throwable) {
-            logger.error("Errore durante l'inizializzazione della action", throwable);
+            log.error("Errore durante l'inizializzazione della action", throwable);
             return;
         }
 
@@ -101,7 +117,7 @@ public abstract class ActionBase<U extends IUser<?>> extends BaseController {
             try {
                 new Process(this).execute();
             } catch (Throwable throwable) {
-                logger.error("Errore interno del server", throwable);
+                log.error("Errore interno del server", throwable);
                 getMessageBox().addFatal("Errore critico sulla funzionalita', contattare l'assistenza tecnica.",
                         throwable);
                 getMessageBox().setViewMode(ViewMode.plain);
@@ -232,6 +248,15 @@ public abstract class ActionBase<U extends IUser<?>> extends BaseController {
     }
 
     @Override
+    protected void forwardToPublisherSkipSetLast(String publisherName) {
+        ExecutionHistory history = SessionManager.getLastExecutionHistory(getSession());
+        if (!publisherName.equals(getLastPublisher()) && (history == null || history.isActionPublished())) {
+            SessionManager.addPrevExecutionToHistory(getSession(), false, true);
+        }
+        super.forwardToPublisherSkipSetLast(publisherName);
+    }
+
+    @Override
     protected void redirectToPublisher(String publisherName) {
         ExecutionHistory history = SessionManager.getLastExecutionHistory(getSession());
         if (!publisherName.equals(getLastPublisher()) && (history == null || history.isActionPublished())) {
@@ -276,6 +301,18 @@ public abstract class ActionBase<U extends IUser<?>> extends BaseController {
         SessionManager.setCurrentAction(getSession(), action);
         setLastPublisher(fakeLastPublisher);
         redirectToActionProfiled(action + parameters);
+    }
+
+    /*
+     * Torna l'IP del client (se c'è quello del girato dal proxy. MEV#22913 - Logging accessi SPID non autorizzati
+     */
+    protected String getIpClient() {
+        HttpServletRequest request = getRequest();
+        String ipVers = request.getHeader("X-FORWARDED-FOR");
+        if (ipVers == null || ipVers.isEmpty()) {
+            ipVers = request.getRemoteAddr();
+        }
+        return ipVers;
     }
 
     public class Process extends FrameElement {
@@ -333,9 +370,9 @@ public abstract class ActionBase<U extends IUser<?>> extends BaseController {
 
         private void logMethod(Method method) {
             if (method.isAnnotationPresent(SuppressLogging.class)) {
-                logger.debug("Eseguo il metodo: " + methodLog());
+                log.debug("Eseguo il metodo: " + methodLog());
             } else {
-                logger.info("Eseguo il metodo: " + methodLog());
+                log.info("Eseguo il metodo: " + methodLog());
             }
         }
 
@@ -371,7 +408,7 @@ public abstract class ActionBase<U extends IUser<?>> extends BaseController {
 
         // Controllo delle autorizzazioni per le esecuzioni del metodo (azioni e menu)
         private boolean isAuthorized(Method method, boolean hasParams) throws SecurityException {
-            if (ConfigSingleton.getDisableSecurity()) {
+            if (ConfigSingleton.getInstance().getBooleanValue(DISABLE_SECURITY.name())) {
                 return true;
             }
             Secure annotation = method.getAnnotation(Secure.class);
@@ -404,7 +441,7 @@ public abstract class ActionBase<U extends IUser<?>> extends BaseController {
                     if (p != null && p.getChild(annotation.action()) != null) {
                         return true;
                     } else {
-                        logger.debug("Utente " + getUser().getUsername() + " non autorizzato all'esecuzione del metodo "
+                        log.debug("Utente " + getUser().getUsername() + " non autorizzato all'esecuzione del metodo "
                                 + annotation.action() + " in pagina " + getLastPublisher());
                         getMessageBox().addFatal(
                                 "Utente " + getUser().getUsername() + " non autorizzato all'esecuzione dell'azione "

@@ -1,15 +1,35 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.tag.form;
 
-import javax.servlet.jsp.JspException;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.DEBUG_AUTHORIZATION;
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.DISABLE_SECURITY;
 
 import it.eng.spagoCore.configuration.ConfigSingleton;
+import javax.servlet.jsp.JspException;
+
 import it.eng.spagoLite.form.Component;
 import it.eng.spagoLite.security.IUser;
 import it.eng.spagoLite.security.profile.Pagina;
 
 public abstract class BaseFormTag<T extends Component> extends BaseTag {
 
-    protected static final String CONTEXTPATH = ConfigSingleton.get_contextRoot();
+    protected static final String CONTEXTPATH = ConfigSingleton.getInstance().getContextPath();
     private static final long serialVersionUID = 1L;
 
     private String name;
@@ -42,19 +62,20 @@ public abstract class BaseFormTag<T extends Component> extends BaseTag {
     }
 
     public void debugAuthorization(StringBuilder body, String authorization) {
-        if (ConfigSingleton.getDebugAuthorization()) {
-            body.append(" <!-- pagina: " + getLastPublisher() + " azione: " + authorization + " -->\n");
+        if (ConfigSingleton.getInstance().getBooleanValue(DEBUG_AUTHORIZATION.name())) {
+            body.append(" <!-- pagina: ").append(getLastPublisher()).append(" azione: ").append(authorization)
+                    .append(" -->\n");
         }
     }
 
     public void debugAuthorization(String authorization) throws JspException {
-        if (ConfigSingleton.getDebugAuthorization()) {
+        if (ConfigSingleton.getInstance().getBooleanValue(DEBUG_AUTHORIZATION.name())) {
             writeln(" <!-- pagina: " + getLastPublisher() + " azione: " + authorization + " -->");
         }
     }
 
     public boolean isUserAuthorized(String action) {
-        if (ConfigSingleton.getDisableSecurity()) {
+        if (ConfigSingleton.getInstance().getBooleanValue(DISABLE_SECURITY.name())) {
             return true;
         }
         IUser<?> user = getUser();

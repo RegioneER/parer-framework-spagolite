@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ejb-jar  xmlns = "http://java.sun.com/xml/ns/javaee" 
+          version = "3.1"
+          xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" 
+          xsi:schemaLocation = "http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_1.xsd">
+    
+    <module-name>spagofat-hibernate-test</module-name>
+
+<!--    <interceptors>  
+        <interceptor>
+            <interceptor-class>it.eng.paginator.ejb.PaginatorInterceptor</interceptor-class>             
+            <around-invoke>            
+                <method-name>storeInvocation</method-name>               
+            </around-invoke>            
+        </interceptor>
+    </interceptors>     -->
+             
+<!--    
+    <assembly-descriptor>
+        <interceptor-binding>
+            <description></description>
+            <ejb-name>SimplyEjb</ejb-name>
+            <interceptor-class>it.eng.paginator.ejb.PaginatorInterceptor</interceptor-class>
+            <method>
+                <method-name>querySelect</method-name>
+            </method>
+        </interceptor-binding>
+        <interceptor-binding>
+            <description></description>
+            <ejb-name>SimplyEjb</ejb-name>
+            <interceptor-class>it.eng.paginator.ejb.PaginatorInterceptor</interceptor-class>
+            <method>
+                <method-name>queryUpdateVoid</method-name>
+            </method>
+        </interceptor-binding>
+        <interceptor-binding>
+            <description></description>
+            <ejb-name>SimplyEjb</ejb-name>
+            <interceptor-class>it.eng.paginator.ejb.PaginatorInterceptor</interceptor-class>
+            <method>
+                <method-name>queryUpdate</method-name>
+            </method>
+        </interceptor-binding>
+    </assembly-descriptor>   -->
+</ejb-jar>

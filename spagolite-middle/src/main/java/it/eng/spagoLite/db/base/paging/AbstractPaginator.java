@@ -1,15 +1,33 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.db.base.paging;
 
 import it.eng.spagoLite.db.base.BaseTableInterface;
 import it.eng.spagoLite.db.base.table.LazyListBean;
+import it.eng.spagoLite.db.base.table.LazyListInterface;
 
 public abstract class AbstractPaginator implements IPaginator {
 
     @Override
     public BaseTableInterface<?> nextPage(BaseTableInterface<?> tableBean) {
-        LazyListBean llBean = tableBean.getLazyListBean();
+        LazyListInterface llBean = tableBean.getLazyListInterface();
         int oldFirst = llBean.getFirstResult();
-        tableBean.getLazyListBean().setFirstResult(oldFirst + llBean.getMaxResult());
+        llBean.setFirstResult(oldFirst + llBean.getMaxResult());
         BaseTableInterface<?> table = invoke(llBean);
         updateTableAfterInvoke(tableBean, table);
         table.first();
@@ -18,9 +36,9 @@ public abstract class AbstractPaginator implements IPaginator {
 
     @Override
     public BaseTableInterface<?> prevPage(BaseTableInterface<?> tableBean) {
-        LazyListBean llBean = tableBean.getLazyListBean();
+        LazyListInterface llBean = tableBean.getLazyListInterface();
         int oldFirst = llBean.getFirstResult();
-        tableBean.getLazyListBean().setFirstResult(oldFirst - llBean.getMaxResult());
+        llBean.setFirstResult(oldFirst - llBean.getMaxResult());
         BaseTableInterface<?> table = invoke(llBean);
         updateTableAfterInvoke(tableBean, table);
         return table;
@@ -28,8 +46,8 @@ public abstract class AbstractPaginator implements IPaginator {
 
     @Override
     public BaseTableInterface<?> firstPage(BaseTableInterface<?> tableBean) {
-        LazyListBean llBean = tableBean.getLazyListBean();
-        tableBean.getLazyListBean().setFirstResult(0);
+        LazyListInterface llBean = tableBean.getLazyListInterface();
+        llBean.setFirstResult(0);
         BaseTableInterface<?> table = invoke(llBean);
         updateTableAfterInvoke(tableBean, table);
         table.first();
@@ -38,11 +56,10 @@ public abstract class AbstractPaginator implements IPaginator {
 
     @Override
     public BaseTableInterface<?> lastPage(BaseTableInterface<?> tableBean) {
-        LazyListBean llBean = tableBean.getLazyListBean();
-        int floorCount = (int) Math
-                .floor((double) llBean.getCountResultSize() / tableBean.getLazyListBean().getMaxResult())
-                * tableBean.getLazyListBean().getMaxResult();
-        tableBean.getLazyListBean().setFirstResult(floorCount);
+        LazyListInterface llBean = tableBean.getLazyListInterface();
+        int floorCount = (int) Math.floor((double) llBean.getCountResultSize() / llBean.getMaxResult())
+                * tableBean.getLazyListInterface().getMaxResult();
+        llBean.setFirstResult(floorCount);
         BaseTableInterface<?> table = invoke(llBean);
         updateTableAfterInvoke(tableBean, table);
         return table;
@@ -50,12 +67,11 @@ public abstract class AbstractPaginator implements IPaginator {
 
     @Override
     public BaseTableInterface<?> goPage(BaseTableInterface<?> tableBean, int page) {
-        LazyListBean llBean = tableBean.getLazyListBean();
+        LazyListInterface llBean = tableBean.getLazyListInterface();
         int pageSize = tableBean.getPageSize();
-        int firstResult = (int) Math
-                .floor((double) ((page - 1) * pageSize) / tableBean.getLazyListBean().getMaxResult())
-                * tableBean.getLazyListBean().getMaxResult();
-        tableBean.getLazyListBean().setFirstResult(firstResult > 0 ? firstResult : 0);
+        int firstResult = (int) Math.floor((double) ((page - 1) * pageSize) / llBean.getMaxResult())
+                * llBean.getMaxResult();
+        llBean.setFirstResult(firstResult > 0 ? firstResult : 0);
         BaseTableInterface<?> table = invoke(llBean);
         updateTableAfterInvoke(tableBean, table);
         return table;
@@ -63,7 +79,7 @@ public abstract class AbstractPaginator implements IPaginator {
 
     @Override
     public BaseTableInterface<?> sort(BaseTableInterface<?> tableBean) {
-        LazyListBean llBean = tableBean.getLazyListBean();
+        LazyListInterface llBean = tableBean.getLazyListInterface();
         llBean.setSortQuery(true);
         llBean.setOrderBySortingRule(tableBean.getLastSortingRule().getSortType());
         llBean.setOrderByColumnName(tableBean.getLastSortingRule().getColumnName());
@@ -88,5 +104,5 @@ public abstract class AbstractPaginator implements IPaginator {
 
     }
 
-    protected abstract BaseTableInterface<?> invoke(LazyListBean llBean);
+    protected abstract BaseTableInterface<?> invoke(LazyListInterface llBean);
 }

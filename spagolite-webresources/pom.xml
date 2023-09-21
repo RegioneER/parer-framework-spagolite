@@ -6,7 +6,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>4.1.28-SNAPSHOT</version>
+        <version>4.11.1-SNAPSHOT</version>
     </parent>
     <build>
         <plugins>
@@ -34,8 +34,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- FASE 2/3 copia i tld prodotti dal passo precedente e salvali nella 
-            cartella corretta -->
+            <!-- FASE 2/3 copia i tld prodotti dal passo precedente e salvali nella cartella corretta -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -85,8 +84,6 @@
             <artifactId>spagofat-core</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!-- <dependency> <groupId>commons-collections</groupId> <artifactId>commons-collections</artifactId> 
-        </dependency> -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
@@ -103,15 +100,10 @@
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
-            <artifactId>jquery-ui-themes</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
             <artifactId>jstree</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.webjars</groupId>
+            <groupId>org.webjars.bower</groupId>
             <artifactId>chosen</artifactId>
         </dependency>
         <dependency>
@@ -127,13 +119,12 @@
             <artifactId>highlightjs-line-numbers.js</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.webjars.bower</groupId>
+            <groupId>org.webjars</groupId>
             <artifactId>font-awesome</artifactId>
         </dependency>
         <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>highlightjs-badgejs</artifactId>
         </dependency>
-		
     </dependencies>
 </project>

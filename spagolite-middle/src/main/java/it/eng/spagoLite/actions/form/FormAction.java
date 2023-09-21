@@ -1,4 +1,23 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.actions.form;
+
+import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.DISABLE_SECURITY;
 
 import it.eng.spagoCore.configuration.ConfigSingleton;
 import it.eng.spagoCore.error.EMFError;
@@ -29,8 +48,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 public abstract class FormAction<T extends Form, U extends IUser<?>> extends ActionBase<U> {
 
-    private static Logger logger = LoggerFactory.getLogger(FormAction.class.getName());
-    private static final long serialVersionUID = 1L;
+    private static Logger log = LoggerFactory.getLogger(FormAction.class.getName());
     private boolean viewAction;
     private boolean editAction;
     private boolean deleteAction;
@@ -143,10 +161,14 @@ public abstract class FormAction<T extends Form, U extends IUser<?>> extends Act
      * Gestisce gli eventi di navigazione sui wizard delle action
      *
      * @param wizard
+     *            value
      * @param element
+     *            value
      * @param wizardNavigation
+     *            value
      * 
      * @throws EMFError
+     *             eccezione generica
      */
     public abstract void wizard(Wizard wizard, WizardElement element, Wizard.WizardNavigation wizardNavigation)
             throws EMFError;
@@ -173,7 +195,7 @@ public abstract class FormAction<T extends Form, U extends IUser<?>> extends Act
         WizardElement wizardElement = wizard.getComponent(stepName);
 
         if (wizardElement == null) {
-            logger.error("Passo non trovato");
+            log.error("Passo non trovato");
             getMessageBox().addError("Passo non trovato");
             forwardToPublisher(getDefaultPublsherName());
         }
@@ -282,18 +304,19 @@ public abstract class FormAction<T extends Form, U extends IUser<?>> extends Act
     // Controllo delle autorizzazioni per le pagine
     @Override
     public boolean isAuthorized(String destination) {
-        if (ConfigSingleton.getDisableSecurity()) {
+        if (ConfigSingleton.getInstance().getBooleanValue(DISABLE_SECURITY.name())) {
             return true;
         }
         IUser user = SessionManager.getUser(getSession());
         if (user != null && user.getProfile().getChild(destination) == null) {
             // getMessageBox().addFatal("Utente non autorizzato alla visualizzazione della risorsa richiesta");
-            logger.debug("Utente " + user.getUsername() + " non autorizzato alla visualizzazione della pagina "
+            log.debug("Utente " + user.getUsername() + " non autorizzato alla visualizzazione della pagina "
                     + destination);
             return false;
         }
         return true;
     }
+
     /*
      * VECCHIO CODICE CHE NON GESTIVA LE FORM DINAMICHE CON UNA SOLA JSP
      * 
@@ -306,9 +329,8 @@ public abstract class FormAction<T extends Form, U extends IUser<?>> extends Act
      * 
      * return false; }
      */
-
     public boolean isUserAuthorized(String action) {
-        if (ConfigSingleton.getDisableSecurity()) {
+        if (ConfigSingleton.getInstance().getBooleanValue(DISABLE_SECURITY.name())) {
             return true;
         }
         IUser<?> user = getUser();
@@ -326,7 +348,7 @@ public abstract class FormAction<T extends Form, U extends IUser<?>> extends Act
             if (p != null && p.getChild(action) != null) {
                 return true;
             } else {
-                logger.debug("Utente " + user.getUsername() + " non autorizzato all'esecuzione dell'azione " + action
+                log.debug("Utente " + user.getUsername() + " non autorizzato all'esecuzione dell'azione " + action
                         + " nella pagina " + getLastPublisher());
             }
         }
@@ -392,7 +414,7 @@ public abstract class FormAction<T extends Form, U extends IUser<?>> extends Act
     /*
      * Metodo da ridefinire nel caso in cui si volesse gestire una chiamata all'help che include anche il codice del
      * menu della pagina per cui si intende chiedere il contenuto del menu. Si utilizza per l'applicazione dispenser che
-     * ha delle form generiche ma associate a più voci di menu (es.: pievesetstina e altre).
+     * ha delle form generiche ma associate a piu' voci di menu (es.: pievesetstina e altre).
      */
     /*
      * protected String getCodiceMenu() { return null; }
@@ -434,7 +456,7 @@ public abstract class FormAction<T extends Form, U extends IUser<?>> extends Act
                 redirectToAjax(jsonObject);
             }
         } catch (RuntimeException ex) {
-            logger.error("Errore durante l'invocazione del WS Rest per l'Help Online.", ex);
+            log.error("Errore durante l'invocazione del WS Rest per l'Help Online.", ex);
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("risposta",

@@ -1,3 +1,20 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoIFace.model;
 
 import it.eng.spagoIFace.session.SessionCoreManager;
@@ -41,7 +58,8 @@ public abstract class BaseController implements Controller, BaseControllerIFace 
         // Gestico la pubblicazione
         ModelAndView mav = null;
         // Forward-to-publisher
-        if (publisherInfo.getType().equals(PublisherInfo.Override.forward)) {
+        if (publisherInfo.getType().equals(PublisherInfo.Override.forward)
+                || publisherInfo.getType().equals(PublisherInfo.Override.forwardSkipSetLast)) {
             // controllo le autorizzazioni di pagina
             String codiceOrganizzazione = getNomeOrganizzazione(publisherInfo.getDestination());
             String nuovaDestinazione = publisherInfo.getDestination();
@@ -50,7 +68,9 @@ public abstract class BaseController implements Controller, BaseControllerIFace 
             }
             if (isAuthorized(nuovaDestinazione)) {
                 logger.info("Forward to: " + publisherInfo.getDestination());
-                setLastPublisher(publisherInfo.getDestination());
+                if (!publisherInfo.getType().equals(PublisherInfo.Override.forwardSkipSetLast)) {
+                    setLastPublisher(publisherInfo.getDestination());
+                }
                 mav = new ModelAndView(publisherInfo.getDestination());
             } else {
                 mav = new ModelAndView("/login/notAuthorized");
@@ -128,6 +148,10 @@ public abstract class BaseController implements Controller, BaseControllerIFace 
 
     protected void forwardToPublisher(String publisherName) {
         publisherInfo = new PublisherInfo(PublisherInfo.Override.forward, publisherName, null);
+    }
+
+    protected void forwardToPublisherSkipSetLast(String publisherName) {
+        publisherInfo = new PublisherInfo(PublisherInfo.Override.forwardSkipSetLast, publisherName, null);
     }
 
     protected void forwardToAction(String publisherName) {
