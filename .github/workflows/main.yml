@@ -12,5 +12,3 @@ jobs:
     with:
       version: ${{ inputs.version }}
       java: '8'
-
-  
