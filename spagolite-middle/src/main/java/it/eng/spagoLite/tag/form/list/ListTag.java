@@ -85,8 +85,7 @@ public class ListTag extends AbstractListTag {
                     styleClass += " displayNone";
                 }
 
-                // FIXME: l'idea dovrebbe essere giusta, l'implementazione fa
-                // schifo
+                // FIXME: ottimizzare implementazione
                 StringBuilder head = new StringBuilder();
                 StringBuilder body = new StringBuilder();
 
