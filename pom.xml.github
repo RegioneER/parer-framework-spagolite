@@ -1,29 +1,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spagofat</artifactId>
-    <version>5.12.0</version>
+    <version>4.11.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Spagolite</name>
     <description>Framework utilizzato dalle applicazioni web, si tratta di uno strato software comune contenente anche le dipendenze di terze parti ed ereditato come bom.</description>
-    <url>https://nexus.ente.regione.emr.it/repository/parer-site/spago/${project.version}/</url>
 
-    <distributionManagement>
-        <site>
-            <id>site</id>
-            <url>dav:https://nexus.ente.regione.emr.it/repository/parer-site/spago/${project.version}</url>
-        </site>
-    </distributionManagement>
 
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>parer-pom</artifactId>
-        <version>5.2.0</version>
+        <version>4.2.0</version>
     </parent>
 
     <scm>
-        <developerConnection>scm:git:git@gitlab.ente.regione.emr.it:parer/framework-spagolite.git</developerConnection>
-        <tag>spagofat-5.12.0</tag>
+        <developerConnection>scm:git:https://github.com/RegioneER/parer-framework-spagolite.git</developerConnection>
+        <tag>HEAD</tag>
     </scm>
+
+    <distributionManagement>
+        <repository>
+               <id>github</id>
+               <url>https://maven.pkg.github.com/RegioneER/parer-framework-spagolite</url>
+           </repository>      
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/RegioneER/parer-framework-parerpom</url>            
+       </repository>     
+	</repositories>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Javadoc skipped by default (temporaneo) -->
@@ -309,7 +317,7 @@
                 <type>pom</type>
                 <version>${jboss-jakartaee-8.0.version}</version>
             </dependency>
-             <dependency>
+            <dependency>
                 <groupId>org.jboss.bom</groupId>
                 <artifactId>jboss-eap-jakartaee8-with-tools</artifactId>
                 <version>${jboss-eap-jakartaee8-with-tools.version}</version>
@@ -334,30 +342,30 @@
             </dependency>
 
             <!-- Hibernate -->
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-core</artifactId>
-				<version>${hibernate-core-version}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-entitymanager</artifactId>
-				<version>${hibernate-core-version}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-                <groupId>org.hibernate.validator</groupId>
-				<artifactId>hibernate-validator</artifactId>
-				<scope>provided</scope>
-				<version>${hibernate-validator-version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-jpamodelgen</artifactId>
-				<version>${hibernate-jpamodelgen-version}</version>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate-core-version}</version>
                 <scope>provided</scope>
-			</dependency>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate-core-version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <scope>provided</scope>
+                <version>${hibernate-validator-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-jpamodelgen</artifactId>
+                <version>${hibernate-jpamodelgen-version}</version>
+                <scope>provided</scope>
+            </dependency>
 			
             <!-- Altro -->
             <dependency>
@@ -491,7 +499,7 @@
                 <groupId>org.keycloak</groupId>
                 <artifactId>keycloak-servlet-filter-adapter</artifactId>
                 <version>${keycloak-filter.version}</version>
-            </dependency>            
+            </dependency>     
         </dependencies>
     </dependencyManagement>
     <dependencies />

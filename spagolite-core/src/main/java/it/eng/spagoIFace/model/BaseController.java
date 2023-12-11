@@ -47,6 +47,7 @@ public abstract class BaseController implements Controller, BaseControllerIFace 
     private HttpServletRequest request;
     private HttpServletResponse response;
 
+    @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // Inizializzo il controller
         this.request = request;

@@ -56,23 +56,6 @@ public class NestedListTag extends AbstractListTag {
         this.subListName = subListName;
     }
 
-    // private String getSortLink(SingleValueField<?> field) {
-    // String image = "";
-    //
-    // SortingRule sortingRule = getComponent().getTable().getLastSortingRule();
-    // String colummName = StringUtils.isEmpty(field.getAlias()) ? field.getName() : field.getAlias();
-    // if (sortingRule != null && sortingRule.getSortType() == SortingRule.ASC &&
-    // sortingRule.getColumnName().equalsIgnoreCase(colummName)) {
-    // image = AbstractListTag.ASC_IMG;
-    // } else if (sortingRule != null && sortingRule.getSortType() == SortingRule.DESC &&
-    // sortingRule.getColumnName().equalsIgnoreCase(colummName)) {
-    // image = AbstractListTag.DESC_IMG;
-    // }
-    //
-    // return "<a href=\"" + getOperationUrl("listSortOnClick", "table=" + getName() + "&amp;column=" + field.getName())
-    // + "\">" + field.getHtmlDescription() + image + "</a>";
-    // }
-
     @Override
     public int doStartTag() throws JspException {
         try {
@@ -100,7 +83,7 @@ public class NestedListTag extends AbstractListTag {
                     styleClass += " displayNone";
                 }
 
-                // FIXME: l'idea dovrebbe essere giusta, l'implementazione fa schifo
+                // FIXME: implementazione da ottimizzare
                 StringBuilder head = new StringBuilder();
                 StringBuilder body = new StringBuilder();
 
