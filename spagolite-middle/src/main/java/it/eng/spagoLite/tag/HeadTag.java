@@ -108,7 +108,7 @@ public class HeadTag extends BaseSpagoLiteTag {
                 + "/webjars/font-awesome/6.4.0/css/all.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
 
         css.append("  <link href=\"" + contextPath
-                + "/webjars/highlightjs/11.5.0/styles/magula.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
+                + "/webjars/highlightjs/11.5.0/styles/vs.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
 
         /**
          * Custom

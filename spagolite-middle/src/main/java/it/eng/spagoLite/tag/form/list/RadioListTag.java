@@ -86,7 +86,7 @@ public class RadioListTag extends AbstractListTag {
                 // Intestazione
                 for (SingleValueField<?> field : fields) {
                     if (!field.isHidden()) {
-                        // FIXME: anche qui il flusso fa schifo
+                        // FIXME: imlementazione da ottimizzare
                         if (!field.getName().equals(getRadioFieldName())) {
                             writeln("    <th>" + field.getHtmlDescription() + "</th>");
                         }
