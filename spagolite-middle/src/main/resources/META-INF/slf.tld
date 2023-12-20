@@ -78,6 +78,12 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+                <attribute>
+                        <name>disableHourGlass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+                </attribute>
 	</tag>
 
 	<tag>
@@ -146,6 +152,12 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+                <attribute>
+                        <name>disableHourGlass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+                </attribute>
 	</tag>
 	
 	<tag>

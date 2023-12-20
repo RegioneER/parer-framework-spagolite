@@ -17,11 +17,23 @@
 
 package it.eng.spagoLite.security.saml;
 
+import org.opensaml.common.SAMLException;
+import org.opensaml.saml2.common.Extensions;
+import org.opensaml.saml2.common.impl.ExtensionsBuilder;
 import org.opensaml.saml2.core.AuthnRequest;
 import org.opensaml.saml2.core.Issuer;
+import org.opensaml.saml2.metadata.AssertionConsumerService;
+import org.opensaml.saml2.metadata.SingleSignOnService;
+import org.opensaml.saml2.metadata.provider.MetadataProviderException;
+import org.opensaml.xml.schema.XSAny;
+import org.opensaml.xml.schema.impl.XSAnyBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.saml.context.SAMLMessageContext;
+import org.springframework.security.saml.metadata.MetadataManager;
+import org.springframework.security.saml.processor.SAMLProcessor;
 import org.springframework.security.saml.websso.WebSSOProfileImpl;
+import org.springframework.security.saml.websso.WebSSOProfileOptions;
 
 /**
  *
@@ -31,6 +43,16 @@ public class SliteWebSSOProfileImpl extends WebSSOProfileImpl {
 
     @Autowired
     private ApplicationContext ctx;
+
+    public static final String PARAMETRO_PURPOSE_SPID = "SlitePur";
+
+    public SliteWebSSOProfileImpl() {
+        super();
+    }
+
+    public SliteWebSSOProfileImpl(SAMLProcessor processor, MetadataManager manager) {
+        super(processor, manager);
+    }
 
     @Override
     protected void buildAuthnContext(AuthnRequest request,
@@ -58,6 +80,27 @@ public class SliteWebSSOProfileImpl extends WebSSOProfileImpl {
             Issuer iss = request.getIssuer();
             iss.setValue(iss.getValue() + suffissoIssuer);
         }
+    }
+
+    @Override
+    protected AuthnRequest getAuthnRequest(SAMLMessageContext context, WebSSOProfileOptions options,
+            AssertionConsumerService assertionConsumer, SingleSignOnService bindingService)
+            throws SAMLException, MetadataProviderException {
+        AuthnRequest authnRequest = super.getAuthnRequest(context, options, assertionConsumer, bindingService);
+        String parametro = (String) context.getInboundMessageTransport().getAttribute(PARAMETRO_PURPOSE_SPID);
+        if (parametro != null) {
+            authnRequest.setExtensions(buildExtensions(parametro));
+        }
+        return authnRequest;
+    }
+
+    protected Extensions buildExtensions(String parametroPurposeSpid) {
+        XSAny extraElement = new XSAnyBuilder().buildObject("https://spid.gov.it/saml-extensions", "Purpose", "spid");
+
+        extraElement.setTextContent(parametroPurposeSpid);
+        Extensions extensions = new ExtensionsBuilder().buildObject();
+        extensions.getUnknownXMLObjects().add(extraElement);
+        return extensions;
     }
 
 }

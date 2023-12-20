@@ -602,8 +602,9 @@ function CSelectChosenHandlerLoad() {
 		placeholder_text_multiple: " ",
 		placeholder_text_single: " ",
 		no_results_text: "Nessun risultato",
-		display_selected_options: false
-	});
+		display_selected_options: false,
+                search_contains: true
+            });
 }
 function CSelectChosenHandler() {
 	this.load = CSelectChosenHandlerLoad;

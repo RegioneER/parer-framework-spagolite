@@ -94,7 +94,7 @@ public class CheckBoxListTag extends AbstractListTag {
                 // Intestazione
                 for (SingleValueField<?> field : fields) {
                     if (!field.isHidden()) {
-                        // FIXME: anche qui il flusso fa schifo
+                        // FIXME: implementazione da ottimizzare
                         if (!field.getName().equals(getCheckBoxFieldName())) {
                             writeln("    <th>" + field.getHtmlDescription() + "</th>");
                         }

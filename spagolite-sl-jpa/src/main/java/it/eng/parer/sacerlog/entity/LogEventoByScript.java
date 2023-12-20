@@ -54,8 +54,10 @@ public class LogEventoByScript implements Serializable {
     private Timestamp dtRegEvento;
     private BigDecimal idAgente;
     private BigDecimal idAzioneCompSw;
+    private BigDecimal idAzionePagina;
     private BigDecimal idOggetto;
     private BigDecimal idTipoOggetto;
+    private BigDecimal idTransazione;
     private String tiRuoloAgenteEvento;
     private String tiRuoloOggettoEvento;
     private BigDecimal idApplic;
@@ -101,6 +103,24 @@ public class LogEventoByScript implements Serializable {
 
     public void setIdAzioneCompSw(BigDecimal idAzioneCompSw) {
         this.idAzioneCompSw = idAzioneCompSw;
+    }
+
+    @Column(name = "ID_AZIONE_PAGINA")
+    public BigDecimal getIdAzionePagina() {
+        return this.idAzionePagina;
+    }
+
+    public void setIdAzionePagina(BigDecimal idAzionePagina) {
+        this.idAzionePagina = idAzionePagina;
+    }
+
+    @Column(name = "ID_TRANSAZIONE")
+    public BigDecimal getIdTransazione() {
+        return this.idTransazione;
+    }
+
+    public void setIdTransazione(BigDecimal idTransazione) {
+        this.idTransazione = idTransazione;
     }
 
     @Column(name = "ID_OGGETTO")

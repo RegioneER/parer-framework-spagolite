@@ -592,8 +592,8 @@ span.tablesection { background-repeat:no-repeat;
 
 /* Tooltip question mark */
 .tooltip {
-	position: absolute;
-	display: inline-block;
+	position: relative;
+	display: inline !important;
 	border-bottom: 0px dotted black;
 	margin-left: 3px;
 }
@@ -615,6 +615,8 @@ span.tablesection { background-repeat:no-repeat;
 	transition: opacity 0.3s;
 	padding: 10px;
 	line-height: normal;
+	font-size: 12px;
+	font-family: verdana,arial,tahoma, sans-serif;
 }
 
 .tooltip .tooltiptext::after {

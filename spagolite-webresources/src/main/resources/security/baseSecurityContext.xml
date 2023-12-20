@@ -19,7 +19,18 @@
     <security:http entry-point-ref="samlEntryPoint">
         <security:intercept-url pattern="/**" access="fullyAuthenticated" />
         <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter" />
+        <!-- CRSF token -->
         <security:csrf request-matcher-ref="csrfMatcher"/>
+        <!-- Security Headers (default) -->
+		<security:headers>
+			<!-- default -->
+			<security:content-type-options /> <!-- static header -->
+			<security:referrer-policy policy="strict-origin-when-cross-origin" /> <!-- static header -->
+			<!-- from system properties -->			
+			<security:content-security-policy policy-directives="#{ systemProperties['http.sec.header.content-security-policy'] ?: 'default-src ''self''; script-src ''self'' ''unsafe-inline'' ''unsafe-eval'' ''report-sample'' *; style-src ''self'' ''report-sample'' ''unsafe-inline'' *; img-src ''self'' data: *;' }" report-only="false" />
+			<!-- Note: header:permissions-policy does not work ! (xsd error) need to upgrade spring security >= 5.5 -->
+			<security:header name="Permissions-Policy" value="#{ systemProperties['http.sec.header.permissions-policy'] ?: 'cross-origin-isolated=*, vertical-scroll=*' }" /> 
+		</security:headers>
     </security:http>
 
     <bean id="samlFilter" class="org.springframework.security.web.FilterChainProxy">
@@ -101,7 +112,7 @@
     </util:list>
         
     <!-- Entry point to initialize authentication, default values taken from properties file -->
-    <bean id="samlEntryPoint" class="org.springframework.security.saml.SAMLEntryPoint">
+    <bean id="samlEntryPoint" class="it.eng.spagoLite.security.saml.SliteSAMLEntryPoint">
         <property name="defaultProfileOptions">
             <bean class="org.springframework.security.saml.websso.WebSSOProfileOptions">
                 <property name="binding" value="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"/>
