@@ -335,13 +335,28 @@ public class SacerLogEjb {
              */
             SacerLogEjb meStesso = context.getBusinessObject(SacerLogEjb.class);
 
+            TransactionLogContext ctxEffettivo;
+
             for (LogEventoByScript logEventoByScript : l) {
                 LogVLogAgente logAgente = sacerLogHelper.getAgenteByIdAgente(logEventoByScript.getIdAgente());
-                AplVLogTiEvnConOrigine evn = sacerLogHelper.getAplVLogTiEvnConOrigineByApplicIdAzioneCompSw(
-                        nomeApplicazione, logEventoByScript.getIdAzioneCompSw());
+                // 29592 - recupero l'azione da loggare, che può essere riferita ad un componente sw o ad una pagina web
+                BigDecimal idAzione = logEventoByScript.getIdAzionePagina() == null
+                        ? logEventoByScript.getIdAzioneCompSw() : logEventoByScript.getIdAzionePagina();
+                AplVLogTiEvnConOrigine evn = sacerLogHelper
+                        .getAplVLogTiEvnConOrigineByApplicIdAzioneCompSw(nomeApplicazione, idAzione);
                 Calendar momentoAttuale = Calendar.getInstance();
                 momentoAttuale.setTimeInMillis(logEventoByScript.getDtRegEvento().getTime());
-                meStesso.logInNewTransaction(ctx, false, null, nomeApplicazione, logAgente,
+
+                // 29592 - Se in logEventoByScript è presente un id transazione (relativo a logging asincrono), creo un
+                // contesto con quell'id
+                // per avere il riferimento alla stessa transazione nei record asincroni loggati
+                if (logEventoByScript.getIdTransazione() != null) {
+                    ctxEffettivo = new TransactionLogContext(logEventoByScript.getIdTransazione());
+                } else {
+                    ctxEffettivo = ctx;
+                }
+
+                meStesso.logInNewTransaction(ctxEffettivo, false, null, nomeApplicazione, logAgente,
                         evn.getNmAzionePaginaCompSw(), nomeTipoOggetto, idOggetto, evn.getNmPaginaCompSw(),
                         logEventoByScript.getTiRuoloAgenteEvento(), logEventoByScript.getTiRuoloOggettoEvento(),
                         momentoAttuale, false, logEventoByScript.getDsMotivoScript());

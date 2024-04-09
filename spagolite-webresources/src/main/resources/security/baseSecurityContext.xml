@@ -101,7 +101,7 @@
     </util:list>
         
     <!-- Entry point to initialize authentication, default values taken from properties file -->
-    <bean id="samlEntryPoint" class="org.springframework.security.saml.SAMLEntryPoint">
+    <bean id="samlEntryPoint" class="it.eng.spagoLite.security.saml.SliteSAMLEntryPoint">
         <property name="defaultProfileOptions">
             <bean class="org.springframework.security.saml.websso.WebSSOProfileOptions">
                 <property name="binding" value="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"/>
