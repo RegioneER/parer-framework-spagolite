@@ -34,6 +34,7 @@ public class ApplicationBaseProperties {
 
     public static final String CONST_HELP_RICERCA_DIPS = "HELP_RICERCA_DIPS";
     public static final String CONST_HELP_PAGINA = "HELP_PAGINA";
+    public static final String CONST_INFO_PRIVACY = "INFO_PRIVACY";
 
     private String applicationName;
     private String applicationUserName;

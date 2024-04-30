@@ -1,8 +1,23 @@
 
+## 5.14.0 (30-04-2024)
+
+### Novità: 1
+- [#31873](https://parermine.regione.emilia-romagna.it/issues/31873) Allineamento alla versione 4.14.0
+
+## 5.13.0 (20-12-2023)
+
+### Novità: 1
+- [#30989](https://parermine.regione.emilia-romagna.it/issues/30989) Allineamento alla versione 4.13.0
 ## 5.12.0 (11-12-2023)
 
 ### Novità: 1
 - [#29937](https://parermine.regione.emilia-romagna.it/issues/29937) Aggiornamento a Spring 5
+
+## 4.13.0 (20-12-2023)
+
+### Novità: 2
+- [#30951](https://parermine.regione.emilia-romagna.it/issues/30951) Introduzione degli header di sicurezza CSP, referrer, content-type e permission policy (spring-security)
+- [#25604](https://parermine.regione.emilia-romagna.it/issues/25604) Modifiche allo stile di visualizzazione degli Xml in interfaccia
 
 ## 4.12.0 (05-12-2023)
 
