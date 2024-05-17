@@ -425,15 +425,23 @@ public abstract class FormAction<T extends Form, U extends IUser<?>> extends Act
         ApplicationBaseProperties appProps = applicationBasePropertiesSevice.getApplicationBaseProperties();
         String nomePagina = SessionManager.getLastPublisher(getSession());
         String codiceMenu = this.getRequest().getParameter("codiceMenuHelp");
+        String tipoHelpInfoPrivacy = this.getRequest().getParameter("tipoHelpInfoPrivacy");
+
+        String tiHelpOnLine = "";
+
+        if (tipoHelpInfoPrivacy != null) {
+            tiHelpOnLine = appProps.CONST_INFO_PRIVACY;
+        } else {
+            tiHelpOnLine = codiceMenu.equals("") ? appProps.CONST_HELP_PAGINA : appProps.CONST_HELP_RICERCA_DIPS;
+        }
+
         if (codiceMenu == null) {
             codiceMenu = "";
         }
         URI targetUrl = UriComponentsBuilder.fromHttpUrl(appProps.getUrlHelp())
                 .queryParam("nmUserId", appProps.getApplicationUserName())
                 .queryParam("cdPwd", appProps.getApplicationPassword())
-                .queryParam("nmApplic", appProps.getApplicationName())
-                .queryParam("tiHelpOnLine",
-                        codiceMenu.equals("") ? appProps.CONST_HELP_PAGINA : appProps.CONST_HELP_RICERCA_DIPS)
+                .queryParam("nmApplic", appProps.getApplicationName()).queryParam("tiHelpOnLine", tiHelpOnLine)
                 .queryParam("nmPaginaWeb", nomePagina).queryParam("nmEntryMenu", codiceMenu).build().toUri();
         try {
             ResponseEntity<String> resp = restTemplate.postForEntity(targetUrl, null, String.class);
