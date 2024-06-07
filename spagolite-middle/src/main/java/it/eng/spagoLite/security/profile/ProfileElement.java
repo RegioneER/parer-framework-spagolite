@@ -28,6 +28,8 @@ import org.dom4j.Element;
  * 
  * @author Enrico Grillini
  * 
+ * @param <T>
+ * 
  */
 public class ProfileElement<T extends ProfileElement<?>> extends FrameElement implements Iterable<T> {
 
@@ -35,7 +37,7 @@ public class ProfileElement<T extends ProfileElement<?>> extends FrameElement im
     private String name;
     private String description;
 
-    private Map<String, T> childs;
+    private final Map<String, T> childs;
 
     public ProfileElement(String name, String description) {
         this.name = name;
@@ -60,6 +62,7 @@ public class ProfileElement<T extends ProfileElement<?>> extends FrameElement im
         this.description = description;
     }
 
+    @Override
     public Iterator<T> iterator() {
         return childs.values().iterator();
     }

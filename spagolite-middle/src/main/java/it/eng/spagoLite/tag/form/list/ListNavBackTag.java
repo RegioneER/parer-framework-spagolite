@@ -26,6 +26,7 @@ import javax.servlet.jsp.JspException;
  * 
  *
  */
+@Deprecated
 public class ListNavBackTag extends AbstractListNavBarTag {
 
     private static final long serialVersionUID = 1L;

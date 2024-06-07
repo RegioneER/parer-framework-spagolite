@@ -7,7 +7,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>5.14.1-SNAPSHOT</version>
+        <version>6.14.0</version>
     </parent>
     <dependencies>
         <dependency>
@@ -32,24 +32,24 @@
             <artifactId>spagofat-sl-slg</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency> 
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-        </dependency> 
-    </dependencies>
+        <dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+		</dependency>
+	</dependencies>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
+			</plugin>
+			<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <!--
+					<!--
                     Generiamo un jar contentente tutte le classi dell'applicazione.
                     Da utilizzare nelle applicazioni su cui applichiamo l'overlay con il classifier "classes"
                     -->
