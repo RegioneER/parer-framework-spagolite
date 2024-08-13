@@ -123,6 +123,7 @@ public class AbstractWizardTag extends BaseFormTag<Wizard> {
      * @throws JspException
      *             eccezione generica
      */
+    @Deprecated
     protected String getLink(String navigationEvent, String linkClass, String title, String step, String textInnerLink)
             throws JspException {
         String submitName = "operation" + Values.OPERATION_SEPARATOR + "wizardNavigationOnClick"
