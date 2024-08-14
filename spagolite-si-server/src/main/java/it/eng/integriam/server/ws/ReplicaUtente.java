@@ -29,7 +29,7 @@ import it.eng.integriam.server.ws.reputente.ModificaUtenteRisposta;
 import it.eng.integriam.server.ws.reputente.ReplicaUtenteInterface;
 import it.eng.integriam.server.ws.reputente.Utente;
 
-@WebService(serviceName = "ReplicaUtente")
+@WebService(serviceName = "ReplicaUtente", targetNamespace = "http://ws.saceriam.eng.it/")
 @HandlerChain(file = "/ws_handler.xml")
 public class ReplicaUtente {
 

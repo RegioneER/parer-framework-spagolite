@@ -4,7 +4,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>6.14.1-SNAPSHOT</version>
+        <version>6.14.2-SNAPSHOT</version>
     </parent>
     <artifactId>spagofat-timer-wrapper-common</artifactId>
     <name>Spagolite Timer wrapper - common</name>

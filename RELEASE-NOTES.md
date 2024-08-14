@@ -1,4 +1,4 @@
-## 6.14.0 (07-06-2024)
+## 6.14.1 (13-08-2024)
 
-### Novità: 1
-- [#29991](https://parermine.regione.emilia-romagna.it/issues/29991) Aggiornamento a Java 11
+### Bugfix: 1
+- [#33323](https://parermine.regione.emilia-romagna.it/issues/33323) Fix configurazione dipendenze Java 11

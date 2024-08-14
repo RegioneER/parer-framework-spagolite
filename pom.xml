@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spagofat</artifactId>
-    <version>6.14.1-SNAPSHOT</version>
+    <version>6.14.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Spagolite</name>
     <description>Framework utilizzato dalle applicazioni web, si tratta di uno strato software comune contenente anche le dipendenze di terze parti ed ereditato come bom.</description>
@@ -10,7 +10,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>parer-pom</artifactId>
-        <version>6.3.0</version>
+        <version>6.3.1</version>
     </parent>
 
     <scm>
@@ -302,22 +302,23 @@
                 <artifactId>httpclient</artifactId>
                 <version>${httpclient.version}</version>
             </dependency>
+            
             <!--JDK 11 -->
+            <!-- JAXB -->
             <dependency>
                 <groupId>javax.xml.bind</groupId>
                 <artifactId>jaxb-api</artifactId>
                 <version>${jaxb.version}</version>
+                <scope>compile</scope>
             </dependency>
+            <!-- JAX-WS -->
             <dependency>
                 <groupId>javax.xml.ws</groupId>
                 <artifactId>jaxws-api</artifactId>
                 <version>${jaxws-api.version}</version>
+                <scope>compile</scope>
             </dependency>
-            <dependency>
-                <groupId>com.sun.xml.ws</groupId>
-                <artifactId>jaxws-tools</artifactId>
-                <version>${jaxws-tools.version}</version>
-            </dependency>
+            
             <!-- Servlet API -->
             <dependency>
                 <groupId>javax.servlet</groupId>
