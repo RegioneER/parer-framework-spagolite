@@ -26,6 +26,7 @@ import it.eng.spagoLite.xmlbean.form.FormDocument;
 import it.eng.util.actionWriter.ActionWriter;
 import it.eng.util.constantWriter.ConstantWriter;
 import it.eng.util.formWriter.FormWriter;
+import org.apache.xmlbeans.XmlException;
 
 public class SpagoLiteTool {
 
@@ -170,9 +171,8 @@ public class SpagoLiteTool {
             constantWriter.write(writer);
             writer.close();
 
-        } catch (Exception e) {
+        } catch (IOException | XmlException e) {
             e.printStackTrace();
-            return;
         }
 
     }
@@ -180,7 +180,7 @@ public class SpagoLiteTool {
     public static String getGeneratedAnnotation(String className) {
         StringBuilder writer = new StringBuilder();
         writer.append("  @Generated(\n");
-        writer.append("    value = \"" + className + "\",\n");
+        writer.append("    value = \"").append(className).append("\",\n");
         writer.append("    comments = \"Questa classe e' stata generata dal SipsTool\"\n");
         writer.append("  )\n");
         return writer.toString();

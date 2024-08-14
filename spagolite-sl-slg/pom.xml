@@ -7,7 +7,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>5.14.1-SNAPSHOT</version>
+        <version>6.14.1-SNAPSHOT</version>
     </parent>
     <dependencies>
         <dependency>
@@ -27,10 +27,15 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
         </dependency> 
-		<dependency>
-			<groupId>org.dom4j</groupId>
-			<artifactId>dom4j</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.18.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -42,9 +47,6 @@
                         <id>parer-tool-compilation</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <source>1.8</source>
-                            <target>1.8</target>
-                            <compilerVersion>1.8</compilerVersion>
                             <includes>
                                 <include>it/eng/parer/sacerlog/slite/gen/util/*.java</include>
                             </includes>
