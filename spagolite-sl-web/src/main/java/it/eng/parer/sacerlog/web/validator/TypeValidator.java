@@ -39,7 +39,7 @@ public class TypeValidator {
 
     /**
      * Metodo di validazione delle date e degli orari inseriti nei filtri di ricerca
-     * 
+     *
      * @param data_da
      *            data da
      * @param ore_da
@@ -56,9 +56,9 @@ public class TypeValidator {
      *            descrizione campo data da
      * @param nm_data_a
      *            descrizione campo data a
-     * 
+     *
      * @return dateValidate, un array di Date contenente le date da - a validate
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -189,7 +189,7 @@ public class TypeValidator {
 
     /**
      * Metodo di validazione delle date inserite nei filtri di ricerca e in fase di inserimento dati
-     * 
+     *
      * @param data_da
      *            data da
      * @param data_a
@@ -198,7 +198,7 @@ public class TypeValidator {
      *            descrizione campo data da
      * @param nm_data_a
      *            descrizione campo data a
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */

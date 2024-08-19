@@ -149,7 +149,7 @@ public class Tree<T extends TreeField<?>> extends BaseElements<T> {
      *
      * @param row
      *            dto row
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */

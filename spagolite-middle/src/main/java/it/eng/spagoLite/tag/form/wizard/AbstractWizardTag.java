@@ -117,9 +117,9 @@ public class AbstractWizardTag extends BaseFormTag<Wizard> {
      *            nome step
      * @param textInnerLink
      *            testo link
-     * 
+     *
      * @return link elaborato
-     * 
+     *
      * @throws JspException
      *             eccezione generica
      */

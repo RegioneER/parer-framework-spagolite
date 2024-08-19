@@ -303,7 +303,7 @@ public class NestedListTag extends AbstractListTag {
     /**
      * Calcola le operazioni disponibili su questa tabella. Utilizzato per generare le colonne necessarie da presentare
      * su interfaccia
-     * 
+     *
      * @param table
      */
     private void calculateOperations(BaseTableInterface<?> table) {

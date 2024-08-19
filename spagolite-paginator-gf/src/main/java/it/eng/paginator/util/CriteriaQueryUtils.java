@@ -51,10 +51,10 @@ public abstract class CriteriaQueryUtils {
     private static volatile int aliasCount = 0;
 
     /**
-     * 
+     *
      * @param em
      * @param criteria
-     * 
+     *
      * @return
      */
     public static <T> int count(EntityManager em, CriteriaQuery<T> criteria) {
@@ -68,9 +68,9 @@ public abstract class CriteriaQueryUtils {
      *            Entity Manager
      * @param criteria
      *            Criteria Query to count results
-     * 
+     *
      * @param params
-     * 
+     *
      * @return row count
      */
     public static <T> int count(EntityManager em, CriteriaQuery<T> criteria, Set<Param> params) {
@@ -87,7 +87,7 @@ public abstract class CriteriaQueryUtils {
      *            entity manager
      * @param criteria
      *            source criteria
-     * 
+     *
      * @return row count CriteriaQuery
      */
     public static <T> CriteriaQuery<Long> countCriteria(EntityManager em, CriteriaQuery<T> criteria) {
@@ -110,7 +110,7 @@ public abstract class CriteriaQueryUtils {
      * Gets The result alias, if none set a default one and return it
      *
      * @param selection
-     * 
+     *
      * @return root alias or generated one
      */
     private static synchronized <T> String getOrCreateAlias(Selection<T> selection) {
@@ -135,7 +135,7 @@ public abstract class CriteriaQueryUtils {
      *            criteria query
      * @param clazz
      *            root type
-     * 
+     *
      * @return Root<T> of null if none
      */
     @SuppressWarnings("unchecked")
@@ -332,7 +332,7 @@ public abstract class CriteriaQueryUtils {
     }
 
     /**
-     * 
+     *
      * @param cq
      * @param sortColumnName
      * @param sortingRule

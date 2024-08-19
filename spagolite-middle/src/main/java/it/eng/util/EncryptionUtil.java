@@ -42,7 +42,7 @@ import it.eng.spagoCore.error.EMFError;
 /**
  *
  * @author MIacolucci
- * 
+ *
  *         Classe di utilità  per la criptazione/decriptazione di stringhe
  */
 public class EncryptionUtil {
@@ -78,12 +78,12 @@ public class EncryptionUtil {
     }
 
     /**
-     * 
+     *
      * @param plainText
      *            Stringa da Criptare con algoritmo AES con profondità  di Bit richiesti
      * @param bit
      *            128, 192, 256 bit
-     * 
+     *
      * @return byte array contenente l'input cifrato
      */
     public static byte[] aesCrypt(String plainText, Aes bit) {
@@ -125,12 +125,12 @@ public class EncryptionUtil {
     }
 
     /**
-     * 
+     *
      * @param cipherMessage
      *            byte arrai della stringa cifrata
      * @param bit
      *            128, 192, 256 bit
-     * 
+     *
      * @return byte array contenente la stringa oroginaria
      */
     public static byte[] aesDecrypt(byte[] cipherMessage, Aes bit) {
@@ -196,12 +196,12 @@ public class EncryptionUtil {
 
     /**
      * TOrna il vecchio HMAC di una stringa. Usato da sempre in sacer per passare parametri sulla URL
-     * 
+     *
      * @param msg
      *            stringa di cui calcolare l'HMAC
-     * 
+     *
      * @return L'HMAC della stringa passata.
-     * 
+     *
      * @throws EMFError
      */
     public static String getHMAC(String msg) throws EMFError {

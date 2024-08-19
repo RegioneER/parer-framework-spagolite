@@ -35,7 +35,7 @@ public abstract class SessionCoreManager {
      *
      * @param httpSession
      *            sessione http
-     * 
+     *
      * @return resituisce l'action corrente
      */
     public static String getCurrentActionUrl(HttpSession httpSession) {
@@ -67,7 +67,7 @@ public abstract class SessionCoreManager {
      *            nome operazione
      * @param additionalInfo
      *            informazioni aggiuntive
-     * 
+     *
      * @return restituisce l'URL con query parameters
      */
     public static String getOperationUrl(HttpSession httpSession, String operation, String additionalInfo) {

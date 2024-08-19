@@ -202,7 +202,7 @@ public class MultiSemaphore extends MultiValueField<String> implements IMappable
 
     /**
      * @return string del tipo "VRG" con le iniziali dei semafori checkati (Verde Rosso Giallo)
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */

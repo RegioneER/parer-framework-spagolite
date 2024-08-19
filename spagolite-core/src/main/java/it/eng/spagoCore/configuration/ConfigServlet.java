@@ -144,7 +144,7 @@ public class ConfigServlet extends HttpServlet {
      *            contesto dell'applicazione senza "/" per esempio <em>saceriam</em>
      * @param configName
      *            nome della proprietà  supportata dallla Servlet
-     * 
+     *
      * @return valore della configurazione.
      */
     private String getValue(ServletConfig config, String applicationPrefix, String configName, String defaultValue) {
@@ -186,14 +186,14 @@ public class ConfigServlet extends HttpServlet {
     /**
      * Carica, internamente all'applicazione in fase di deploy, la risorsa esterna. Per l'applicazione la risorsa sarà,
      * a tutti gli effetti, interna.
-     * 
+     *
      * @param externalResource
      *            percorso della risorsa esterna all'applicazione.
      * @param destinationPath
      *            percorso <em>relativo</em> della risorsa all'interno dell'applicazione
      * @param defaultRelativePath
      *            percorso della risorsa predefinita
-     * 
+     *
      * @return percorso relativo dalle risorsa
      */
     private String getRelativePathFromExternalResource(String externalResource, String destinationPath,
@@ -217,13 +217,13 @@ public class ConfigServlet extends HttpServlet {
      * <ul>
      * <li>file://</li></li> http(s)://</li>
      * </ul>
-     * 
+     *
      * Esempio di chiamata:
      * <ul>
      * <li>loadResource("file:///opt/jboss/logo1_snap.png", "/img/logo1.png")</li>
      * <li>loadResource("https:///my.beautiful.css/overlay.css", "/css/overlay.css")</li>
      * </ul>
-     * 
+     *
      * @param resourceURL
      *            URL della risorsa da caricare
      * @param destination

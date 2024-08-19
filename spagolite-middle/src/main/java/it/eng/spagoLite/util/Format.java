@@ -109,7 +109,7 @@ public class Format {
      *
      * @param string
      *            valore
-     * 
+     *
      * @return la stringa formattata
      */
     public static String formatString(String string) {
@@ -129,7 +129,7 @@ public class Format {
      *            formato conversione
      * @param symbols
      *            simbolo decimale
-     * 
+     *
      * @return la stringa formattata
      */
     private static String formatNumber(BigDecimal bigDecimal, String format, DecimalFormatSymbols symbols) {
@@ -154,7 +154,7 @@ public class Format {
      *            valore
      * @param format
      *            formato
-     * 
+     *
      * @return la stringa formattata
      */
     public static String formatDecimal(BigDecimal bigDecimal, String format) {
@@ -166,7 +166,7 @@ public class Format {
      *
      * @param bigDecimal
      *            valore
-     * 
+     *
      * @return la stringa formattata
      */
     public static String formatDecimal(BigDecimal bigDecimal) {
@@ -178,7 +178,7 @@ public class Format {
      *
      * @param bigDecimal
      *            valore
-     * 
+     *
      * @return la stringa formattata
      */
     public static String formatInteger(BigDecimal bigDecimal) {
@@ -206,7 +206,7 @@ public class Format {
      *            valore
      * @param formato
      *            formato
-     * 
+     *
      * @return la stringa formattata
      */
     public static String formatInteger(BigDecimal bigDecimal, String formato) {
@@ -222,7 +222,7 @@ public class Format {
      *            formato
      * @param currencySymbol
      *            simbolo valuta
-     * 
+     *
      * @return la stringa formattata
      */
     public static String formatCurrency(BigDecimal bigDecimal, String format, String currencySymbol) {
@@ -244,7 +244,7 @@ public class Format {
      *            valore
      * @param currencySymbol
      *            simbolo valuta
-     * 
+     *
      * @return la stringa formattata
      */
     public static String formatCurrency(BigDecimal bigDecimal, String currencySymbol) {
@@ -254,7 +254,7 @@ public class Format {
     /**
      * @param valore
      *            in inpunt
-     * 
+     *
      * @return la stringa formattata
      */
     public static String formatItalianCurrency(String valore) {
@@ -282,7 +282,7 @@ public class Format {
      *
      * @param bigDecimal
      *            valore
-     * 
+     *
      * @return la stringa formattata
      */
     public static String formatCurrency(BigDecimal bigDecimal) {
@@ -296,7 +296,7 @@ public class Format {
      *            in formato timestamp
      * @param format
      *            formato di conversione
-     * 
+     *
      * @return la data formattata
      */
     public static String formatDate(Timestamp date, String format) {
@@ -314,7 +314,7 @@ public class Format {
      *
      * @param date
      *            timestamp in input
-     * 
+     *
      * @return la data formattata
      */
     public static String formatDate(Timestamp date) {
@@ -326,7 +326,7 @@ public class Format {
      *
      * @param date
      *            timestamp in input
-     * 
+     *
      * @return la data formattata
      */
     public static String formatDateTime(Timestamp date) {
@@ -338,7 +338,7 @@ public class Format {
      *
      * @param date
      *            timestamp in input
-     * 
+     *
      * @return la data formattata
      */
     public static String formatTime(Timestamp date) {
@@ -350,7 +350,7 @@ public class Format {
      *
      * @param date
      *            timestamp in input
-     * 
+     *
      * @return la data formattata
      */
     public static String formatWeek(Timestamp date) {
@@ -362,7 +362,7 @@ public class Format {
      *
      * @param date
      *            timestamp in input
-     * 
+     *
      * @return la data formattata
      */
     public static String formatMonth(Timestamp date) {
@@ -374,7 +374,7 @@ public class Format {
      *
      * @param date
      *            timestamp in input
-     * 
+     *
      * @return la data formattata
      */
     public static String formatYear(Timestamp date) {

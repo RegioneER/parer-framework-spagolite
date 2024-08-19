@@ -33,7 +33,7 @@ public class PremisEnums {
 
     /*
      * public class TipoOrigineAgente {
-     * 
+     *
      * public static final String UTENTE = "UTENTE"; public static final String COMPONENTE_SW = "COMPONENTE_SW"; };
      */
 

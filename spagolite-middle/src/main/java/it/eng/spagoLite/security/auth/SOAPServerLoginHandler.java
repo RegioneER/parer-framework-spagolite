@@ -44,10 +44,10 @@ import org.w3c.dom.NodeList;
 /**
  * Handler SOAP per un WS Server generico: effettua solo il login (autenticazione con user/password) dell'utente. Si
  * aspetta che i campi user e password siano nell'header come da standard ws security.
- * 
- * 
+ *
+ *
  * @author Quaranta_M
- * 
+ *
  */
 public class SOAPServerLoginHandler implements SOAPHandler<SOAPMessageContext> {
 

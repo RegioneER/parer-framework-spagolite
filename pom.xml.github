@@ -1,29 +1,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spagofat</artifactId>
-    <version>6.15.0</version>
+    <version>6.14.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Spagolite</name>
     <description>Framework utilizzato dalle applicazioni web, si tratta di uno strato software comune contenente anche le dipendenze di terze parti ed ereditato come bom.</description>
-    <url>https://nexus.ente.regione.emr.it/repository/parer-site/spago/${project.version}/</url>
 
-    <distributionManagement>
-        <site>
-            <id>site</id>
-            <url>dav:https://nexus.ente.regione.emr.it/repository/parer-site/spago/${project.version}</url>
-        </site>
-    </distributionManagement>
 
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>parer-pom</artifactId>
-        <version>6.4.0</version>
+        <version>6.3.1</version>
     </parent>
 
     <scm>
-        <developerConnection>scm:git:git@gitlab.ente.regione.emr.it:parer/framework-spagolite.git</developerConnection>
-        <tag>spagofat-6.15.0</tag>
+        <developerConnection>scm:git:https://github.com/RegioneER/parer-framework-spagolite.git</developerConnection>
+        <tag>HEAD</tag>
     </scm>
+
+    <distributionManagement>
+        <repository>
+               <id>github</id>
+               <url>https://maven.pkg.github.com/RegioneER/parer-framework-spagolite</url>
+           </repository>      
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/RegioneER/parer-framework-parerpom</url>            
+       </repository>     
+	</repositories>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Javadoc skipped by default (temporaneo) -->
@@ -34,24 +42,20 @@
         <hibernate-validator-version>6.0.22.Final-redhat-00002</hibernate-validator-version>	
         <hibernate-jpamodelgen-version>5.6.14.Final-redhat-00001</hibernate-jpamodelgen-version>
         <dom4j.version>2.1.4</dom4j.version>
-        <keycloak-filter.version>24.0.5</keycloak-filter.version>
+        <keycloak-filter.version>21.1.1</keycloak-filter.version>
         <xml-apis.version>1.4.01</xml-apis.version>
         <xmlbeans.version>5.1.1</xmlbeans.version>
         <!-- webjars (framework spago) -->
-        <jquery.version>3.7.1</jquery.version>
-        <jquery-ui.version>1.13.3</jquery-ui.version>
+        <jquery.version>3.6.4</jquery.version>
+        <jquery-ui.version>1.13.2</jquery-ui.version>
         <jstree.version>3.3.8</jstree.version>
         <chosen.version>1.8.7</chosen.version>
         <select2.version>4.0.13</select2.version>
         <font-awesome.version>6.4.0</font-awesome.version>
         <highlightjs.version>11.5.0</highlightjs.version>
-        <highlightjs-line-numbers.js.version>2.8.0</highlightjs-line-numbers.js.version>
+        <highlightjs-line-numbers.js.version>2.7.0</highlightjs-line-numbers.js.version>
         <!-- MIT project forked from original: https://github.com/sinattieng/highlightjs-badgejs -->
         <highlightjs-badgejs.version>0.0.5</highlightjs-badgejs.version>
-        <commons-beanutils.version>1.9.4</commons-beanutils.version>
-        <velocity-engine-core.version>2.3</velocity-engine-core.version>
-        <javax.activation.version>1.2.0</javax.activation.version>
-        <junit-jupiter.version>5.10.3</junit-jupiter.version>      
     </properties>
 
     <dependencyManagement>
@@ -258,11 +262,6 @@
                 </exclusions>
             </dependency>
             <!-- Altro -->
-			<dependency>
-			    <groupId>org.apache.velocity</groupId>
-			    <artifactId>velocity-engine-core</artifactId>
-			    <version>${velocity-engine-core.version}</version>
-			</dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
@@ -289,6 +288,11 @@
                 <version>${commons-logging.version}</version>
             </dependency>
             <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io.version}</version>
@@ -297,35 +301,25 @@
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
                 <version>${httpclient.version}</version>
-            </dependency>            
-            <!-- XML -->
-			<dependency>
-				<groupId>org.apache.santuario</groupId>
-				<artifactId>xmlsec</artifactId>
-				<version>${xmlsec.version}</version>
-			</dependency>
-
-			<!--JDK 11 -->
-			<!-- JAXB -->
+            </dependency>
+            
+            <!--JDK 11 -->
+            <!-- JAXB -->
             <dependency>
                 <groupId>javax.xml.bind</groupId>
                 <artifactId>jaxb-api</artifactId>
                 <version>${jaxb.version}</version>
+                <scope>compile</scope>
             </dependency>
-			<!-- JAX-WS -->
+            <!-- JAX-WS -->
             <dependency>
                 <groupId>javax.xml.ws</groupId>
                 <artifactId>jaxws-api</artifactId>
                 <version>${jaxws-api.version}</version>
+                <scope>compile</scope>
             </dependency>
-			<!-- Activation -->
-			<dependency>
-				<groupId>com.sun.activation</groupId>
-				<artifactId>javax.activation</artifactId>
-				<version>${javax.activation.version}</version>
-			</dependency>
-
-			<!-- Servlet API -->
+            
+            <!-- Servlet API -->
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
@@ -362,11 +356,7 @@
                 <artifactId>commons-net</artifactId>
                 <version>${commons-net.version}</version>
             </dependency>
-			<dependency>
-				<groupId>commons-beanutils</groupId>
-				<artifactId>commons-beanutils</artifactId>
-				<version>${commons-beanutils.version}</version>
-			</dependency>
+
 			<!-- Hibernate -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -433,12 +423,10 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-			<!-- javax.xml provided by JDK 11 -->
             <dependency>
                 <groupId>xml-apis</groupId>
                 <artifactId>xml-apis</artifactId>
                 <version>${xml-apis.version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>joda-time</groupId>
@@ -507,11 +495,11 @@
                 <artifactId>highlightjs</artifactId>
                 <version>${highlightjs.version}</version>
             </dependency>
-			<dependency>
-				<groupId>org.webjars.npm</groupId>
-				<artifactId>highlightjs-line-numbers.js</artifactId>
+            <dependency>
+                <groupId>org.webjars.bowergithub.wcoder</groupId>
+                <artifactId>highlightjs-line-numbers.js</artifactId>
                 <version>${highlightjs-line-numbers.js.version}</version>
-			</dependency>
+            </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>font-awesome</artifactId>
@@ -532,18 +520,6 @@
     </dependencyManagement>
     <dependencies />
     <build>
-        <pluginManagement>
-            <plugins>
-                <!-- OWASP -->
-                <plugin>
-                    <groupId>org.owasp</groupId>
-                    <artifactId>dependency-check-maven</artifactId>
-                    <configuration>
-                        <suppressionFile>src/site/owasp/suppress.xml</suppressionFile>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

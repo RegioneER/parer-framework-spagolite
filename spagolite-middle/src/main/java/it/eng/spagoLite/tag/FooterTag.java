@@ -91,6 +91,7 @@ public class FooterTag extends BaseSpagoLiteTag {
         } else {
             footer.append(img3.toString());
         }
+        footer.append("</div>");
 
         return footer.toString();
     }

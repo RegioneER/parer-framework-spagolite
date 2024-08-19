@@ -8,7 +8,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>6.14.2-SNAPSHOT</version>
+        <version>6.15.0</version>
     </parent>
     <build>
         <plugins>
@@ -89,6 +89,14 @@
                     <groupId>commons-collections</groupId>
                     <artifactId>commons-collections</artifactId>
                 </exclusion>
+                <exclusion>
+                	<groupId>xml-apis</groupId>
+                	<artifactId>xml-apis</artifactId>
+                </exclusion>
+            	<exclusion>
+            		<groupId>org.springframework</groupId>
+            		<artifactId>spring-expression</artifactId>
+            	</exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -120,6 +128,12 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
+			<exclusions>
+            	<exclusion>
+            		<groupId>org.springframework</groupId>
+            		<artifactId>spring-expression</artifactId>
+            	</exclusion>
+            </exclusions>            
         </dependency>
         <dependency>
 			<groupId>org.apache.commons</groupId>

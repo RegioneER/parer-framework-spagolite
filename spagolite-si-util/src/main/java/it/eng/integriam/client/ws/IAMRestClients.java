@@ -48,7 +48,7 @@ public class IAMRestClients {
      *            tipologia help online
      * @param nmPaginaWeb.
      *            pagina web per cui cui richiedere l'help online
-     * 
+     *
      * @return stringa contenente la serializzazione dell'help online.
      */
     public static String recuperoHelpClient(String serviceURL, long idApplic, String tiHelpOnLine, String nmPaginaWeb) {

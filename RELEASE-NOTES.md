@@ -1,4 +1,4 @@
-## 6.14.1 (13-08-2024)
+## 6.15.0 (19-08-2024)
 
-### Bugfix: 1
-- [#33323](https://parermine.regione.emilia-romagna.it/issues/33323) Fix configurazione dipendenze Java 11
+### Novità: 1
+- [#33050](https://parermine.regione.emilia-romagna.it/issues/33050) Aggiornamento librerie obsolete 2024

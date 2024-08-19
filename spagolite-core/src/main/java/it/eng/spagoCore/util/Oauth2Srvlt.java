@@ -56,9 +56,9 @@ public class Oauth2Srvlt extends HttpServlet {
 
     /**
      * Get keycloak session from request
-     * 
+     *
      * @param req
-     * 
+     *
      * @return
      */
     private KeycloakSecurityContext getKeycloakSession(HttpServletRequest req) {

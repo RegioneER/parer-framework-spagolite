@@ -76,9 +76,9 @@ public class Fields<T extends Field> extends BaseElements<T> {
      *            Http request
      * @param maxFileSize
      *            Sets the maximum allowed size of a single uploaded file
-     * 
+     *
      * @return risultato elaborazione
-     * 
+     *
      * @throws FileUploadException
      *             se la dimensione massima del file è stata raggiunta o si è verificato un errore di I/O.
      *
@@ -95,9 +95,9 @@ public class Fields<T extends Field> extends BaseElements<T> {
      *            Folder temporanea su cui avviene il deposito dei file più grandi di 1 MB
      * @param maxFileSize
      *            Sets the maximum allowed size of a single uploaded file
-     * 
+     *
      * @return risultato elaborazione
-     * 
+     *
      * @throws FileUploadException
      *             se la dimensione massima del file è stata raggiunta o si è verificato un errore di I/O.
      *
@@ -163,7 +163,7 @@ public class Fields<T extends Field> extends BaseElements<T> {
      *
      * @param row
      *            oggetto bean
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -181,7 +181,7 @@ public class Fields<T extends Field> extends BaseElements<T> {
      *
      * @param row
      *            oggetto bean
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -249,12 +249,12 @@ public class Fields<T extends Field> extends BaseElements<T> {
     /**
      * Metodo che ritorna un JSONObject popolato con i dati del form e l'aggiunta di un eventuale Message visualizzato
      * in un popup JavaScript lato client
-     * 
+     *
      * @param msg
      *            messaggio
-     * 
+     *
      * @return json object
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -286,12 +286,12 @@ public class Fields<T extends Field> extends BaseElements<T> {
     /**
      * Metodo che ritorna un JSONObject popolato con i dati del form e l'aggiunta del nome di una funzione JavaScript da
      * eseguire lato client
-     * 
+     *
      * @param funcName
      *            nome funzione
-     * 
+     *
      * @return Json object
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -309,14 +309,14 @@ public class Fields<T extends Field> extends BaseElements<T> {
      * Metodo che ritorna un JSONObject popolato con i dati del form e l'aggiunta di un eventuale Message visualizzato
      * in un popup JavaScript lato client e del nome di una funzione JavaScript da eseguire lato client dopo la
      * pressione del tasto OK sul messaggio
-     * 
+     *
      * @param msg
      *            messaggio
      * @param funcName
      *            nome funzione
-     * 
+     *
      * @return Json object
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */

@@ -38,7 +38,7 @@ public class JavaScript {
      *
      * @param input
      *            stringa da manipolare.
-     * 
+     *
      * @return Stringa manipolata
      */
     public static String escape(String input) {
@@ -58,7 +58,7 @@ public class JavaScript {
      *
      * @param input
      *            the string to manage.
-     * 
+     *
      * @return stringa manipolata
      */
     public static String unescape(String input) {
@@ -79,7 +79,7 @@ public class JavaScript {
      *
      * @param input
      *            stringa da manipolare.
-     * 
+     *
      * @return testo manipolato
      */
     public static String escapeText(String input) {
@@ -97,7 +97,7 @@ public class JavaScript {
      *            parte di stringa da sostituire.
      * @param replaced
      *            stringa nuova.
-     * 
+     *
      * @return stringa modificata
      */
     public static String replace(String toParse, String replacing, String replaced) {

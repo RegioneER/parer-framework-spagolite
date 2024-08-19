@@ -27,7 +27,7 @@ import javax.persistence.TemporalType;
 /**
  * Implementazione di una parte dell'entity necessaria a mappare la tabella dei job. I metodi rispettano (parzialmente)
  * il contratto definito da {@link JobTable}
- * 
+ *
  * @author Snidero_L
  */
 @MappedSuperclass

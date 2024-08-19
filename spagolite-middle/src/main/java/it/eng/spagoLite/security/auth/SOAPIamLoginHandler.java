@@ -42,9 +42,9 @@ import org.w3c.dom.NodeList;
 /**
  * Handler SOAP specifico per Sacer IAM (Lato SERVER): i controlli sono effettuati su tabelle specifiche, che in IAM
  * sono diverse dagli altri applicativi Viene effettuato anche il controllo delle autorizzazioni.
- * 
+ *
  * @author Quaranta_M
- * 
+ *
  */
 
 public class SOAPIamLoginHandler implements SOAPHandler<SOAPMessageContext> {

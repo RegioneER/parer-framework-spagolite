@@ -23,8 +23,8 @@ package it.eng.spagoCore.base;
 
 /*
 * DATE            CONTRIBUTOR/DEVELOPER    NOTE
-* 13-12-2004		  Butano	   Cambiato il valore della costante Spago		   
-* 										    
+* 13-12-2004		  Butano	   Cambiato il valore della costante Spago
+*
 **/
 public class Constants {
     public static final String NOME_MODULO = "Spago";

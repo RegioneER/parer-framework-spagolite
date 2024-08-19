@@ -25,7 +25,7 @@ package it.eng.spagoLite.actions.application;
 /**
  *
  * @author Iacolucci_M
- * 
+ *
  *         Oggetto contenente gli attributi di base di ogni applicazione che usa spagolite. Ad esempio serve per poter
  *         far funzionare il motore di richiesta HelpOnline che richiede il nome dell'applicazione e l'utenet e la
  *         password applicativa per comunicare con IAM.

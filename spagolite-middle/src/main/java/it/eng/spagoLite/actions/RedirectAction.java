@@ -25,11 +25,11 @@ import it.eng.spagoLite.SessionManager;
 import it.eng.spagoLite.security.IUser;
 
 /**
- * 
+ *
  * Action standard per governare il redirect a livello applicativo
- * 
+ *
  * @author Enrico Grillini
- * 
+ *
  */
 public class RedirectAction extends BaseController {
 

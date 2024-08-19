@@ -30,11 +30,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
+ *
  * Classe base per
- * 
+ *
  * @author Grillini Enrico
- * 
+ *
  */
 public abstract class BaseTag extends TagSupport {
 

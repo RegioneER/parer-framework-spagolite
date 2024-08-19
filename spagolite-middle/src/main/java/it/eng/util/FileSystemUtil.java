@@ -32,7 +32,7 @@ public class FileSystemUtil {
      *            da verificare
      * @param excludePath
      *            path da escludere
-     * 
+     *
      * @return true/false
      */
     public static final boolean isToExclude(File file, String[] excludePath) {
@@ -49,7 +49,7 @@ public class FileSystemUtil {
      *
      * @param file
      *            da verificare
-     * 
+     *
      * @return true/false
      */
     public static final boolean isToExclude(File file) {
@@ -66,7 +66,7 @@ public class FileSystemUtil {
      *            filtro da applicare
      * @param excludePath
      *            path da escludere
-     * 
+     *
      */
     private static final void getFileList(List list, File file, String filter, String[] excludePath) {
         if (isToExclude(file, excludePath))
@@ -93,7 +93,7 @@ public class FileSystemUtil {
      *            filtro da applicare
      * @param excludePath
      *            path da escludere
-     * 
+     *
      * @return lista file
      */
     public static final List<File> getFileList(String directory, String filter, String[] excludePath) {

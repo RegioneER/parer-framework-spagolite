@@ -136,7 +136,7 @@ public class List<T extends SingleValueField<?>> extends BaseElements<T> {
      *
      * @param inTable
      *            interfaccia table
-     * 
+     *
      * @return implementazione dell'interfaccia
      */
     public BaseTableInterface<?> toTable(BaseTableInterface<?> inTable) {
@@ -211,7 +211,7 @@ public class List<T extends SingleValueField<?>> extends BaseElements<T> {
      *
      * @param rowIndex
      *            numero riga
-     * 
+     *
      * @return BaseRowInterface
      */
     public BaseRowInterface remove(int rowIndex) {
@@ -389,7 +389,7 @@ public class List<T extends SingleValueField<?>> extends BaseElements<T> {
      *
      * @param row
      *            oggetto bean
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */

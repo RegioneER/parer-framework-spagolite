@@ -48,9 +48,9 @@ public class JbossTimerStartInterceptor {
      *
      * @param inv
      *            invocation context del metodo doJob
-     * 
+     *
      * @return di solito i metodi intercettati sono void
-     * 
+     *
      * @throws Exception
      *             eccezione del metodo intercettato
      */

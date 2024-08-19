@@ -46,7 +46,7 @@ public class Casting {
      *
      * @param date
      *            timestamp in input
-     * 
+     *
      * @return formattazione date
      */
     public static String formatDate(Timestamp date) {
@@ -58,7 +58,7 @@ public class Casting {
      *
      * @param date
      *            timestamp in input
-     * 
+     *
      * @return formattazione date
      */
     public static String formatDateTime(Timestamp date) {
@@ -86,7 +86,7 @@ public class Casting {
      *
      * @param strDate
      *            data in formato string
-     * 
+     *
      * @return true/false con risultato verifica
      */
     public static boolean checkDate(String strDate) {
@@ -103,9 +103,9 @@ public class Casting {
      *
      * @param strDate
      *            data in formato string
-     * 
+     *
      * @return Timestamp della data in ingresso
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -127,9 +127,9 @@ public class Casting {
      *
      * @param strInteger
      *            data in formato integer
-     * 
+     *
      * @return BigDecimal della data in ingresso
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -153,9 +153,9 @@ public class Casting {
      *
      * @param strDecimal
      *            data in formato string
-     * 
+     *
      * @return BigDecimal della data in ingresso
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -178,9 +178,9 @@ public class Casting {
      *
      * @param cap
      *            in ingresso
-     * 
+     *
      * @return parsing del CAP fornito
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -200,9 +200,9 @@ public class Casting {
      *
      * @param email
      *            in ingresso
-     * 
+     *
      * @return parsing della mail con espressione regolare
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -223,9 +223,9 @@ public class Casting {
      *
      * @param codFiscale
      *            in ingresso
-     * 
+     *
      * @return del codice fiscale con espressione regolare
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -245,9 +245,9 @@ public class Casting {
      *
      * @param piva
      *            in ingresso
-     * 
+     *
      * @return della partiva iva con espressione regolare
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -320,9 +320,9 @@ public class Casting {
      *
      * @param codice
      *            in ingresso
-     * 
+     *
      * @return del codice fiscale con espressione regolare
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -359,9 +359,9 @@ public class Casting {
      *
      * @param telefono
      *            in ingresso
-     * 
+     *
      * @return del telefono con espressione regolare
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -416,9 +416,9 @@ public class Casting {
      *            oggetto generico
      * @param type
      *            tipo {@link Enum}
-     * 
+     *
      * @return risultato della formattazione
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -451,7 +451,7 @@ public class Casting {
      *            string in ingresso
      * @param type
      *            tipo {@link Enum}
-     * 
+     *
      * @return true/false con verifica
      */
     public static final boolean check(String value, Type.Enum type) {
@@ -483,9 +483,9 @@ public class Casting {
      *            string in ingresso
      * @param type
      *            tipo {@link Enum}
-     * 
+     *
      * @return oggetto parsato
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
