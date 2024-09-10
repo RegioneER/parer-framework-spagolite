@@ -156,7 +156,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
      *
      * @param row
      *            value
-     * 
+     *
      * @return oggetto generico T aggiunto
      */
     public T add(BaseRowInterface row);
@@ -175,7 +175,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
      *
      * @param rowIndex
      *            indice relativo della riga
-     * 
+     *
      * @return la riga rimossa
      */
     public T remove(int rowIndex);
@@ -204,7 +204,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
      *
      * @param index
      *            indice riga
-     * 
+     *
      * @return riga passata
      */
     public T getRow(int index);
@@ -244,7 +244,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
      *
      * @param rowIndex
      *            indice assoluto della riga
-     * 
+     *
      * @return la riga rimossa
      */
     public T removeFullIdx(int rowIndex);
@@ -255,7 +255,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
      *
      * @param baseRowInterface
      *            value
-     * 
+     *
      * @return la riga aggiunta
      */
     public T addFullIdx(BaseRowInterface baseRowInterface);

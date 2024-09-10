@@ -38,7 +38,7 @@ public class Parse {
      *
      * @param string
      *            in ingresso
-     * 
+     *
      * @return string parsata
      */
     public static String parseString(String string) {
@@ -58,9 +58,9 @@ public class Parse {
      *            formato
      * @param symbols
      *            simbolo decimale
-     * 
+     *
      * @return la stringa parsata
-     * 
+     *
      * @throws ParseException
      */
     private static BigDecimal parseNumber(String value, String format, DecimalFormatSymbols symbols)
@@ -88,9 +88,9 @@ public class Parse {
      *            in ingresso
      * @param format
      *            formato
-     * 
+     *
      * @return il numero parsato
-     * 
+     *
      * @throws ParseException
      *             eccezione generica
      */
@@ -103,9 +103,9 @@ public class Parse {
      *
      * @param value
      *            in ingresso
-     * 
+     *
      * @return il numero parsato
-     * 
+     *
      * @throws ParseException
      *             eccezione generica
      */
@@ -118,9 +118,9 @@ public class Parse {
      *
      * @param value
      *            in ingresso
-     * 
+     *
      * @return il numero parsato
-     * 
+     *
      * @throws ParseException
      *             eccezione generica
      */
@@ -137,9 +137,9 @@ public class Parse {
      *            formato
      * @param currencySymbol
      *            currency
-     * 
+     *
      * @return il numero parsato
-     * 
+     *
      * @throws ParseException
      *             eccezione generica
      */
@@ -159,9 +159,9 @@ public class Parse {
      *            in ingresso
      * @param currencySymbol
      *            currency
-     * 
+     *
      * @return il numero parsato
-     * 
+     *
      * @throws ParseException
      *             eccezione generica
      */
@@ -174,9 +174,9 @@ public class Parse {
      *
      * @param value
      *            in ingresso
-     * 
+     *
      * @return risultato parsing valuta
-     * 
+     *
      * @throws ParseException
      *             eccezione generica
      */
@@ -195,9 +195,9 @@ public class Parse {
      *            in ingresso
      * @param format
      *            formato
-     * 
+     *
      * @return la data parsata, <code>null</code> se la data è <code>null</code> o stringa vuota
-     * 
+     *
      * @throws ParseException
      *             eccezione generica
      */
@@ -222,9 +222,9 @@ public class Parse {
      *
      * @param date
      *            in ingresso
-     * 
+     *
      * @return la data parsata, <code>null</code> se la data è <code>null</code> o stringa vuota
-     * 
+     *
      * @throws ParseException
      *             eccezione generica
      */
@@ -237,9 +237,9 @@ public class Parse {
      *
      * @param date
      *            in ingresso
-     * 
+     *
      * @return la data parsata, <code>null</code> se la data è <code>null</code> o stringa vuota
-     * 
+     *
      * @throws ParseException
      *             eccezione generica
      */
@@ -252,9 +252,9 @@ public class Parse {
      *
      * @param date
      *            in ingresso
-     * 
+     *
      * @return la data parsata, <code>null</code> se la data è <code>null</code> o stringa vuota
-     * 
+     *
      * @throws ParseException
      *             eccezione generica
      */
@@ -267,9 +267,9 @@ public class Parse {
      *
      * @param date
      *            in ingresso
-     * 
+     *
      * @return la data parsata, <code>null</code> se la data è <code>null</code> o stringa vuota
-     * 
+     *
      * @throws ParseException
      *             eccezione generica
      */
@@ -282,9 +282,9 @@ public class Parse {
      *
      * @param date
      *            in ingresso
-     * 
+     *
      * @return la data parsata, <code>null</code> se la data è <code>null</code> o stringa vuota
-     * 
+     *
      * @throws ParseException
      *             eccezione generica
      */

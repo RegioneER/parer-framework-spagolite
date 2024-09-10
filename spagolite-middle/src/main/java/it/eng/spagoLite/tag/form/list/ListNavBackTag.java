@@ -23,7 +23,7 @@ import javax.servlet.jsp.JspException;
 
 /**
  * @deprecated Al momento non disegna nulla sulla pagina.
- * 
+ *
  *
  */
 @Deprecated

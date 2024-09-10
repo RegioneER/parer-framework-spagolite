@@ -166,7 +166,7 @@ public abstract class FormAction<T extends Form, U extends IUser<?>> extends Act
      *            value
      * @param wizardNavigation
      *            value
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -319,14 +319,14 @@ public abstract class FormAction<T extends Form, U extends IUser<?>> extends Act
 
     /*
      * VECCHIO CODICE CHE NON GESTIVA LE FORM DINAMICHE CON UNA SOLA JSP
-     * 
+     *
      * public boolean isUserAuthorized(String action) { if (ConfigSingleton.getDisableSecurity()) { return true; }
      * IUser<?> user = getUser(); if (user != null) { if (getLastPublisher().equals("")) { return true; }
-     * 
+     *
      * Pagina p = (Pagina) user.getProfile().getChild(getLastPublisher()); if (p != null && p.getChild(action) != null)
      * { return true; } else { logger.debug("Utente " + user.getUsername() +
      * " non autorizzato all'esecuzione dell'azione " + action + " nella pagina " + getLastPublisher()); } }
-     * 
+     *
      * return false; }
      */
     public boolean isUserAuthorized(String action) {

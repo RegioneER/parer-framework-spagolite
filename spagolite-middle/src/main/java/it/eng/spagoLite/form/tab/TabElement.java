@@ -37,7 +37,7 @@ public class TabElement extends BaseComponent {
     }
 
     /**
-     * 
+     *
      * @param parent
      *            riferimento genitore
      * @param name
@@ -96,7 +96,7 @@ public class TabElement extends BaseComponent {
     }
 
     /**
-     * 
+     *
      * @param iconUrls
      *            {@link String} di url separati da spazio
      */

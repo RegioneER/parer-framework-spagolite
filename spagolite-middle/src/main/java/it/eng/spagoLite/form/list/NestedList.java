@@ -97,10 +97,10 @@ public class NestedList<T extends SingleValueField<?>> extends BaseElements<T> {
     /**
      * Restituisce un table bean del tipo passato in input arricchito dalle informazioni del table bean referenziato
      * dalla lista
-     * 
+     *
      * @param inTable
      *            interfaccia table base
-     * 
+     *
      * @return implementazione interfaccia
      */
     public BaseTableInterface<?> toTable(BaseTableInterface<?> inTable) {
@@ -142,7 +142,7 @@ public class NestedList<T extends SingleValueField<?>> extends BaseElements<T> {
 
     /**
      * Removes current row from the list
-     * 
+     *
      * @return BaseRowInterface
      */
     public BaseRowInterface remove() {
@@ -155,10 +155,10 @@ public class NestedList<T extends SingleValueField<?>> extends BaseElements<T> {
 
     /**
      * Removes row from the list
-     * 
+     *
      * @param rowIndex
      *            numero riga
-     * 
+     *
      * @return BaseRowInterface
      */
     public BaseRowInterface remove(int rowIndex) {
@@ -288,7 +288,7 @@ public class NestedList<T extends SingleValueField<?>> extends BaseElements<T> {
 
     /**
      * Compila il row bean con il contenuto della riga corrente
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -301,10 +301,10 @@ public class NestedList<T extends SingleValueField<?>> extends BaseElements<T> {
 
     /**
      * Compila il row bean con il contenuto del form
-     * 
+     *
      * @param row
      *            riga oggetto BaseRowInterface
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */

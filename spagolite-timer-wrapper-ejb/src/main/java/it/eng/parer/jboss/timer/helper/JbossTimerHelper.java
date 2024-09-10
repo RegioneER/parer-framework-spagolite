@@ -46,7 +46,7 @@ public interface JbossTimerHelper {
      *            nome del job (solitamente una costante)
      * @param nodeName
      *            nome del nodo.
-     * 
+     *
      * @throws TimerNotFoundException
      *             nel caso in cui il job non esista
      */
@@ -66,9 +66,9 @@ public interface JbossTimerHelper {
      *
      * @param jobName
      *            nome del job
-     * 
+     *
      * @return entity della tabella che memorizza lo stato dei job
-     * 
+     *
      * @throws TimerNotFoundException
      *             nel caso in cui il job non esista
      */
@@ -87,7 +87,7 @@ public interface JbossTimerHelper {
      *
      * @param nodeName
      *            nome del nodo
-     * 
+     *
      * @return lista di job
      */
     List<JobTable> getJobs(String nodeName);
@@ -97,9 +97,9 @@ public interface JbossTimerHelper {
      *
      * @param jobName
      *            nome del job
-     * 
+     *
      * @return true se il timer lo ha impostato. false altrimenti
-     * 
+     *
      * @throws TimerNotFoundException
      *             nel caso in cui il job non esista
      */
@@ -110,7 +110,7 @@ public interface JbossTimerHelper {
      *
      * @param jobName
      *            nome del job
-     * 
+     *
      * @throws TimerNotFoundException
      *             nel caso in cui il job non esista
      */
@@ -124,7 +124,7 @@ public interface JbossTimerHelper {
      *            nome del job
      * @param newDate
      *            nuova data
-     * 
+     *
      * @throws TimerNotFoundException
      *             nel caso in cui il job non esista
      */
@@ -135,7 +135,7 @@ public interface JbossTimerHelper {
      *
      * @param jobName
      *            nome del job
-     * 
+     *
      * @throws TimerNotFoundException
      *             nel caso in cui il job non esista
      */
@@ -146,7 +146,7 @@ public interface JbossTimerHelper {
      *
      * @param jobName
      *            nome del job
-     * 
+     *
      * @throws TimerNotFoundException
      *             nel caso in cui il job non esista
      */
@@ -160,7 +160,7 @@ public interface JbossTimerHelper {
      *            nome del job
      * @param newDate
      *            nuova data
-     * 
+     *
      * @throws TimerNotFoundException
      *             nel caso in cui il job non esista
      */
@@ -171,7 +171,7 @@ public interface JbossTimerHelper {
      *
      * @param jobName
      *            nome del job
-     * 
+     *
      * @throws TimerNotFoundException
      *             nel caso in cui il job non esista
      */
@@ -183,9 +183,9 @@ public interface JbossTimerHelper {
      *
      * @param jobName
      *            nome del job
-     * 
+     *
      * @return istanza del timer
-     * 
+     *
      * @throws TimerNotFoundException
      *             nel caso in cui il job non esista
      */
@@ -198,7 +198,7 @@ public interface JbossTimerHelper {
      *            nome del job
      * @param stato
      *            nuovo stato
-     * 
+     *
      * @throws TimerNotFoundException
      *             nel caso in cui il job non esista
      */
@@ -209,9 +209,9 @@ public interface JbossTimerHelper {
      *
      * @param jobName
      *            nome del job
-     * 
+     *
      * @return data di prossima attivazione oppure null
-     * 
+     *
      * @throws TimerNotFoundException
      *             nel caso in cui il job non esista
      */
@@ -229,9 +229,9 @@ public interface JbossTimerHelper {
      *
      * @param jobName
      *            nome del job
-     * 
+     *
      * @return l'oggetto cronschedule
-     * 
+     *
      * @throws TimerNotFoundException
      *             nel caso in cui il job non esista
      */

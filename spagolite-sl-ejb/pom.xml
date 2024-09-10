@@ -7,7 +7,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>6.14.2-SNAPSHOT</version>
+        <version>6.15.1-SNAPSHOT</version>
     </parent>
     
     <dependencies>
@@ -24,6 +24,12 @@
         <dependency>
             <groupId>it.eng.parer</groupId>
             <artifactId>spagofat-sl-slg</artifactId>
+            <exclusions>
+            	<exclusion>
+            		<groupId>xml-apis</groupId>
+            		<artifactId>xml-apis</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>it.eng.parer</groupId>

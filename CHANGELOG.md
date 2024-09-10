@@ -1,4 +1,9 @@
 
+## 6.15.0 (19-08-2024)
+
+### Novità: 1
+- [#33050](https://parermine.regione.emilia-romagna.it/issues/33050) Aggiornamento librerie obsolete 2024
+
 ## 6.14.1 (13-08-2024)
 
 ### Bugfix: 1
@@ -12,7 +17,7 @@
 ## 5.14.0 (30-04-2024)
 
 ### Novità: 1
-- [#29991](https://parermine.regione.emilia-romagna.it/issues/29991) Aggiornamento a Java 11
+- [#31873](https://parermine.regione.emilia-romagna.it/issues/31873) Allineamento alla versione 4.14.0
 
 ## 5.13.0 (20-12-2023)
 

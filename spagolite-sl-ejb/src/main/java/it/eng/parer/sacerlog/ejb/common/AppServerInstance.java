@@ -22,9 +22,6 @@
  */
 package it.eng.parer.sacerlog.ejb.common;
 
-import it.eng.parer.sacerlog.ejb.common.helper.ParamApplicHelper;
-import it.eng.parer.sacerlog.ejb.helper.SacerLogHelper;
-import it.eng.parer.sacerlog.viewEntity.AplVParamApplic;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -32,6 +29,7 @@ import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -39,7 +37,14 @@ import javax.ejb.Lock;
 import javax.ejb.LockType;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+
 import org.slf4j.LoggerFactory;
+
+import it.eng.parer.sacerlog.ejb.common.helper.ParamApplicHelper;
+import it.eng.parer.sacerlog.ejb.helper.SacerLogHelper;
+import it.eng.parer.sacerlog.exceptions.SacerLogRuntimeException;
+import it.eng.parer.sacerlog.exceptions.SacerLogRuntimeException.SacerLogErrorCategory;
+import it.eng.parer.sacerlog.viewEntity.AplVParamApplic;
 
 /**
  *
@@ -63,8 +68,8 @@ public class AppServerInstance {
             LOG.info("Inizializzazione singleton AppServerInstance...");
             InetAddress address = this.getMyHostAddress();
 
-            LOG.info("Indirizzo IP del server: " + address.getHostAddress());
-            LOG.info("        Nome del server: " + address.getCanonicalHostName());
+            LOG.info("Indirizzo IP del server: {}", address.getHostAddress());
+            LOG.info("        Nome del server: {}", address.getCanonicalHostName());
 
             servername = address.getCanonicalHostName();
 
@@ -73,10 +78,11 @@ public class AppServerInstance {
             if (instance != null) {
                 servername += "/" + instance;
             }
-            LOG.info("Il nome completo dell'istanza in esecuzione è " + servername);
+            LOG.info("Il nome completo dell'istanza in esecuzione è {}", servername);
         } catch (UnknownHostException ex) {
-            LOG.error("Inizializzazione singleton AppServerInstance fallita! ", ex);
-            throw new RuntimeException(ex);
+            throw SacerLogRuntimeException.builder().cause(ex)
+                    .message("Inizializzazione singleton AppServerInstance fallita!")
+                    .category(SacerLogErrorCategory.INTERNAL_ERROR).build();
         }
     }
 
@@ -107,12 +113,13 @@ public class AppServerInstance {
             // probabilmente disconnessa dalla rete
             //
             // Scorri su tutte le interfacce di rete
-            for (Enumeration ifaces = NetworkInterface.getNetworkInterfaces(); ifaces.hasMoreElements();) {
+            for (Enumeration<NetworkInterface> ifaces = NetworkInterface.getNetworkInterfaces(); ifaces
+                    .hasMoreElements();) {
                 NetworkInterface iface = (NetworkInterface) ifaces.nextElement();
                 // Scorri su tutti gli indirizzi IP associati ad una scheda di rete
-                for (Enumeration inetAddrs = iface.getInetAddresses(); inetAddrs.hasMoreElements();) {
+                for (Enumeration<InetAddress> inetAddrs = iface.getInetAddresses(); inetAddrs.hasMoreElements();) {
                     InetAddress inetAddr = (InetAddress) inetAddrs.nextElement();
-                    LOG.debug("Verifico l'indirizzo " + inetAddr.getHostAddress());
+                    LOG.debug("Verifico l'indirizzo {}", inetAddr.getHostAddress());
                     AddressTypes tipo = decodeAddrType(inetAddr);
                     // se è già presente un indirizzo di questo tipo (per esempio se
                     // ci sono più schede di rete fisiche) lo sovrascrivo. Di fatto prendo
@@ -125,7 +132,7 @@ public class AppServerInstance {
             // garantendo la preferenza nella scelta del tipo di indirizzo reso
             for (AddressTypes at : AddressTypes.values()) {
                 if (map.get(at) != null) {
-                    LOG.info("Ho selezionato l'indirizzo di tipo " + at.name());
+                    LOG.info("Ho selezionato l'indirizzo di tipo {}", at.name());
                     return map.get(at);
                 }
             }
@@ -166,7 +173,7 @@ public class AppServerInstance {
                     tipo = AddressTypes.NON_SITE_LOCAL_WITHOUT_NAME_IPV6;
                 }
             }
-            LOG.debug("è un indirizzo " + tipo.name());
+            LOG.debug("è un indirizzo {}", tipo.name());
         } else {
             // non mi interessa se questo indirizzo di loopback ha un nome:
             // nella maggior parte dei casi si chiama "localhost".
@@ -178,15 +185,12 @@ public class AppServerInstance {
             } else {
                 tipo = AddressTypes.LOOPBACK_IPV6;
             }
-            LOG.debug("è un indirizzo di loopback di tipo " + tipo.name());
+            LOG.debug("è un indirizzo di loopback di tipo {}", tipo.name());
         }
         return tipo;
     }
 
     private boolean isAddressWithHostName(InetAddress inetAddress) {
-        if (inetAddress.getHostName().equals(inetAddress.getHostAddress())) {
-            return false;
-        }
-        return true;
+        return inetAddress.getHostName().equals(inetAddress.getHostAddress());
     }
 }

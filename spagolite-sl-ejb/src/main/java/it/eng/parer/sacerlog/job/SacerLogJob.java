@@ -139,13 +139,13 @@ public class SacerLogJob {
     /*
      * Metodo invocato dal timer di gestione degli allineamenti delle loggate inserite mediante script esterni
      * all'applicazione.
-     * 
+     *
      * Apre un cursore che estrae con una DISTINCT dalla VIEW LOG_V_LIS_EVENTO_BY_SCRIPT ( legge dalla tabella:
      * LOG_EVENTO_BY_SCRIPT) tutte le coppie di valori ID_TIPO_OGGETTO e ID_OGGETTO (+ nome tipo oggetto). Per ogni
      * record estratto effettua una SELECT FOR UPDATE della coppia di valori estratti loccando tutti i records estratti
      * in modo pessimistico in modo tale da bloccare un'altra eventuale select dello stesso tipo che dovesse essere
      * fatta sugli stessi oggetti dal motore di logging.
-     * 
+     *
      */
     public void allineamentoLogByScript(String nomeApplicazione) throws Exception {
         Date dataInizio = new Date();
@@ -206,7 +206,7 @@ public class SacerLogJob {
          * logger.info("[{}]>>> ATTESA SIMULATA 30sec NEL THREAD DI ALLINEAMENTO...[{}]-[{}]-[{}] ", new
          * Date(),nmApplic, nmTipoOggetto,idOggetto); try { Thread.currentThread().sleep(1000*30); } catch (Exception
          * ex) {
-         * 
+         *
          * } logger.info("[{}]>>> USCITO DALL'ATTESA SIMULATA 30sec NEL THREAD DI ALLINEAMENTO..[{}]-[{}]-[{}] ", new
          * Date(),nmApplic, nmTipoOggetto,idOggetto);
          */

@@ -17,10 +17,46 @@
 
 package it.eng.parer.sacerlog.ejb.helper;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.math.BigDecimal;
+import java.sql.CallableStatement;
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.eng.parer.sacerlog.common.SacerLogEjbType;
 import it.eng.parer.sacerlog.ejb.common.AppServerInstance;
 import it.eng.parer.sacerlog.entity.LogEventoByScript;
 import it.eng.parer.sacerlog.entity.LogEventoLoginUser;
+import it.eng.parer.sacerlog.exceptions.SacerLogRuntimeException;
+import it.eng.parer.sacerlog.exceptions.SacerLogRuntimeException.SacerLogErrorCategory;
 import it.eng.parer.sacerlog.viewEntity.AplVLogChiaveTiOgg;
 import it.eng.parer.sacerlog.viewEntity.AplVLogFotoTiEvnOgg;
 import it.eng.parer.sacerlog.viewEntity.AplVLogInit;
@@ -38,34 +74,12 @@ import it.eng.parer.sacerlog.viewEntity.LogVUsrAbilOrganiz;
 import it.eng.parer.sacerlog.viewEntity.LogVVisEventoPrincTx;
 import it.eng.parer.sacerlog.viewEntity.LogVVisOggetto;
 import it.eng.spagoCore.util.JpaUtils;
-import java.io.IOException;
-import java.io.Reader;
-import java.math.BigDecimal;
-import java.sql.CallableStatement;
-import java.sql.Clob;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import javax.ejb.*;
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Iacolucci_M
  */
+@SuppressWarnings("unchecked")
 @Stateless
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -78,7 +92,6 @@ public class SacerLogHelper {
     private AppServerInstance appServerInstance;
 
     private static final String TRUE = "1";
-    private static final String FALSE = "0";
 
     private static Logger log = LoggerFactory.getLogger(SacerLogHelper.class);
 
@@ -87,9 +100,9 @@ public class SacerLogHelper {
             Query query = entityManager.createNamedQuery("LogVLogAgente.getByNomeAgente", LogVLogAgente.class);
             query.setParameter("nomeAgente", nomeAgente);
             return (LogVLogAgente) query.getSingleResult();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione dell'agente [{}]", nomeAgente, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione dell'agente [{0}]", nomeAgente).build();
         }
     }
 
@@ -98,9 +111,9 @@ public class SacerLogHelper {
             Query query = entityManager.createNamedQuery("LogVLogAgente.getByIdAgente", LogVLogAgente.class);
             query.setParameter("idAgente", idAgente);
             return (LogVLogAgente) query.getSingleResult();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione dell'agente con id [{}]", idAgente, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione dell'agente con id [{0,number,#}]", idAgente).build();
         }
     }
 
@@ -112,10 +125,10 @@ public class SacerLogHelper {
             query.setParameter("nmApplic", nomeApplicazione);
             query.setParameter("idAzionePaginaCompSw", idAzionePaginaCompSw);
             return (AplVLogTiEvnConOrigine) query.getSingleResult();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di AplVLogTiEvnConOrigine con idAzionePaginaCompSw [{}] e applic [{}]",
-                    idAzionePaginaCompSw, nomeApplicazione, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR).message(
+                    "Errore nell'estrazione di AplVLogTiEvnConOrigine con idAzionePaginaCompSw [{0,number,#}] e applic [{1}]",
+                    idAzionePaginaCompSw, nomeApplicazione).build();
         }
     }
 
@@ -125,9 +138,9 @@ public class SacerLogHelper {
             query.setParameter("nmParamApplic", "LOG_ATTIVO");
             AplVParamApplic p = (AplVParamApplic) query.getSingleResult();
             return p.getDsValoreParamApplic().equalsIgnoreCase("true");
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione del parametro applicativo [{}]", "LOG_ATTIVO", ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione del parametro applicativo [LOG_ATTIVO]").build();
         }
     }
 
@@ -138,9 +151,9 @@ public class SacerLogHelper {
             AplVParamApplic p = (AplVParamApplic) query.getSingleResult();
 
             return p.getDsValoreParamApplic().equalsIgnoreCase(nomeAzione);
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione del parametro applicativo [{}]", "AZIONE_INIZIALIZZAZIONE_LOG", ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione del parametro applicativo [AZIONE_INIZIALIZZAZIONE_LOG]").build();
         }
     }
 
@@ -149,9 +162,10 @@ public class SacerLogHelper {
             Query query = entityManager.createNamedQuery("LogVLogAgente.getByNomeCompSoftware", LogVLogAgente.class);
             query.setParameter("nmNomeUserCompSw", nmNomeUserCompSw);
             return (LogVLogAgente) query.getSingleResult();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di LogVLogAgente con nmNomeUserCompSw [{}]", nmNomeUserCompSw, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione di LogVLogAgente con nmNomeUserCompSw [{0}]", nmNomeUserCompSw)
+                    .build();
         }
     }
 
@@ -164,11 +178,10 @@ public class SacerLogHelper {
             query.setParameter("nmPaginaCompSw", nmPaginaCompSw);
             query.setParameter("nmAzionePaginaCompSw", nmAzionePaginaCompSw);
             return (AplVLogTiEvnConOrigine) query.getSingleResult();
-        } catch (RuntimeException ex) {
-            log.error(
-                    "Errore nell'estrazione di AplVLogTiEvnConOrigine con nmApplic [{}] nmPaginaCompSw [{}] nmAzionePaginaCompSw [{}] ",
-                    nmApplic, nmPaginaCompSw, nmAzionePaginaCompSw, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR).message(
+                    "Errore nell'estrazione di AplVLogTiEvnConOrigine con nmApplic [{0}] nmPaginaCompSw [{1}] nmAzionePaginaCompSw [{2}]",
+                    nmApplic, nmPaginaCompSw, nmAzionePaginaCompSw).build();
         }
     }
 
@@ -178,10 +191,11 @@ public class SacerLogHelper {
             query.setParameter("nmApplic", nmApplic);
             query.setParameter("nmTipoEvento", nmTipoEvento);
             return (AplVLogTiEvn) query.getSingleResult();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di AplVLogTiEvn con nmApplic [{}] nmTipoEvento [{}]", nmApplic,
-                    nmTipoEvento, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione di AplVLogTiEvn con nmApplic [{0}] nmTipoEvento [{1}]", nmApplic,
+                            nmTipoEvento)
+                    .build();
         }
     }
 
@@ -191,10 +205,12 @@ public class SacerLogHelper {
             query.setParameter("nmApplic", nmApplic);
             query.setParameter("nmTipoOggetto", nmTipoOggetto);
             return (AplVLogTiOgg) query.getSingleResult();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di AplVLogTiOgg con nmApplic [{}] nmTipoOggetto [{}]", nmApplic,
-                    nmTipoOggetto, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione di AplVLogTiOgg con nmApplic [{0}] nmTipoOggetto [{1}]", nmApplic,
+                            nmTipoOggetto)
+                    .build();
+
         }
     }
 
@@ -203,9 +219,10 @@ public class SacerLogHelper {
             Query query = entityManager.createNamedQuery("AplVLogTiOgg.findTipoOggettoById", AplVLogTiOgg.class);
             query.setParameter("idTipoOggetto", idTipoOggetto);
             return (AplVLogTiOgg) query.getSingleResult();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di AplVLogTiOgg con idTipoOggetto [{}]", idTipoOggetto, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione di AplVLogTiOgg con idTipoOggetto [{0,number,#}]", idTipoOggetto)
+                    .build();
         }
     }
 
@@ -215,9 +232,11 @@ public class SacerLogHelper {
                     AplVLogChiaveTiOgg.class);
             query.setParameter("idTipoOggetto", idTipoOggetto);
             return query.getResultList();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di AplVLogChiaveTiOgg con idTipoOggetto [{}]", idTipoOggetto, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione di AplVLogChiaveTiOgg con idTipoOggetto [{0,number,#}]",
+                            idTipoOggetto)
+                    .build();
         }
     }
 
@@ -228,14 +247,13 @@ public class SacerLogHelper {
             query.setParameter("idTipoEvento", idTipoEvento);
             query.setParameter("idTipoOggetto", idTipoOggetto);
             return (AplVLogFotoTiEvnOgg) query.getSingleResult();
-        } catch (NoResultException e) {
-            log.error("Nessun AplVLogFotoTiEvnOgg trovato con con idTipoEvento [{}] idTipoOggetto [{}]", idTipoEvento,
-                    idTipoOggetto, e);
-            throw new RuntimeException("Errore di configurazione del sistema di log");
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di AplVLogFotoTiEvnOgg con idTipoEvento [{}] idTipoOggetto [{}]",
-                    idTipoEvento, idTipoOggetto, ex);
-            throw ex;
+        } catch (NoResultException ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore di configurazione del sistema di log").build();
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR).message(
+                    "Errore nell'estrazione di AplVLogFotoTiEvnOgg con idTipoEvento [{0,number,#}] idTipoOggetto [{1,number,#}]",
+                    idTipoEvento, idTipoOggetto).build();
         }
     }
 
@@ -244,9 +262,11 @@ public class SacerLogHelper {
             Query query = entityManager.createNamedQuery("AplVLogTrigTiEvnOgg.findTrigger", AplVLogTrigTiEvnOgg.class);
             query.setParameter("idTipoEventoOggetto", idEventoOggetto);
             return query.getResultList();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di AplVLogChiaveTiOgg con idEventoOggetto [{}]", idEventoOggetto, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione di AplVLogChiaveTiOgg con idEventoOggetto [{0,number,#}]",
+                            idEventoOggetto)
+                    .build();
         }
     }
 
@@ -259,47 +279,34 @@ public class SacerLogHelper {
                     AplVLogTrigTiEvnOgg.class);
             query.setParameter("idTipoEventoOggetto", idEventoOggetto);
             return query.getResultList();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di AplVLogTrigTiEvnOgg con idEventoOggetto [{}]", idEventoOggetto, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione di AplVLogTrigTiEvnOgg con idEventoOggetto [{0,number,#}]",
+                            idEventoOggetto)
+                    .build();
         }
     }
 
     public String getFotoXml(String query, BigDecimal idOggetto, String nmQueryTipoOggetto) {
         Clob clob = null;
         String risultato = null;
-        ResultSet rs = null;
-        PreparedStatement ps = null;
-        Connection con = null;
 
-        try {
-            con = JpaUtils.provideConnectionFrom(entityManager);
-            ps = con.prepareStatement("SELECT GET_XML_FOTO_AS_CLOB(?,?) AS FOTO FROM DUAL");
+        try (Connection con = JpaUtils.provideConnectionFrom(entityManager);
+                PreparedStatement ps = con.prepareStatement("SELECT GET_XML_FOTO_AS_CLOB(?,?) AS FOTO FROM DUAL")) {
             ps.setClob(1, getStringAsClob(con, query));
             ps.setBigDecimal(2, idOggetto);
-            rs = ps.executeQuery();
-            if (rs != null && rs.next()) {
-                clob = rs.getClob("FOTO");
-                risultato = clob == null ? null : getClobAsString(clob);
+
+            try (ResultSet rs = ps.executeQuery();) {
+                if (rs != null && rs.next()) {
+                    clob = rs.getClob("FOTO");
+                    risultato = clob == null ? null : getClobAsString(clob);
+                }
             }
         } catch (Exception ex) {
-            log.error("Errore lettura foto per la query [{}] per l'oggetto [{}]", nmQueryTipoOggetto, idOggetto, ex);
-            throw new RuntimeException("Errore lettura foto dalla funzione oracle", ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                    if (ps != null) {
-                        ps.close();
-                    }
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception ex) {
-                throw new RuntimeException("Errore lettura foto dalla funzione oracle", ex);
-            }
-
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore lettura foto per la query [{0}] per l'oggetto [{1,number,#}]", nmQueryTipoOggetto,
+                            idOggetto)
+                    .build();
         }
         return risultato;
     }
@@ -307,38 +314,24 @@ public class SacerLogHelper {
     public String getDeltaFotoAsClob(String xml1, String xml2) {
         Clob clob = null;
         String risultato = null;
-        ResultSet rs = null;
-        PreparedStatement ps = null;
-        Connection con = null;
-        try {
-            con = JpaUtils.provideConnectionFrom(entityManager);
-            ps = con.prepareStatement("SELECT SACER_LOG.GET_DELTA_FOTO_AS_CLOB(?,?) AS DELTA FROM DUAL");
+
+        try (Connection con = JpaUtils.provideConnectionFrom(entityManager); PreparedStatement ps = con
+                .prepareStatement("SELECT SACER_LOG.GET_DELTA_FOTO_AS_CLOB(?,?) AS DELTA FROM DUAL")) {
             Clob par1 = con.createClob();
             Clob par2 = con.createClob();
             par1.setString(1, xml1);
             par2.setString(1, xml2);
             ps.setClob(1, par1);
             ps.setClob(2, par2);
-            rs = ps.executeQuery();
-            if (rs != null && rs.next()) {
-                clob = rs.getClob("DELTA");
-                risultato = clob == null ? null : getClobAsString(clob);
+
+            try (ResultSet rs = ps.executeQuery();) {
+                if (rs != null && rs.next()) {
+                    clob = rs.getClob("DELTA");
+                    risultato = clob == null ? null : getClobAsString(clob);
+                }
             }
         } catch (Exception ex) {
             log.error("Errore lettura foto dalla funzione oracle GET_DELTA_FOTO_AS_CLOB()", ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                    if (ps != null) {
-                        ps.close();
-                    }
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception ex) {
-            }
         }
         return risultato;
     }
@@ -346,41 +339,25 @@ public class SacerLogHelper {
     public String getDeltaFotoAssertAsClob(String xml1, String xml2) {
         Clob clob = null;
         String risultato = null;
-        ResultSet rs = null;
-        PreparedStatement ps = null;
-        Connection con = null;
-        try {
-            con = JpaUtils.provideConnectionFrom(entityManager);
-            ps = con.prepareStatement("SELECT SACER_LOG.GET_DELTA_ASSERT_FOR_TEST(?,?) AS DELTA FROM DUAL");
+
+        try (Connection con = JpaUtils.provideConnectionFrom(entityManager); PreparedStatement ps = con
+                .prepareStatement("SELECT SACER_LOG.GET_DELTA_ASSERT_FOR_TEST(?,?) AS DELTA FROM DUAL")) {
             Clob par1 = con.createClob();
             Clob par2 = con.createClob();
             par1.setString(1, xml1);
             par2.setString(1, xml2);
             ps.setClob(1, par1);
             ps.setClob(2, par2);
-            rs = ps.executeQuery();
-            if (rs != null && rs.next()) {
-                clob = rs.getClob("DELTA");
-                risultato = clob == null ? null : getClobAsString(clob);
+
+            try (ResultSet rs = ps.executeQuery();) {
+                if (rs != null && rs.next()) {
+                    clob = rs.getClob("DELTA");
+                    risultato = clob == null ? null : getClobAsString(clob);
+                }
             }
         } catch (Exception ex) {
-            final String testoErrore = "Errore lettura foto dalla funzione oracle GET_DELTA_ASSERT_FOR_TEST()";
-            log.error(testoErrore, ex);
-            throw new RuntimeException(testoErrore, ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                    if (ps != null) {
-                        ps.close();
-                    }
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception ex) {
-
-            }
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore lettura foto dalla funzione oracle GET_DELTA_ASSERT_FOR_TEST()").build();
         }
         return risultato;
     }
@@ -388,35 +365,20 @@ public class SacerLogHelper {
     public boolean isThereATrigger(String sqlTrigger, BigDecimal idFoto) {
         boolean risultato = false;
         String campo = null;
-        ResultSet rs = null;
-        PreparedStatement ps = null;
-        Connection con = null;
-        try {
-            con = JpaUtils.provideConnectionFrom(entityManager);
-            ps = con.prepareStatement(sqlTrigger);
+
+        try (Connection con = JpaUtils.provideConnectionFrom(entityManager);
+                PreparedStatement ps = con.prepareStatement(sqlTrigger);) {
             ps.setBigDecimal(1, idFoto);
-            rs = ps.executeQuery();
-            if (rs != null && rs.next()) {
-                campo = rs.getString("FLAG");
-                risultato = campo != null && campo.equals(TRUE);
+
+            try (ResultSet rs = ps.executeQuery();) {
+                if (rs != null && rs.next()) {
+                    campo = rs.getString("FLAG");
+                    risultato = campo != null && campo.equals(TRUE);
+                }
             }
         } catch (Exception ex) {
-            log.error(null, ex);
-            throw new RuntimeException("Errore verifica esistenza trigger", ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                    if (ps != null) {
-                        ps.close();
-                    }
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception ex) {
-                throw new RuntimeException("Errore verifica esistenza trigger", ex);
-            }
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore verifica esistenza trigger").build();
         }
         return risultato;
 
@@ -428,37 +390,22 @@ public class SacerLogHelper {
      */
     public List<BigDecimal> findAllObjectIdFromTrigger(String sqlTriggerAllObjectId, BigDecimal idEntity) {
         List<BigDecimal> risultato = null;
-        ResultSet rs = null;
-        PreparedStatement ps = null;
-        Connection con = null;
-        try {
-            con = JpaUtils.provideConnectionFrom(entityManager);
-            ps = con.prepareStatement(sqlTriggerAllObjectId);
+
+        try (Connection con = JpaUtils.provideConnectionFrom(entityManager);
+                PreparedStatement ps = con.prepareStatement(sqlTriggerAllObjectId);) {
             ps.setBigDecimal(1, idEntity);
-            rs = ps.executeQuery();
-            if (rs != null) {
-                risultato = new ArrayList<>();
-                while (rs.next()) {
-                    risultato.add(rs.getBigDecimal("ID"));
+
+            try (ResultSet rs = ps.executeQuery();) {
+                if (rs != null) {
+                    risultato = new ArrayList<>();
+                    while (rs.next()) {
+                        risultato.add(rs.getBigDecimal("ID"));
+                    }
                 }
             }
         } catch (Exception ex) {
-            log.error(null, ex);
-            throw new RuntimeException("Errore estrazione ID scatenati dal trigger", ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                    if (ps != null) {
-                        ps.close();
-                    }
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception ex) {
-                throw new RuntimeException("Errore estrazione ID scatenati dal trigger", ex);
-            }
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore estrazione ID scatenati dal trigger").build();
         }
         return risultato;
     }
@@ -469,36 +416,21 @@ public class SacerLogHelper {
      */
     public List<BigDecimal> findAllObjectIdToInitialize(String sqlFindAllObjectId) {
         List<BigDecimal> risultato = null;
-        ResultSet rs = null;
-        PreparedStatement ps = null;
-        Connection con = null;
-        try {
-            con = JpaUtils.provideConnectionFrom(entityManager);
-            ps = con.prepareStatement(sqlFindAllObjectId);
-            rs = ps.executeQuery();
-            if (rs != null) {
-                risultato = new ArrayList();
-                while (rs.next()) {
-                    risultato.add(rs.getBigDecimal(1));
+
+        try (Connection con = JpaUtils.provideConnectionFrom(entityManager);
+                PreparedStatement ps = con.prepareStatement(sqlFindAllObjectId);) {
+
+            try (ResultSet rs = ps.executeQuery();) {
+                if (rs != null) {
+                    risultato = new ArrayList<>();
+                    while (rs.next()) {
+                        risultato.add(rs.getBigDecimal(1));
+                    }
                 }
             }
         } catch (Exception ex) {
-            log.error(null, ex);
-            throw new RuntimeException("Errore estrazione ID scatenati dalla funzione init log", ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                    if (ps != null) {
-                        ps.close();
-                    }
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception ex) {
-                throw new RuntimeException("Errore estrazione ID scatenati dalla funzione init log", ex);
-            }
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore estrazione ID scatenati dalla funzione init log").build();
         }
         return risultato;
     }
@@ -509,37 +441,22 @@ public class SacerLogHelper {
      */
     public List<BigDecimal> findAllChiaviAccessoByIdOggetto(String sqlAllChiaviAccesso, BigDecimal idOggettoFiglio) {
         List<BigDecimal> risultato = null;
-        ResultSet rs = null;
-        PreparedStatement ps = null;
-        Connection con = null;
-        try {
-            con = JpaUtils.provideConnectionFrom(entityManager);
-            ps = con.prepareStatement(sqlAllChiaviAccesso);
+
+        try (Connection con = JpaUtils.provideConnectionFrom(entityManager);
+                PreparedStatement ps = con.prepareStatement(sqlAllChiaviAccesso);) {
             ps.setBigDecimal(1, idOggettoFiglio);
-            rs = ps.executeQuery();
-            if (rs != null) {
-                risultato = new ArrayList();
-                while (rs.next()) {
-                    risultato.add(rs.getBigDecimal("ID"));
+
+            try (ResultSet rs = ps.executeQuery();) {
+                if (rs != null) {
+                    risultato = new ArrayList<>();
+                    while (rs.next()) {
+                        risultato.add(rs.getBigDecimal("ID"));
+                    }
                 }
             }
         } catch (Exception ex) {
-            log.error(null, ex);
-            throw new RuntimeException("Errore Lettura degli oggetti padre", ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                    if (ps != null) {
-                        ps.close();
-                    }
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception ex) {
-                throw new RuntimeException("Errore Lettura degli oggetti padre", ex);
-            }
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore Lettura degli oggetti padre").build();
         }
         return risultato;
     }
@@ -554,16 +471,16 @@ public class SacerLogHelper {
             query.setParameter("nmApplic", nomeApplicazione);
             query.setParameter("nmTipoOggetto", nomeTipoOggetto);
             query.setParameter("idOggetto", idOggetto);
-            List<LogVVisOggetto> l = query.getResultList();
-            if (!l.isEmpty()) {
-                return l.get(0);
+            List<LogVVisOggetto> result = query.getResultList();
+            if (!result.isEmpty()) {
+                return result.get(0);
             } else {
                 return null;
             }
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di LogVVisOggetto con nmApplic [{}] nmTipoOggetto [{}] idOggetto [{}]",
-                    nomeApplicazione, nomeTipoOggetto, idOggetto, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR).message(
+                    "Errore nell'estrazione di LogVVisOggetto con nmApplic [{0}] nmTipoOggetto [{1}] idOggetto [{2,number,#}]",
+                    nomeApplicazione, nomeTipoOggetto, idOggetto).build();
         }
     }
 
@@ -579,11 +496,10 @@ public class SacerLogHelper {
             query.setParameter("nmTipoOggetto", nomeTipoOggetto);
             query.setParameter("idOggetto", idOggetto);
             return query.getResultList();
-        } catch (RuntimeException ex) {
-            log.error(
-                    "Errore nell'estrazione di LogVLisEventoOggetto con nmApplic [{}] nmTipoOggetto [{}] idOggetto [{}]",
-                    nomeApplicazione, nomeTipoOggetto, idOggetto, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR).message(
+                    "Errore nell'estrazione di LogVLisEventoOggetto con nmApplic [{0}] nmTipoOggetto [{1}] idOggetto [{2,number,#}]",
+                    nomeApplicazione, nomeTipoOggetto, idOggetto).build();
         }
     }
 
@@ -596,9 +512,11 @@ public class SacerLogHelper {
                     LogVLisAsserzioniDati.class);
             query.setParameter("idOggettoEvento", idOggettoEvento);
             return query.getResultList();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di LogVLisAsserzioniDati con idOggettoEvento [{}]", idOggettoEvento, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione di LogVLisAsserzioniDati con idOggettoEvento [{0,number,#}]",
+                            idOggettoEvento)
+                    .build();
         }
     }
 
@@ -615,10 +533,10 @@ public class SacerLogHelper {
             query.setParameter("idTipoOggetto", idTipoOggetto);
             query.setParameter("idOggetto", idOggetto);
             return query.getResultList();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di LogEventoByScript con idTipoOggetto [{}] e idOggetto [{}]",
-                    idTipoOggetto, idOggetto, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR).message(
+                    "Errore nell'estrazione di LogEventoByScript con idTipoOggetto [{0,number,#}] e idOggetto [{1,number,#}]",
+                    idTipoOggetto, idOggetto).build();
         }
     }
 
@@ -630,9 +548,9 @@ public class SacerLogHelper {
             Query query = entityManager.createNamedQuery("AplVLogInit.findByAppName", AplVLogInit.class);
             query.setParameter("nmApplic", nmApplic);
             return query.getResultList();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di AplVLogInit con nmApplic [{}]", nmApplic, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione di AplVLogInit con nmApplic [{0}]", nmApplic).build();
         }
     }
 
@@ -658,9 +576,9 @@ public class SacerLogHelper {
             }
             query.setParameter("nmApplic", nmApplic);
             return query.getResultList();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di AplVLogTiOgg con nmApplic [{}]", nmApplic, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione di AplVLogTiOgg con nmApplic [{0}]", nmApplic).build();
         }
     }
 
@@ -671,10 +589,11 @@ public class SacerLogHelper {
             query.setParameter("nmApplic", nmApplic);
             query.setParameter("idUserIam", idUserIam);
             return query.getResultList();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di UsrVAbilOrganiz con nmApplic [{}] e idUserIam [{}]", nmApplic,
-                    idUserIam, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione di UsrVAbilOrganiz con nmApplic [{0}] e idUserIam [{1,number,#}]",
+                            nmApplic, idUserIam)
+                    .build();
         }
     }
 
@@ -696,12 +615,15 @@ public class SacerLogHelper {
             cq.select(logVRicEventi);
             cq.orderBy(cb.desc(logVRicEventi.get("dtRegEvento")));
             Predicate predicate = cb.equal(logVRicEventi.get("nmApplic"), nomeApplicazione);
-            if (idOrganizzazione != null)
+            if (idOrganizzazione != null) {
                 predicate = cb.and(predicate, cb.equal(logVRicEventi.get("idOrganizApplic"), idOrganizzazione));
-            if (idTipoOggetto != null)
+            }
+            if (idTipoOggetto != null) {
                 predicate = cb.and(predicate, cb.equal(logVRicEventi.get("idTipoOggetto"), idTipoOggetto));
-            if (classeEvento != null)
+            }
+            if (classeEvento != null) {
                 predicate = cb.and(predicate, cb.equal(logVRicEventi.get("tipoClasseEvento"), classeEvento));
+            }
             Path<Date> val = logVRicEventi.get("dtRegEvento");
             // Gestisce i casi di data between, solo "data da" e solo "data a"
             if (dataDa != null && dataA != null) {
@@ -718,11 +640,10 @@ public class SacerLogHelper {
             cq.where(predicate);
             return cq;
 
-        } catch (RuntimeException ex) {
-            log.error(
-                    "Errore nell'estrazione di LogVRicEventi con nmApplic [{}], idOrganizzazione [{}], idtipoOggetto [{}], classeEvento [{}], dataInizio [{}], dataFine [{}]",
-                    nomeApplicazione, idOrganizzazione, idTipoOggetto, classeEvento, dataDa, dataA, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR).message(
+                    "Errore nell'estrazione di LogVRicEventi con nmApplic [{0}], idOrganizzazione [{1,number,#}], idtipoOggetto [{2,number,#}], classeEvento [{3}], dataInizio [{4,date}], dataFine [{5,date}]",
+                    nomeApplicazione, idOrganizzazione, idTipoOggetto, classeEvento, dataDa, dataA, ex).build();
         }
     }
 
@@ -731,9 +652,10 @@ public class SacerLogHelper {
             Query query = entityManager.createNamedQuery("LogVRicEventi.findByIdEvento", LogVRicEventi.class);
             query.setParameter("idEvento", idEvento);
             return query.getResultList();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di LogVRicEventi con idEvento [{}]", idEvento, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione di LogVRicEventi con idEvento [{0,number,#}]", idEvento, ex)
+                    .build();
         }
     }
 
@@ -745,10 +667,10 @@ public class SacerLogHelper {
             query.setParameter("idTransazione", idTransazione);
             query.setParameter("idEvento", idEvento);
             return query.getResultList();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di LogVRicEventi con idtransazione [{}] e idEvento [{}]", idTransazione,
-                    idEvento, ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR).message(
+                    "Errore nell'estrazione di LogVRicEventi con idtransazione [{0,number,#}] e idEvento [{1,number,#}]",
+                    idTransazione, idEvento, ex).build();
         }
     }
 
@@ -763,8 +685,10 @@ public class SacerLogHelper {
             }
             return null;
         } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di LogVVisEventoPrincTx con idtransazione [{}]", idTransazione, ex);
-            throw ex;
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione di LogVVisEventoPrincTx con idtransazione [{0,number,#}]",
+                            idTransazione, ex)
+                    .build();
         }
     }
 
@@ -776,9 +700,9 @@ public class SacerLogHelper {
             Query query = entityManager.createNamedQuery("LogVLisEventoByScript.findDistinctByNmApplic");
             query.setParameter("nmApplic", nmApplic);
             return query.getResultList();
-        } catch (RuntimeException ex) {
-            log.error("Errore nell'estrazione di LogEventoByScript DISTINCT", ex);
-            throw ex;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nell'estrazione di LogEventoByScript DISTINCT", ex).build();
         }
     }
 
@@ -825,9 +749,9 @@ public class SacerLogHelper {
             T instance = entityManager.find(entityClass, id);
             log.debug("Get successful");
             return instance;
-        } catch (RuntimeException re) {
-            log.error("Get failed", re);
-            throw re;
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Get failed", ex).build();
         }
     }
 
@@ -837,12 +761,10 @@ public class SacerLogHelper {
      */
     public long inserisciFoto(long idOggettoEvento, String fotoXml, Calendar momentoAttuale) {
         long risultato = -1;
-        CallableStatement cs = null;
         String istruzione = "{call SACER_LOG.INSERT_FOTO(?,?,?,?)}";
-        Connection con = null;
-        try {
-            con = JpaUtils.provideConnectionFrom(entityManager);
-            cs = con.prepareCall(istruzione);
+
+        try (Connection con = JpaUtils.provideConnectionFrom(entityManager);
+                CallableStatement cs = con.prepareCall(istruzione);) {
             cs.registerOutParameter(4, java.sql.Types.NUMERIC);
             cs.setLong(1, idOggettoEvento);
             cs.setString(2, fotoXml);
@@ -850,27 +772,8 @@ public class SacerLogHelper {
             cs.executeUpdate();
             risultato = cs.getLong(4);
         } catch (Exception ex) {
-            log.error("Errore Scrittura Foto", ex);
-            throw new RuntimeException("Errore Scrittura Foto", ex);
-        } finally {
-
-            if (cs != null) {
-                try {
-                    cs.close();
-                } catch (SQLException ex) {
-                    log.debug("Errore Scrittura Foto", ex);
-                    throw new RuntimeException("Errore Scrittura Foto", ex);
-                }
-            }
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException ex) {
-                    log.debug("Errore Scrittura Foto", ex);
-                    throw new RuntimeException("Errore Scrittura Foto", ex);
-                }
-            }
-
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore Scrittura Foto", ex).build();
         }
         return risultato;
     }
@@ -880,31 +783,17 @@ public class SacerLogHelper {
      */
     public BigDecimal getNewTransactionId() {
         BigDecimal risultato = null;
-        ResultSet rs = null;
-        PreparedStatement ps = null;
-        Connection con = null;
-        try {
-            con = JpaUtils.provideConnectionFrom(entityManager);
-            ps = con.prepareStatement("SELECT SACER_LOG.slog_evento_transazione.NEXTVAL AS TRANSACTION_ID FROM DUAL");
-            rs = ps.executeQuery();
-            if (rs != null && rs.next()) {
-                risultato = rs.getBigDecimal("TRANSACTION_ID");
+
+        try (Connection con = JpaUtils.provideConnectionFrom(entityManager); PreparedStatement ps = con
+                .prepareStatement("SELECT SACER_LOG.slog_evento_transazione.NEXTVAL AS TRANSACTION_ID FROM DUAL");) {
+
+            try (ResultSet rs = ps.executeQuery();) {
+                if (rs != null && rs.next()) {
+                    risultato = rs.getBigDecimal("TRANSACTION_ID");
+                }
             }
         } catch (Exception ex) {
             log.error(null, ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                    if (ps != null) {
-                        ps.close();
-                    }
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception ex) {
-            }
         }
         return risultato;
     }
@@ -914,39 +803,19 @@ public class SacerLogHelper {
      */
     public long scriviDelta(long idOggettoEvento, Calendar momentoAttuale) {
         long risultato = -1;
-        CallableStatement cs = null;
         String istruzione = "{call SACER_LOG.SCRIVI_DELTA(?,?,?)}";
-        Connection con = null;
-        try {
-            con = JpaUtils.provideConnectionFrom(entityManager);
-            cs = con.prepareCall(istruzione);
+
+        try (Connection con = JpaUtils.provideConnectionFrom(entityManager);
+                CallableStatement cs = con.prepareCall(istruzione);) {
+
             cs.registerOutParameter(3, java.sql.Types.NUMERIC);
             cs.setLong(1, idOggettoEvento);
             cs.setTimestamp(2, new Timestamp(momentoAttuale.getTime().getTime()));
             cs.executeUpdate();
             risultato = cs.getLong(3);
         } catch (Exception ex) {
-            log.error("Errore Scrittura DELTA", ex);
-            throw new RuntimeException("Errore nella chiamata alla procedura SCRIVI_DELTA", ex);
-        } finally {
-
-            if (cs != null) {
-                try {
-                    cs.close();
-                } catch (SQLException ex) {
-                    log.error("Errore Scrittura DELTA", ex);
-                    throw new RuntimeException("Errore nella chiamata alla procedura SCRIVI_DELTA", ex);
-                }
-            }
-
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException ex) {
-                    log.error("Errore Scrittura DELTA", ex);
-                    throw new RuntimeException("Errore nella chiamata alla procedura SCRIVI_DELTA", ex);
-                }
-            }
+            throw SacerLogRuntimeException.builder().cause(ex).category(SacerLogErrorCategory.SQL_ERROR)
+                    .message("Errore nella chiamata alla procedura SCRIVI_DELTA", ex).build();
         }
         return risultato;
     }
@@ -971,34 +840,20 @@ public class SacerLogHelper {
     public String getXmlFotoByIdEventoOggettoAsString(BigDecimal idOggettoEvento) {
         Clob clob = null;
         String risultato = null;
-        ResultSet rs = null;
-        PreparedStatement ps = null;
-        Connection con = null;
-        try {
-            con = JpaUtils.provideConnectionFrom(entityManager);
-            ps = con.prepareStatement("SELECT SACER_LOG.GET_XML_FOTO_BY_ID_AS_CLOB(?) AS FOTO FROM DUAL");
+
+        try (Connection con = JpaUtils.provideConnectionFrom(entityManager); PreparedStatement ps = con
+                .prepareStatement("SELECT SACER_LOG.GET_XML_FOTO_BY_ID_AS_CLOB(?) AS FOTO FROM DUAL");) {
+
             ps.setLong(1, idOggettoEvento.longValueExact());
-            rs = ps.executeQuery();
-            if (rs != null && rs.next()) {
-                clob = rs.getClob("FOTO");
-                risultato = clob == null ? null : getClobAsString(clob);
+
+            try (ResultSet rs = ps.executeQuery();) {
+                if (rs != null && rs.next()) {
+                    clob = rs.getClob("FOTO");
+                    risultato = clob == null ? null : getClobAsString(clob);
+                }
             }
         } catch (Exception ex) {
             log.error(null, ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                    if (ps != null) {
-                        ps.close();
-
-                    }
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception ex) {
-            }
         }
         return risultato;
     }

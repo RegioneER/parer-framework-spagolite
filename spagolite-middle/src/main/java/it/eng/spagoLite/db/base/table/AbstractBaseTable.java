@@ -178,7 +178,7 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see it.eng.spagoLite.db.base.BaseTableInterface#add(it.eng.spagoLite.db.base.BaseRowInterface)
      */
     public T add(BaseRowInterface baseRowInterface) {
@@ -211,7 +211,7 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see it.eng.spagoLite.db.base.BaseTableInterface#addFullIdx(it.eng.spagoLite.db.base.BaseRowInterface)
      */
     public T addFullIdx(BaseRowInterface baseRowInterface) {
@@ -245,7 +245,7 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see it.eng.spagoLite.db.base.BaseTableInterface#remove(int)
      */
     public T remove(int rowIndex) {
@@ -265,7 +265,7 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see it.eng.spagoLite.db.base.BaseTableInterface#removeFullIdx(int)
      */
     public T removeFullIdx(int rowIndex) {

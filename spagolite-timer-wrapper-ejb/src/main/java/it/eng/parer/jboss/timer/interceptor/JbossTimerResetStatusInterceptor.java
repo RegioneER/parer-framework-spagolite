@@ -46,9 +46,9 @@ public class JbossTimerResetStatusInterceptor {
      *
      * @param inv
      *            invocation context
-     * 
+     *
      * @return di solito i metodi intercettati sono void
-     * 
+     *
      * @throws Exception
      *             eccezione del metodo intercettato
      */

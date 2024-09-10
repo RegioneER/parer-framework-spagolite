@@ -26,9 +26,9 @@ import java.util.List;
 import org.dom4j.Element;
 
 /**
- * 
+ *
  * @author Enrico Grillini
- * 
+ *
  */
 public class Menu extends MenuEntry implements Iterable<MenuEntry> {
 

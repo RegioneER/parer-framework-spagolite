@@ -32,7 +32,7 @@ public interface JbossJobTimer {
      * Restituisce la data del prossimo timeout.
      *
      * @return data della prossima elaborazione
-     * 
+     *
      * @param applicationName
      *            nome dell'applicazione. Necessario per SacerLog
      */
@@ -76,7 +76,7 @@ public interface JbossJobTimer {
      *
      * @param timer
      *            firma standard del metodo di timeout
-     * 
+     *
      * @throws java.lang.Exception
      *             eccezione generica
      */

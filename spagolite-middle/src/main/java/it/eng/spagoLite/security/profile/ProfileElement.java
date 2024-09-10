@@ -25,11 +25,11 @@ import org.apache.commons.collections4.map.CaseInsensitiveMap;
 import org.dom4j.Element;
 
 /**
- * 
+ *
  * @author Enrico Grillini
- * 
+ *
  * @param <T>
- * 
+ *
  */
 public class ProfileElement<T extends ProfileElement<?>> extends FrameElement implements Iterable<T> {
 

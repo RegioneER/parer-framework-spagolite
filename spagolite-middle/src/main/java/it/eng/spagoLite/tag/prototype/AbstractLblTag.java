@@ -24,9 +24,9 @@ import it.eng.spagoLite.tag.form.formLayout.ContainerTag;
 import javax.servlet.jsp.JspException;
 
 /**
- * 
+ *
  * @author Enrico Grillini
- * 
+ *
  */
 public abstract class AbstractLblTag extends BaseSpagoLiteTag {
 
@@ -121,7 +121,7 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
 
     /**
      * Scrive la label
-     * 
+     *
      * @throws JspException
      *             eccezione generica
      */
@@ -140,7 +140,7 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
 
     /**
      * Scrive il controllo
-     * 
+     *
      * @throws JspException
      *             eccezione generica
      */
@@ -148,7 +148,7 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
 
     /**
      * Stampa il container
-     * 
+     *
      * @throws JspException
      *             eccezione generica
      */
@@ -159,7 +159,7 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
 
     /**
      * Stampa il container
-     * 
+     *
      * @throws JspException
      *             eccezione generica
      */

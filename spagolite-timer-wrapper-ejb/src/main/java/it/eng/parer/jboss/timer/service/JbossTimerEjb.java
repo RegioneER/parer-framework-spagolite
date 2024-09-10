@@ -152,7 +152,7 @@ public class JbossTimerEjb {
      *
      * @param jobName
      *            nome del job
-     * 
+     *
      * @return null o la data della prossima attivazioen del job
      */
     public Date getDataProssimaAttivazione(String jobName) {
@@ -183,7 +183,7 @@ public class JbossTimerEjb {
      *
      * @param jobName
      *            nome del job
-     * 
+     *
      * @return true se la risposta è sì, false altrimenti
      */
     public boolean isDataProssimaAttivazioneAccurata(String jobName) {
@@ -250,7 +250,7 @@ public class JbossTimerEjb {
      *
      * @param nodoAssegnato
      *            definito su banca dati
-     * 
+     *
      * @return lista di job
      */
     public List<JobTable> getJobs(String nodoAssegnato) {
@@ -268,7 +268,7 @@ public class JbossTimerEjb {
      *
      * @param jobName
      *            nome del job
-     * 
+     *
      * @return istanza del timer
      */
     public JbossJobTimer getTimer(String jobName) {
@@ -296,7 +296,7 @@ public class JbossTimerEjb {
      *
      * @param jobName
      *            nome del job
-     * 
+     *
      * @return entity oppure null
      */
     public JobTable getJob(String jobName) {

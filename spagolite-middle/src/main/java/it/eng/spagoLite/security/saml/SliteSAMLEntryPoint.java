@@ -31,7 +31,7 @@ import org.springframework.security.saml.context.SAMLMessageContext;
 /**
  *
  * @author S257421
- * 
+ *
  *         Classe con metodo ridefinito per poter intercettato il parametro nostro della request atto a gestire il
  *         purpose di SPID e per metterlo tra gli attributi della request, altrimenti non è più possibile leggerlo in
  *         alcun modo nelle fari successive negli oggetti SPRING SAML perché completamente incapsulati.

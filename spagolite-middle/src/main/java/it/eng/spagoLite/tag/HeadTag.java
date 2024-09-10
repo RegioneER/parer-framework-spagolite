@@ -100,9 +100,9 @@ public class HeadTag extends BaseSpagoLiteTag {
 
         /*
          * Highlightjs
-         * 
+         *
          * <pre><code> block </code></pre>
-         * 
+         *
          */
         css.append("  <link href=\"" + contextPath
                 + "/webjars/font-awesome/6.4.0/css/all.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
@@ -114,7 +114,7 @@ public class HeadTag extends BaseSpagoLiteTag {
          * Custom
          */
         css.append("  <link href=\"" + contextPath
-                + "/css/custom/jquery-ui-custom/1.13.2/jquery-ui.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
+                + "/css/custom/jquery-ui-custom/1.13.3/jquery-ui.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
 
         css.append("  <link href=\"" + contextPath
                 + "/css/custom/chosen/1.8.7/chosen.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
@@ -160,14 +160,14 @@ public class HeadTag extends BaseSpagoLiteTag {
          * Webjars
          */
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
-                + "/webjars/jquery/3.6.4/jquery.min.js\"></script>\n");
+                + "/webjars/jquery/3.7.1/jquery.min.js\"></script>\n");
 
         // Static (not updatable to webjar)
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
                 + "/js/jQuery/jquery.base64-min.js\"></script>\n");
 
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
-                + "/webjars/jquery-ui/1.13.2/jquery-ui.min.js\"></script>\n");
+                + "/webjars/jquery-ui/1.13.3/jquery-ui.min.js\"></script>\n");
 
         // Static (not updatable to webjar)
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
@@ -196,15 +196,15 @@ public class HeadTag extends BaseSpagoLiteTag {
 
         /*
          * Highlightjs
-         * 
+         *
          * <pre><code> block </code></pre>
-         * 
+         *
          */
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
                 + "/webjars/highlightjs/11.5.0/highlight.min.js\"></script>\n");
 
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
-                + "/webjars/highlightjs-line-numbers.js/dist/highlightjs-line-numbers.min.js\"></script>\n");
+                + "/webjars/highlightjs-line-numbers.js/2.8.0/dist/highlightjs-line-numbers.min.js\"></script>\n");
 
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
                 + "/webjars/highlightjs-badgejs/0.0.5/highlightjs-badgejs.min.js\"></script>\n");

@@ -169,7 +169,7 @@ public class Wizard extends BaseElements<WizardElement> {
 
     /**
      * Conta solo gli step visibili
-     * 
+     *
      * @return conteggio
      */
     public int stepSize() {
@@ -187,7 +187,7 @@ public class Wizard extends BaseElements<WizardElement> {
 
     /**
      * Conta solo gli step visibili
-     * 
+     *
      * @return conteggio
      */
     public int currentStepIndex() {

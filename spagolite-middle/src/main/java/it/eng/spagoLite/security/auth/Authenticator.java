@@ -40,11 +40,11 @@ public abstract class Authenticator {
     /**
      * Metodo per la verifica dell'autorizzazione ad eseguire l'applicazione corrente Metodo reimplementato per
      * bypassare la verifica.
-     * 
-     * 
+     *
+     *
      * @param utente
      *            dto
-     * 
+     *
      * @return true/false se autenticato
      */
     // public boolean isAutorized(User utente){
@@ -60,7 +60,7 @@ public abstract class Authenticator {
 
     /**
      * Metodo che ritorna il nome dell'applicazione così come è definito in IAM
-     * 
+     *
      * @return nome applicazione
      */
     protected abstract String getAppName();

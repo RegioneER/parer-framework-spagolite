@@ -55,6 +55,8 @@ import it.eng.parer.sacerlog.entity.LogChiaveAccessoEvento;
 import it.eng.parer.sacerlog.entity.LogEvento;
 import it.eng.parer.sacerlog.entity.LogEventoByScript;
 import it.eng.parer.sacerlog.entity.LogOggettoEvento;
+import it.eng.parer.sacerlog.exceptions.SacerLogRuntimeException;
+import it.eng.parer.sacerlog.exceptions.SacerLogRuntimeException.SacerLogErrorCategory;
 import it.eng.parer.sacerlog.util.TransactionLogContext;
 import it.eng.parer.sacerlog.viewEntity.AplVLogChiaveTiOgg;
 import it.eng.parer.sacerlog.viewEntity.AplVLogFotoTiEvnOgg;
@@ -96,52 +98,6 @@ public class SacerLogEjb {
         return ctx;
     }
 
-    /*
-     * Metodo principale per il logging che gestisce sia le loggate normali che quelle scaturite da un trigger.
-     * 
-     * @param isTrigger viene messo a true quando questo metodo viene chiamato da se stesso per eseguire un log da
-     * trigger. In questo caso non serve passare nmComponente ma basta il nmTipoEvento e nmApplicazione che usa per fare
-     * una query sulla vista APL_V_LOG_TI_EVN che va solo nella tabella APL_TIPO_EVENTO. Se viene passato false in tutti
-     * gli altri casi. Con false usa la view APL_V_LOG_TI_EVN_CON_ORIGINE che mette in join e UNION le tabelle delle
-     * pagine web, azioni pagine e tabelle dei tipi evento.
-     * 
-     * @param nmTipoEvento viene passato nel caso in cui istrigger = true in quanto serve per estrarre i dati dalla view
-     * APL_V_LOG_TI_EVN
-     * 
-     * @param nmApplic contiene il nome dell'applicazione per cui si sta loggando
-     * 
-     * @param agente contiene un record di LOG_V_LOG_AGENTE che è una view che consente con una UNION e join di estrarre
-     * i dati dell'utente/agente oppure del componente sw/agente.
-     * 
-     * @param nmAzione contiene il nome dell'azione da loggare es.: toolbar/insert (campo NM_AZIONE_PAGINA della tabella
-     * APL_AZIONE_PAGINA) oppure nel caso di un componente software l'azione corrisponde al contenuto del campo
-     * NM_AZIONE_COMP_SW della tabella APL_AZIONE_COMP_SW come ad esempio: "Inizializza log Sacer_iam"
-     * 
-     * @param nmTipoOggetto contiene il del tipo oggetto che si sta loggando
-     * 
-     * @param idOggetto contiene la chiave primaria dell'entità che si sta loggando
-     * 
-     * @param nmComponente contiene il nome del componente che sta logganto come ad esempio una pagina web (es.:
-     * /amministrazione/loginUtente) oppure un nome di un componente software come un job che corrisponde al campo
-     * NM_COMP_SW della tabella APL_COMP_SW
-     * 
-     * @param tipoRuoloPremisAgenteEvento il ruolo_agente_evento da mettere nella tabella LOG_AGENTE_EVENTO. Se non
-     * viene valorizzato imposta di default "implementer"
-     * 
-     * @param tipoRuoloPremisEventoOggetto il ruolo_oggetto_evento da mettere nella tabella LOG_OGGETTO_EVENTO. Se non
-     * viene valorizzato imposta di default "outcome"
-     * 
-     * @param momentoAttuale è il timestamp con cui si deve registrare l'evento di log che può essere now() nel caso di
-     * loggate normale oppure deve esere presa dalla tabella LOG_EVENTO_BY_SCRIPT nel caso in cui si utilizzi uno script
-     * di aggiornamento ORACLE lanciato esternamente per cui quegli eventi vanno registrati con il loro timestamp
-     * originario
-     * 
-     * @param hasToCheckScriptExistance true nei casi di log normale, false nel caso in cui questo metodo venisse
-     * chiamato da se stesso quando venissero rilevati dei log dalla tabella LOG_EVENTO_BY_SCRIPT
-     *
-     * @return LogEvento record LOG_EVENTO con la sua chiave primaria valorizzata
-     *
-     */
     protected LogEvento log(TransactionLogContext ctx, boolean isTrigger, String nmTipoEvento, String nmApplic,
             LogVLogAgente agente, String nmAzione, String nmTipoOggetto, BigDecimal idOggetto, String nmComponente,
             String tipoRuoloPremisAgenteEvento, String tipoRuoloPremisEventoOggetto, Calendar momentoAttuale,
@@ -208,7 +164,7 @@ public class SacerLogEjb {
             logEvento.setIdTransazione(ctx.getTransactionId());
 
             // Agenti Evento
-            ArrayList<LogAgenteEvento> agentiEvento = new ArrayList();
+            ArrayList<LogAgenteEvento> agentiEvento = new ArrayList<>();
             LogAgenteEvento logAgenteEvento = new LogAgenteEvento();
             logAgenteEvento.setIdAgente(agente.getIdAgente());
             logAgenteEvento.setTiRuoloAgenteEvento(tipoRuoloPremisAgenteEvento);
@@ -217,7 +173,7 @@ public class SacerLogEjb {
             logEvento.setLogAgenteEventos(agentiEvento);
 
             // Oggetto Evento
-            ArrayList<LogOggettoEvento> oggettiEvento = new ArrayList();
+            ArrayList<LogOggettoEvento> oggettiEvento = new ArrayList<>();
             LogOggettoEvento logOggettoEvento = new LogOggettoEvento();
             logOggettoEvento.setIdOggetto(idOggetto);
             logOggettoEvento.setIdTipoOggetto(tiOgg.getIdTipoOggetto());
@@ -229,11 +185,11 @@ public class SacerLogEjb {
             logEvento.setLogOggettoEventos(oggettiEvento);
 
             // Verifica esistenza chiavi di accesso
-            ArrayList<LogChiaveAccessoEvento> aChiave = new ArrayList();
+            ArrayList<LogChiaveAccessoEvento> aChiave = new ArrayList<>();
             if (tiOgg.getIdTipoOggettoPadre() != null) {
                 List<AplVLogChiaveTiOgg> lChiavi = sacerLogHelper
                         .getChiaviAccessoByIdTipoOggetto(tiOgg.getIdTipoOggetto());
-                if (lChiavi != null && lChiavi.size() > 0) {
+                if (lChiavi != null && !lChiavi.isEmpty()) {
                     BigDecimal idOggettoFiglio = idOggetto;
                     LogChiaveAccessoEvento logChiave = null;
                     for (AplVLogChiaveTiOgg chiave : lChiavi) {
@@ -244,7 +200,7 @@ public class SacerLogEjb {
                         logChiave.setDtRegEvento(momentoAttuale);
                         List<BigDecimal> lChiaviPadre = sacerLogHelper
                                 .findAllChiaviAccessoByIdOggetto(chiave.getBlQueryTipoOggetto(), idOggettoFiglio);
-                        if (lChiaviPadre != null && lChiaviPadre.size() > 0) {
+                        if (lChiaviPadre != null && !lChiaviPadre.isEmpty()) {
                             logChiave.setIdOggetto(lChiaviPadre.iterator().next());
                             aChiave.add(logChiave);
                         }
@@ -275,7 +231,7 @@ public class SacerLogEjb {
             // Verifica esistenza ed esecuzione dei trigger
             List<AplVLogTrigTiEvnOgg> trigList = sacerLogHelper
                     .getTriggersByIdEventoOggetto(evnOgg.getIdTipoEventoOggetto());
-            if (trigList != null && trigList.size() > 0) {
+            if (trigList != null && !trigList.isEmpty()) {
                 // per ogni trigger che trova...
                 for (AplVLogTrigTiEvnOgg trigger : trigList) {
                     if (sacerLogHelper.isThereATrigger(trigger.getBlQueryTipoOggettoTrig(), idFoto)) {
@@ -288,9 +244,6 @@ public class SacerLogEjb {
                                 log.debug("TID [{}] Deve scattare la nuova FOTO TRIGGERATA per l'entita' [{}]", ctx,
                                         oggId);
                                 // Logga l'oggetto triggerato ricorsivamente
-                                // log(ctx, true, trigger.getNmTipoEventoTrig(), nmApplic, agente, nmAzione,
-                                // trigger.getNmTipoOggettoTrig(), oggId, nmComponente, tipoRuoloPremisAgenteEvento,
-                                // tipoRuoloPremisEventoOggetto, momentoAttuale, true);
                                 log(ctx, true, trigger.getNmTipoEventoTrig(), trigger.getNmApplicTrig(), agente,
                                         nmAzione, trigger.getNmTipoOggettoTrig(), oggId, nmComponente,
                                         tipoRuoloPremisAgenteEvento, tipoRuoloPremisEventoOggetto, momentoAttuale,
@@ -318,8 +271,9 @@ public class SacerLogEjb {
      */
     public void gestisciLogEventoScript(TransactionLogContext ctx, String nomeApplicazione, String nomeTipoOggetto,
             BigDecimal idTipoOggetto, BigDecimal idOggetto) {
-        List<LogEventoByScript> l = sacerLogHelper.getLogEventoScriptByTipoOggettoIdLocked(idTipoOggetto, idOggetto);
-        if (l != null && l.size() > 0) {
+        List<LogEventoByScript> eventoList = sacerLogHelper.getLogEventoScriptByTipoOggettoIdLocked(idTipoOggetto,
+                idOggetto);
+        if (eventoList != null && !eventoList.isEmpty()) {
             /*
              * Se l'ID di transazione viene fornito dall'esterno usa quello altrimenti ne ricava uno nuovo dalla
              * sequence su DB.
@@ -337,7 +291,7 @@ public class SacerLogEjb {
 
             TransactionLogContext ctxEffettivo;
 
-            for (LogEventoByScript logEventoByScript : l) {
+            for (LogEventoByScript logEventoByScript : eventoList) {
                 LogVLogAgente logAgente = sacerLogHelper.getAgenteByIdAgente(logEventoByScript.getIdAgente());
                 // 29592 - recupero l'azione da loggare, che può essere riferita ad un componente sw o ad una pagina web
                 BigDecimal idAzione = logEventoByScript.getIdAzionePagina() == null
@@ -412,8 +366,8 @@ public class SacerLogEjb {
      */
     public List<LogEvento> log(TransactionLogContext ctx, String nmApplic, String nmAgente, String nmAzione,
             String nmTipoOggetto, Set<BigDecimal> idsOggetto, String nmComponente) {
-        List<LogEvento> l = new ArrayList();
-        if (idsOggetto != null && idsOggetto.size() > 0) {
+        List<LogEvento> l = new ArrayList<>();
+        if (idsOggetto != null && !idsOggetto.isEmpty()) {
             /*
              * Se l'ID di transazione viene fornito dall'esterno usa quello altrimenti ne ricava uno nuovo dalla
              * sequence su DB.
@@ -442,27 +396,27 @@ public class SacerLogEjb {
      * tipo oggetto ed una lista di ID oggetto da fotografare in futuro. Si utilizza tipicamente quando di vuole una
      * lista di oggetti da fotografare dopo che sono stati cancellati dal DB. Per fotografarli successivamente si deve
      * usare la funzione logAfter() a cui verrà passata la lista di oggetti ritornati da questa funzione.
-     * 
+     *
      * @param nmApplic contiene il nome dell'applicazione per cui si sta loggando
-     * 
+     *
      * @param agente contiene un record di LOG_V_LOG_AGENTE che è una view che consente con una UNION e join di estrarre
      * i dati dell'utente/agente oppure del componente sw/agente.
-     * 
+     *
      * @param nmAzione contiene il nome dell'azione da loggare es.: toolbar/insert
-     * 
+     *
      * @param nmTipoOggetto contiene il del tipo oggetto che si sta loggando
-     * 
+     *
      * @param idOggetto contiene la chiave primaria dell'entità che si sta loggando
-     * 
+     *
      * @param nmComponente contiene il nome del componente che sta logganto come ad esempio una pagina web (es.:
      * /amministrazione/loginUtente) oppure un nome di un componente software come un job
-     * 
+     *
      * @param tipoRuoloPremisAgenteEvento il ruolo_agente_evento da mettere nella tabella LOG_AGENTE_EVENTO. Se non
      * viene valorizzato imposta di default "implementer"
-     * 
+     *
      * @param tipoRuoloPremisEventoOggetto il ruolo_oggetto_evento da mettere nella tabella LOG_OGGETTO_EVENTO. Se non
      * viene valorizzato imposta di default "outcome"
-     * 
+     *
      * @return List<ObjectsToLogBefore> Unalista di ObjectsToLogBefore. Un ObjectsToLogBefore contiene il nome del tipo
      * di oggetto ed una lista di idOggetto.
      */
@@ -470,18 +424,14 @@ public class SacerLogEjb {
             String nmAzione, String nmTipoOggetto, BigDecimal idOggetto, String nmComponente) {
 
         if (ctx == null) {
-            throw new RuntimeException(ERR_MSG_ID_TRANSAZIONE_NULLO);
+            throw SacerLogRuntimeException.builder().category(SacerLogErrorCategory.LOGGER_ERROR)
+                    .message(ERR_MSG_ID_TRANSAZIONE_NULLO).build();
         }
         // LogVLogAgente agente = sacerLogHelper.getAgenteByNomeAgente(nmAgente);
         List<ObjectsToLogBefore> listaOggettiDaLoggare = null;
         // verifica se il logging e' abilitato sulla tabella dei parametri dell'applicazione
         if (sacerLogHelper.isLoggingEnabled() || sacerLogHelper.isLoggingEnabledForThisNomeAzione(nmAzione)) {
             // Gestione defaults
-            // tipoRuoloPremisAgenteEvento = tipoRuoloPremisAgenteEvento == null ?
-            // PremisEnums.TipoAgenteEvento.IMPLEMENTER : tipoRuoloPremisAgenteEvento;
-            // tipoRuoloPremisEventoOggetto = tipoRuoloPremisEventoOggetto == null ?
-            // PremisEnums.TipoEventoOggetto.OUTCOME : tipoRuoloPremisEventoOggetto;
-
             AplVLogTiEvnConOrigine tipoConOrigine = sacerLogHelper.getTipoEventoByApplicFinestraAzione(nmApplic,
                     nmComponente, nmAzione);
             BigDecimal idTipoEvento = tipoConOrigine.getAplVLogTiEvnConOrigineId().getIdTipoEvento();
@@ -496,8 +446,8 @@ public class SacerLogEjb {
              */
             List<AplVLogTrigTiEvnOgg> trigList = sacerLogHelper
                     .getTriggersBeforeByIdEventoOggetto(evnOgg.getIdTipoEventoOggetto());
-            if (trigList != null && trigList.size() > 0) {
-                listaOggettiDaLoggare = new ArrayList();
+            if (trigList != null && !trigList.isEmpty()) {
+                listaOggettiDaLoggare = new ArrayList<>();
                 // per ogni trigger che trova...
                 for (AplVLogTrigTiEvnOgg trigger : trigList) {
                     /*
@@ -505,9 +455,9 @@ public class SacerLogEjb {
                      * esempio l'idOggetto potrebbe essere quello del TipoUD e la select degli oggetti estrae per questo
                      * TipoUD tutti i Registri collegati
                      */
-                    List<BigDecimal> l = sacerLogHelper.findAllObjectIdFromTrigger(trigger.getBlQueryTipoOggettoSel(),
-                            idOggetto);
-                    if (l != null && l.size() > 0) {
+                    List<BigDecimal> idsList = sacerLogHelper
+                            .findAllObjectIdFromTrigger(trigger.getBlQueryTipoOggettoSel(), idOggetto);
+                    if (idsList != null && !idsList.isEmpty()) {
                         // ...estrae il tipo oggetto ed il tipo evento degli oggetti i cui ID si estrarranno nella
                         // successiva query...
                         ObjectsToLogBefore obj = new ObjectsToLogBefore(trigger.getNmApplicTrig(),
@@ -515,7 +465,7 @@ public class SacerLogEjb {
                                 trigger.getTipoClasseEventoTrig());
                         listaOggettiDaLoggare.add(obj);
                         log.debug("TID [{}] Deve scattare il trigger per l'entita' [{}]", ctx, obj.getTipoOggetto());
-                        for (BigDecimal oggId : l) {
+                        for (BigDecimal oggId : idsList) {
                             // Inserisco l'ID dell'oggetto nell'array degli oggetti da fotografare in futuro
                             obj.getIdOggetto().add(oggId);
                         }
@@ -538,7 +488,8 @@ public class SacerLogEjb {
             List<ObjectsToLogBefore> listaOggetti, String nmComponente) {
 
         if (ctx == null) {
-            throw new RuntimeException(ERR_MSG_ID_TRANSAZIONE_NULLO);
+            throw SacerLogRuntimeException.builder().category(SacerLogErrorCategory.LOGGER_ERROR)
+                    .message(ERR_MSG_ID_TRANSAZIONE_NULLO).build();
         }
         if (listaOggetti != null) {
             LogVLogAgente agente = sacerLogHelper.getAgenteByNomeAgente(nmAgente);
@@ -576,7 +527,7 @@ public class SacerLogEjb {
      * Costruisce la chiave del record prendendo tutti gli elementi della chiave e separandoli con DUE caratteri ~
      * (TILDE). Se nell'elemento c'è 'null' allora omette sia il contenuto della chiave che della tilde
      */
-    public static String getChiaveRecordFoto(String xml) {
+    public String getChiaveRecordFoto(String xml) {
         if (xml == null) {
             return null;
         }
@@ -612,65 +563,4 @@ public class SacerLogEjb {
         return chiave;
     }
 
-    /*
-     * public List<ObjectsToLogBefore> logBefore(String nmApplic, String nmAgente, String nmAzione, String
-     * nmTipoOggetto, BigDecimal idOggetto, String nmComponente, String tipoRuoloPremisAgenteEvento, String
-     * tipoRuoloPremisEventoOggetto) { LogVLogAgente agente = sacerLogHelper.getAgenteByNomeAgente(nmAgente); return
-     * logBefore(nmApplic, agente, nmAzione, nmTipoOggetto, idOggetto, nmComponente, tipoRuoloPremisAgenteEvento,
-     * tipoRuoloPremisEventoOggetto); }
-     */
-    /*
-     * public List<ObjectsToLogBefore> logBefore(String nmApplic, String nmAgente, String nmAzione, String
-     * nmTipoOggetto, BigDecimal idOggetto, String nmComponente) { LogVLogAgente agente =
-     * sacerLogHelper.getAgenteByNomeAgente(nmAgente); return logBefore(nmApplic, agente, nmAzione, nmTipoOggetto,
-     * idOggetto, nmComponente); }
-     */
-    /*
-     * Metodo di logging massivo per loggare una serie di idOggetto in un colpo solo senza idTransazione
-     */
-    /*
-     * public List<LogEvento> log(String nmApplic, String nmAgente, String nmAzione, String nmTipoOggetto,
-     * Set<BigDecimal> idsOggetto, String nmComponente) { return log(null, nmApplic, nmAgente, nmAzione, nmTipoOggetto,
-     * idsOggetto, nmComponente); }
-     */
-    /* Multiple logging */
-    /*
-     * public void log(String nmApplic, String nmAgente, String nmAzione, LogOggettoRuolo logOggettoRuolo[], String
-     * nmComponente, String tipoRuoloPremisAgenteEvento) { if (logOggettoRuolo != null) { for (LogOggettoRuolo or :
-     * logOggettoRuolo) { log(nmApplic, nmAgente, nmAzione, or.getNmTipoOggetto(), or.getIdOggetto(), nmComponente,
-     * tipoRuoloPremisAgenteEvento, or.getTiRuoloPremis()); } } }
-     * 
-     * public void log(String nmApplic, String nmAgente, String nmAzione, LogOggettoRuolo logOggettoRuolo[], String
-     * nmComponente) { if (logOggettoRuolo != null) { for (LogOggettoRuolo or : logOggettoRuolo) { log(nmApplic,
-     * nmAgente, nmAzione, or.getNmTipoOggetto(), or.getIdOggetto(), nmComponente, null, or.getTiRuoloPremis()); } } }
-     * 
-     * public void log(String nmApplic, String nmAgente, String nmAzione, LogOggettoRuolo logOggettoRuolo[]) { if
-     * (logOggettoRuolo != null) { for (LogOggettoRuolo or : logOggettoRuolo) { log(nmApplic, nmAgente, nmAzione,
-     * or.getNmTipoOggetto(), or.getIdOggetto(), null, null, or.getTiRuoloPremis()); } } }
-     */
-    /*
-     * Metodo da utilizzare per le loggate da azioni tipo azione pagina senza idTransazione
-     */
-    /*
-     * public LogEvento log(String nmApplic, String nmAgente, String nmAzione, String nmTipoOggetto, BigDecimal
-     * idOggetto, String nmComponente) { return log(null, nmApplic, nmAgente, nmAzione, nmTipoOggetto, idOggetto,
-     * nmComponente); }
-     */
-    /*
-     * Metodo da utilizzare per le loggate da azioni tipo azione pagina senza idTransazione
-     */
-    /*
-     * public LogEvento log(String nmApplic, String nmAgente, String nmAzione, String nmTipoOggetto, BigDecimal
-     * idOggetto, String nmComponente, String tipoRuoloPremisAgenteEvento, String tipoRuoloPremisEventoOggetto) { return
-     * log(null, nmApplic, nmAgente, nmAzione, nmTipoOggetto, idOggetto, nmComponente, tipoRuoloPremisAgenteEvento,
-     * tipoRuoloPremisEventoOggetto); }
-     */
-    /*
-     * Metodo in overload che passa null al corrispondente metodo precedente
-     */
-    /*
-     * public void gestisciLogEventoScript(String nomeApplicazione, String nomeTipoOggetto, BigDecimal idTipoOggetto,
-     * BigDecimal idOggetto) { gestisciLogEventoScript(null, nomeApplicazione, nomeTipoOggetto, idTipoOggetto,
-     * idOggetto); }
-     */
 }

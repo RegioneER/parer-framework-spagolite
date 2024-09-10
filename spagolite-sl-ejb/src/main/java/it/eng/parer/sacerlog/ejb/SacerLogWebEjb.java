@@ -157,11 +157,11 @@ public class SacerLogWebEjb {
             String flg2 = "0";
             /*
              * La logica di apparizione dei link per i valori troppo grandi è la seguente:
-             * 
+             *
              * Dalla vista se tipo _valore = 0 allora il valore è < 254 caratteri e quindi è un campo normale. Se tipo
              * valore = 1 il valore <=4000 caratteri ed è ancora un campo normale. Se tipo valore = 2 il valore > 4000
              * caratteri ed un CLOB.
-             * 
+             *
              * Se però nel caso in cui nel tipo_valore = 1 è presente una stringa contenente un XML allora il sistema
              * deve copiare la stringa dal campo caratteri normale a quello contenente il CLOB. Se invece non c'è un xml
              * allora il valore è considerato ancora un tipo caratteri normale ed appare il primo link.

@@ -100,10 +100,10 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
 
     /**
      * Metodo di utility che viene eseguito dopo ogni query di paginazione lazy
-     * 
+     *
      * @param list
      *            value
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */
@@ -172,7 +172,7 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
      *            riga
      * @param forceReload
      *            reload
-     * 
+     *
      * @throws EMFError
      *             eccezione generica
      */

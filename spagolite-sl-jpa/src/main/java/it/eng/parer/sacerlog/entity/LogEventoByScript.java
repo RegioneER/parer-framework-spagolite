@@ -42,7 +42,7 @@ import javax.persistence.Table;
         @NamedQuery(name = "LogEventoByScript.deleteAll", query = "DELETE FROM LogEventoByScript")
 /*
  * ,
- * 
+ *
  * @NamedQuery(name = "LogEventoByScript.findDistinctLogEventoScriptByIdApplic", query =
  * "SELECT DISTINCT l.idTipoOggetto, l.idOggetto FROM LogEventoByScript l WHERE l.idApplic = :idApplic")
  */

@@ -25,7 +25,7 @@ package it.eng.spagoLite.actions.application;
 /**
  *
  * @author Iacolucci_M
- * 
+ *
  *         Interfaccia che ogni applicazione che usa SpagoLite dovrebbe implementare per popolare l'oggetto
  *         ApplicationBaseProperties da qualsiasi fonte, tipicamente un DB
  */
