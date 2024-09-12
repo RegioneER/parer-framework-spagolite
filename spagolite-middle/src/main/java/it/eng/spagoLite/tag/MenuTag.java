@@ -119,10 +119,12 @@ public class MenuTag extends BaseSpagoLiteTag {
                 infoUtente.append("<div><label class=\"slLabel\" >");
                 infoUtente.append(nome + ": ");
                 infoUtente.append("</label>");
-                // Recupero dalla sessione il parametro linkabile da visualizzare nel menu
-                String link = (String) pageContext.getSession().getAttribute(nome + "_LINK");
-                if (link != null) {
-                    infoUtente.append(link);
+                if (nome.equals("STRUTTURA")) {
+                    String linkStrut = "<a href=\"Strutture.html?operation=loadStrutDaMenu\">" + value + "</a>";
+                    infoUtente.append(linkStrut);
+                } else if (nome.equals("VERSATORE")) {
+                    String linkVers = "<a href=\"Amministrazione.html?operation=loadVersDaMenu\">" + value + "</a>";
+                    infoUtente.append(linkVers);
                 } else {
                     infoUtente.append(value);
                 }
