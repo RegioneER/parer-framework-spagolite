@@ -85,7 +85,7 @@ public class SOAPIamLoginHandler implements SOAPHandler<SOAPMessageContext> {
                         && (passNode = passwordEl.item(0)) != null && (servizioWeb = svcn.getLocalPart()) != null) {
                     username = userNode.getFirstChild().getNodeValue();
                     password = passNode.getFirstChild().getNodeValue();
-                    WSLoginHandler.loginAndCheckAuthzIAM(username, password, servizioWeb, ipAddress, em);
+                    WSLoginHandler.loginAndCheckAuthzIAM(username, password, servizioWeb, ipAddress, em, false);
                     msgCtx.put(AuthenticationHandlerConstants.AUTHN_STAUTS, java.lang.Boolean.TRUE);
                     msgCtx.put(AuthenticationHandlerConstants.USER, username);
                     msgCtx.put(AuthenticationHandlerConstants.PWD, password);

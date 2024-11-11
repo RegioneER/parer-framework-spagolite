@@ -43,6 +43,7 @@ public class WSLoginHandler {
     private static Logger log = LoggerFactory.getLogger(WSLoginHandler.class);
 
     private static final String LOGIN_FALLITO_MSG = "Username e/o password errate/a";
+    private static final String LOGIN_FALLITO_NO_PASSWORD = "Valorizzare il campo password";
     private static final String PROBLEMA_ESTRAZIONE_APPLICAZIONE_MSG = "Problema nell'estrazione dei dati dell'applicazione";
 
     private static final String LOGIN_IP_FALLITO_MSG = "Indirizzo IP dell'utente che ha originato la richiesta non autorizzato";
@@ -111,7 +112,16 @@ public class WSLoginHandler {
         q1.setParameter("username", username);
         Query ipListQuery = em.createQuery(IP_LIST_QUERY);
         ipListQuery.setParameter("username", username);
-        return doLogin(username, password, ipAddress, q1, ipListQuery, null);
+        return doLogin(username, password, ipAddress, q1, ipListQuery, null, false);
+    }
+
+    public static boolean login(String username, String password, String ipAddress, EntityManager em, boolean isOAuth2)
+            throws AuthWSException {
+        Query q1 = em.createQuery(LOGIN_QUERY);
+        q1.setParameter("username", username);
+        Query ipListQuery = em.createQuery(IP_LIST_QUERY);
+        ipListQuery.setParameter("username", username);
+        return doLogin(username, password, ipAddress, q1, ipListQuery, null, isOAuth2);
     }
 
     /**
@@ -127,7 +137,7 @@ public class WSLoginHandler {
         q1.setParameter("username", certCommonName);
         // Nel parametro username passa il common name che eventualmente viene usato
         // nel messaggio di errore nel caso l'utente non esistesse
-        return doLogin(certCommonName, null, null, q1, null, certCommonName);
+        return doLogin(certCommonName, null, null, q1, null, certCommonName, false);
     }
 
     /**
@@ -151,7 +161,7 @@ public class WSLoginHandler {
      *             eccezione lanciata se l'utente non è autorizzato
      */
     public static boolean loginAndCheckAuthzAtLeastOneOrganiz(String username, String password, String servizioWeb,
-            String ipAddress, EntityManager em) throws AuthWSException {
+            String ipAddress, EntityManager em, boolean isOAuth2) throws AuthWSException {
         Query q1 = em.createQuery(LOGIN_QUERY);
         q1.setParameter("username", username);
         Query q2 = em.createQuery(AT_LEAST_ONE_AUTH_QUERY);
@@ -159,7 +169,7 @@ public class WSLoginHandler {
         q2.setParameter("servizioWeb", servizioWeb);
         Query ipListQuery = em.createQuery(IP_LIST_QUERY);
         ipListQuery.setParameter("username", username);
-        return doLoginAndCheckAuthz(username, password, null, servizioWeb, ipAddress, q1, q2, ipListQuery);
+        return doLoginAndCheckAuthz(username, password, null, servizioWeb, ipAddress, q1, q2, ipListQuery, isOAuth2);
     }
 
     /**
@@ -182,7 +192,7 @@ public class WSLoginHandler {
      *             eccezione lanciata se l'utente non è autorizzato
      */
     public static boolean loginAndCheckAuthzIAM(String username, String password, String servizioWeb, String ipAddress,
-            EntityManager em) throws AuthWSException {
+            EntityManager em, boolean isOAuth2) throws AuthWSException {
         Query q1 = em.createQuery(IAM_LOGIN_QUERY);
         q1.setParameter("username", username);
         Query q2 = em.createQuery(IAM_AUTH_QUERY);
@@ -190,7 +200,7 @@ public class WSLoginHandler {
         q2.setParameter("servizioWeb", servizioWeb);
         Query ipListQuery = em.createQuery(IAM_IP_LIST_QUERY);
         ipListQuery.setParameter("username", username);
-        return doLoginAndCheckAuthz(username, password, null, servizioWeb, ipAddress, q1, q2, ipListQuery);
+        return doLoginAndCheckAuthz(username, password, null, servizioWeb, ipAddress, q1, q2, ipListQuery, isOAuth2);
     }
 
     private static boolean doCheckAuthz(String username, Integer idOrganiz, String servizioWeb, Query q2)
@@ -210,7 +220,7 @@ public class WSLoginHandler {
     }
 
     private static boolean doLogin(String username, String password, String ipAddress, Query q1, Query ipListQuery,
-            String commonName) throws AuthWSException {
+            String commonName, boolean isOAuth2) throws AuthWSException {
         Object res[];
         try {
             res = (Object[]) q1.getSingleResult();
@@ -254,6 +264,12 @@ public class WSLoginHandler {
                             throw new AuthWSException(AuthWSException.CodiceErrore.LOGIN_FALLITO, LOGIN_FALLITO_MSG);
                         }
                     }
+                } else if (!isOAuth2) {
+                    log.warn("Login failed for user: " + username);
+                    throw new AuthWSException(AuthWSException.CodiceErrore.LOGIN_FALLITO, LOGIN_FALLITO_MSG);
+                } else {
+                    log.warn("Login failed for user: " + username);
+                    throw new AuthWSException(AuthWSException.CodiceErrore.LOGIN_FALLITO, LOGIN_FALLITO_NO_PASSWORD);
                 }
 
                 if (ipCheck) {
@@ -281,8 +297,8 @@ public class WSLoginHandler {
     }
 
     private static boolean doLoginAndCheckAuthz(String username, String password, Integer idOrganiz, String servizioWeb,
-            String ipAddress, Query q1, Query q2, Query ipListQuery) throws AuthWSException {
-        doLogin(username, password, ipAddress, q1, ipListQuery, null);
+            String ipAddress, Query q1, Query q2, Query ipListQuery, boolean isOAuth2) throws AuthWSException {
+        doLogin(username, password, ipAddress, q1, ipListQuery, null, isOAuth2);
         doCheckAuthz(username, idOrganiz, servizioWeb, q2);
         return true;
 
