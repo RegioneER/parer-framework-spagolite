@@ -4,7 +4,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>6.15.2-SNAPSHOT</version>
+        <version>6.15.3-SNAPSHOT</version>
     </parent>
     <artifactId>spagofat-timer-wrapper-ejb</artifactId>
     <name>Spagolite Timer wrapper - ejb</name>
