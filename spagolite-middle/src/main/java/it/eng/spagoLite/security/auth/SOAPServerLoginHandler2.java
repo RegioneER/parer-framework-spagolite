@@ -86,7 +86,8 @@ public class SOAPServerLoginHandler2 implements SOAPHandler<SOAPMessageContext> 
                         && (passNode = passwordEl.item(0)) != null && (servizioWeb = svcn.getLocalPart()) != null) {
                     username = userNode.getFirstChild().getNodeValue();
                     password = passNode.getFirstChild().getNodeValue();
-                    WSLoginHandler.loginAndCheckAuthzAtLeastOneOrganiz(username, password, servizioWeb, ipAddress, em, false);
+                    WSLoginHandler.loginAndCheckAuthzAtLeastOneOrganiz(username, password, servizioWeb, ipAddress, em,
+                            false);
                     msgCtx.put(AuthenticationHandlerConstants.AUTHN_STAUTS, java.lang.Boolean.TRUE);
                     msgCtx.put(AuthenticationHandlerConstants.USER, username);
                     msgCtx.put(AuthenticationHandlerConstants.PWD, password);
