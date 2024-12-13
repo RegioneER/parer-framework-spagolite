@@ -17,8 +17,6 @@
 
 package it.eng.spagoLite.security.exception;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.ws.ProtocolException;
 import javax.xml.ws.WebFault;
 
 @WebFault(name = "AuthWSException", faultBean = "SOAPFaultInfo")

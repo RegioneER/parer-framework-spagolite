@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spagofat</artifactId>
-    <version>6.15.3-SNAPSHOT</version>
+    <version>6.16.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Spagolite</name>
     <description>Framework utilizzato dalle applicazioni web, si tratta di uno strato software comune contenente anche le dipendenze di terze parti ed ereditato come bom.</description>
@@ -19,31 +19,29 @@
             <url>https://maven.pkg.github.com/RegioneER/parer-framework-parerpom</url>            
        </repository>     
     </repositories>
-
-    <parent>
-        <groupId>it.eng.parer</groupId>
-        <artifactId>parer-pom</artifactId>
-        <version>6.4.1</version>
-    </parent>
-
+	<parent>
+		<groupId>it.eng.parer</groupId>
+		<artifactId>parer-pom</artifactId>
+		<version>6.5.0</version>
+	</parent>
 <scm>
         <developerConnection>scm:git:https://github.com/RegioneER/parer-framework-spagolite.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- Javadoc skipped by default (temporaneo) -->
+		<!-- Javadoc skipped by default (temporaneo) -->
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <sonar.projectVersion>${project.version}</sonar.projectVersion>
-        <!-- Hibernate ORM -->
-        <hibernate-core-version>5.3.20.Final-redhat-00001</hibernate-core-version>
-        <hibernate-validator-version>6.0.22.Final-redhat-00002</hibernate-validator-version>	
-        <hibernate-jpamodelgen-version>5.6.14.Final-redhat-00001</hibernate-jpamodelgen-version>
+		<!-- Hibernate ORM -->
+        <hibernate-core-version>5.3.36.Final-redhat-00001</hibernate-core-version>
+        <hibernate-validator-version>6.0.23.Final-redhat-00001</hibernate-validator-version>	
+        <hibernate-jpamodelgen-version>5.3.36.Final-redhat-00001</hibernate-jpamodelgen-version>
         <dom4j.version>2.1.4</dom4j.version>
         <keycloak-filter.version>24.0.5</keycloak-filter.version>
         <xml-apis.version>1.4.01</xml-apis.version>
-        <xmlbeans.version>5.1.1</xmlbeans.version>
-        <!-- webjars (framework spago) -->
+        <xmlbeans.version>5.2.1</xmlbeans.version>
+		<!-- webjars (framework spago) -->
         <jquery.version>3.7.1</jquery.version>
         <jquery-ui.version>1.13.3</jquery-ui.version>
         <jstree.version>3.3.8</jstree.version>
@@ -52,17 +50,18 @@
         <font-awesome.version>6.4.0</font-awesome.version>
         <highlightjs.version>11.5.0</highlightjs.version>
         <highlightjs-line-numbers.js.version>2.8.0</highlightjs-line-numbers.js.version>
-        <!-- MIT project forked from original: https://github.com/sinattieng/highlightjs-badgejs -->
+		<!-- MIT project forked from original: https://github.com/sinattieng/highlightjs-badgejs -->
         <highlightjs-badgejs.version>0.0.5</highlightjs-badgejs.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <velocity-engine-core.version>2.3</velocity-engine-core.version>
         <javax.activation.version>1.2.0</javax.activation.version>
-        <junit-jupiter.version>5.10.3</junit-jupiter.version>      
+        <junit-jupiter.version>5.10.3</junit-jupiter.version>     
+        <log4j.version>2.23.1</log4j.version> 
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- Progetti del framework -->
+			<!-- Progetti del framework -->
             <dependency>
                 <groupId>it.eng.parer</groupId>
                 <artifactId>spagofat-core</artifactId>
@@ -93,7 +92,7 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- Progetti che gestiscono la componente integration (ex SacerIam integration) -->
+			<!-- Progetti che gestiscono la componente integration (ex SacerIam integration) -->
             <dependency>
                 <groupId>it.eng.parer</groupId>
                 <artifactId>spagofat-si-client</artifactId>
@@ -118,7 +117,7 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- Progetti che gestiscono il log di audit (ex Sacerlog) -->
+			<!-- Progetti che gestiscono il log di audit (ex Sacerlog) -->
             <dependency>
                 <groupId>it.eng.parer</groupId>
                 <artifactId>spagofat-sl-jpa</artifactId>
@@ -148,7 +147,7 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- wrapper per i timer in cluster su jboss -->
+			<!-- wrapper per i timer in cluster su jboss -->
             <dependency>
                 <groupId>it.eng.parer</groupId>
                 <artifactId>spagofat-timer-wrapper-common</artifactId>
@@ -161,8 +160,8 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- Third party libraries -->
-            <!-- Spring -->
+			<!-- Third party libraries -->
+			<!-- Spring -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
@@ -263,7 +262,7 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!-- Altro -->
+			<!-- Altro -->
 			<dependency>
 			    <groupId>org.apache.velocity</groupId>
 			    <artifactId>velocity-engine-core</artifactId>
@@ -303,33 +302,19 @@
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
                 <version>${httpclient.version}</version>
-            </dependency>            
-            <!-- XML -->
-			<dependency>
-				<groupId>org.apache.santuario</groupId>
-				<artifactId>xmlsec</artifactId>
-				<version>${xmlsec.version}</version>
-			</dependency>
-
-			<!--JDK 11 -->
-			<!-- JAXB -->
-            <dependency>
-                <groupId>javax.xml.bind</groupId>
-                <artifactId>jaxb-api</artifactId>
-                <version>${jaxb.version}</version>
             </dependency>
-			<!-- JAX-WS -->
+			<!-- XML -->
             <dependency>
-                <groupId>javax.xml.ws</groupId>
-                <artifactId>jaxws-api</artifactId>
-                <version>${jaxws-api.version}</version>
+                <groupId>org.apache.santuario</groupId>
+                <artifactId>xmlsec</artifactId>
+                <version>${xmlsec.version}</version>
             </dependency>
 			<!-- Activation -->
-			<dependency>
-				<groupId>com.sun.activation</groupId>
-				<artifactId>javax.activation</artifactId>
-				<version>${javax.activation.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>com.sun.activation</groupId>
+                <artifactId>javax.activation</artifactId>
+                <version>${javax.activation.version}</version>
+            </dependency>
 
 			<!-- Servlet API -->
             <dependency>
@@ -339,16 +324,14 @@
             </dependency>
 
 			<!-- JBoss -->
+			<!-- 
+                Utilizzo del BOM per JBoss EAP 7.4 (jboss-eap-jakartaee8),
+                che gestisce le dipendenze per Jakarta EE 8 in JBoss EAP 7.4.
+            -->
             <dependency>
-                <groupId>org.jboss.spec</groupId>
-                <artifactId>jboss-jakartaee-8.0</artifactId>
-                <type>pom</type>
-                <version>${jboss-jakartaee-8.0.version}</version>
-            </dependency>
-             <dependency>
                 <groupId>org.jboss.bom</groupId>
-                <artifactId>jboss-eap-jakartaee8-with-tools</artifactId>
-                <version>${jboss-eap-jakartaee8-with-tools.version}</version>
+                <artifactId>jboss-eap-jakartaee8</artifactId>
+                <version>${version.bom}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -368,36 +351,36 @@
                 <artifactId>commons-net</artifactId>
                 <version>${commons-net.version}</version>
             </dependency>
-			<dependency>
-				<groupId>commons-beanutils</groupId>
-				<artifactId>commons-beanutils</artifactId>
-				<version>${commons-beanutils.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
+            </dependency>
 			<!-- Hibernate -->
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-core</artifactId>
-				<version>${hibernate-core-version}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-entitymanager</artifactId>
-				<version>${hibernate-core-version}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-                <groupId>org.hibernate.validator</groupId>
-				<artifactId>hibernate-validator</artifactId>
-				<scope>provided</scope>
-				<version>${hibernate-validator-version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-jpamodelgen</artifactId>
-				<version>${hibernate-jpamodelgen-version}</version>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate-core-version}</version>
                 <scope>provided</scope>
-			</dependency>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate-core-version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <scope>provided</scope>
+                <version>${hibernate-validator-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-jpamodelgen</artifactId>
+                <version>${hibernate-jpamodelgen-version}</version>
+                <scope>provided</scope>
+            </dependency>
 
 			<!-- Altro -->
             <dependency>
@@ -540,7 +523,7 @@
     <build>
         <pluginManagement>
             <plugins>
-                <!-- OWASP -->
+				<!-- OWASP -->
                 <plugin>
                     <groupId>org.owasp</groupId>
                     <artifactId>dependency-check-maven</artifactId>
@@ -555,7 +538,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
-                    <!-- Esclusione dai javadoc delle classi generate da xmlbeans -->
+					<!-- Esclusione dai javadoc delle classi generate da xmlbeans -->
                     <excludePackageNames>it.eng.spagoLite.spagoLite.*:it.eng.spagoLite.xmlbean.*:it.eng.integriam.*</excludePackageNames>
                 </configuration>
             </plugin>
@@ -567,16 +550,16 @@
         <module>spagolite-webresources</module>
         <module>spagolite-paginator-gf</module>
         <module>spagolite-paginator-ejb</module>
-        <!-- Saceriam integration -->
+		<!-- Saceriam integration -->
         <module>spagolite-si-server</module>
         <module>spagolite-si-client</module>
         <module>spagolite-si-util</module>
-        <!-- SacerLog -->
+		<!-- SacerLog -->
         <module>spagolite-sl-jpa</module>
         <module>spagolite-sl-slg</module>
         <module>spagolite-sl-ejb</module>
         <module>spagolite-sl-web</module>
-        <!-- Jboss Timer Wrapper -->
+		<!-- Jboss Timer Wrapper -->
         <module>spagolite-timer-wrapper-common</module>
         <module>spagolite-timer-wrapper-ejb</module>
     </modules>
