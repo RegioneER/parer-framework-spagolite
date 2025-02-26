@@ -41,7 +41,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * Handler SOAP per un WS Server generico: effettua il login (autenticazione con user/password) dell'utente e verifica
- * che l'utente sia autorizzato ad eseguire il servizio su cui l'handler è applicato per almeno un'organizzazione. E'
+ * che l'utente sia autorizzato ad eseguire il servizio su cui l'handler ï¿½ applicato per almeno un'organizzazione. E'
  * utile per i servizi che sono trasversali alle organizzazioni. Si aspetta che i campi user e password siano
  * nell'header come da standard ws security.
  *
