@@ -1,4 +1,7 @@
-## 6.16.0 (09-12-2024)
+## 6.17.0 (24-03-2025)
+
+### Bugfix: 1
+- [#34169](https://parermine.regione.emilia-romagna.it/issues/34169) Correzione chiamata help online
 
 ### Novità: 1
-- [#33950](https://parermine.regione.emilia-romagna.it/issues/33950) Aggiornamento alle ultime versioni librerie jakarata-ee8 per jboss 7.4
+- [#33070](https://parermine.regione.emilia-romagna.it/issues/33070) Navigazione tra risultati di ricerca

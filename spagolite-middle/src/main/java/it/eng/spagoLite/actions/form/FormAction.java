@@ -427,6 +427,10 @@ public abstract class FormAction<T extends Form, U extends IUser<?>> extends Act
         String codiceMenu = this.getRequest().getParameter("codiceMenuHelp");
         String tipoHelpInfoPrivacy = this.getRequest().getParameter("tipoHelpInfoPrivacy");
 
+        if (codiceMenu == null) {
+            codiceMenu = "";
+        }
+
         String tiHelpOnLine = "";
 
         if (tipoHelpInfoPrivacy != null) {
@@ -435,9 +439,6 @@ public abstract class FormAction<T extends Form, U extends IUser<?>> extends Act
             tiHelpOnLine = codiceMenu.equals("") ? appProps.CONST_HELP_PAGINA : appProps.CONST_HELP_RICERCA_DIPS;
         }
 
-        if (codiceMenu == null) {
-            codiceMenu = "";
-        }
         URI targetUrl = UriComponentsBuilder.fromHttpUrl(appProps.getUrlHelp())
                 .queryParam("nmUserId", appProps.getApplicationUserName())
                 .queryParam("cdPwd", appProps.getApplicationPassword())

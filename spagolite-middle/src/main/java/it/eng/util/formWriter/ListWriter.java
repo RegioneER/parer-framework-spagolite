@@ -50,11 +50,13 @@ public class ListWriter {
                 : " , \"" + list.getVisibilityProperty() + "\"";
         String filterValidRecords = list.isSetFilterValidRecords() ? String.valueOf(list.getFilterValidRecords())
                 : "null";
+        String goToPageNavigation = list.isSetGoToPageNavigation() ? String.valueOf(list.getGoToPageNavigation())
+                : "null";
         String excelFileName = list.isSetExcelFileName() ? String.valueOf(list.getExcelFileName()) : "null";
         writer.write("      super(null, NAME, DESCRIPTION,Status.view,DESCRIPTION,null,false,"
                 + list.isSetHideDetailButton() + "," + list.isSetHideUpdateButton() + "," + list.isSetHideDeleteButton()
                 + "," + list.isSetHideInsertButton() + "," + list.isSetEditable() + visibility + ","
-                + filterValidRecords + "," + excelFileName + ");\n");
+                + filterValidRecords + "," + excelFileName + "," + goToPageNavigation + ");\n");
 
         // writer.write(" super(null, NAME, DESCRIPTION);\n");
         if (list.isSetEditable()) {

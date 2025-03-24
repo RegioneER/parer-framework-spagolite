@@ -189,8 +189,9 @@
                 <attribute name="masterList" type="boolean"></attribute>
                 <attribute name="readOnly" type="boolean"></attribute>
                 <attribute name="visibilityProperty" type="string"></attribute>
-                <attribute name="filterValidRecords" type="boolean"></attribute>
+                <attribute name="filterValidRecords" type="boolean"></attribute>                
                 <attribute name="excelFileName" type="string"></attribute>
+                <attribute name="goToPageNavigation" type="boolean"></attribute>
             </extension>
         </complexContent>
     </complexType>

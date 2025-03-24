@@ -217,6 +217,20 @@ public class AbstractListNavBarTag extends AbstractListTag {
         }
     }
 
+    // MEV #33070
+    protected void writeGoToPage() throws JspException {
+        BaseTableInterface<?> table = getComponent().getTable();
+        if (table != null) {
+            if (!modificainCorso() && table.getPageSize() > 0 && table.getCurrentPageIndex() <= table.getPages()) {
+                writeln(getSubmit(ListAction.NE_GOTO_PAGE, GOTOPAGE_STYLE, "Vai alla pagina", "",
+                        table.getCurrentRowIndex(), false));
+
+                writeln("<input type=\"text\" size=\"4px\" style=\"height:15px; text-decoration: none;\" name=\"numPag"
+                        + getComponent().getName() + "\" >");
+            }
+        }
+    }
+
     protected void writeExcel() throws JspException {
         BaseTableInterface<?> table = getComponent().getTable();
         if (table != null && table.getPageSize() > 0 && table.size() > 0) {
@@ -365,6 +379,7 @@ public class AbstractListNavBarTag extends AbstractListTag {
             writePrevPage();
             writePrev();
             writeNext();
+            writeGoToPage();
             writeNextPage();
             writeLast();
             writePageCounter();

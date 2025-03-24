@@ -56,6 +56,8 @@ public class List<T extends SingleValueField<?>> extends BaseElements<T> {
     private Boolean filterValidRecords;
     private String excelFileName;
     private Fields genericFields;
+    // MEV 33070
+    private Boolean goToPageNavigation;
 
     private ButtonList buttonList;
 
@@ -83,29 +85,38 @@ public class List<T extends SingleValueField<?>> extends BaseElements<T> {
 
     public List(Component parent, String name, String description, Status status, String title,
             BaseTableInterface<?> table, boolean hidden, boolean hideDetailButton, boolean hideUpdateButton,
-            boolean hideDeleteButton, boolean hideInsertButton, boolean editable) {
+            boolean hideDeleteButton, boolean hideInsertButton, boolean editable) { // 12
         this(parent, name, description, status, title, table, hidden, hideDetailButton, hideUpdateButton,
                 hideDeleteButton, hideInsertButton, editable, null);
     }
 
     public List(Component parent, String name, String description, Status status, String title,
             BaseTableInterface<?> table, boolean hidden, boolean hideDetailButton, boolean hideUpdateButton,
-            boolean hideDeleteButton, boolean hideInsertButton, String visibilityProperty) {
+            boolean hideDeleteButton, boolean hideInsertButton, String visibilityProperty) { // 12
         this(parent, name, description, status, title, table, hidden, hideDetailButton, hideUpdateButton,
-                hideDeleteButton, hideInsertButton, false, visibilityProperty, null, null);
+                hideDeleteButton, hideInsertButton, false, visibilityProperty, null, null, null);
     }
 
     public List(Component parent, String name, String description, Status status, String title,
             BaseTableInterface<?> table, boolean hidden, boolean hideDetailButton, boolean hideUpdateButton,
             boolean hideDeleteButton, boolean hideInsertButton, boolean editable, String visibilityProperty) {
         this(parent, name, description, status, title, table, hidden, hideDetailButton, hideUpdateButton,
-                hideDeleteButton, hideInsertButton, editable, visibilityProperty, null, null);
+                hideDeleteButton, hideInsertButton, editable, visibilityProperty, null, null, null); // 13
     }
 
     public List(Component parent, String name, String description, Status status, String title,
             BaseTableInterface<?> table, boolean hidden, boolean hideDetailButton, boolean hideUpdateButton,
             boolean hideDeleteButton, boolean hideInsertButton, boolean editable, String visibilityProperty,
-            Boolean filterValidRecords, String excelFileName) {
+            Boolean filterValidRecords, String excelFileName) { // 15
+        this(parent, name, description, status, title, table, hidden, hideDetailButton, hideUpdateButton,
+                hideDeleteButton, hideInsertButton, editable, visibilityProperty, filterValidRecords, excelFileName,
+                null); // 13
+    }
+
+    public List(Component parent, String name, String description, Status status, String title,
+            BaseTableInterface<?> table, boolean hidden, boolean hideDetailButton, boolean hideUpdateButton,
+            boolean hideDeleteButton, boolean hideInsertButton, boolean editable, String visibilityProperty,
+            Boolean filterValidRecords, String excelFileName, Boolean goToPageNavigation) { // 16
         super(parent, name, description);
         this.hideDetailButton = hideDetailButton;
         this.hideUpdateButton = hideUpdateButton;
@@ -124,6 +135,8 @@ public class List<T extends SingleValueField<?>> extends BaseElements<T> {
         this.visibilityProperty = visibilityProperty;
         this.filterValidRecords = filterValidRecords;
         this.excelFileName = excelFileName;
+        // MEV 33070
+        this.goToPageNavigation = goToPageNavigation;
     }
 
     public BaseTableInterface<?> getTable() {
@@ -435,6 +448,16 @@ public class List<T extends SingleValueField<?>> extends BaseElements<T> {
     public void setFilterValidRecords(Boolean filterValidRecords) {
         this.filterValidRecords = filterValidRecords;
     }
+
+    // MEV 33070
+    public Boolean isGoToPageNavigation() {
+        return goToPageNavigation;
+    }
+
+    public void setGoToPageNavigation(Boolean goToPageNavigation) {
+        this.goToPageNavigation = goToPageNavigation;
+    }
+    // end MEV 33070
 
     public String getExcelFileName() {
         return excelFileName;

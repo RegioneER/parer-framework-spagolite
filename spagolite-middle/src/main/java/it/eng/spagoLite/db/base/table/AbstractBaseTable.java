@@ -76,11 +76,18 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
         setCurrentRowIndex(getCurrentRowIndex() + 1);
     }
 
+    // MEV #33070 - metodo modificato
     public void goPage(int page) {
-        int capoNextPag = (int) (Math.floor(this.rigaCorrente / getPageSize()) + page) * getPageSize();
-        if (getPageSize() > 0) {
-            this.rigaCorrente = capoNextPag < this.size() ? capoNextPag : getFirstRowPageIndex();
-        }
+        // Va settato l'indice della pagina corrente su cui andrò ad atterrare che varia a seconda che la chiamata
+        // a questo metodo provenga da una lista paginata o meno.
+        // Es. per una lista paginata lazy con 100 record per pagina, passando da pagina 4 a pagina 5 significa
+        // atterrare sulla rigaCorrente 100 (indice 0
+        // pagina 1, 100 pagina 2, 200 pagine 3, 0 pagina 4, 100 pagina 5)
+        // Es. per una lista non paginata lazy con 10 record per pagina, passando da pagina 31 a pagina 32 significa
+        // atterrare sulla rica 310 (non avendo blocchi da 300)
+        int capoNextPag = (int) (page - 1) * getPageSize();
+        int numeroBlocco = (int) Math.floor(capoNextPag / this.size());
+        this.rigaCorrente = capoNextPag - (this.size() * numeroBlocco);
     }
 
     public void nextPage() {

@@ -62,6 +62,8 @@ public class AbstractListTag extends BaseFormTag<List<SingleValueField<?>>> {
             + "/img/toolBar/next.png\" title=\"Vai record successivo\" alt=\"Vai record successivo\" style=\"vertical-align:middle\"/>";
     protected static final String NEXT_PAGE = "<img src=\"" + CONTEXTPATH
             + "/img/toolBar/nextPage.png\" title=\"Vai alla pagina successiva\" alt=\"Vai alla pagina successiva\" />";
+    protected static final String GO_TO_PAGE = "<img src=\"" + CONTEXTPATH
+            + "/img/toolBar/vaiAPag.png\" title=\"Vai alla pagina\" alt=\"Vai alla pagina\" />";
     protected static final String LAST = "<img src=\"" + CONTEXTPATH
             + "/img/toolBar/last.png\" title=\"Vai all'ultimo record\" alt=\"Vai all'ultimo record\" />";
 
@@ -98,6 +100,7 @@ public class AbstractListTag extends BaseFormTag<List<SingleValueField<?>>> {
     protected static final String DELETE_STYLE = "crud delete";
     protected static final String SELECT_STYLE = "crud select";
     protected static final String DESELECT_STYLE = "crud deselect";
+    protected static final String GOTOPAGE_STYLE = "navBar goto";
 
     private String mainNavTable = "";
 
