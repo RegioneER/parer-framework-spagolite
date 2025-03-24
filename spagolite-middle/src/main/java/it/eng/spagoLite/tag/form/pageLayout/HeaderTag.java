@@ -17,14 +17,14 @@
 
 package it.eng.spagoLite.tag.form.pageLayout;
 
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_1_ALT;
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_1_TITLE;
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_1_URL;
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_APP_ALT;
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_APP_TITLE;
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_APP_URL;
-import static it.eng.spagoCore.configuration.ConfigProperties.URIProperty.LOGO_1_RELATIVE;
-import static it.eng.spagoCore.configuration.ConfigProperties.URIProperty.LOGO_APP_RELATIVE;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.LOGO_1_ALT;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.LOGO_1_TITLE;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.LOGO_1_URL;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.LOGO_APP_ALT;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.LOGO_APP_TITLE;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.LOGO_APP_URL;
+import static it.eng.spagoCore.ConfigProperties.URIProperty.LOGO_1_RELATIVE;
+import static it.eng.spagoCore.ConfigProperties.URIProperty.LOGO_APP_RELATIVE;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +32,7 @@ import javax.servlet.jsp.JspException;
 
 import org.apache.commons.lang3.StringUtils;
 
-import it.eng.spagoCore.configuration.ConfigSingleton;
+import it.eng.spagoCore.ConfigSingleton;
 import it.eng.spagoCore.util.JavaScript;
 import it.eng.spagoLite.tag.NewLineTag;
 import it.eng.spagoLite.tag.form.BaseTag;
@@ -109,7 +109,6 @@ public class HeaderTag extends BaseTag {
             writeln("<h2><a href=\"" + ((HttpServletResponse) pageContext.getResponse()).encodeURL("Logout.html")
                     + "\" title=\"Logout\">" + "<img style=\"padding-right: 5px;\" src=\"" + contextPath + IMG_LOGOUT
                     + "\" alt=\"Logout\" title=\"Logout\" />" + "Logout</a></h2>");
-
             writeln("</div>");
             writeln("  </div>");
         }

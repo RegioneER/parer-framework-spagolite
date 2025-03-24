@@ -17,17 +17,17 @@
 
 package it.eng.spagoLite.tag;
 
-import static it.eng.spagoCore.configuration.ConfigProperties.URIProperty.CSS_OVER_RELATIVE;
-import static it.eng.spagoCore.configuration.ConfigProperties.URIProperty.FAV_ICON_RELATIVE;
+import static it.eng.spagoCore.ConfigProperties.URIProperty.CSS_OVER_RELATIVE;
+import static it.eng.spagoCore.ConfigProperties.URIProperty.FAV_ICON_RELATIVE;
 
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.TITOLO_APPLICATIVO;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.TITOLO_APPLICATIVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
 import org.apache.commons.lang3.StringUtils;
 
-import it.eng.spagoCore.configuration.ConfigSingleton;
+import it.eng.spagoCore.ConfigSingleton;
 import it.eng.spagoCore.util.JavaScript;
 import it.eng.spagoLite.security.CsrfHelper;
 

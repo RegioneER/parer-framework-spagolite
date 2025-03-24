@@ -17,9 +17,9 @@
 
 package it.eng.spagoLite.actions.form;
 
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.DISABLE_SECURITY;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.DISABLE_SECURITY;
 
-import it.eng.spagoCore.configuration.ConfigSingleton;
+import it.eng.spagoCore.ConfigSingleton;
 import it.eng.spagoCore.error.EMFError;
 import it.eng.spagoLite.SessionManager;
 import it.eng.spagoLite.actions.ActionBase;
@@ -427,6 +427,10 @@ public abstract class FormAction<T extends Form, U extends IUser<?>> extends Act
         String codiceMenu = this.getRequest().getParameter("codiceMenuHelp");
         String tipoHelpInfoPrivacy = this.getRequest().getParameter("tipoHelpInfoPrivacy");
 
+        if (codiceMenu == null) {
+            codiceMenu = "";
+        }
+
         String tiHelpOnLine = "";
 
         if (tipoHelpInfoPrivacy != null) {
@@ -435,9 +439,6 @@ public abstract class FormAction<T extends Form, U extends IUser<?>> extends Act
             tiHelpOnLine = codiceMenu.equals("") ? appProps.CONST_HELP_PAGINA : appProps.CONST_HELP_RICERCA_DIPS;
         }
 
-        if (codiceMenu == null) {
-            codiceMenu = "";
-        }
         URI targetUrl = UriComponentsBuilder.fromHttpUrl(appProps.getUrlHelp())
                 .queryParam("nmUserId", appProps.getApplicationUserName())
                 .queryParam("cdPwd", appProps.getApplicationPassword())

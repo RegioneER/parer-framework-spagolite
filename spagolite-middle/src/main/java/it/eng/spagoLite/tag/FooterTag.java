@@ -17,16 +17,16 @@
 
 package it.eng.spagoLite.tag;
 
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_2_ALT;
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_2_TITLE;
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_2_URL;
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_3_ALT;
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_3_TITLE;
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.LOGO_3_URL;
-import static it.eng.spagoCore.configuration.ConfigProperties.URIProperty.LOGO_2_RELATIVE;
-import static it.eng.spagoCore.configuration.ConfigProperties.URIProperty.LOGO_3_RELATIVE;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.LOGO_2_ALT;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.LOGO_2_TITLE;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.LOGO_2_URL;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.LOGO_3_ALT;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.LOGO_3_TITLE;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.LOGO_3_URL;
+import static it.eng.spagoCore.ConfigProperties.URIProperty.LOGO_2_RELATIVE;
+import static it.eng.spagoCore.ConfigProperties.URIProperty.LOGO_3_RELATIVE;
 
-import it.eng.spagoCore.configuration.ConfigSingleton;
+import it.eng.spagoCore.ConfigSingleton;
 import javax.servlet.jsp.JspException;
 import org.apache.commons.lang3.StringUtils;
 

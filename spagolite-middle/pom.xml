@@ -8,34 +8,34 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>6.16.1-SNAPSHOT</version>
+        <version>7.0.0</version>
     </parent>
     <build>
         <plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>createXmlBeansDir</id>
-						<phase>generate-sources</phase>
-						<configuration>
-							<target>
-								<mkdir dir="${project.build.directory}/generated-sources/xmlbeans" />
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.xmlbeans</groupId>
-				<artifactId>xmlbeans</artifactId>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>createXmlBeansDir</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${project.build.directory}/generated-sources/xmlbeans" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.xmlbeans</groupId>
+                <artifactId>xmlbeans</artifactId>
 				<version>${xmlbeans.version}</version>
-				<executions>
-					<execution>
+                <executions>
+                    <execution>
                         <goals>
                             <goal>compile</goal>
                         </goals>
@@ -50,12 +50,12 @@
                     <name>middle</name>
                 </configuration>
                 <dependencies>
-					<dependency>
-						<groupId>org.apache.logging.log4j</groupId>
-						<artifactId>log4j-core</artifactId>
+                    <dependency>
+                        <groupId>org.apache.logging.log4j</groupId>
+                        <artifactId>log4j-core</artifactId>
 						<version>${log4j.version}</version>
-					</dependency>
-				</dependencies>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
@@ -72,28 +72,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
         </dependency> 
-        <dependency>
-            <groupId>org.springframework.security.extensions</groupId>
-            <artifactId>spring-security-saml2-core</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-httpclient</groupId>
-                    <artifactId>commons-httpclient</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-collections</groupId>
-                    <artifactId>commons-collections</artifactId>
-                </exclusion>
-                <exclusion>
-                	<groupId>xml-apis</groupId>
-                	<artifactId>xml-apis</artifactId>
-                </exclusion>
-            	<exclusion>
-            		<groupId>org.springframework</groupId>
-            		<artifactId>spring-expression</artifactId>
-            	</exclusion>
-            </exclusions>
-        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -146,7 +124,6 @@
             <artifactId>jboss-jaxb-api_2.3_spec</artifactId>
             <scope>provided</scope>
         </dependency>
-
         <!-- Jakarta SOAP with Attachments API -->
         <dependency>
             <groupId>org.jboss.spec.javax.xml.soap</groupId>
@@ -159,21 +136,20 @@
             <artifactId>jboss-jaxws-api_2.3_spec</artifactId>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-			<exclusions>
-            	<exclusion>
-            		<groupId>org.springframework</groupId>
-            		<artifactId>spring-expression</artifactId>
-            	</exclusion>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-expression</artifactId>
+                </exclusion>
             </exclusions>            
         </dependency>
         <dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-text</artifactId>
-		</dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -198,5 +174,26 @@
             <version>${slf4j.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-saml2-service-provider</artifactId>
+            <scope>provided</scope>
+        </dependency> 
+        <dependency>
+            <groupId>org.opensaml</groupId>
+            <artifactId>opensaml-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.opensaml</groupId>
+            <artifactId>opensaml-saml-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.opensaml</groupId>
+            <artifactId>opensaml-saml-impl</artifactId>
+            <scope>provided</scope>
+        </dependency>   
+               
     </dependencies>
 </project>

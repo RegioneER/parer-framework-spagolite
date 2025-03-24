@@ -312,7 +312,7 @@ public class ActionWriter {
         if (getForm().getListArray() != null && getForm().getListArray().length > 0) {
 
             String[] listOperations = new String[] { "update", "select", "delete", "postLazyLoad",
-                    "filterInactiveRecords" };
+                    "filterInactiveRecords", "goToPageNavigation" };
             for (String operation : listOperations) {
                 writeListOperationManager(operation, writer);
             }

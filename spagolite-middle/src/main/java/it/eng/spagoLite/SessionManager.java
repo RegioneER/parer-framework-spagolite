@@ -17,6 +17,7 @@
 
 package it.eng.spagoLite;
 
+import it.eng.spagoLite.security.IUser;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -28,7 +29,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import it.eng.spagoIFace.session.SessionCoreManager;
 import it.eng.spagoLite.form.Form;
 import it.eng.spagoLite.message.MessageBox;
-import it.eng.spagoLite.security.IUser;
 
 public class SessionManager extends SessionCoreManager {
 

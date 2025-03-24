@@ -18,7 +18,6 @@
 package it.eng.spagoLite.db.base.paging;
 
 import it.eng.spagoLite.db.base.BaseTableInterface;
-import it.eng.spagoLite.db.base.table.LazyListBean;
 import it.eng.spagoLite.db.base.table.LazyListInterface;
 
 public abstract class AbstractPaginator implements IPaginator {
@@ -69,9 +68,12 @@ public abstract class AbstractPaginator implements IPaginator {
     public BaseTableInterface<?> goPage(BaseTableInterface<?> tableBean, int page) {
         LazyListInterface llBean = tableBean.getLazyListInterface();
         int pageSize = tableBean.getPageSize();
+        // Indice da cui parte il "blocco" di 300 record alla volta... ad esempio per pagina 4, 5 e 6 il firstResult
+        // deve essere sempre 300, per pagina 7, 8 e 9 deve essere 600...
         int firstResult = (int) Math.floor((double) ((page - 1) * pageSize) / llBean.getMaxResult())
                 * llBean.getMaxResult();
-        llBean.setFirstResult(firstResult > 0 ? firstResult : 0);
+        // MEV #33070
+        llBean.setFirstResult(firstResult);
         BaseTableInterface<?> table = invoke(llBean);
         updateTableAfterInvoke(tableBean, table);
         return table;

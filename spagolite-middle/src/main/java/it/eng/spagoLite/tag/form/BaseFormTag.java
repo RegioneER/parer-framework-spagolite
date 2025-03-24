@@ -17,10 +17,10 @@
 
 package it.eng.spagoLite.tag.form;
 
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.DEBUG_AUTHORIZATION;
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.DISABLE_SECURITY;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.DEBUG_AUTHORIZATION;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.DISABLE_SECURITY;
 
-import it.eng.spagoCore.configuration.ConfigSingleton;
+import it.eng.spagoCore.ConfigSingleton;
 import javax.servlet.jsp.JspException;
 
 import it.eng.spagoLite.form.Component;

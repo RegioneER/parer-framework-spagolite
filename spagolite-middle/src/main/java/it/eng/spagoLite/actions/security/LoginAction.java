@@ -26,9 +26,11 @@ import it.eng.spagoLite.actions.ActionBase;
 import it.eng.spagoLite.security.IUser;
 import it.eng.spagoLite.security.User;
 import it.eng.spagoLite.security.auth.Authenticator;
+import javax.servlet.http.Cookie;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -40,6 +42,9 @@ import org.slf4j.LoggerFactory;
 public class LoginAction extends ActionBase {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginAction.class);
+    private static final String JSESSIONID = "JSESSIONID";
+    @Autowired
+    public String nomeApplicazione;
 
     @Resource
     private Authenticator authenticator;
@@ -82,10 +87,52 @@ public class LoginAction extends ActionBase {
             getMessageBox().addInfo("L'utente " + utente.getUsername() + " ha richiesto il logout");
             if (utente.getUserType() != null && utente.getUserType().equals(IUser.UserType.SPID_FEDERA)) {
                 logger.debug("Richiesto SAML LOCAL LOGOUT per l'utente " + IUser.UserType.SPID_FEDERA.name());
-                redirectToAction("saml/logout?local=true");
+                Cookie cookie = new Cookie("shib_idp_session", "");
+                cookie.setMaxAge(0);
+                cookie.setPath("/idp");
+                cookie.setSecure(true);
+                cookie.setHttpOnly(true);
+                getResponse().addCookie(cookie);
+
+                cookie = new Cookie(JSESSIONID, "");
+                cookie.setMaxAge(0);
+                cookie.setPath("/wayf");
+                cookie.setSecure(true);
+                cookie.setHttpOnly(true);
+                getResponse().addCookie(cookie);
+
+                cookie = new Cookie(JSESSIONID, "");
+                cookie.setMaxAge(0);
+                cookie.setPath("/idp");
+                cookie.setSecure(true);
+                cookie.setHttpOnly(true);
+                getResponse().addCookie(cookie);
+
+                cookie = new Cookie(JSESSIONID, "");
+                cookie.setMaxAge(0);
+                cookie.setPath("/" + nomeApplicazione);
+                cookie.setSecure(true);
+                cookie.setHttpOnly(true);
+                getResponse().addCookie(cookie);
+                logger.info("Nome applicazione {}", nomeApplicazione);
+
+                cookie = new Cookie("_saml_wayf_idp_", "");
+                cookie.setMaxAge(0);
+                cookie.setPath("/");
+                cookie.setSecure(true);
+                cookie.setHttpOnly(true);
+                getResponse().addCookie(cookie);
+
+                cookie = new Cookie("USENAV", "");
+                cookie.setMaxAge(0);
+                cookie.setSecure(true);
+                cookie.setHttpOnly(true);
+                getResponse().addCookie(cookie);
+
+                redirectToAction("/Logout.html?operation=success");
             } else {
                 logger.debug("Richiesto SAML GLOBAL LOGOUT");
-                redirectToAction("saml/logout/");
+                forwardToPublisher("/login/logoutGlobale");
             }
         }
     }

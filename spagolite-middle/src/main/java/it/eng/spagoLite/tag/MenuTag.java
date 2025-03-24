@@ -17,7 +17,7 @@
 
 package it.eng.spagoLite.tag;
 
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.AMBIENTE;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.AMBIENTE;
 
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -25,7 +25,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 
-import it.eng.spagoCore.configuration.ConfigSingleton;
+import it.eng.spagoCore.ConfigSingleton;
 import it.eng.spagoCore.util.JavaScript;
 import it.eng.spagoLite.security.menu.MenuEntry;
 import it.eng.spagoLite.security.menu.impl.Link;

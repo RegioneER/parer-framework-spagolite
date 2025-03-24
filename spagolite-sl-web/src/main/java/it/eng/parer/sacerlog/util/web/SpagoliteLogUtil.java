@@ -20,7 +20,7 @@ package it.eng.parer.sacerlog.util.web;
 import java.math.BigDecimal;
 
 import it.eng.parer.sacerlog.util.LogParam;
-import it.eng.spagoIFace.model.BaseController;
+import it.eng.spagoIFace.BaseController;
 import it.eng.spagoLite.ExecutionHistory;
 import it.eng.spagoLite.SessionManager;
 import it.eng.spagoLite.actions.form.FormAction;

@@ -88,6 +88,14 @@ public class ListNavBarTag extends AbstractListNavBarTag {
             writeNextPage();
             writeLast();
 
+            // MEV 33070
+            if (getComponent().isGoToPageNavigation() != null) {
+                if (getComponent().isGoToPageNavigation()) {
+                    writeGoToPage();
+                }
+            }
+            // end MEV 33070
+
             if (isNavigableRecord()) {
                 writeRecordCounter();
             } else {

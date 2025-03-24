@@ -54,9 +54,6 @@ public class LogEventoLoginUser implements Serializable {
     private String dsEmailUser;
     private String cdIDEsterno;
 
-    public LogEventoLoginUser() {
-    }
-
     @Id
     @SequenceGenerator(name = "LOG_EVENTO_LOGIN_USER_IDEVENTOLOGINUSER_GENERATOR", schema = "SACER_LOG", sequenceName = "SLOG_EVENTO_LOGIN_USER", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_EVENTO_LOGIN_USER_IDEVENTOLOGINUSER_GENERATOR")
