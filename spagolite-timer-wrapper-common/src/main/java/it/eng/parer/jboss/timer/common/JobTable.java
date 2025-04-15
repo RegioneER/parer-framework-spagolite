@@ -1,18 +1,14 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna
- * <p/>
- * This program is free software: you can redistribute it and/or modify it under the terms of
- * the GNU Affero General Public License as published by the Free Software Foundation,
- * either version 3 of the License, or (at your option) any later version.
- * <p/>
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Affero General Public License for more details.
- * <p/>
- * You should have received a copy of the GNU Affero General Public License along with this program.
- * If not, see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the License, or (at your option)
+ * any later version. <p/> This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
+ * have received a copy of the GNU Affero General Public License along with this program. If not,
+ * see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.parer.jboss.timer.common;
@@ -32,7 +28,7 @@ public interface JobTable extends Serializable {
      * Stato del timer.
      */
     public enum STATO_TIMER {
-        INATTIVO, ATTIVO, ESECUZIONE_SINGOLA
+	INATTIVO, ATTIVO, ESECUZIONE_SINGOLA
     };
 
     /**
@@ -55,8 +51,7 @@ public interface JobTable extends Serializable {
     /**
      * Primary key della tabella - setter.
      *
-     * @param idJob
-     *            id job
+     * @param idJob id job
      */
     void setIdJob(Long idJob);
 
@@ -70,8 +65,7 @@ public interface JobTable extends Serializable {
     /**
      * Nome job - setter.
      *
-     * @param nmJob
-     *            nome del job
+     * @param nmJob nome del job
      */
     void setNmJob(String nmJob);
 
@@ -85,8 +79,7 @@ public interface JobTable extends Serializable {
     /**
      * Descrizione job - setter.
      *
-     * @param dsJob
-     *            descrizione del job
+     * @param dsJob descrizione del job
      */
     void setDsJob(String dsJob);
 
@@ -100,8 +93,7 @@ public interface JobTable extends Serializable {
     /**
      * Nome ambito - setter.
      *
-     * @param nmAmbito
-     *            nome dell'ambito
+     * @param nmAmbito nome dell'ambito
      */
     void setNmAmbito(String nmAmbito);
 
@@ -115,8 +107,7 @@ public interface JobTable extends Serializable {
     /**
      * Numero ordine esecuzione - setter.
      *
-     * @param niOrdExec
-     *            numero ordine
+     * @param niOrdExec numero ordine
      */
     void setNiOrdExec(BigDecimal niOrdExec);
 
@@ -130,8 +121,7 @@ public interface JobTable extends Serializable {
     /**
      * Tipologia di schedulazione job (utilizzato per ZABBIX) - setter.
      *
-     * @param tiSchedJob
-     *            tipologia di schedulazione
+     * @param tiSchedJob tipologia di schedulazione
      */
     void setTiSchedJob(String tiSchedJob);
 
@@ -150,8 +140,7 @@ public interface JobTable extends Serializable {
     /**
      * Scopo del job - setter.
      *
-     * @param tiScopoJob
-     *            codice scopo del job
+     * @param tiScopoJob codice scopo del job
      */
     void setTiScopoJob(String tiScopoJob);
 
@@ -165,13 +154,13 @@ public interface JobTable extends Serializable {
     /**
      * Nodo del cluster assegnato per il job - setter.
      *
-     * @param nmNodoAssegnato
-     *            nodo assegnato
+     * @param nmNodoAssegnato nodo assegnato
      */
     void setNmNodoAssegnato(String nmNodoAssegnato);
 
     /**
-     * Stato del timer - getter. Il timer può assumere uno stato tra quelli definiti in {@link STATO_TIMER}
+     * Stato del timer - getter. Il timer può assumere uno stato tra quelli definiti in
+     * {@link STATO_TIMER}
      *
      * @return stato del timer
      */
@@ -180,8 +169,7 @@ public interface JobTable extends Serializable {
     /**
      * Stato del timer - setter.
      *
-     * @param tiStatoTimer
-     *            stato del timer
+     * @param tiStatoTimer stato del timer
      */
     void setTiStatoTimer(String tiStatoTimer);
 
@@ -195,8 +183,7 @@ public interface JobTable extends Serializable {
     /**
      * Schedulazione: ora - setter.
      *
-     * @param cdSchedHour
-     *            ora
+     * @param cdSchedHour ora
      */
     void setCdSchedHour(String cdSchedHour);
 
@@ -210,8 +197,7 @@ public interface JobTable extends Serializable {
     /**
      * Schedulazione: minuto - setter.
      *
-     * @param cdSchedMinute
-     *            minuto
+     * @param cdSchedMinute minuto
      */
     void setCdSchedMinute(String cdSchedMinute);
 
@@ -225,8 +211,7 @@ public interface JobTable extends Serializable {
     /**
      * Schedulazione: giorno del mese - setter.
      *
-     * @param cdSchedDayofmonth
-     *            giorno del mese
+     * @param cdSchedDayofmonth giorno del mese
      */
     void setCdSchedDayofmonth(String cdSchedDayofmonth);
 
@@ -240,8 +225,7 @@ public interface JobTable extends Serializable {
     /**
      * Schedulazione: mese - setter.
      *
-     * @param cdSchedMonth
-     *            mese
+     * @param cdSchedMonth mese
      */
     void setCdSchedMonth(String cdSchedMonth);
 
@@ -255,14 +239,13 @@ public interface JobTable extends Serializable {
     /**
      * Schedulazione: giorno della settimana - setter.
      *
-     * @param cdSchedDayofweek
-     *            giorno della settimana
+     * @param cdSchedDayofweek giorno della settimana
      */
     void setCdSchedDayofweek(String cdSchedDayofweek);
 
     /**
-     * Data di prossima attivazione - getter. La data di prossima attivazione viene impostata dallo strato web (in
-     * maniera non accurata) oppure dal timer stesso.
+     * Data di prossima attivazione - getter. La data di prossima attivazione viene impostata dallo
+     * strato web (in maniera non accurata) oppure dal timer stesso.
      *
      * @return data di prossima attivazione
      */
@@ -271,8 +254,7 @@ public interface JobTable extends Serializable {
     /**
      * Data di prossima attivazione - setter.
      *
-     * @param dtProssimaAttivazione
-     *            data di prossima attivazione
+     * @param dtProssimaAttivazione data di prossima attivazione
      */
     void setDtProssimaAttivazione(Date dtProssimaAttivazione);
 
@@ -286,8 +268,7 @@ public interface JobTable extends Serializable {
     /**
      * Flag di accuratezza della data - setter.
      *
-     * @param flDataAccurata
-     *            flag di accuratezza
+     * @param flDataAccurata flag di accuratezza
      */
     void setFlDataAccurata(String flDataAccurata);
 }

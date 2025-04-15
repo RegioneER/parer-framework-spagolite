@@ -7,14 +7,9 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>6.16.1-SNAPSHOT</version>
+        <version>7.1.0</version>
     </parent>
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>it.eng.parer</groupId>
             <artifactId>spagofat-middle</artifactId>
@@ -31,12 +26,18 @@
             <groupId>org.dom4j</groupId>
             <artifactId>dom4j</artifactId>
         </dependency>
-         <!-- JBoss Jakarta Annotations API -->
+        <!-- JBoss Jakarta Annotations API -->
         <dependency>
             <groupId>org.jboss.spec.javax.annotation</groupId>
             <artifactId>jboss-annotations-api_1.3_spec</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- Unit Test -->
+		<dependency>
+		    <groupId>org.junit.jupiter</groupId>
+		    <artifactId>junit-jupiter-api</artifactId>
+		    <scope>test</scope>
+		</dependency>
     </dependencies>
     <build>
         <plugins>

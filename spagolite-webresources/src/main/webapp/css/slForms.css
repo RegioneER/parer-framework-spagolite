@@ -380,6 +380,10 @@ img.backImg{vertical-align: middle;}
 .deselect{background-image: url("../img/toolBar/deselect.png");}
 .backButtton{background-image: url("../img/toolBar/back.png");}
 
+/* MEV #33070 */
+input.navBar{padding-bottom:4px;background-color: transparent;  background-repeat: no-repeat;    border: 0 none;    cursor: pointer;   padding-top: 0px;  padding-left: 35px; height: 20px; box-shadow: none}
+.goto{background-image: url("../img/toolBar/vaiAPag.png");}
+
 .list input.select{background-image: url("../img/toolBar/select2.png");}
 .listToolBar input{font-weight: bold;font-size: 10px; text-decoration: underline;}
 .listToolBar .navBarBackLink{
@@ -397,6 +401,10 @@ img.backImg{vertical-align: middle;}
 }
 .listToolBar .navBarPrevPageLink{
     background: url("../img/toolBar/prevPage.png") no-repeat center;
+    padding-left: 21px; padding-top: 0px; /* border: 1px solid #CCC;*/
+}
+.listToolBar .navBarGoToPageLink{
+    background: url("../img/toolBar/vaiAPag.png") no-repeat center;
     padding-left: 21px; padding-top: 0px; /* border: 1px solid #CCC;*/
 }
 .listToolBar .navBarPrevPageDisabledLink{

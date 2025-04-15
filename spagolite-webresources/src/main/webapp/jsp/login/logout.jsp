@@ -1,4 +1,4 @@
-<%@page import="it.eng.spagoCore.configuration.ConfigSingleton"%>
+<%@page import="it.eng.spagoCore.ConfigSingleton"%>
 <%@ include file="../../include.jsp"%>
 
 <sl:html>
@@ -6,7 +6,10 @@
     <sl:body>
         <sl:header  showHomeBtn="false"/>
         <div class="newLine "></div>
-
+        <%
+            // per sicurezza invalido la sessione!
+            session.invalidate();
+        %>
         <div id="menu"></div>
         <div id="content">
             <!-- Message Box -->

@@ -8,7 +8,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>6.16.1-SNAPSHOT</version>
+        <version>7.1.0</version>
     </parent>
     <dependencies>
         <!-- BOM per JBoss EAP 7.4 (jboss-eap-jakartaee8) dependencies -->
@@ -53,11 +53,15 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-        </dependency>
+        </dependency> 
+        <dependency> 
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency> 
         <dependency>  
             <groupId>com.fasterxml.jackson.core</groupId>  
             <artifactId>jackson-databind</artifactId>  
-        </dependency>  
+        </dependency> 
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-servlet-filter-adapter</artifactId>
