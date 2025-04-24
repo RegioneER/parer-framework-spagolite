@@ -48,7 +48,7 @@ public class LogoutAction extends ActionBase {
     }
 
     /*
-     * Intecettata la chiamata al logout locale che richiede eventualmente un SAML GLOBAL LOGOUT nel caso di utente con
+     * Intercettata la chiamata al logout locale che richiede eventualmente un SAML GLOBAL LOGOUT nel caso di utente con
      * login classico (IDP INTERNO, PUGLIA e tutti gli altri casi) altrimenti nel caso di IDP FEDERA SPID il Global
      * logout non è gestito e quindi fa solo un logout LOCALE
      */

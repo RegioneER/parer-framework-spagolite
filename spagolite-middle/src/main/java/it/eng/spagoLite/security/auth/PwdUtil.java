@@ -39,7 +39,6 @@ public class PwdUtil {
     private static final int ITERATIONS = 2048;
     private static final int KEY_LENGTH = 64 * 8;
 
-    @Deprecated
     public static String encodePassword(String password) {
         MessageDigest md = null;
         try {

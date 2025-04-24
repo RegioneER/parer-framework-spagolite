@@ -19,7 +19,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.eng.spagoCore.configuration;
+package it.eng.spagoCore;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;

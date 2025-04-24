@@ -15,7 +15,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.eng.spagoCore.configuration;
+package it.eng.spagoCore;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
 public class ConfigServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigServlet.class.getName());
+    protected static final Logger LOGGER = LoggerFactory.getLogger(ConfigServlet.class.getName());
 
     // cache
     private final Map<String, String> configCache = new HashMap<>();

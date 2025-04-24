@@ -15,8 +15,9 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.eng.spagoIFace.model;
+package it.eng.spagoIFace;
 
+import it.eng.spagoIFace.model.PublisherInfo;
 import it.eng.spagoIFace.session.SessionCoreManager;
 
 import javax.servlet.http.HttpServletRequest;

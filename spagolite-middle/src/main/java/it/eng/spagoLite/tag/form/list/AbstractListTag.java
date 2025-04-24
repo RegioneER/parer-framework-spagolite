@@ -17,9 +17,9 @@
 
 package it.eng.spagoLite.tag.form.list;
 
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.ENABLE_LAZY_SORT;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.ENABLE_LAZY_SORT;
 
-import it.eng.spagoCore.configuration.ConfigSingleton;
+import it.eng.spagoCore.ConfigSingleton;
 import it.eng.spagoIFace.Values;
 import it.eng.spagoLite.db.base.BaseRowInterface;
 import it.eng.spagoLite.db.base.sorting.SortingRule;

@@ -14,7 +14,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>6.17.1-SNAPSHOT</version>
+        <version>7.0.1-SNAPSHOT</version>
     </parent>
     <build>
         <plugins>
@@ -49,18 +49,18 @@
             <groupId>org.dom4j</groupId>
             <artifactId>dom4j</artifactId>
         </dependency>
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>javax.xml.ws</groupId>
             <artifactId>jaxws-api</artifactId>
         </dependency>-->
         
-	 <!-- Jakarta XML Web Services API -->
+        <!-- Jakarta XML Web Services API -->
         <dependency>
             <groupId>org.jboss.spec.javax.xml.ws</groupId>
             <artifactId>jboss-jaxws-api_2.3_spec</artifactId>
             <scope>provided</scope>
         </dependency>
-        		
+			
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>

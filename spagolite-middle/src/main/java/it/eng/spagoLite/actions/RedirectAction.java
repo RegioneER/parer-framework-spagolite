@@ -17,10 +17,10 @@
 
 package it.eng.spagoLite.actions;
 
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.DISABLE_SECURITY;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.DISABLE_SECURITY;
 
-import it.eng.spagoCore.configuration.ConfigSingleton;
-import it.eng.spagoIFace.model.BaseController;
+import it.eng.spagoCore.ConfigSingleton;
+import it.eng.spagoIFace.BaseController;
 import it.eng.spagoLite.SessionManager;
 import it.eng.spagoLite.security.IUser;
 

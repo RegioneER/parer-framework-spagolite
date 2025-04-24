@@ -17,9 +17,9 @@
 
 package it.eng.spagoLite.actions.form;
 
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.DISABLE_SECURITY;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.DISABLE_SECURITY;
 
-import it.eng.spagoCore.configuration.ConfigSingleton;
+import it.eng.spagoCore.ConfigSingleton;
 import it.eng.spagoCore.error.EMFError;
 import it.eng.spagoLite.SessionManager;
 import it.eng.spagoLite.actions.ActionBase;

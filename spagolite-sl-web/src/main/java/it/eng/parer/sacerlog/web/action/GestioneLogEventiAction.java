@@ -67,7 +67,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class GestioneLogEventiAction extends GestioneLogEventiAbstractAction {
 
-    private static Logger logger = LoggerFactory.getLogger(GestioneLogEventiAbstractAction.class);
+    private static Logger log = LoggerFactory.getLogger(GestioneLogEventiAction.class);
     /*
      * Costante per memorizare nella sessione l'idEventoOggetto che poi servirà nella visualizzazione foto che è
      * richiamabile da diversi percorsi
@@ -91,16 +91,16 @@ public class GestioneLogEventiAction extends GestioneLogEventiAbstractAction {
 
     @Override
     public void initOnClick() throws EMFError {
-        logger.debug("**************** initOnClick ******************");
+        log.debug("**************** initOnClick ******************");
     }
 
     @Override
     public void loadDettaglio() throws EMFError {
-        logger.debug("**************** loadDettaglio ******************");
+        log.debug("**************** loadDettaglio ******************");
         if (getNavigationEvent().equals(ListAction.NE_DETTAGLIO_VIEW) || getNavigationEvent().equals(ListAction.NE_PREV)
                 || getNavigationEvent().equals(ListAction.NE_NEXT)) {
             if (getTableName().equals(getForm().getListaEventi().getName())) {
-                logger.debug("SI PROVIENE DALLA LISTA EVENTI");
+                log.debug("SI PROVIENE DALLA LISTA EVENTI");
                 int riga = getForm().getListaEventi().getTable().getCurrentRowIndex();
                 String valore = null;
                 Timestamp data = getForm().getListaEventi().getTable().getRow(riga).getTimestamp("dt_reg_evento");
@@ -135,7 +135,7 @@ public class GestioneLogEventiAction extends GestioneLogEventiAbstractAction {
                 // opportune
                 getSession().setAttribute(OGGETTO_LISTA_NAVIGAZIONE, getTableName());
             } else if (getTableName().equals(getForm().getRicercaEventiList().getName())) {
-                logger.debug("SI PROVIENE DALLA LISTA Ricerca EVENTI");
+                log.debug("SI PROVIENE DALLA LISTA Ricerca EVENTI");
                 popolaDettaglioEventoOggettoDaRicercaEventi(getForm().getRicercaEventiList());
                 /* Memorizza l'idEgentoOggetto per la futura visualizzazione foto */
                 LogVRicEventiRowBean row = (LogVRicEventiRowBean) getForm().getRicercaEventiList().getTable()
@@ -145,7 +145,7 @@ public class GestioneLogEventiAction extends GestioneLogEventiAbstractAction {
                 // opportune
                 getSession().setAttribute(OGGETTO_LISTA_NAVIGAZIONE, getTableName());
             } else if (getTableName().equals(getForm().getOggettiEventoPrincipaleList().getName())) {
-                logger.debug("SI PROVIENE DALLA LISTA Oggetti evento principale");
+                log.debug("SI PROVIENE DALLA LISTA Oggetti evento principale");
                 popolaDettaglioEventoOggettoDaRicercaEventi(getForm().getOggettiEventoPrincipaleList());
                 /* Memorizza l'idEgentoOggetto per la futura visualizzazione foto */
                 LogVRicEventiRowBean row = (LogVRicEventiRowBean) getForm().getOggettiEventoPrincipaleList().getTable()
@@ -155,7 +155,7 @@ public class GestioneLogEventiAction extends GestioneLogEventiAbstractAction {
                 // opportune
                 getSession().setAttribute(OGGETTO_LISTA_NAVIGAZIONE, getTableName());
             } else if (getTableName().equals(getForm().getEventiSuccessiviList().getName())) {
-                logger.debug("SI PROVIENE DALLA LISTA eventi successivi");
+                log.debug("SI PROVIENE DALLA LISTA eventi successivi");
                 popolaDettaglioEventoOggettoDaRicercaEventi(getForm().getEventiSuccessiviList());
                 /* Memorizza l'idEgentoOggetto per la futura visualizzazione foto */
                 LogVRicEventiRowBean row = (LogVRicEventiRowBean) getForm().getEventiSuccessiviList().getTable()
@@ -172,28 +172,28 @@ public class GestioneLogEventiAction extends GestioneLogEventiAbstractAction {
 
     @Override
     public void undoDettaglio() throws EMFError {
-        logger.debug("**************** undoDettaglio ******************");
+        log.debug("**************** undoDettaglio ******************");
     }
 
     @Override
     public void insertDettaglio() throws EMFError {
-        logger.debug("**************** insertDettaglio ******************");
+        log.debug("**************** insertDettaglio ******************");
     }
 
     @Override
     public void saveDettaglio() throws EMFError {
-        logger.debug("**************** saveDettaglio ******************");
+        log.debug("**************** saveDettaglio ******************");
     }
 
     @Override
     public void dettaglioOnClick() throws EMFError {
-        logger.debug("**************** dettaglioOnClick ******************");
+        log.debug("**************** dettaglioOnClick ******************");
         forwardToPublisher(Application.Publisher.DETTAGLIO_EVENTO_OGGETTO);
     }
 
     @Override
     public void elencoOnClick() throws EMFError {
-        logger.debug("**************** elencoOnClick ******************");
+        log.debug("**************** elencoOnClick ******************");
         goBack();
     }
 
@@ -204,7 +204,7 @@ public class GestioneLogEventiAction extends GestioneLogEventiAbstractAction {
 
     @Override
     public void reloadAfterGoBack(String string) {
-        logger.debug("**************** reloadAfterGoBack ******************");
+        log.debug("**************** reloadAfterGoBack ******************");
     }
 
     @Override
@@ -214,7 +214,7 @@ public class GestioneLogEventiAction extends GestioneLogEventiAbstractAction {
 
     // @Secure(action = "Menu.UnitaDocumentarie.UnitaDocumentarieRicercaAvanzata")
     public void inizializzaLogEventi() throws EMFError {
-        logger.debug("**************** inizializzaLogEventi ******************");
+        log.debug("**************** inizializzaLogEventi ******************");
         GestioneLogEventiForm form = getForm();
         LogVVisOggettoRowBean bean = sacerLogWebEjb.getDettOggettoByAppTipoOggettoId(
                 form.getOggettoDetail().getNmApp().getValue(), form.getOggettoDetail().getNm_tipo_oggetto().getValue(),
@@ -382,12 +382,12 @@ public class GestioneLogEventiAction extends GestioneLogEventiAbstractAction {
 
         } catch (Exception e) {
             getMessageBox().addError("Errore durante il download del file XML nel Log eventi");
-            logger.error("Errore durante il download del file XML nel Log eventi", e);
+            log.error("Errore durante il download del file XML nel Log eventi", e);
         }
     }
 
     public void loadRicercaEventi() throws EMFError {
-        logger.debug("**************** loadRicercaEventi ******************");
+        log.debug("**************** loadRicercaEventi ******************");
         getUser().getMenu().reset();
         getUser().getMenu().select("Menu.Logging.RicercaEventi");
 

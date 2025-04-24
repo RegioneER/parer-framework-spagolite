@@ -15,7 +15,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.eng.spagoCore.configuration;
+package it.eng.spagoCore;
 
 import java.io.Serializable;
 import java.net.URI;

@@ -23,13 +23,16 @@
 package it.eng.spagoLite.message;
 
 import java.time.LocalTime;
-import java.util.Date;
 
 /**
  *
  * @author MIacolucci
  */
 public class MessageUtil {
+
+    private MessageUtil() {
+        //
+    }
 
     public static String getSalutoPerOrario() {
         String ritorno = "";

@@ -30,7 +30,6 @@ import javax.ejb.EJB;
  * @author Quaranta_M
  */
 public class PaginatorImpl extends AbstractPaginator {
-
     @EJB(mappedName = "java:app/paginator/LazyListHelper")
     private LazyListHelper lazyListHelper;
 

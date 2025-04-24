@@ -17,10 +17,10 @@
 
 package it.eng.spagoLite.actions;
 
-import it.eng.spagoCore.configuration.ConfigSingleton;
+import it.eng.spagoCore.ConfigSingleton;
 import it.eng.spagoCore.error.EMFError;
 import it.eng.spagoIFace.Values;
-import it.eng.spagoIFace.model.BaseController;
+import it.eng.spagoIFace.BaseController;
 import it.eng.spagoLite.ExecutionHistory;
 import it.eng.spagoLite.FrameElement;
 import it.eng.spagoLite.SessionManager;
@@ -32,7 +32,7 @@ import it.eng.spagoLite.security.Secure;
 import it.eng.spagoLite.security.SuppressLogging;
 import it.eng.spagoLite.security.profile.Pagina;
 
-import static it.eng.spagoCore.configuration.ConfigProperties.StandardProperty.DISABLE_SECURITY;
+import static it.eng.spagoCore.ConfigProperties.StandardProperty.DISABLE_SECURITY;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
