@@ -6,7 +6,7 @@ function mostraHelpPagina(codiceMenuHelp) {
     var wHeight = $(window).height();
     $.getJSON('#', {
         operation: 'mostraHelpPagina',
-        codiceMenuHelp: 'codiceMenuHelp'
+        codiceMenuHelp: codiceMenuHelp
     }).done(function (data) {
         var obj = jQuery.parseJSON(data.map[0].risposta);
         if (obj.cdEsito==='OK') {

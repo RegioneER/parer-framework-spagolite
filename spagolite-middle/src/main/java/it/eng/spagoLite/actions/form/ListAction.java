@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU Affero General Public License along with this program.
  * If not, see <https://www.gnu.org/licenses/>.
  */
-
 package it.eng.spagoLite.actions.form;
 
 import java.io.IOException;
@@ -36,6 +35,7 @@ import it.eng.spagoLite.form.fields.SingleValueField;
 import it.eng.spagoLite.form.list.List;
 import it.eng.spagoLite.message.MessageBox.ViewMode;
 import it.eng.spagoLite.security.IUser;
+import it.eng.spagoLite.util.NavigationValidator;
 
 public abstract class ListAction<T extends Form, U extends IUser<?>> extends FormAction<T, U> {
 
@@ -54,6 +54,7 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
     public static final String NE_PREV = "prev";
     public static final String NE_NEXT = "next";
     public static final String NE_NEXT_PAGE = "nextPage";
+    public static final String NE_GOTO_PAGE = "gotoPage";
     public static final String NE_SET_PAGE_SIZE = "setPageSize";
     public static final String NE_LAST = "last";
     public static final String NE_GOTO_ROW = "gotoRow";
@@ -87,6 +88,8 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
     public abstract void initOnClick() throws EMFError;
 
     public abstract void filterInactiveRecords(List<?> list) throws EMFError;
+
+    public abstract void goToPageNavigation(List<?> list) throws EMFError;
 
     //
     public void confirmDelete() throws EMFError {
@@ -155,7 +158,7 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
         listNavigationOnClick(getTableName(), getNavigationEvent(), getRiga(), getForceReload());
     }
 
-    // probabilmente questa ï¿½ una submit
+    // probabilmente questa è una submit
     public void listNavigationOnClick(String[] param) throws EMFError {
         setParameters(param);
         listNavigationOnClick(getTableName(), getNavigationEvent(), getRiga(), getForceReload());
@@ -179,11 +182,11 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
     protected void listNavigationOnClick(String tableName, String navigationEvent, String riga, String forceReload)
             throws EMFError {
         List<?> list = (List<?>) getForm().getComponent(tableName);
-        // Forzo il goback se la tabella nella lista ï¿½ null .. l'utente potrebbe aver cliccato il tasto back del
-        // browser
+        // Forzo il goback se la tabella nella lista è null...
+        // l'utente potrebbe aver cliccato il tasto back del browser
         if (list.getTable() == null) {
             getMessageBox().addWarning(
-                    "Si ï¿½ verificato un errore (probabilmente) a seguito dell'utilizzo del tasto Indietro del browser.\n E' stata recuperata l'ultima pagina aperta correttamente.");
+                    "Si è verificato un errore (probabilmente) a seguito dell'utilizzo del tasto Indietro del browser.\n E' stata recuperata l'ultima pagina aperta correttamente.");
             getMessageBox().setViewMode(ViewMode.plain);
             this.goBack(true);
             return;
@@ -250,7 +253,7 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
             loadDettaglio();
         } else if (navigationEvent.equalsIgnoreCase(NE_PREV)) {
             // evento invocato se sto paginando dal dettaglio
-            // invoco il lazyloading solo se ï¿½ una tabella paginata e se sono alla prima riga
+            // invoco il lazyloading solo se è una tabella paginata e se sono alla prima riga
             if (list.getTable().getLazyListInterface() != null && list.getTable().getCurrentRowIndex() == 0) {
                 this.lazyLoadPrevPage(list);
             } else {
@@ -259,8 +262,8 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
             loadDettaglio();
         } else if (navigationEvent.equalsIgnoreCase(NE_NEXT)) {
             // evento invocato se sto paginando dal dettaglio
-            // invoco il lazyloading solo se ï¿½ una tabella paginata e se sono all'ultima riga (ie. l'ultima riga della
-            // pagina +1 ï¿½ maggiore del numero di risultati relativi)
+            // invoco il lazyloading solo se è una tabella paginata e se sono all'ultima riga (ie. l'ultima riga della
+            // pagina +1 è maggiore del numero di risultati relativi)
             if (list.getTable().getLazyListInterface() != null && list.getTable().getCurrentRowIndex()
                     + 1 > list.getTable().getLazyListInterface().getMaxResult() - 1) {
                 this.lazyLoadNextPage(list);
@@ -274,6 +277,24 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
                 list.getTable().nextPage();
             }
             loadDettaglio();
+        }
+        // MEV #33070
+        else if (navigationEvent.equalsIgnoreCase(NE_GOTO_PAGE)) {
+            // Effetto i controlli formali sul parametro
+            NavigationValidator validatore = new NavigationValidator(getMessageBox());
+
+            Integer goToNumPagList = validatore.getValidNavigationInteger(getRequest(), list.getTable().getPages(),
+                    list.getName());
+
+            // Se il numero è corretto (un intero e che non supera il numero di pagine disponibili)
+            if (!getMessageBox().hasError()) {
+                // Mi posiziono alla pagina desiderata
+                if (!this.lazyLoadGoPage(list, goToNumPagList)) {
+                    list.getTable().goPage(goToNumPagList);
+                }
+            }
+
+            // eventuale chiamata al goToPageNavigation(list) di cui eseguire l'override nella action
         } else if (navigationEvent.equalsIgnoreCase(NE_GOTO_ROW)) {
             list.getTable().setCurrentRowIndex(Integer.parseInt(riga));
             loadDettaglio();
@@ -322,7 +343,7 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
 
     private boolean lazySortCurrentPage(List<?> list) throws EMFError {
         BaseTableInterface<?> table = list.getTable();
-        // invoco l'ordinamento lazy se ï¿½ una tabella paginata
+        // invoco l'ordinamento lazy se è una tabella paginata
         if (table.getLazyListInterface() != null
                 && (table.size() < table.getLazyListInterface().getCountResultSize())) {
             table = getPaginator().sort(table);
@@ -336,9 +357,8 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
 
     private boolean lazyLoadNextPage(List<?> list) throws EMFError {
         BaseTableInterface<?> table = list.getTable();
-        // invoco la paginazione lazy se ï¿½ una tabella paginata e se la pagina successiva non ï¿½ contenuta
-        // interamente
-        // nella lista che ho in memoria
+        // invoco la paginazione lazy se è una tabella paginata e se la pagina successiva non è contenuta
+        // interamente nella lista che ho in memoria
         if (table.getLazyListInterface() != null && table.getLastRowPageIndex() + table.getPageSize() + 1 > table
                 .getLazyListInterface().getMaxResult()) {
             table = getPaginator().nextPage(table);
@@ -352,9 +372,8 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
 
     private boolean lazyLoadPrevPage(List<?> list) throws EMFError {
         BaseTableInterface<?> table = list.getTable();
-        // invoco la paginazione lazy se ï¿½ una tabella paginata e se la pagina successiva non ï¿½ contenuta
-        // interamente
-        // nella lista che ho in memoria
+        // invoco la paginazione lazy se è una tabella paginata e se la pagina successiva non è contenuta
+        // interamente nella lista che ho in memoria
         if (table.getLazyListInterface() != null && table.getFirstRowPageIndex() - table.getPageSize() < 0) {
             table = getPaginator().prevPage(table);
             list.setTable(table);
@@ -391,20 +410,37 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
 
     protected boolean lazyLoadGoPage(List<?> list, int page) throws EMFError {
         BaseTableInterface<?> table = list.getTable();
-        // invoco la paginazione lazy se ï¿½ una tabella paginata
-        if (table.getLazyListInterface() != null && // se il primo index della lista che ho in memoria ï¿½ maggiore del
-                                                    // primo
-        // index della pagina di destinazione
+        // invoco la paginazione lazy se è una tabella paginata
+        if (table.getLazyListInterface() != null && // se il primo index della lista che ho in memoria è maggiore del
+                                                    // primo index della pagina di destinazione
                 ((table.getLazyListInterface().getFirstResult() > (page - 1) * table.getPageSize()) || // se l'ultimo
                                                                                                        // index
-                // della lista che ho
-                // in memoria ï¿½ minore
-                // dell'ultimo index
-                // della pagina di
-                // destinazione
+                                                                                                       // della lista
+                                                                                                       // che ho
+                                                                                                       // in memoria è
+                                                                                                       // minore
+                                                                                                       // dell'ultimo
+                                                                                                       // index
+                                                                                                       // della pagina
+                                                                                                       // di
+                                                                                                       // destinazione
                         (table.getLazyListInterface().getFirstResult()
                                 + table.getLazyListInterface().getMaxResult() < page * table.getPageSize() - 1))) {
             table = getPaginator().goPage(table, page);
+
+            // MEV #33070 - aggiungo il calcolo del corretto currentRowIndex della lista lazy
+            // Essendo blocchi di dimensione predefinita (es. 300), il currentRowIndex dovrà sempre essere un valore
+            // compreso tra 0 e 299
+            int currentRowIndex = ((page * table.getPageSize())
+                    - ((int) (Math.floor((page * table.getPageSize()) / table.getLazyListInterface().getMaxResult()))
+                            * table.getLazyListInterface().getMaxResult()));
+            if (currentRowIndex == 0) {
+                currentRowIndex = table.getLazyListInterface().getMaxResult() - table.getPageSize();
+            } else {
+                currentRowIndex = currentRowIndex - table.getPageSize();
+            }
+            table.setCurrentRowIndex(currentRowIndex);
+
             list.setTable(table);
             postLazyLoad(list);
             return true;
@@ -446,7 +482,7 @@ public abstract class ListAction<T extends Form, U extends IUser<?>> extends For
 
     // meccanismo di "sicurezza" per garantire che il singolo *navigationEvent* risponda
     // ad un certo http method (e.g. evitare che la delete di un elemento in lista venga effettuata
-    // via GET anzichï¿½ POST)
+    // via GET anzichè POST)
     private boolean authorizeHttpMethodOnNavigationEvent(String navigationEvent) throws EMFError {
         boolean result = true; // default
         if (NE_DETTAGLIO_DELETE.equals(navigationEvent)) {
