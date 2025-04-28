@@ -4,21 +4,19 @@
  *
  * This file is part of Spago.
  *
- * Spago is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * any later version.
+ * Spago is free software; you can redistribute it and/or modify it under the terms of the GNU
+ * Lesser General Public License as published by the Free Software Foundation; either version 2.1 of
+ * the License, or any later version.
  *
- * Spago is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * Spago is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with Spago; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * You should have received a copy of the GNU Lesser General Public License along with Spago; if
+ * not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA
  *
- * */
+ */
 package it.eng.spagoCore.error;
 
 import java.io.Serializable;
@@ -42,41 +40,41 @@ public class EMFError extends Exception implements Serializable {
     private final Throwable throwable;
 
     public EMFError(String severity, String description, Throwable throwable) {
-        this.severity = severity;
-        this.description = description;
-        this.throwable = throwable;
+	this.severity = severity;
+	this.description = description;
+	this.throwable = throwable;
     }
 
     public EMFError(String severity, String description) {
-        this(severity, description, null);
+	this(severity, description, null);
     }
 
     public EMFError(String severity, Throwable throwable) {
-        this(severity, null, throwable);
+	this(severity, null, throwable);
     }
 
     public String getSeverity() {
-        return severity;
+	return severity;
     }
 
     public String getDescription() {
-        return description;
+	return description;
     }
 
     public Throwable getThrowable() {
-        return throwable;
+	return throwable;
     }
 
     public boolean isOk(String serverity) {
-        if (getSeverity() == null) {
-            return true;
-        }
+	if (getSeverity() == null) {
+	    return true;
+	}
 
-        if (getSeverity().equalsIgnoreCase(serverity)) {
-            return true;
-        } else {
-            return false;
-        }
+	if (getSeverity().equalsIgnoreCase(serverity)) {
+	    return true;
+	} else {
+	    return false;
+	}
     }
 
 }

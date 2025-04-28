@@ -1,18 +1,14 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna
- * <p/>
- * This program is free software: you can redistribute it and/or modify it under the terms of
- * the GNU Affero General Public License as published by the Free Software Foundation,
- * either version 3 of the License, or (at your option) any later version.
- * <p/>
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Affero General Public License for more details.
- * <p/>
- * You should have received a copy of the GNU Affero General Public License along with this program.
- * If not, see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the License, or (at your option)
+ * any later version. <p/> This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
+ * have received a copy of the GNU Affero General Public License along with this program. If not,
+ * see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.parer.sacerlog.viewEntity;
@@ -34,9 +30,10 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "LOG_V_RIC_EVENTI", schema = "SACER_LOG")
-@NamedQueries({ @NamedQuery(name = "LogVRicEventi.findAll", query = "SELECT l FROM LogVRicEventi l"),
-        @NamedQuery(name = "LogVRicEventi.findByIdEvento", query = "SELECT l FROM LogVRicEventi l WHERE l.idEvento = :idEvento"),
-        @NamedQuery(name = "LogVRicEventi.findByIdTransazioneExcludingIdEvento", query = "SELECT l FROM LogVRicEventi l WHERE l.idTransazione = :idTransazione AND l.idEvento <> :idEvento") })
+@NamedQueries({
+	@NamedQuery(name = "LogVRicEventi.findAll", query = "SELECT l FROM LogVRicEventi l"),
+	@NamedQuery(name = "LogVRicEventi.findByIdEvento", query = "SELECT l FROM LogVRicEventi l WHERE l.idEvento = :idEvento"),
+	@NamedQuery(name = "LogVRicEventi.findByIdTransazioneExcludingIdEvento", query = "SELECT l FROM LogVRicEventi l WHERE l.idTransazione = :idTransazione AND l.idEvento <> :idEvento") })
 public class LogVRicEventi implements ILogVRicEventi {
 
     private static final long serialVersionUID = 1L;
@@ -75,347 +72,347 @@ public class LogVRicEventi implements ILogVRicEventi {
 
     @EmbeddedId
     public LogVRicEventiId getLogVRicEventiId() {
-        return logVRicEventiId;
+	return logVRicEventiId;
     }
 
     public void setLogVRicEventiId(LogVRicEventiId logVRicEventiId) {
-        this.logVRicEventiId = logVRicEventiId;
+	this.logVRicEventiId = logVRicEventiId;
     }
 
     @Column(name = "DS_KEY_OGGETTO")
     @Override
     public String getDsKeyOggetto() {
-        return this.dsKeyOggetto;
+	return this.dsKeyOggetto;
     }
 
     @Override
     public void setDsKeyOggetto(String dsKeyOggetto) {
-        this.dsKeyOggetto = dsKeyOggetto;
+	this.dsKeyOggetto = dsKeyOggetto;
     }
 
     @Column(name = "DT_REG_EVENTO")
     @Override
     public Timestamp getDtRegEvento() {
-        return this.dtRegEvento;
+	return this.dtRegEvento;
     }
 
     @Override
     public void setDtRegEvento(Timestamp dtRegEvento) {
-        this.dtRegEvento = dtRegEvento;
+	this.dtRegEvento = dtRegEvento;
     }
 
     @Column(name = "ID_AGENTE")
     @Override
     public BigDecimal getIdAgente() {
-        return this.idAgente;
+	return this.idAgente;
     }
 
     @Override
     public void setIdAgente(BigDecimal idAgente) {
-        this.idAgente = idAgente;
+	this.idAgente = idAgente;
     }
 
     @Override
     @Transient
     public BigDecimal getIdAgenteEvento() {
-        return this.logVRicEventiId.getIdAgenteEvento();
+	return this.logVRicEventiId.getIdAgenteEvento();
     }
 
     @Override
     public void setIdAgenteEvento(BigDecimal idAgenteEvento) {
-        if (this.logVRicEventiId == null) {
-            this.logVRicEventiId = new LogVRicEventiId();
-        }
-        logVRicEventiId.setIdAgenteEvento(idAgenteEvento);
+	if (this.logVRicEventiId == null) {
+	    this.logVRicEventiId = new LogVRicEventiId();
+	}
+	logVRicEventiId.setIdAgenteEvento(idAgenteEvento);
     }
 
     @Column(name = "ID_APPLIC")
     @Override
     public BigDecimal getIdApplic() {
-        return this.idApplic;
+	return this.idApplic;
     }
 
     @Override
     public void setIdApplic(BigDecimal idApplic) {
-        this.idApplic = idApplic;
+	this.idApplic = idApplic;
     }
 
     @Column(name = "ID_EVENTO")
     @Override
     public BigDecimal getIdEvento() {
-        return this.idEvento;
+	return this.idEvento;
     }
 
     @Override
     public void setIdEvento(BigDecimal idEvento) {
-        this.idEvento = idEvento;
+	this.idEvento = idEvento;
     }
 
     @Column(name = "ID_OGGETTO")
     @Override
     public BigDecimal getIdOggetto() {
-        return this.idOggetto;
+	return this.idOggetto;
     }
 
     @Override
     public void setIdOggetto(BigDecimal idOggetto) {
-        this.idOggetto = idOggetto;
+	this.idOggetto = idOggetto;
     }
 
     @Override
     @Transient
     public BigDecimal getIdOggettoEvento() {
-        return this.logVRicEventiId.getIdOggettoEvento();
+	return this.logVRicEventiId.getIdOggettoEvento();
     }
 
     @Override
     public void setIdOggettoEvento(BigDecimal idOggettoEvento) {
-        if (this.logVRicEventiId == null) {
-            this.logVRicEventiId = new LogVRicEventiId();
-        }
-        this.logVRicEventiId.setIdOggettoEvento(idOggettoEvento);
+	if (this.logVRicEventiId == null) {
+	    this.logVRicEventiId = new LogVRicEventiId();
+	}
+	this.logVRicEventiId.setIdOggettoEvento(idOggettoEvento);
     }
 
     @Column(name = "ID_TIPO_EVENTO")
     @Override
     public BigDecimal getIdTipoEvento() {
-        return this.idTipoEvento;
+	return this.idTipoEvento;
     }
 
     @Override
     public void setIdTipoEvento(BigDecimal idTipoEvento) {
-        this.idTipoEvento = idTipoEvento;
+	this.idTipoEvento = idTipoEvento;
     }
 
     @Column(name = "ID_TIPO_OGGETTO")
     @Override
     public BigDecimal getIdTipoOggetto() {
-        return this.idTipoOggetto;
+	return this.idTipoOggetto;
     }
 
     @Override
     public void setIdTipoOggetto(BigDecimal idTipoOggetto) {
-        this.idTipoOggetto = idTipoOggetto;
+	this.idTipoOggetto = idTipoOggetto;
     }
 
     @Column(name = "ID_TIPO_OGGETTO_PADRE")
     @Override
     public BigDecimal getIdTipoOggettoPadre() {
-        return this.idTipoOggettoPadre;
+	return this.idTipoOggettoPadre;
     }
 
     @Override
     public void setIdTipoOggettoPadre(BigDecimal idTipoOggettoPadre) {
-        this.idTipoOggettoPadre = idTipoOggettoPadre;
+	this.idTipoOggettoPadre = idTipoOggettoPadre;
     }
 
     @Column(name = "ID_TRANSAZIONE")
     @Override
     public BigDecimal getIdTransazione() {
-        return this.idTransazione;
+	return this.idTransazione;
     }
 
     @Override
     public void setIdTransazione(BigDecimal idTransazione) {
-        this.idTransazione = idTransazione;
+	this.idTransazione = idTransazione;
     }
 
     @Column(name = "NM_AGENTE")
     @Override
     public String getNmAgente() {
-        return this.nmAgente;
+	return this.nmAgente;
     }
 
     @Override
     public void setNmAgente(String nmAgente) {
-        this.nmAgente = nmAgente;
+	this.nmAgente = nmAgente;
     }
 
     @Column(name = "NM_AMBIENTE")
     @Override
     public String getNmAmbiente() {
-        return this.nmAmbiente;
+	return this.nmAmbiente;
     }
 
     @Override
     public void setNmAmbiente(String nmAmbiente) {
-        this.nmAmbiente = nmAmbiente;
+	this.nmAmbiente = nmAmbiente;
     }
 
     @Column(name = "NM_APPLIC")
     @Override
     public String getNmApplic() {
-        return this.nmApplic;
+	return this.nmApplic;
     }
 
     @Override
     public void setNmApplic(String nmApplic) {
-        this.nmApplic = nmApplic;
+	this.nmApplic = nmApplic;
     }
 
     @Column(name = "NM_AZIONE")
     @Override
     public String getNmAzione() {
-        return this.nmAzione;
+	return this.nmAzione;
     }
 
     @Override
     public void setNmAzione(String nmAzione) {
-        this.nmAzione = nmAzione;
+	this.nmAzione = nmAzione;
     }
 
     @Column(name = "NM_ENTE")
     @Override
     public String getNmEnte() {
-        return this.nmEnte;
+	return this.nmEnte;
     }
 
     @Override
     public void setNmEnte(String nmEnte) {
-        this.nmEnte = nmEnte;
+	this.nmEnte = nmEnte;
     }
 
     @Column(name = "NM_GENERATORE_AZIONE")
     @Override
     public String getNmGeneratoreAzione() {
-        return this.nmGeneratoreAzione;
+	return this.nmGeneratoreAzione;
     }
 
     @Override
     public void setNmGeneratoreAzione(String nmGeneratoreAzione) {
-        this.nmGeneratoreAzione = nmGeneratoreAzione;
+	this.nmGeneratoreAzione = nmGeneratoreAzione;
     }
 
     @Column(name = "NM_OGGETTO")
     @Override
     public String getNmOggetto() {
-        return this.nmOggetto;
+	return this.nmOggetto;
     }
 
     @Override
     public void setNmOggetto(String nmOggetto) {
-        this.nmOggetto = nmOggetto;
+	this.nmOggetto = nmOggetto;
     }
 
     @Column(name = "NM_STRUTTURA")
     @Override
     public String getNmStruttura() {
-        return this.nmStruttura;
+	return this.nmStruttura;
     }
 
     @Override
     public void setNmStruttura(String nmStruttura) {
-        this.nmStruttura = nmStruttura;
+	this.nmStruttura = nmStruttura;
     }
 
     @Column(name = "NM_TIPO_EVENTO")
     @Override
     public String getNmTipoEvento() {
-        return this.nmTipoEvento;
+	return this.nmTipoEvento;
     }
 
     @Override
     public void setNmTipoEvento(String nmTipoEvento) {
-        this.nmTipoEvento = nmTipoEvento;
+	this.nmTipoEvento = nmTipoEvento;
     }
 
     @Column(name = "NM_TIPO_OGGETTO")
     @Override
     public String getNmTipoOggetto() {
-        return this.nmTipoOggetto;
+	return this.nmTipoOggetto;
     }
 
     @Override
     public void setNmTipoOggetto(String nmTipoOggetto) {
-        this.nmTipoOggetto = nmTipoOggetto;
+	this.nmTipoOggetto = nmTipoOggetto;
     }
 
     @Column(name = "NM_TIPO_OGGETTO_PADRE")
     @Override
     public String getNmTipoOggettoPadre() {
-        return this.nmTipoOggettoPadre;
+	return this.nmTipoOggettoPadre;
     }
 
     @Override
     public void setNmTipoOggettoPadre(String nmTipoOggettoPadre) {
-        this.nmTipoOggettoPadre = nmTipoOggettoPadre;
+	this.nmTipoOggettoPadre = nmTipoOggettoPadre;
     }
 
     @Column(name = "TI_RUOLO_AGENTE_EVENTO")
     @Override
     public String getTiRuoloAgenteEvento() {
-        return this.tiRuoloAgenteEvento;
+	return this.tiRuoloAgenteEvento;
     }
 
     @Override
     public void setTiRuoloAgenteEvento(String tiRuoloAgenteEvento) {
-        this.tiRuoloAgenteEvento = tiRuoloAgenteEvento;
+	this.tiRuoloAgenteEvento = tiRuoloAgenteEvento;
     }
 
     @Column(name = "TIPO_AZIONE")
     @Override
     public String getTipoAzione() {
-        return this.tipoAzione;
+	return this.tipoAzione;
     }
 
     @Override
     public void setTipoAzione(String tipoAzione) {
-        this.tipoAzione = tipoAzione;
+	this.tipoAzione = tipoAzione;
     }
 
     @Column(name = "TIPO_CLASSE_EVENTO")
     @Override
     public String getTipoClasseEvento() {
-        return this.tipoClasseEvento;
+	return this.tipoClasseEvento;
     }
 
     @Override
     public void setTipoClasseEvento(String tipoClasseEvento) {
-        this.tipoClasseEvento = tipoClasseEvento;
+	this.tipoClasseEvento = tipoClasseEvento;
     }
 
     @Column(name = "TIPO_ORIGINE_AGENTE")
     @Override
     public String getTipoOrigineAgente() {
-        return this.tipoOrigineAgente;
+	return this.tipoOrigineAgente;
     }
 
     @Override
     public void setTipoOrigineAgente(String tipoOrigineAgente) {
-        this.tipoOrigineAgente = tipoOrigineAgente;
+	this.tipoOrigineAgente = tipoOrigineAgente;
     }
 
     @Column(name = "NM_VERSATORE")
     @Override
     public String getNmVersatore() {
-        return this.nmVersatore;
+	return this.nmVersatore;
     }
 
     @Override
     public void setNmVersatore(String nmVersatore) {
-        this.nmVersatore = nmVersatore;
+	this.nmVersatore = nmVersatore;
     }
 
     @Column(name = "ID_ORGANIZ_APPLIC")
     @Override
     public BigDecimal getIdOrganizApplic() {
-        return this.idOrganizApplic;
+	return this.idOrganizApplic;
     }
 
     @Override
     public void setIdOrganizApplic(BigDecimal idOrganizApplic) {
-        this.idOrganizApplic = idOrganizApplic;
+	this.idOrganizApplic = idOrganizApplic;
     }
 
     @Column(name = "DS_MOTIVO_SCRIPT")
     @Override
     public String getDsMotivoScript() {
-        return this.dsMotivoScript;
+	return this.dsMotivoScript;
     }
 
     @Override
     public void setDsMotivoScript(String dsMotivoScript) {
-        this.dsMotivoScript = dsMotivoScript;
+	this.dsMotivoScript = dsMotivoScript;
     }
 
 }

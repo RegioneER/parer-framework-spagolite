@@ -11,14 +11,35 @@
  * see <https://www.gnu.org/licenses/>.
  */
 
-package it.eng.spagoLite.security.profile;
+/*
+ * To change this template, choose Tools | Templates and open the template in the editor.
+ */
+package it.eng.spagoCore.exceptions;
 
-public class MenuDips extends ProfileElement<ProfileElement<?>> {
+public class MetadataRuntimeException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 5015771412184277789L;
 
-    public MenuDips(String name, String description) {
-	super(name, description);
+    public MetadataRuntimeException() {
+	super();
     }
 
+    public MetadataRuntimeException(String message, Throwable throwable) {
+	super(message, throwable);
+    }
+
+    public MetadataRuntimeException(Throwable throwable) {
+	super(throwable);
+    }
+
+    public MetadataRuntimeException(String message) {
+	super(message);
+    }
+
+    public MetadataRuntimeException(String message, Object... args) {
+	super(String.format(message, args));
+    }
 }

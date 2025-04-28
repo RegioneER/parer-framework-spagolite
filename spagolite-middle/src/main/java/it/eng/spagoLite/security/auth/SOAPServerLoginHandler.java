@@ -1,18 +1,14 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna
- * <p/>
- * This program is free software: you can redistribute it and/or modify it under the terms of
- * the GNU Affero General Public License as published by the Free Software Foundation,
- * either version 3 of the License, or (at your option) any later version.
- * <p/>
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Affero General Public License for more details.
- * <p/>
- * You should have received a copy of the GNU Affero General Public License along with this program.
- * If not, see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the License, or (at your option)
+ * any later version. <p/> This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
+ * have received a copy of the GNU Affero General Public License along with this program. If not,
+ * see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.spagoLite.security.auth;
@@ -42,8 +38,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Handler SOAP per un WS Server generico: effettua solo il login (autenticazione con user/password) dell'utente. Si
- * aspetta che i campi user e password siano nell'header come da standard ws security.
+ * Handler SOAP per un WS Server generico: effettua solo il login (autenticazione con user/password)
+ * dell'utente. Si aspetta che i campi user e password siano nell'header come da standard ws
+ * security.
  *
  *
  * @author Quaranta_M
@@ -61,71 +58,73 @@ public class SOAPServerLoginHandler implements SOAPHandler<SOAPMessageContext> {
     @Override
     public boolean handleMessage(SOAPMessageContext msgCtx) {
 
-        Boolean outbound = (Boolean) msgCtx.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-        Object obj = msgCtx.get(MessageContext.SERVLET_REQUEST);
-        String ipAddress = X_FORWARDED_UNDEFINED;
-        if (obj != null && obj instanceof HttpServletRequest) {
-            ipAddress = ((HttpServletRequest) obj).getHeader("X-FORWARDED-FOR");
-        }
-        log.debug("SOAPServerLoginHandler attivato. Client IP Address: " + ipAddress);
-        if (!outbound) {
+	Boolean outbound = (Boolean) msgCtx.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+	Object obj = msgCtx.get(MessageContext.SERVLET_REQUEST);
+	String ipAddress = X_FORWARDED_UNDEFINED;
+	if (obj != null && obj instanceof HttpServletRequest) {
+	    ipAddress = ((HttpServletRequest) obj).getHeader("X-FORWARDED-FOR");
+	}
+	log.debug("SOAPServerLoginHandler attivato. Client IP Address: " + ipAddress);
+	if (!outbound) {
 
-            EntityManager em = null;
-            String username = null;
-            String password = null;
-            try {
-                em = emf.createEntityManager();
-                NodeList usernameEl = (NodeList) msgCtx.getMessage().getSOAPHeader()
-                        .getElementsByTagNameNS(WSSE_XSD_URI, "Username");
-                NodeList passwordEl = (NodeList) msgCtx.getMessage().getSOAPHeader()
-                        .getElementsByTagNameNS(WSSE_XSD_URI, "Password");
-                Node userNode = null;
-                Node passNode = null;
-                if (usernameEl != null && passwordEl != null && (userNode = usernameEl.item(0)) != null
-                        && (passNode = passwordEl.item(0)) != null) {
-                    username = userNode.getFirstChild().getNodeValue();
-                    password = passNode.getFirstChild().getNodeValue();
-                    WSLoginHandler.login(username, password, ipAddress, em);
-                    msgCtx.put(AuthenticationHandlerConstants.AUTHN_STAUTS, java.lang.Boolean.TRUE);
-                    msgCtx.put(AuthenticationHandlerConstants.USER, username);
-                    msgCtx.put(AuthenticationHandlerConstants.PWD, password);
-                } else {
-                    throw new ProtocolException("Username e password sono obbligatorie");
-                }
-            } catch (AuthWSException e) {
-                WSLoginHandler.throwSOAPFault(msgCtx, e);
-            } catch (DOMException | SOAPException e) {
-                throw new ProtocolException(e);
-            } finally {
-                if (em != null) {
-                    em.close();
-                }
-            }
-            msgCtx.setScope(AuthenticationHandlerConstants.AUTHN_STAUTS, MessageContext.Scope.APPLICATION);
-            msgCtx.setScope(AuthenticationHandlerConstants.USER, MessageContext.Scope.APPLICATION);
-            msgCtx.setScope(AuthenticationHandlerConstants.PWD, MessageContext.Scope.APPLICATION);
-        }
-        return true;
+	    EntityManager em = null;
+	    String username = null;
+	    String password = null;
+	    try {
+		em = emf.createEntityManager();
+		NodeList usernameEl = (NodeList) msgCtx.getMessage().getSOAPHeader()
+			.getElementsByTagNameNS(WSSE_XSD_URI, "Username");
+		NodeList passwordEl = (NodeList) msgCtx.getMessage().getSOAPHeader()
+			.getElementsByTagNameNS(WSSE_XSD_URI, "Password");
+		Node userNode = null;
+		Node passNode = null;
+		if (usernameEl != null && passwordEl != null
+			&& (userNode = usernameEl.item(0)) != null
+			&& (passNode = passwordEl.item(0)) != null) {
+		    username = userNode.getFirstChild().getNodeValue();
+		    password = passNode.getFirstChild().getNodeValue();
+		    WSLoginHandler.login(username, password, ipAddress, em);
+		    msgCtx.put(AuthenticationHandlerConstants.AUTHN_STAUTS, java.lang.Boolean.TRUE);
+		    msgCtx.put(AuthenticationHandlerConstants.USER, username);
+		    msgCtx.put(AuthenticationHandlerConstants.PWD, password);
+		} else {
+		    throw new ProtocolException("Username e password sono obbligatorie");
+		}
+	    } catch (AuthWSException e) {
+		WSLoginHandler.throwSOAPFault(msgCtx, e);
+	    } catch (DOMException | SOAPException e) {
+		throw new ProtocolException(e);
+	    } finally {
+		if (em != null) {
+		    em.close();
+		}
+	    }
+	    msgCtx.setScope(AuthenticationHandlerConstants.AUTHN_STAUTS,
+		    MessageContext.Scope.APPLICATION);
+	    msgCtx.setScope(AuthenticationHandlerConstants.USER, MessageContext.Scope.APPLICATION);
+	    msgCtx.setScope(AuthenticationHandlerConstants.PWD, MessageContext.Scope.APPLICATION);
+	}
+	return true;
     }
 
     @Override
     public boolean handleFault(SOAPMessageContext context) {
 
-        return true;
+	return true;
     }
 
     @Override
     public void close(MessageContext context) {
-        // TODO Auto-generated method stub
+	// TODO Auto-generated method stub
 
     }
 
     @Override
     public Set<QName> getHeaders() {
 
-        HashSet<QName> headers = new HashSet<QName>();
-        headers.add(QNAME_WSSE_HEADER);
-        return headers;
+	HashSet<QName> headers = new HashSet<QName>();
+	headers.add(QNAME_WSSE_HEADER);
+	return headers;
     }
 
 }

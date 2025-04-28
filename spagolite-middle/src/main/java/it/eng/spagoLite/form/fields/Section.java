@@ -1,18 +1,14 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna
- * <p/>
- * This program is free software: you can redistribute it and/or modify it under the terms of
- * the GNU Affero General Public License as published by the Free Software Foundation,
- * either version 3 of the License, or (at your option) any later version.
- * <p/>
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Affero General Public License for more details.
- * <p/>
- * You should have received a copy of the GNU Affero General Public License along with this program.
- * If not, see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the License, or (at your option)
+ * any later version. <p/> This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
+ * have received a copy of the GNU Affero General Public License along with this program. If not,
+ * see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.spagoLite.form.fields;
@@ -33,85 +29,85 @@ public class Section extends BaseComponent {
     private boolean editMode;
 
     public Section(Component parent, String name, String description) {
-        super(parent, name, description);
+	super(parent, name, description);
     }
 
     public Section(Component parent, String name, String description, String legend, boolean hidden,
-            boolean borderHidden, boolean showButton, boolean loadOpened, boolean editMode) {
-        super(parent, name, description);
-        this.legend = legend;
-        this.hidden = hidden;
-        this.borderHidden = borderHidden;
-        this.showButton = showButton;
-        this.loadOpened = loadOpened;
-        this.editMode = editMode;
+	    boolean borderHidden, boolean showButton, boolean loadOpened, boolean editMode) {
+	super(parent, name, description);
+	this.legend = legend;
+	this.hidden = hidden;
+	this.borderHidden = borderHidden;
+	this.showButton = showButton;
+	this.loadOpened = loadOpened;
+	this.editMode = editMode;
     }
 
     public String getLegend() {
-        return legend;
+	return legend;
     }
 
     public void setLegend(String legend) {
-        this.legend = legend;
+	this.legend = legend;
     }
 
     public boolean isHidden() {
-        return hidden;
+	return hidden;
     }
 
     public void setHidden(boolean hidden) {
-        this.hidden = hidden;
+	this.hidden = hidden;
     }
 
     public boolean isBorderHidden() {
-        return borderHidden;
+	return borderHidden;
     }
 
     public void setBorderHidden(boolean borderHidden) {
-        this.borderHidden = borderHidden;
+	this.borderHidden = borderHidden;
     }
 
     public boolean isShowButton() {
-        return showButton;
+	return showButton;
     }
 
     public void setShowButton(boolean showButton) {
-        this.showButton = showButton;
+	this.showButton = showButton;
     }
 
     public boolean isLoadOpened() {
-        return loadOpened;
+	return loadOpened;
     }
 
     public void setLoadOpened(boolean loadOpened) {
-        this.loadOpened = loadOpened;
+	this.loadOpened = loadOpened;
     }
 
     public boolean isEditMode() {
-        return editMode;
+	return editMode;
     }
 
     public boolean isViewMode() {
-        return !editMode;
+	return !editMode;
     }
 
     public void setEditMode() {
-        this.editMode = true;
+	this.editMode = true;
     }
 
     public void setViewMode() {
-        this.editMode = false;
+	this.editMode = false;
     }
 
     @Override
     public JSONObject asJSON() throws EMFError {
-        JSONObject json = super.asJSON();
-        try {
-            json.put("type", "Section");
-        } catch (JSONException e) {
-            throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
-        }
-        return json;
+	JSONObject json = super.asJSON();
+	try {
+	    json.put("type", "Section");
+	} catch (JSONException e) {
+	    throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
+	}
+	return json;
     }
 
 }

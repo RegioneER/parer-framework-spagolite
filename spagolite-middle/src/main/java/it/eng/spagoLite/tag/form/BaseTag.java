@@ -1,18 +1,14 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna
- * <p/>
- * This program is free software: you can redistribute it and/or modify it under the terms of
- * the GNU Affero General Public License as published by the Free Software Foundation,
- * either version 3 of the License, or (at your option) any later version.
- * <p/>
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Affero General Public License for more details.
- * <p/>
- * You should have received a copy of the GNU Affero General Public License along with this program.
- * If not, see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the License, or (at your option)
+ * any later version. <p/> This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
+ * have received a copy of the GNU Affero General Public License along with this program. If not,
+ * see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.spagoLite.tag.form;
@@ -42,47 +38,47 @@ public abstract class BaseTag extends TagSupport {
     protected static Logger logger = LoggerFactory.getLogger(BaseTag.class.getName());
 
     protected void write(String htmlStream) throws JspException {
-        try {
-            pageContext.getOut().write(htmlStream);
-        } catch (IOException e) {
-            throw new JspException(e);
-        }
+	try {
+	    pageContext.getOut().write(htmlStream);
+	} catch (IOException e) {
+	    throw new JspException(e);
+	}
     }
 
     protected void writeln(String htmlStream) throws JspException {
-        write(htmlStream + "\n");
+	write(htmlStream + "\n");
     }
 
     protected void write(StringBuilder htmlStream) throws JspException {
-        write(htmlStream.toString());
+	write(htmlStream.toString());
     }
 
     protected void writeln(StringBuilder htmlStream) throws JspException {
-        writeln(htmlStream.toString());
+	writeln(htmlStream.toString());
     }
 
     public Form getForm() {
-        return SessionManager.getForm(pageContext.getSession());
+	return SessionManager.getForm(pageContext.getSession());
     }
 
     public MessageBox getMessageBox() {
-        return SessionManager.getMessageBox(pageContext.getSession());
+	return SessionManager.getMessageBox(pageContext.getSession());
     }
 
     public String getActionName() {
-        return SessionManager.getCurrentAction(pageContext.getSession());
+	return SessionManager.getCurrentAction(pageContext.getSession());
     }
 
     public String getOperationUrl(String operation, String additionalInfo) {
-        return SessionManager.getOperationUrl(pageContext.getSession(), operation, additionalInfo);
+	return SessionManager.getOperationUrl(pageContext.getSession(), operation, additionalInfo);
     }
 
     public IUser getUser() {
-        return SessionManager.getUser(pageContext.getSession());
+	return SessionManager.getUser(pageContext.getSession());
     }
 
     public String getLastPublisher() {
-        return SessionManager.getLastPublisher(pageContext.getSession());
+	return SessionManager.getLastPublisher(pageContext.getSession());
     }
 
 }
