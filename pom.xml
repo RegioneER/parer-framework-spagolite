@@ -474,7 +474,7 @@
                 <artifactId>highlightjs-badgejs</artifactId>
                 <version>${highlightjs-badgejs.version}</version>
             </dependency>
-			<!-- UTILS -->
+            <!-- UTILS -->
             <dependency>
                 <groupId>org.keycloak</groupId>
                 <artifactId>keycloak-servlet-filter-adapter</artifactId>

@@ -59,7 +59,7 @@ public class LoginAction extends ActionBase {
     public void process() throws EMFError {
 	User utente = (User) SessionManager.getUser(getSession());
 	if (utente != null) {
-	    logger.info("Login già effettuato per l'utente " + utente.getUsername());
+	    logger.info("Login giï¿½ effettuato per l'utente " + utente.getUsername());
 	    if (!getRequest().getServletPath().startsWith("/detail")) {
 		redirectToAction("SceltaOrganizzazione.html?clearhistory=true");
 	    }

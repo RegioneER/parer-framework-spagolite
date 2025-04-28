@@ -74,7 +74,7 @@ public abstract class AbstractBaseTable<T extends BaseRowInterface> extends Fram
 
     // MEV #33070 - metodo modificato
     public void goPage(int page) {
-	// Va settato l'indice della pagina corrente su cui andrò ad atterrare che varia
+	// Va settato l'indice della pagina corrente su cui andrï¿½ ad atterrare che varia
 	// a seconda che la chiamata
 	// a questo metodo provenga da una lista paginata o meno.
 	// Es. per una lista paginata lazy con 100 record per pagina, passando da pagina

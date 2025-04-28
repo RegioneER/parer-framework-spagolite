@@ -56,10 +56,10 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
 
     // Messaggi utilizzabili nelle classi derivate nella funziona
     // verificaEsistenzaUtente()
-    protected static final String MSG_TROPPE_OCCORRENZE_UTENTE = "Gentile %s %s, non è autorizzato ad accedere ai nostri sistemi tramite utente SPID con codice fiscale %s, sono state rilevate più occorrenze nel database";
-    protected static final String MSG_UTENTE_NON_AUTORIZZATO = "Gentile %s %s, non è autorizzato ad accedere ai nostri sistemi tramite utente SPID con codice fiscale %s";
-    protected static final String MSG_UTENTE_LIVELLO_AUTH_INADEGUATO = "Gentile %s %s, non è autorizzato ad accedere ai nostri sistemi con codice fiscale %s e livello di autorizzazione %s";
-    protected static final String MSG_UTENTE_SPID_NON_VALIDO = "Gentile %s %s, non è autorizzato ad accedere ai nostri sistemi con questo utente SPID senza codice fiscale";
+    protected static final String MSG_TROPPE_OCCORRENZE_UTENTE = "Gentile %s %s, non ï¿½ autorizzato ad accedere ai nostri sistemi tramite utente SPID con codice fiscale %s, sono state rilevate piï¿½ occorrenze nel database";
+    protected static final String MSG_UTENTE_NON_AUTORIZZATO = "Gentile %s %s, non ï¿½ autorizzato ad accedere ai nostri sistemi tramite utente SPID con codice fiscale %s";
+    protected static final String MSG_UTENTE_LIVELLO_AUTH_INADEGUATO = "Gentile %s %s, non ï¿½ autorizzato ad accedere ai nostri sistemi con codice fiscale %s e livello di autorizzazione %s";
+    protected static final String MSG_UTENTE_SPID_NON_VALIDO = "Gentile %s %s, non ï¿½ autorizzato ad accedere ai nostri sistemi con questo utente SPID senza codice fiscale";
     protected static final String MSG_UTENTE_AGGIUNTIVO_RER = ", contatti helpdeskparer@regione.emilia-romagna.it per accedere.";
     // Inizializza la proprietÃ Â di sistema abilita-livello-1-spid sull AppServer
     protected static boolean abilitaLivello1Spid = System
@@ -79,7 +79,7 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
 	User u = new User();
 	if (verificaSeUtenteSpidValido(principal, u)) {
 	    /**
-	     * SI TRATTA DI UN UTENTE SPID VALIDO! Ed ho già  determinato se RER o PUGLIA
+	     * SI TRATTA DI UN UTENTE SPID VALIDO! Ed ho giï¿½ determinato se RER o PUGLIA
 	     */
 	    List<UtenteDb> l = null;
 	    if (u.getUserType().equals(IUser.UserType.SPID_PUGLIA)) {
@@ -150,7 +150,7 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
 	    }
 	    UtenteDb uDb = getUtentePerUsername(u.getUsername());
 	    /*
-	     * nel caso di DPI il metodo non è ridefinito e la superclasse torna un null che va
+	     * nel caso di DPI il metodo non ï¿½ ridefinito e la superclasse torna un null che va
 	     * controllato!
 	     */
 	    if (uDb != null) {
@@ -168,7 +168,7 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
     }
 
     /*
-     * Determina se un utente è un utente SPID oppure un utente proveniente da un classico IDP
+     * Determina se un utente ï¿½ un utente SPID oppure un utente proveniente da un classico IDP
      * normale Inoltre verifica che se si tratta di un utente RER o PUGLIA e controlla che esista il
      * codice fiscale. Se esiste il codice fiscale in caso di RER verifica i livelli di
      * autenticazione 1 o 2 e solleva un'eccezione opportuna nel caso in cui non sia autorizzata.
@@ -195,8 +195,8 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
 		u.setEmail(emailSpid);
 		u.setUserType(IUser.UserType.SPID_FEDERA);
 		/*
-		 * Se è stato abilitato il livello uno allora autorizza uno dei tre metodi di
-		 * autenticazione 1-2-3 oppure se non è abilitato il livello uno permette solo i
+		 * Se ï¿½ stato abilitato il livello uno allora autorizza uno dei tre metodi di
+		 * autenticazione 1-2-3 oppure se non ï¿½ abilitato il livello uno permette solo i
 		 * livelli 2-3
 		 */
 		if (metodoAutenticazioneSpid != null
