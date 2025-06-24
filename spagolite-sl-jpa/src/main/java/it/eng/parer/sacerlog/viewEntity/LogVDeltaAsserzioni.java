@@ -1,14 +1,18 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version. <p/> This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
- * have received a copy of the GNU Affero General Public License along with this program. If not,
- * see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.parer.sacerlog.viewEntity;
@@ -57,156 +61,156 @@ public class LogVDeltaAsserzioni implements Serializable {
     @Lob
     @Column(name = "BL_VALORE_NEW_CAMPO")
     public String getBlValoreNewCampo() {
-	return this.blValoreNewCampo;
+        return this.blValoreNewCampo;
     }
 
     public void setBlValoreNewCampo(String blValoreNewCampo) {
-	this.blValoreNewCampo = blValoreNewCampo;
+        this.blValoreNewCampo = blValoreNewCampo;
     }
 
     @Lob
     @Column(name = "BL_VALORE_OLD_CAMPO")
     public String getBlValoreOldCampo() {
-	return this.blValoreOldCampo;
+        return this.blValoreOldCampo;
     }
 
     public void setBlValoreOldCampo(String blValoreOldCampo) {
-	this.blValoreOldCampo = blValoreOldCampo;
+        this.blValoreOldCampo = blValoreOldCampo;
     }
 
     @Column(name = "DS_CHIAVE_TIPO_RECORD")
     public String getDsChiaveTipoRecord() {
-	return this.dsChiaveTipoRecord;
+        return this.dsChiaveTipoRecord;
     }
 
     public void setDsChiaveTipoRecord(String dsChiaveTipoRecord) {
-	this.dsChiaveTipoRecord = dsChiaveTipoRecord;
+        this.dsChiaveTipoRecord = dsChiaveTipoRecord;
     }
 
     @Column(name = "DS_VALORE_NEW_CAMPO")
     public String getDsValoreNewCampo() {
-	return this.dsValoreNewCampo;
+        return this.dsValoreNewCampo;
     }
 
     public void setDsValoreNewCampo(String dsValoreNewCampo) {
-	this.dsValoreNewCampo = dsValoreNewCampo;
+        this.dsValoreNewCampo = dsValoreNewCampo;
     }
 
     @Column(name = "DS_VALORE_OLD_CAMPO")
     public String getDsValoreOldCampo() {
-	return this.dsValoreOldCampo;
+        return this.dsValoreOldCampo;
     }
 
     public void setDsValoreOldCampo(String dsValoreOldCampo) {
-	this.dsValoreOldCampo = dsValoreOldCampo;
+        this.dsValoreOldCampo = dsValoreOldCampo;
     }
 
     @Id
     @Column(name = "ID_ASSERZIONE_DELTA_FOTO")
     public BigDecimal getIdAsserzioneDeltaFoto() {
-	return this.idAsserzioneDeltaFoto;
+        return this.idAsserzioneDeltaFoto;
     }
 
     public void setIdAsserzioneDeltaFoto(BigDecimal idAsserzioneDeltaFoto) {
-	this.idAsserzioneDeltaFoto = idAsserzioneDeltaFoto;
+        this.idAsserzioneDeltaFoto = idAsserzioneDeltaFoto;
     }
 
     @Column(name = "ID_OGGETTO")
     public BigDecimal getIdOggetto() {
-	return this.idOggetto;
+        return this.idOggetto;
     }
 
     public void setIdOggetto(BigDecimal idOggetto) {
-	this.idOggetto = idOggetto;
+        this.idOggetto = idOggetto;
     }
 
     @Column(name = "ID_OGGETTO_EVENTO")
     public BigDecimal getIdOggettoEvento() {
-	return this.idOggettoEvento;
+        return this.idOggettoEvento;
     }
 
     public void setIdOggettoEvento(BigDecimal idOggettoEvento) {
-	this.idOggettoEvento = idOggettoEvento;
+        this.idOggettoEvento = idOggettoEvento;
     }
 
     @Column(name = "ID_RECORD")
     public BigDecimal getIdRecord() {
-	return this.idRecord;
+        return this.idRecord;
     }
 
     public void setIdRecord(BigDecimal idRecord) {
-	this.idRecord = idRecord;
+        this.idRecord = idRecord;
     }
 
     @Column(name = "ID_RECORD_PADRE")
     public String getIdRecordPadre() {
-	return this.idRecordPadre;
+        return this.idRecordPadre;
     }
 
     public void setIdRecordPadre(String idRecordPadre) {
-	this.idRecordPadre = idRecordPadre;
+        this.idRecordPadre = idRecordPadre;
     }
 
     @Column(name = "LABEL_CAMPO")
     public String getLabelCampo() {
-	return this.labelCampo;
+        return this.labelCampo;
     }
 
     public void setLabelCampo(String labelCampo) {
-	this.labelCampo = labelCampo;
+        this.labelCampo = labelCampo;
     }
 
     public BigDecimal getLivello() {
-	return this.livello;
+        return this.livello;
     }
 
     public void setLivello(BigDecimal livello) {
-	this.livello = livello;
+        this.livello = livello;
     }
 
     @Column(name = "NM_TIPO_RECORD")
     public String getNmTipoRecord() {
-	return this.nmTipoRecord;
+        return this.nmTipoRecord;
     }
 
     public void setNmTipoRecord(String nmTipoRecord) {
-	this.nmTipoRecord = nmTipoRecord;
+        this.nmTipoRecord = nmTipoRecord;
     }
 
     @Column(name = "\"PATH\"")
     public String getPath() {
-	return this.path;
+        return this.path;
     }
 
     public void setPath(String path) {
-	this.path = path;
+        this.path = path;
     }
 
     @Column(name = "PATH_KEY")
     public String getPathKey() {
-	return this.pathKey;
+        return this.pathKey;
     }
 
     public void setPathKey(String pathKey) {
-	this.pathKey = pathKey;
+        this.pathKey = pathKey;
     }
 
     @Column(name = "TIPO_ASSERZIONE")
     public String getTipoAsserzione() {
-	return this.tipoAsserzione;
+        return this.tipoAsserzione;
     }
 
     public void setTipoAsserzione(String tipoAsserzione) {
-	this.tipoAsserzione = tipoAsserzione;
+        this.tipoAsserzione = tipoAsserzione;
     }
 
     @Column(name = "TIPO_VALORE")
     public String getTipoValore() {
-	return this.tipoValore;
+        return this.tipoValore;
     }
 
     public void setTipoValore(String tipoValore) {
-	this.tipoValore = tipoValore;
+        this.tipoValore = tipoValore;
     }
 
 }

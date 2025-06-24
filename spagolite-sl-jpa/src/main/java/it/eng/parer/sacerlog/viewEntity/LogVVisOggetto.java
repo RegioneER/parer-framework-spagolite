@@ -1,14 +1,18 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version. <p/> This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
- * have received a copy of the GNU Affero General Public License along with this program. If not,
- * see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.parer.sacerlog.viewEntity;
@@ -30,9 +34,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LOG_V_VIS_OGGETTO", schema = "SACER_LOG")
-@NamedQueries({
-	@NamedQuery(name = "LogVVisOggetto.findAll", query = "SELECT l FROM LogVVisOggetto l"),
-	@NamedQuery(name = "LogVVisOggetto.findByAppTipoOggettoId", query = "SELECT l FROM LogVVisOggetto l WHERE l.nmApplic = :nmApplic AND l.nmTipoOggetto = :nmTipoOggetto AND l.idOggetto = :idOggetto") })
+@NamedQueries({ @NamedQuery(name = "LogVVisOggetto.findAll", query = "SELECT l FROM LogVVisOggetto l"),
+        @NamedQuery(name = "LogVVisOggetto.findByAppTipoOggettoId", query = "SELECT l FROM LogVVisOggetto l WHERE l.nmApplic = :nmApplic AND l.nmTipoOggetto = :nmTipoOggetto AND l.idOggetto = :idOggetto") })
 public class LogVVisOggetto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,129 +59,129 @@ public class LogVVisOggetto implements Serializable {
 
     @Column(name = "DS_KEY_OGGETTO")
     public String getDsKeyOggetto() {
-	return this.dsKeyOggetto;
+        return this.dsKeyOggetto;
     }
 
     public void setDsKeyOggetto(String dsKeyOggetto) {
-	this.dsKeyOggetto = dsKeyOggetto;
+        this.dsKeyOggetto = dsKeyOggetto;
     }
 
     @Column(name = "DT_REG_EVENTO")
     public Timestamp getDtRegEvento() {
-	return this.dtRegEvento;
+        return this.dtRegEvento;
     }
 
     public void setDtRegEvento(Timestamp dtRegEvento) {
-	this.dtRegEvento = dtRegEvento;
+        this.dtRegEvento = dtRegEvento;
     }
 
     @Column(name = "ID_APPLIC")
     public BigDecimal getIdApplic() {
-	return this.idApplic;
+        return this.idApplic;
     }
 
     public void setIdApplic(BigDecimal idApplic) {
-	this.idApplic = idApplic;
+        this.idApplic = idApplic;
     }
 
     @Column(name = "ID_EVENTO")
     public BigDecimal getIdEvento() {
-	return this.idEvento;
+        return this.idEvento;
     }
 
     public void setIdEvento(BigDecimal idEvento) {
-	this.idEvento = idEvento;
+        this.idEvento = idEvento;
     }
 
     @Column(name = "ID_OGGETTO")
     public BigDecimal getIdOggetto() {
-	return this.idOggetto;
+        return this.idOggetto;
     }
 
     public void setIdOggetto(BigDecimal idOggetto) {
-	this.idOggetto = idOggetto;
+        this.idOggetto = idOggetto;
     }
 
     @Id
     @Column(name = "ID_OGGETTO_EVENTO")
     public BigDecimal getIdOggettoEvento() {
-	return this.idOggettoEvento;
+        return this.idOggettoEvento;
     }
 
     public void setIdOggettoEvento(BigDecimal idOggettoEvento) {
-	this.idOggettoEvento = idOggettoEvento;
+        this.idOggettoEvento = idOggettoEvento;
     }
 
     @Column(name = "ID_TIPO_OGGETTO")
     public BigDecimal getIdTipoOggetto() {
-	return this.idTipoOggetto;
+        return this.idTipoOggetto;
     }
 
     public void setIdTipoOggetto(BigDecimal idTipoOggetto) {
-	this.idTipoOggetto = idTipoOggetto;
+        this.idTipoOggetto = idTipoOggetto;
     }
 
     @Column(name = "NM_AMBIENTE")
     public String getNmAmbiente() {
-	return this.nmAmbiente;
+        return this.nmAmbiente;
     }
 
     public void setNmAmbiente(String nmAmbiente) {
-	this.nmAmbiente = nmAmbiente;
+        this.nmAmbiente = nmAmbiente;
     }
 
     @Column(name = "NM_APPLIC")
     public String getNmApplic() {
-	return this.nmApplic;
+        return this.nmApplic;
     }
 
     public void setNmApplic(String nmApplic) {
-	this.nmApplic = nmApplic;
+        this.nmApplic = nmApplic;
     }
 
     @Column(name = "NM_ENTE")
     public String getNmEnte() {
-	return this.nmEnte;
+        return this.nmEnte;
     }
 
     public void setNmEnte(String nmEnte) {
-	this.nmEnte = nmEnte;
+        this.nmEnte = nmEnte;
     }
 
     @Column(name = "NM_OGGETTO")
     public String getNmOggetto() {
-	return this.nmOggetto;
+        return this.nmOggetto;
     }
 
     public void setNmOggetto(String nmOggetto) {
-	this.nmOggetto = nmOggetto;
+        this.nmOggetto = nmOggetto;
     }
 
     @Column(name = "NM_STRUTTURA")
     public String getNmStruttura() {
-	return this.nmStruttura;
+        return this.nmStruttura;
     }
 
     public void setNmStruttura(String nmStruttura) {
-	this.nmStruttura = nmStruttura;
+        this.nmStruttura = nmStruttura;
     }
 
     @Column(name = "NM_TIPO_OGGETTO")
     public String getNmTipoOggetto() {
-	return this.nmTipoOggetto;
+        return this.nmTipoOggetto;
     }
 
     public void setNmTipoOggetto(String nmTipoOggetto) {
-	this.nmTipoOggetto = nmTipoOggetto;
+        this.nmTipoOggetto = nmTipoOggetto;
     }
 
     @Column(name = "NM_VERSATORE")
     public String getNmVersatore() {
-	return this.nmVersatore;
+        return this.nmVersatore;
     }
 
     public void setNmVersatore(String nmVersatore) {
-	this.nmVersatore = nmVersatore;
+        this.nmVersatore = nmVersatore;
     }
 
 }

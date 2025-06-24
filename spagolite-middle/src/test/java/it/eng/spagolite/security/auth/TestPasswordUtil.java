@@ -1,14 +1,18 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version. <p/> This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
- * have received a copy of the GNU Affero General Public License along with this program. If not,
- * see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.spagolite.security.auth;
@@ -50,17 +54,17 @@ public class TestPasswordUtil {
 
     @Test
     public void testPasswordWitoutSalt() {
-	String actualPassword = PwdUtil.encodePassword("password");
-	final String expectedPassword = "W6ph5Mm5Pz8GgiULbPgzG37mj9g=";
-	Assertions.assertEquals(expectedPassword, actualPassword);
+        String actualPassword = PwdUtil.encodePassword("password");
+        final String expectedPassword = "W6ph5Mm5Pz8GgiULbPgzG37mj9g=";
+        Assertions.assertEquals(expectedPassword, actualPassword);
     }
 
     @Test
     public void testPasswordWithSalt() {
-	byte[] salt = PwdUtil.decodeUFT8Base64String("7TtONHgKep1bl7wmDGQ5jA==");
-	String actualPassword = PwdUtil.encodePBKDF2Password(salt, "password");
-	final String expectedPassword = "BQ9fmLrh2aNFQGRmtD+jjGiv6UaDKBcKvSzKaVWQ1NcHj8ZELAH1ZZXphSFzHlNJXlMjSIYl0Fd597B1kntbRw==";
-	Assertions.assertEquals(expectedPassword, actualPassword);
+        byte[] salt = PwdUtil.decodeUFT8Base64String("7TtONHgKep1bl7wmDGQ5jA==");
+        String actualPassword = PwdUtil.encodePBKDF2Password(salt, "password");
+        final String expectedPassword = "BQ9fmLrh2aNFQGRmtD+jjGiv6UaDKBcKvSzKaVWQ1NcHj8ZELAH1ZZXphSFzHlNJXlMjSIYl0Fd597B1kntbRw==";
+        Assertions.assertEquals(expectedPassword, actualPassword);
 
     }
 

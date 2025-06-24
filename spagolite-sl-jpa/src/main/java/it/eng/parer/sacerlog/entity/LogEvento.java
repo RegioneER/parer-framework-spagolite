@@ -1,14 +1,18 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version. <p/> This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
- * have received a copy of the GNU Affero General Public License along with this program. If not,
- * see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.parer.sacerlog.entity;
@@ -37,9 +41,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(schema = "SACER_LOG", name = "LOG_EVENTO")
-@NamedQueries({
-	@NamedQuery(name = "LogEvento.findAll", query = "SELECT l FROM LogEvento l"),
-	@NamedQuery(name = "LogEvento.deleteAll", query = "DELETE FROM LogEvento") })
+@NamedQueries({ @NamedQuery(name = "LogEvento.findAll", query = "SELECT l FROM LogEvento l"),
+        @NamedQuery(name = "LogEvento.deleteAll", query = "DELETE FROM LogEvento") })
 public class LogEvento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -64,159 +67,157 @@ public class LogEvento implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_EVENTO_IDEVENTO_GENERATOR")
     @Column(name = "ID_EVENTO")
     public long getIdEvento() {
-	return this.idEvento;
+        return this.idEvento;
     }
 
     public void setIdEvento(long idEvento) {
-	this.idEvento = idEvento;
+        this.idEvento = idEvento;
     }
 
     // @org.eclipse.persistence.annotations.Convert("ORACLE_DATE")
     @Column(name = "DT_REG_EVENTO")
     @Temporal(TemporalType.TIMESTAMP)
     public Calendar getDtRegEvento() {
-	return this.dtRegEvento;
+        return this.dtRegEvento;
     }
 
     public void setDtRegEvento(Calendar dtRegEvento) {
-	this.dtRegEvento = dtRegEvento;
+        this.dtRegEvento = dtRegEvento;
     }
 
     @Column(name = "ID_APPLIC")
     public java.math.BigDecimal getIdApplic() {
-	return this.idApplic;
+        return this.idApplic;
     }
 
     public void setIdApplic(java.math.BigDecimal idApplic) {
-	this.idApplic = idApplic;
+        this.idApplic = idApplic;
     }
 
     @Column(name = "ID_TIPO_EVENTO")
     public java.math.BigDecimal getIdTipoEvento() {
-	return this.idTipoEvento;
+        return this.idTipoEvento;
     }
 
     public void setIdTipoEvento(java.math.BigDecimal idTipoEvento) {
-	this.idTipoEvento = idTipoEvento;
+        this.idTipoEvento = idTipoEvento;
     }
 
     @Column(name = "NM_AZIONE")
     public String getNmAzione() {
-	return this.nmAzione;
+        return this.nmAzione;
     }
 
     public void setNmAzione(String nmAzione) {
-	this.nmAzione = nmAzione;
+        this.nmAzione = nmAzione;
     }
 
     @Column(name = "NM_GENERATORE_AZIONE")
     public String getNmGeneratoreAzione() {
-	return this.nmGeneratoreAzione;
+        return this.nmGeneratoreAzione;
     }
 
     public void setNmGeneratoreAzione(String nmGeneratoreAzione) {
-	this.nmGeneratoreAzione = nmGeneratoreAzione;
+        this.nmGeneratoreAzione = nmGeneratoreAzione;
     }
 
     @Column(name = "TIPO_AZIONE")
     public String getTipoAzione() {
-	return this.tipoAzione;
+        return this.tipoAzione;
     }
 
     public void setTipoAzione(String tipoAzione) {
-	this.tipoAzione = tipoAzione;
+        this.tipoAzione = tipoAzione;
     }
 
     @Column(name = "ID_TRANSAZIONE")
     public java.math.BigDecimal getIdTransazione() {
-	return this.idTransazione;
+        return this.idTransazione;
     }
 
     public void setIdTransazione(java.math.BigDecimal idTransazione) {
-	this.idTransazione = idTransazione;
+        this.idTransazione = idTransazione;
     }
 
     @Column(name = "DS_MOTIVO_SCRIPT")
     public String getDsMotivoScript() {
-	return this.dsMotivoScript;
+        return this.dsMotivoScript;
     }
 
     public void setDsMotivoScript(String dsMotivoScript) {
-	this.dsMotivoScript = dsMotivoScript;
+        this.dsMotivoScript = dsMotivoScript;
     }
 
     // bi-directional many-to-one association to LogAgenteEvento
     @OneToMany(mappedBy = "logEvento", cascade = CascadeType.PERSIST)
     public List<LogAgenteEvento> getLogAgenteEventos() {
-	return this.logAgenteEventos;
+        return this.logAgenteEventos;
     }
 
     public void setLogAgenteEventos(List<LogAgenteEvento> logAgenteEventos) {
-	this.logAgenteEventos = logAgenteEventos;
+        this.logAgenteEventos = logAgenteEventos;
     }
 
     public LogAgenteEvento addLogAgenteEvento(LogAgenteEvento logAgenteEvento) {
-	getLogAgenteEventos().add(logAgenteEvento);
-	logAgenteEvento.setLogEvento(this);
+        getLogAgenteEventos().add(logAgenteEvento);
+        logAgenteEvento.setLogEvento(this);
 
-	return logAgenteEvento;
+        return logAgenteEvento;
     }
 
     public LogAgenteEvento removeLogAgenteEvento(LogAgenteEvento logAgenteEvento) {
-	getLogAgenteEventos().remove(logAgenteEvento);
-	logAgenteEvento.setLogEvento(null);
+        getLogAgenteEventos().remove(logAgenteEvento);
+        logAgenteEvento.setLogEvento(null);
 
-	return logAgenteEvento;
+        return logAgenteEvento;
     }
 
     // bi-directional many-to-one association to LogChiaveAccessoEvento
     @OneToMany(mappedBy = "logEvento", cascade = CascadeType.PERSIST)
     public List<LogChiaveAccessoEvento> getLogChiaveAccessoEventos() {
-	return this.logChiaveAccessoEventos;
+        return this.logChiaveAccessoEventos;
     }
 
     public void setLogChiaveAccessoEventos(List<LogChiaveAccessoEvento> logChiaveAccessoEventos) {
-	this.logChiaveAccessoEventos = logChiaveAccessoEventos;
+        this.logChiaveAccessoEventos = logChiaveAccessoEventos;
     }
 
-    public LogChiaveAccessoEvento addLogChiaveAccessoEvento(
-	    LogChiaveAccessoEvento logChiaveAccessoEvento) {
-	getLogChiaveAccessoEventos().add(logChiaveAccessoEvento);
-	logChiaveAccessoEvento.setLogEvento(this);
+    public LogChiaveAccessoEvento addLogChiaveAccessoEvento(LogChiaveAccessoEvento logChiaveAccessoEvento) {
+        getLogChiaveAccessoEventos().add(logChiaveAccessoEvento);
+        logChiaveAccessoEvento.setLogEvento(this);
 
-	return logChiaveAccessoEvento;
+        return logChiaveAccessoEvento;
     }
 
-    public LogChiaveAccessoEvento removeLogChiaveAccessoEvento(
-	    LogChiaveAccessoEvento logChiaveAccessoEvento) {
-	getLogChiaveAccessoEventos().remove(logChiaveAccessoEvento);
-	logChiaveAccessoEvento.setLogEvento(null);
+    public LogChiaveAccessoEvento removeLogChiaveAccessoEvento(LogChiaveAccessoEvento logChiaveAccessoEvento) {
+        getLogChiaveAccessoEventos().remove(logChiaveAccessoEvento);
+        logChiaveAccessoEvento.setLogEvento(null);
 
-	return logChiaveAccessoEvento;
+        return logChiaveAccessoEvento;
     }
 
     // bi-directional many-to-one association to LogOggettoEvento
     @OneToMany(mappedBy = "logEvento", cascade = CascadeType.PERSIST)
     public List<LogOggettoEvento> getLogOggettoEventos() {
-	return this.logOggettoEventos;
+        return this.logOggettoEventos;
     }
 
     public void setLogOggettoEventos(List<LogOggettoEvento> logOggettoEventos) {
-	this.logOggettoEventos = logOggettoEventos;
+        this.logOggettoEventos = logOggettoEventos;
     }
 
     public LogOggettoEvento addLogOggettoEvento(LogOggettoEvento logOggettoEvento) {
-	getLogOggettoEventos().add(logOggettoEvento);
-	logOggettoEvento.setLogEvento(this);
+        getLogOggettoEventos().add(logOggettoEvento);
+        logOggettoEvento.setLogEvento(this);
 
-	return logOggettoEvento;
+        return logOggettoEvento;
     }
 
     public LogOggettoEvento removeLogOggettoEvento(LogOggettoEvento logOggettoEvento) {
-	getLogOggettoEventos().remove(logOggettoEvento);
-	logOggettoEvento.setLogEvento(null);
+        getLogOggettoEventos().remove(logOggettoEvento);
+        logOggettoEvento.setLogEvento(null);
 
-	return logOggettoEvento;
+        return logOggettoEvento;
     }
 
 }

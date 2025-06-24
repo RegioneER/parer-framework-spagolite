@@ -1,14 +1,18 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version. <p/> This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
- * have received a copy of the GNU Affero General Public License along with this program. If not,
- * see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.parer.sacerlog.entity;
@@ -35,9 +39,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(schema = "SACER_LOG", name = "LOG_AGENTE_EVENTO")
-@NamedQueries({
-	@NamedQuery(name = "LogAgenteEvento.findAll", query = "SELECT l FROM LogAgenteEvento l"),
-	@NamedQuery(name = "LogAgenteEvento.deleteAll", query = "DELETE FROM LogAgenteEvento") })
+@NamedQueries({ @NamedQuery(name = "LogAgenteEvento.findAll", query = "SELECT l FROM LogAgenteEvento l"),
+        @NamedQuery(name = "LogAgenteEvento.deleteAll", query = "DELETE FROM LogAgenteEvento") })
 public class LogAgenteEvento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,40 +57,40 @@ public class LogAgenteEvento implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_AGENTE_EVENTO_IDAGENTEEVENTO_GENERATOR")
     @Column(name = "ID_AGENTE_EVENTO")
     public long getIdAgenteEvento() {
-	return this.idAgenteEvento;
+        return this.idAgenteEvento;
     }
 
     public void setIdAgenteEvento(long idAgenteEvento) {
-	this.idAgenteEvento = idAgenteEvento;
+        this.idAgenteEvento = idAgenteEvento;
     }
 
     @Column(name = "ID_AGENTE")
     public BigDecimal getIdAgente() {
-	return this.idAgente;
+        return this.idAgente;
     }
 
     public void setIdAgente(BigDecimal idAgente) {
-	this.idAgente = idAgente;
+        this.idAgente = idAgente;
     }
 
     @Column(name = "TI_RUOLO_AGENTE_EVENTO")
     public String getTiRuoloAgenteEvento() {
-	return this.tiRuoloAgenteEvento;
+        return this.tiRuoloAgenteEvento;
     }
 
     public void setTiRuoloAgenteEvento(String tiRuoloAgenteEvento) {
-	this.tiRuoloAgenteEvento = tiRuoloAgenteEvento;
+        this.tiRuoloAgenteEvento = tiRuoloAgenteEvento;
     }
 
     // bi-directional many-to-one association to LogEvento
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_EVENTO")
     public LogEvento getLogEvento() {
-	return this.logEvento;
+        return this.logEvento;
     }
 
     public void setLogEvento(LogEvento logEvento) {
-	this.logEvento = logEvento;
+        this.logEvento = logEvento;
     }
 
 }

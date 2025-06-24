@@ -1,14 +1,18 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version. <p/> This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
- * have received a copy of the GNU Affero General Public License along with this program. If not,
- * see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.spagoLite.form.wizard;
@@ -24,36 +28,35 @@ public class Step extends BaseComponent implements WizardElement {
     private boolean current;
     private boolean hidden;
 
-    public Step(Component parent, String name, String description, boolean summary, boolean current,
-	    boolean hidden) {
-	super(parent, name, description);
-	this.summary = summary;
-	this.current = current;
-	this.hidden = hidden;
+    public Step(Component parent, String name, String description, boolean summary, boolean current, boolean hidden) {
+        super(parent, name, description);
+        this.summary = summary;
+        this.current = current;
+        this.hidden = hidden;
     }
 
     public boolean isSummary() {
-	return summary;
+        return summary;
     }
 
     public void setSummary(boolean summary) {
-	this.summary = summary;
+        this.summary = summary;
     }
 
     public boolean isCurrent() {
-	return current;
+        return current;
     }
 
     public void setCurrent(boolean current) {
-	this.current = current;
+        this.current = current;
     }
 
     public boolean isHidden() {
-	return hidden;
+        return hidden;
     }
 
     public void setHidden(boolean hidden) {
-	this.hidden = hidden;
+        this.hidden = hidden;
     }
 
 }

@@ -1,14 +1,18 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version. <p/> This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
- * have received a copy of the GNU Affero General Public License along with this program. If not,
- * see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.parer.sacerlog.entity;
@@ -39,9 +43,8 @@ import org.hibernate.annotations.ColumnTransformer;
  */
 @Entity
 @Table(schema = "SACER_LOG", name = "LOG_DELTA_FOTO")
-@NamedQueries({
-	@NamedQuery(name = "LogDeltaFoto.findAll", query = "SELECT l FROM LogDeltaFoto l"),
-	@NamedQuery(name = "LogDeltaFoto.deleteAll", query = "DELETE FROM LogDeltaFoto") })
+@NamedQueries({ @NamedQuery(name = "LogDeltaFoto.findAll", query = "SELECT l FROM LogDeltaFoto l"),
+        @NamedQuery(name = "LogDeltaFoto.deleteAll", query = "DELETE FROM LogDeltaFoto") })
 public class LogDeltaFoto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -59,53 +62,53 @@ public class LogDeltaFoto implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_DELTA_FOTO_IDDELTAFOTO_GENERATOR")
     @Column(name = "ID_DELTA_FOTO")
     public long getIdDeltaFoto() {
-	return this.idDeltaFoto;
+        return this.idDeltaFoto;
     }
 
     public void setIdDeltaFoto(long idDeltaFoto) {
-	this.idDeltaFoto = idDeltaFoto;
+        this.idDeltaFoto = idDeltaFoto;
     }
 
     @ColumnTransformer(read = "to_clob(columnName)", write = "?")
     @Column(name = "BL_DELTA_FOTO", columnDefinition = "XMLType")
     public String getBlDeltaFoto() {
-	return this.blDeltaFoto;
+        return this.blDeltaFoto;
     }
 
     public void setBlDeltaFoto(String blDeltaFoto) {
-	this.blDeltaFoto = blDeltaFoto;
+        this.blDeltaFoto = blDeltaFoto;
     }
 
     @Column(name = "DT_REG_EVENTO")
     @Temporal(TemporalType.TIMESTAMP)
     public Calendar getDtRegEvento() {
-	return this.dtRegEvento;
+        return this.dtRegEvento;
     }
 
     public void setDtRegEvento(Calendar dtRegEvento) {
-	this.dtRegEvento = dtRegEvento;
+        this.dtRegEvento = dtRegEvento;
     }
 
     // bi-directional many-to-one association to LogOggettoEvento
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_OGGETTO_EVENTO_PREC")
     public LogOggettoEvento getLogOggettoEvento1() {
-	return this.logOggettoEvento1;
+        return this.logOggettoEvento1;
     }
 
     public void setLogOggettoEvento1(LogOggettoEvento logOggettoEvento1) {
-	this.logOggettoEvento1 = logOggettoEvento1;
+        this.logOggettoEvento1 = logOggettoEvento1;
     }
 
     // bi-directional many-to-one association to LogOggettoEvento
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_OGGETTO_EVENTO")
     public LogOggettoEvento getLogOggettoEvento2() {
-	return this.logOggettoEvento2;
+        return this.logOggettoEvento2;
     }
 
     public void setLogOggettoEvento2(LogOggettoEvento logOggettoEvento2) {
-	this.logOggettoEvento2 = logOggettoEvento2;
+        this.logOggettoEvento2 = logOggettoEvento2;
     }
 
 }
