@@ -247,7 +247,7 @@ public class Casting {
 	    throw new EMFError(EMFError.WARNING, "Errore nella validazione della partita IVA");
 	}
 
-	if (piva == "00000000000") {
+	if ("00000000000".equals(piva)) {
 	    throw new EMFError(EMFError.WARNING, "Errore nella validazione della partita IVA");
 	}
 

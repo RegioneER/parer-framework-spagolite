@@ -13,12 +13,15 @@
 
 package it.eng.util.formWriter;
 
-import it.eng.spagoLite.xmlbean.form.Button;
+import java.io.IOException;
+import java.io.Writer;
+
+import org.apache.xmlbeans.XmlCursor;
+
 import it.eng.spagoLite.xmlbean.form.ButtonList;
 import it.eng.spagoLite.xmlbean.form.Element;
 import it.eng.spagoLite.xmlbean.form.Fields;
 import it.eng.spagoLite.xmlbean.form.Form;
-import it.eng.spagoLite.xmlbean.form.Link;
 import it.eng.spagoLite.xmlbean.form.List;
 import it.eng.spagoLite.xmlbean.form.NestedList;
 import it.eng.spagoLite.xmlbean.form.Section;
@@ -27,18 +30,6 @@ import it.eng.spagoLite.xmlbean.form.Tree;
 import it.eng.spagoLite.xmlbean.form.Wizard;
 import it.eng.util.ClassUtil;
 import it.eng.util.SpagoLiteTool;
-
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.io.Writer;
-
-import org.apache.xmlbeans.XmlCursor;
 
 public class FormWriter {
     private String packageName;
@@ -177,38 +168,38 @@ public class FormWriter {
     }
 
     private void writeAdds(Writer writer) throws IOException {
-	XmlCursor cursor = getForm().newCursor();
-	cursor.toFirstChild();
-
-	for (int i = 0;; i++) {
-	    if (cursor.getObject() instanceof Element) {
-		Element field = (Element) cursor.getObject();
-
-		String name = ClassUtil.getClassName(field.getName());
-		writer.write("    addComponent (new " + name + "());\n");
+	try (XmlCursor cursor = getForm().newCursor()) {
+	    if (!cursor.toFirstChild()) {
+		return;
 	    }
-	    if (!cursor.toNextSibling())
-		break;
+	    do {
+		Object obj = cursor.getObject();
+		if (obj instanceof Element) {
+		    Element field = (Element) obj;
+		    String name = ClassUtil.getClassName(field.getName());
+		    writer.write("    addComponent (new " + name + "());\n");
+		}
+	    } while (cursor.toNextSibling());
 	}
     }
 
     private void writeGets(Writer writer) throws IOException {
-	XmlCursor cursor = getForm().newCursor();
-	cursor.toFirstChild();
-	for (int i = 0;; i++) {
-	    if (cursor.getObject() instanceof Element) {
-		Element field = (Element) cursor.getObject();
-		String name = ClassUtil.getClassName(field.getName());
-
-		writer.write("  public " + name + " get" + name + " () {\n");
-		writer.write("    return (" + name + ") getComponent(" + name + ".NAME);\n");
-		writer.write("  }\n");
-		writer.write("\n");
+	try (XmlCursor cursor = getForm().newCursor()) {
+	    if (!cursor.toFirstChild()) {
+		return;
 	    }
+	    do {
+		Object obj = cursor.getObject();
+		if (obj instanceof Element) {
+		    Element field = (Element) obj;
+		    String name = ClassUtil.getClassName(field.getName());
 
-	    if (!cursor.toNextSibling())
-		break;
-
+		    writer.write("  public " + name + " get" + name + " () {\n");
+		    writer.write("    return (" + name + ") getComponent(" + name + ".NAME);\n");
+		    writer.write("  }\n");
+		    writer.write("\n");
+		}
+	    } while (cursor.toNextSibling());
 	}
     }
 

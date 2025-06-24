@@ -13,14 +13,16 @@
 
 package it.eng.spagoLite.form.base;
 
-import it.eng.spagoCore.error.EMFError;
-import it.eng.spagoCore.util.JavaScript;
-import it.eng.spagoLite.FrameElement;
-import it.eng.spagoLite.form.Component;
+import java.util.Objects;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.dom4j.Element;
+
+import it.eng.spagoCore.error.EMFError;
+import it.eng.spagoCore.util.JavaScript;
+import it.eng.spagoLite.FrameElement;
+import it.eng.spagoLite.form.Component;
 
 public class BaseComponent extends FrameElement implements Component {
 
@@ -81,11 +83,14 @@ public class BaseComponent extends FrameElement implements Component {
 
     @Override
     public boolean equals(Object obj) {
-	if (obj.getClass().getName().equals(getClass().getName())) {
-	    return ((Component) obj).getName().equals(getName());
-	} else {
+	if (this == obj) {
+	    return true;
+	}
+	if (obj == null || getClass() != obj.getClass()) {
 	    return false;
 	}
+	BaseComponent other = (BaseComponent) obj;
+	return Objects.equals(this.name, other.name);
     }
 
 }

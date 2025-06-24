@@ -17,6 +17,7 @@ import it.eng.spagoLite.db.base.table.LazyListBean;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 
+@Deprecated(forRemoval = true, since = "LazyListHelper")
 public class PaginatorInterceptor {
 
     private static ThreadLocal<LazyListBean> tLocalLazyList = new ThreadLocal<>();

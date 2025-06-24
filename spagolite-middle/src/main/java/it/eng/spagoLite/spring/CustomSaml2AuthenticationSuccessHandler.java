@@ -164,7 +164,15 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
 	SessionManager.setUser(request.getSession(), u);
 	saml2Auth.setDetails(u);
 	// REDIRIGE per esempio su /verso
-	response.sendRedirect(request.getContextPath() + "/Login.html");
+	response.sendRedirect(getSendRedirectForLogin(request));
+    }
+
+    /*
+     * Restituisce l'url di reindirizzamento per il login. Da ridefinire nelle classi derivate
+     * qualora il default non andasse bene.
+     */
+    protected String getSendRedirectForLogin(HttpServletRequest request) {
+	return request.getContextPath() + "/Login.html";
     }
 
     /*

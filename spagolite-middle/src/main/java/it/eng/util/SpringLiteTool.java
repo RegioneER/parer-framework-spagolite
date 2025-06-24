@@ -53,57 +53,6 @@ public class SpringLiteTool {
 	this.formPackage = formPackage;
     }
 
-    // private void writeAction(FileWriter fileWriter, String path) {
-    // List<File> actionFiles = FileSystemUtil.getFileList(path, "java",
-    // FileSystemUtil.EXLUDE_PATH);
-    // for (File file : actionFiles) {
-    // String fullClassName = file.getPath().substring(
-    // new File(srcPath).getPath().length() + 1);
-    // fullClassName = fullClassName.substring(0, fullClassName.length()
-    // - ".java".length());
-    // fullClassName = fullClassName.replace("\\", ".");
-    //
-    // String className = fullClassName.substring(fullClassName
-    // .lastIndexOf(".") + 1);
-    //
-    // try {
-    // Class.forName(fullClassName).newInstance();
-    // fileWriter.write(" <action name=\""
-    // + ClassUtil.getConstantName(className) + "\" class=\""
-    // + fullClassName + "\" scope=\"REQUEST\" />\n");
-    // } catch (Throwable e) {
-    // }
-    // }
-    // }
-    //
-    // private void writePublisher(List<File> jspFiles) throws IOException {
-    //
-    // FileWriter fileWriter = new FileWriter(confPath + "/publishers.xml");
-    // fileWriter.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
-    // fileWriter
-    // .write("<publishers
-    // xmlns=\"http://www.spagoLite.eng.it/spagoLite/publishers\"
-    // xmlns:xsi=\"http://www.w3.org/2001/XMLSchema\">\n");
-    // for (File file : jspFiles) {
-    // String name = file.getName().substring(0,
-    // file.getName().length() - ".jsp".length());
-    // fileWriter.write(" <publisher name=\""
-    // + ClassUtil.getConstantName(name) + "_PUBLISHER\">\n");
-    // fileWriter
-    // .write(" <rendering channel=\"HTTP\" type=\"JSP\" mode=\"FORWARD\">\n");
-    // fileWriter.write(" <resources>\n");
-    // fileWriter.write(" <item prog=\"0\" resource=\""
-    // + file.getPath().substring(5).replace("\\", "/")
-    // + "\" />\n");
-    // fileWriter.write(" </resources>\n");
-    // fileWriter.write(" </rendering>\n");
-    // fileWriter.write(" </publisher>\n");
-    // }
-    //
-    // fileWriter.write("</publishers>\n");
-    // fileWriter.close();
-    // }
-
     public void run() {
 	try {
 	    List<File> files = null;
@@ -125,18 +74,19 @@ public class SpringLiteTool {
 		String formFileName = ClassUtil.getFormFileName(srcPath, getFormPackage(), file);
 
 		// Action
-		FileWriter actionFileWriter = new FileWriter(actionFileName);
-		ActionWriter actionWriter = new ActionWriter(getActionPackage(), actionClassName,
-			getFormPackage(), formClassName, formDocument.getForm(), userPackage);
-		actionWriter.write(actionFileWriter);
-		actionFileWriter.close();
+		try (FileWriter actionFileWriter = new FileWriter(actionFileName)) {
+		    ActionWriter actionWriter = new ActionWriter(getActionPackage(),
+			    actionClassName, getFormPackage(), formClassName,
+			    formDocument.getForm(), userPackage);
+		    actionWriter.write(actionFileWriter);
+		}
 
 		// Form
-		FileWriter formFileWriter = new FileWriter(formFileName);
-		FormWriter formWriter = new FormWriter(getFormPackage(), formClassName,
-			formDocument.getForm());
-		formWriter.write(formFileWriter);
-		formFileWriter.close();
+		try (FileWriter formFileWriter = new FileWriter(formFileName)) {
+		    FormWriter formWriter = new FormWriter(getFormPackage(), formClassName,
+			    formDocument.getForm());
+		    formWriter.write(formFileWriter);
+		}
 
 	    }
 

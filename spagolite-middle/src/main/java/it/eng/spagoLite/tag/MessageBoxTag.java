@@ -13,21 +13,17 @@
 
 package it.eng.spagoLite.tag;
 
+import javax.servlet.jsp.JspException;
+
 import it.eng.spagoLite.message.Message;
 import it.eng.spagoLite.message.Message.MessageLevel;
 import it.eng.spagoLite.message.MessageBox;
 import it.eng.spagoLite.message.MessageBox.ViewMode;
 import it.eng.spagoLite.tag.form.BaseTag;
 
-import javax.servlet.jsp.JspException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class MessageBoxTag extends BaseTag {
 
     private static final long serialVersionUID = 1L;
-
-    private static final Logger Logger = LoggerFactory.getLogger(MessageBoxTag.class);
 
     @Override
     public int doStartTag() throws JspException {

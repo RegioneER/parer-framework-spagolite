@@ -60,79 +60,93 @@ public class WizardWriter {
     private void writeConstants(Writer writer) throws IOException {
 	writer.write("\n");
 
-	XmlCursor cursor = wizard.newCursor();
-	cursor.toFirstChild();
-	for (int i = 0;; i++) {
-	    WizardElementWriter wizardElementWriter = null;
-	    if (cursor.getObject() instanceof Step) {
-		wizardElementWriter = new StepWriter((Step) cursor.getObject(), i);
+	try (XmlCursor cursor = wizard.newCursor()) {
+	    if (cursor.toFirstChild()) {
+		int i = 0;
+		do {
+		    WizardElementWriter wizardElementWriter = null;
+		    if (cursor.getObject() instanceof Step) {
+			wizardElementWriter = new StepWriter((Step) cursor.getObject(), i);
 
-	    } else if (cursor.getObject() instanceof EndPage) {
-		wizardElementWriter = new EndPageWriter((EndPage) cursor.getObject());
-	    }
-	    wizardElementWriter.writeConstant(writer);
+		    } else if (cursor.getObject() instanceof EndPage) {
+			wizardElementWriter = new EndPageWriter((EndPage) cursor.getObject());
+		    }
 
-	    if (!cursor.toNextSibling()) {
-		break;
+		    if (wizardElementWriter != null) {
+			wizardElementWriter.writeConstant(writer);
+		    }
+		    i++;
+		} while (cursor.toNextSibling());
 	    }
 	}
 
 	writer.write("\n");
-	cursor = wizard.newCursor();
-	cursor.toFirstChild();
-	for (int i = 0;; i++) {
-	    WizardElementWriter wizardElementWriter = null;
-	    if (cursor.getObject() instanceof Step) {
-		wizardElementWriter = new StepWriter((Step) cursor.getObject(), i);
 
-	    } else if (cursor.getObject() instanceof EndPage) {
-		wizardElementWriter = new EndPageWriter((EndPage) cursor.getObject());
-	    }
+	try (XmlCursor cursor = wizard.newCursor()) {
+	    if (cursor.toFirstChild()) {
+		int i = 0;
+		do {
+		    WizardElementWriter wizardElementWriter = null;
+		    if (cursor.getObject() instanceof Step) {
+			wizardElementWriter = new StepWriter((Step) cursor.getObject(), i);
 
-	    wizardElementWriter.writeConstantFull(writer);
+		    } else if (cursor.getObject() instanceof EndPage) {
+			wizardElementWriter = new EndPageWriter((EndPage) cursor.getObject());
+		    }
 
-	    if (!cursor.toNextSibling()) {
-		break;
+		    if (wizardElementWriter != null) {
+			wizardElementWriter.writeConstantFull(writer);
+		    }
+		    i++;
+		} while (cursor.toNextSibling());
 	    }
 	}
     }
 
     private void writeAdds(Writer writer) throws IOException {
 	writer.write("\n");
-	XmlCursor cursor = wizard.newCursor();
-	cursor.toFirstChild();
-	for (int i = 0;; i++) {
-	    WizardElementWriter wizardElementWriter = null;
-	    if (cursor.getObject() instanceof Step) {
-		wizardElementWriter = new StepWriter((Step) cursor.getObject(), i);
 
-	    } else if (cursor.getObject() instanceof EndPage) {
-		wizardElementWriter = new EndPageWriter((EndPage) cursor.getObject());
-	    }
-	    wizardElementWriter.writeAdd(writer);
+	try (XmlCursor cursor = wizard.newCursor()) {
+	    if (cursor.toFirstChild()) {
+		int i = 0;
+		do {
+		    WizardElementWriter wizardElementWriter = null;
+		    if (cursor.getObject() instanceof Step) {
+			wizardElementWriter = new StepWriter((Step) cursor.getObject(), i);
 
-	    if (!cursor.toNextSibling()) {
-		break;
+		    } else if (cursor.getObject() instanceof EndPage) {
+			wizardElementWriter = new EndPageWriter((EndPage) cursor.getObject());
+		    }
+
+		    if (wizardElementWriter != null) {
+			wizardElementWriter.writeAdd(writer);
+		    }
+		    i++;
+		} while (cursor.toNextSibling());
 	    }
 	}
     }
 
     private void writeGets(Writer writer) throws IOException {
 	writer.write("\n");
-	XmlCursor cursor = wizard.newCursor();
-	cursor.toFirstChild();
-	for (int i = 0;; i++) {
-	    WizardElementWriter wizardElementWriter = null;
-	    if (cursor.getObject() instanceof Step) {
-		wizardElementWriter = new StepWriter((Step) cursor.getObject(), i);
 
-	    } else if (cursor.getObject() instanceof EndPage) {
-		wizardElementWriter = new EndPageWriter((EndPage) cursor.getObject());
-	    }
-	    wizardElementWriter.writeGet(writer);
+	try (XmlCursor cursor = wizard.newCursor()) {
+	    if (cursor.toFirstChild()) {
+		int i = 0;
+		do {
+		    WizardElementWriter wizardElementWriter = null;
+		    if (cursor.getObject() instanceof Step) {
+			wizardElementWriter = new StepWriter((Step) cursor.getObject(), i);
 
-	    if (!cursor.toNextSibling()) {
-		break;
+		    } else if (cursor.getObject() instanceof EndPage) {
+			wizardElementWriter = new EndPageWriter((EndPage) cursor.getObject());
+		    }
+
+		    if (wizardElementWriter != null) {
+			wizardElementWriter.writeGet(writer);
+		    }
+		    i++;
+		} while (cursor.toNextSibling());
 	    }
 	}
     }

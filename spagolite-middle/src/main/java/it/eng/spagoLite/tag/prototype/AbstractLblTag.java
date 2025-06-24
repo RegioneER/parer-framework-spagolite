@@ -28,21 +28,12 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
 
     private static final long serialVersionUID = 1L;
 
-    private String label;
     private boolean editable;
     private String width;
     private String labelWidth;
     private String controlwidth;
     private String position;
     private String labelPosition;
-
-    public String getLabel() {
-	return label;
-    }
-
-    public void setLabel(String label) {
-	this.label = label;
-    }
 
     public boolean isEditable() {
 	return editable;
@@ -128,13 +119,8 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
 		? "slLabel " + getLabelWidth()
 		: "slLabelRight " + getLabelWidth();
 
-	if (isEditable()) {
-	    writeln(" <label for=\"" + getId() + "\" class=\"" + className + "\">" + label
-		    + "</label>");
-	} else {
-	    writeln(" <label for=\"" + getId() + "\" class=\"" + className + "\">" + label
-		    + "</label>");
-	}
+	writeln(" <label for=\"" + getId() + "\" class=\"" + className + "\">" + label
+		+ "</label>");
     }
 
     /**

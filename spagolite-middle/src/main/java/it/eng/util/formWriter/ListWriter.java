@@ -85,51 +85,48 @@ public class ListWriter {
     private void writeConstants(Writer writer) throws IOException {
 	writer.write("\n");
 
-	XmlCursor cursor = list.newCursor();
-	cursor.toFirstChild();
-	for (int i = 0;; i++) {
-	    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-	    fieldWriter.writeConstant(writer);
-
-	    if (!cursor.toNextSibling())
-		break;
+	try (XmlCursor cursor = list.newCursor()) {
+	    if (cursor.toFirstChild()) {
+		do {
+		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+		    fieldWriter.writeConstant(writer);
+		} while (cursor.toNextSibling());
+	    }
 	}
 
 	writer.write("\n");
-	cursor = list.newCursor();
-	cursor.toFirstChild();
-	for (int i = 0;; i++) {
-	    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-	    fieldWriter.writeConstantFull(writer);
 
-	    if (!cursor.toNextSibling())
-		break;
+	try (XmlCursor cursor = list.newCursor()) {
+	    if (cursor.toFirstChild()) {
+		do {
+		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+		    fieldWriter.writeConstantFull(writer);
+		} while (cursor.toNextSibling());
+	    }
 	}
     }
 
     private void writeAdds(Writer writer) throws IOException {
 	writer.write("\n");
-	XmlCursor cursor = list.newCursor();
-	cursor.toFirstChild();
-	for (int i = 0;; i++) {
-	    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-	    fieldWriter.writeAdd(writer);
-
-	    if (!cursor.toNextSibling())
-		break;
+	try (XmlCursor cursor = list.newCursor()) {
+	    if (cursor.toFirstChild()) {
+		do {
+		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+		    fieldWriter.writeAdd(writer);
+		} while (cursor.toNextSibling());
+	    }
 	}
     }
 
     private void writeGets(Writer writer) throws IOException {
 	writer.write("\n");
-	XmlCursor cursor = list.newCursor();
-	cursor.toFirstChild();
-	for (int i = 0;; i++) {
-	    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-	    fieldWriter.writeGet(writer);
-
-	    if (!cursor.toNextSibling())
-		break;
+	try (XmlCursor cursor = list.newCursor()) {
+	    if (cursor.toFirstChild()) {
+		do {
+		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+		    fieldWriter.writeGet(writer);
+		} while (cursor.toNextSibling());
+	    }
 	}
     }
 }

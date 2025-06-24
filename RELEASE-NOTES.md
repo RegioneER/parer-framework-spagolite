@@ -1,4 +1,4 @@
-## 7.1.0 (15-04-2025)
+## 7.1.1 (24-06-2025)
 
-### Novità: 1
-- [#37617](https://parermine.regione.emilia-romagna.it/issues/37617) Aggiornamento librerie obsolete primo quadrimestre 2025
+### Bugfix: 1
+- [#38338](https://parermine.regione.emilia-romagna.it/issues/38338) Correzione join di allineamento organizzazioni

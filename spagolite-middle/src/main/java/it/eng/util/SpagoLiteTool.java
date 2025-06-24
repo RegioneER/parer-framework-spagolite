@@ -90,25 +90,26 @@ public class SpagoLiteTool {
 
     private void writePublisher(List<File> jspFiles) throws IOException {
 
-	FileWriter fileWriter = new FileWriter(confPath + "/publishers.xml");
-	fileWriter.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
-	fileWriter.write(
-		"<publishers xmlns=\"http://www.spagoLite.eng.it/spagoLite/publishers\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema\">\n");
-	for (File file : jspFiles) {
-	    String name = file.getName().substring(0, file.getName().length() - ".jsp".length());
+	try (FileWriter fileWriter = new FileWriter(confPath + "/publishers.xml")) {
+	    fileWriter.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
 	    fileWriter.write(
-		    " <publisher name=\"" + ClassUtil.getConstantName(name) + "_PUBLISHER\">\n");
-	    fileWriter.write("  <rendering channel=\"HTTP\" type=\"JSP\" mode=\"FORWARD\">\n");
-	    fileWriter.write("   <resources>\n");
-	    fileWriter.write("    <item prog=\"0\" resource=\""
-		    + file.getPath().substring(5).replace("\\", "/") + "\" />\n");
-	    fileWriter.write("   </resources>\n");
-	    fileWriter.write("  </rendering>\n");
-	    fileWriter.write(" </publisher>\n");
-	}
+		    "<publishers xmlns=\"http://www.spagoLite.eng.it/spagoLite/publishers\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema\">\n");
+	    for (File file : jspFiles) {
+		String name = file.getName().substring(0,
+			file.getName().length() - ".jsp".length());
+		fileWriter.write(" <publisher name=\"" + ClassUtil.getConstantName(name)
+			+ "_PUBLISHER\">\n");
+		fileWriter.write("  <rendering channel=\"HTTP\" type=\"JSP\" mode=\"FORWARD\">\n");
+		fileWriter.write("   <resources>\n");
+		fileWriter.write("    <item prog=\"0\" resource=\""
+			+ file.getPath().substring(5).replace("\\", "/") + "\" />\n");
+		fileWriter.write("   </resources>\n");
+		fileWriter.write("  </rendering>\n");
+		fileWriter.write(" </publisher>\n");
+	    }
 
-	fileWriter.write("</publishers>\n");
-	fileWriter.close();
+	    fileWriter.write("</publishers>\n");
+	}
     }
 
     public void run() {
@@ -131,19 +132,19 @@ public class SpagoLiteTool {
 		String formFileName = ClassUtil.getFormFileName(srcPath, getFormPackage(), file);
 
 		// Action
-		FileWriter actionFileWriter = new FileWriter(actionFileName);
-		ActionWriter actionWriter = new ActionWriter(getActionPackage(), actionClassName,
-			getFormPackage(), formClassName, formDocument.getForm(), null);
-		actionWriter.write(actionFileWriter);
-		actionFileWriter.close();
+		try (FileWriter actionFileWriter = new FileWriter(actionFileName)) {
+		    ActionWriter actionWriter = new ActionWriter(getActionPackage(),
+			    actionClassName, getFormPackage(), formClassName,
+			    formDocument.getForm(), null);
+		    actionWriter.write(actionFileWriter);
+		}
 
 		// Form
-		FileWriter formFileWriter = new FileWriter(formFileName);
-		FormWriter formWriter = new FormWriter(getFormPackage(), formClassName,
-			formDocument.getForm());
-		formWriter.write(formFileWriter);
-		formFileWriter.close();
-
+		try (FileWriter formFileWriter = new FileWriter(formFileName)) {
+		    FormWriter formWriter = new FormWriter(getFormPackage(), formClassName,
+			    formDocument.getForm());
+		    formWriter.write(formFileWriter);
+		}
 	    }
 
 	    // File di configurazioni
@@ -154,27 +155,27 @@ public class SpagoLiteTool {
 
 	    // Write actions.xml
 	    System.out.println("Write actions.xml");
-	    FileWriter fileWriter = new FileWriter(confPath + "/actions.xml");
-	    fileWriter.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
-	    fileWriter.write(
-		    "<actions xmlns=\"http://www.spagoLite.eng.it/spagoLite/action\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema\">\n");
-	    fileWriter.write(
-		    " <action name=\"REDIRECT_ACTION\" class=\"it.eng.spagoLite.actions.RedirectAction\" scope=\"REQUEST\" />\n");
-	    writeAction(fileWriter, getActionPath());
-	    writeAction(fileWriter, getActionRerPath());
-	    fileWriter.write("</actions>\n");
-	    fileWriter.close();
 
+	    try (FileWriter fileWriter = new FileWriter(confPath + "/actions.xml")) {
+		fileWriter.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+		fileWriter.write(
+			"<actions xmlns=\"http://www.spagoLite.eng.it/spagoLite/action\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema\">\n");
+		fileWriter.write(
+			" <action name=\"REDIRECT_ACTION\" class=\"it.eng.spagoLite.actions.RedirectAction\" scope=\"REQUEST\" />\n");
+		writeAction(fileWriter, getActionPath());
+		writeAction(fileWriter, getActionRerPath());
+		fileWriter.write("</actions>\n");
+	    }
 	    // Get Jsp
 	    System.out.println("Write publisher.xml");
 	    writePublisher(jspFiles);
 
-	    FileWriter writer = new FileWriter(
-		    ClassUtil.getConstantFileName(srcPath, getGenPackage()));
-	    ConstantWriter constantWriter = new ConstantWriter(getGenPackage(), actionPath,
-		    actionFiles, jspFiles);
-	    constantWriter.write(writer);
-	    writer.close();
+	    try (FileWriter writer = new FileWriter(
+		    ClassUtil.getConstantFileName(srcPath, getGenPackage()))) {
+		ConstantWriter constantWriter = new ConstantWriter(getGenPackage(), actionPath,
+			actionFiles, jspFiles);
+		constantWriter.write(writer);
+	    }
 
 	} catch (IOException | XmlException e) {
 	    e.printStackTrace();

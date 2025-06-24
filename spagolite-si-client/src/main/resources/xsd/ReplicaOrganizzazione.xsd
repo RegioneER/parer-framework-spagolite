@@ -39,7 +39,7 @@
     <xs:complexType name="tipoDato">
         <xs:sequence>
             <xs:element name="dsTipoDato" type="xs:string" minOccurs="1"/>
-            <xs:element name="idTipoDatoApplic" type="xs:int" minOccurs="1"/>
+            <xs:element name="idTipoDatoApplic" type="xs:long" minOccurs="1"/>
             <xs:element name="nmClasseTipoDato" type="xs:string" minOccurs="1"/>
             <xs:element name="nmTipoDato" type="xs:string" minOccurs="1"/>
         </xs:sequence>

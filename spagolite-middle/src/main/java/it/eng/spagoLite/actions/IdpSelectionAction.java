@@ -29,7 +29,7 @@ public class IdpSelectionAction {
     @GetMapping(path = "/discovery")
     public String handler(Model model, HttpServletRequest request) {
 	/*
-	 * Anche questa ï¿½ un workaround perchï¿½ all'atto del logout da keycloak il logout veniva
+	 * Anche questa è un workaround perché all'atto del logout da keycloak il logout veniva
 	 * fatto ma mi reindirizzava dono un http 302 verso /discovery?error !!!
 	 *
 	 * Quindi intercettando il parametro che contiene "" capisco che devo mandarlo nella pagina
@@ -64,7 +64,7 @@ public class IdpSelectionAction {
 		al.sort(Comparator.comparing(idpBean -> idpBean.getIdpEntityId()));
 		request.setAttribute("idps", al);
 	    }
-	    // Se il discovery ï¿½ disabilitato va direttamente all'idp con il registrationId
+	    // Se il discovery è disabilitato va direttamente all'idp con il registrationId
 	    // configurato con "nomeApplicazione" (es.: saceriam)
 	    if (System.getProperty("discovery-service-enabled", "true").equals("false")) {
 		return "redirect:/saml2/authenticate/" + nomeApplicazione;

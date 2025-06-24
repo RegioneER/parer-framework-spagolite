@@ -50,7 +50,7 @@ public class SOAPServerLoginHandler2 implements SOAPHandler<SOAPMessageContext> 
 
     private static Logger log = LoggerFactory.getLogger(SOAPServerLoginHandler2.class);
 
-    private static final String X_FORWARDED_UNDEFINED = "l'header http x-forwarded non ï¿½ definito";
+    private static final String X_FORWARDED_UNDEFINED = "l'header http x-forwarded non è definito";
 
     @PersistenceUnit
     private EntityManagerFactory emf;

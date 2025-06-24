@@ -43,7 +43,7 @@
                                             <div style="border: 1px solid grey; border-radius: 5px; border-opacity: 0.6;">
                                                 <a href="<c:url value="${b.link}"/>">
                                                     <img src="<%=request.getContextPath()%>/img/LogoIdp.png" alt="Logo" width="340px" height="85px"/>
-                                                </a>  
+                                                </a>
                                             </div>
                                         </c:if>
                                         <c:if test="${not fn:contains(b.idpEntityId, '.lepida.it') and fn:contains(b.idpEntityId, 'localhost:')}">

@@ -56,55 +56,52 @@ public class TabWriter {
     private void writeConstants(Writer writer) throws IOException {
 	writer.write("\n");
 
-	XmlCursor cursor = Tab.newCursor();
-	cursor.toFirstChild();
-	for (int i = 0;; i++) {
-	    TabElementWriter TabElementWriter = new TabElementWriter(
-		    (TabElement) cursor.getObject());
-	    TabElementWriter.writeConstant(writer);
-
-	    if (!cursor.toNextSibling())
-		break;
+	try (XmlCursor cursor = Tab.newCursor()) {
+	    if (cursor.toFirstChild()) {
+		do {
+		    TabElementWriter TabElementWriter = new TabElementWriter(
+			    (TabElement) cursor.getObject());
+		    TabElementWriter.writeConstant(writer);
+		} while (cursor.toNextSibling());
+	    }
 	}
 
 	writer.write("\n");
-	cursor = Tab.newCursor();
-	cursor.toFirstChild();
-	for (int i = 0;; i++) {
-	    TabElementWriter TabElementWriter = new TabElementWriter(
-		    (TabElement) cursor.getObject());
-	    TabElementWriter.writeConstantFull(writer);
 
-	    if (!cursor.toNextSibling())
-		break;
+	try (XmlCursor cursor = Tab.newCursor()) {
+	    if (cursor.toFirstChild()) {
+		do {
+		    TabElementWriter TabElementWriter = new TabElementWriter(
+			    (TabElement) cursor.getObject());
+		    TabElementWriter.writeConstantFull(writer);
+		} while (cursor.toNextSibling());
+	    }
 	}
     }
 
     private void writeAdds(Writer writer) throws IOException {
 	writer.write("\n");
-	XmlCursor cursor = Tab.newCursor();
-	cursor.toFirstChild();
-	for (int i = 0;; i++) {
-	    TabElementWriter TabElementWriter = new TabElementWriter(
-		    (TabElement) cursor.getObject());
-	    TabElementWriter.writeAdd(writer);
-
-	    if (!cursor.toNextSibling())
-		break;
+	try (XmlCursor cursor = Tab.newCursor()) {
+	    if (cursor.toFirstChild()) {
+		do {
+		    TabElementWriter TabElementWriter = new TabElementWriter(
+			    (TabElement) cursor.getObject());
+		    TabElementWriter.writeAdd(writer);
+		} while (cursor.toNextSibling());
+	    }
 	}
     }
 
     private void writeGets(Writer writer) throws IOException {
 	writer.write("\n");
-	XmlCursor cursor = Tab.newCursor();
-	cursor.toFirstChild();
-	for (int i = 0;; i++) {
-	    TabElementWriter TabElementWriter = new TabElementWriter(
-		    (TabElement) cursor.getObject());
-	    TabElementWriter.writeGet(writer);
-
-	    if (!cursor.toNextSibling())
-		break;
+	try (XmlCursor cursor = Tab.newCursor()) {
+	    if (cursor.toFirstChild()) {
+		do {
+		    TabElementWriter TabElementWriter = new TabElementWriter(
+			    (TabElement) cursor.getObject());
+		    TabElementWriter.writeGet(writer);
+		} while (cursor.toNextSibling());
+	    }
 	}
     }
 }

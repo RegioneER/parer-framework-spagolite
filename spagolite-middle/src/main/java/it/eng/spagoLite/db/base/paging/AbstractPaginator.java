@@ -93,11 +93,11 @@ public abstract class AbstractPaginator implements IPaginator {
 
     private void updateTableAfterInvoke(BaseTableInterface<?> oldTable,
 	    BaseTableInterface<?> newTable) {
-	// dopo la chiamata "invoke" il table bean ï¿½ stato rigenerato
+	// dopo la chiamata "invoke" il table bean è stato rigenerato
 	// Setto il page size come prima dell'invocazione
 	newTable.setPageSize(oldTable.getPageSize());
 	// Aggiungo tra le property della tabella la regola che ho utilizzato
-	// per ordinare, sarï¿½ letta dal ListTag per il rendering della lista
+	// per ordinare, sarà letta dal ListTag per il rendering della lista
 	if (oldTable.getLastSortingRule() != null) {
 	    newTable.addSortingRule(oldTable.getLastSortingRule().getColumnName(),
 		    oldTable.getLastSortingRule().getSortType());

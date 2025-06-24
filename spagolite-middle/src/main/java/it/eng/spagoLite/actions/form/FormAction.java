@@ -137,8 +137,7 @@ public abstract class FormAction<T extends Form, U extends IUser<?>> extends Act
 	try {
 	    res = getResponse().getOutputStream();
 	} catch (IOException e) {
-	    new EMFError(EMFError.WARNING, "Errore di Ingresso/Uscita", e);
-
+	    throw new EMFError(EMFError.WARNING, "Errore di Ingresso/Uscita", e);
 	}
 
 	return res;

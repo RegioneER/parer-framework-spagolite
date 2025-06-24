@@ -292,11 +292,13 @@ public class LogVRicEventiRowBean extends BaseRow implements BaseRowInterface {
     }
 
     // @Override
+    @SuppressWarnings("deprecation")
     public ILogVRicEventi rowBeanToEntity(Class<ILogVRicEventi> classe) {
 	ILogVRicEventi entity = null;
 	try {
 	    entity = classe.newInstance();
 	} catch (InstantiationException | IllegalAccessException ex) {
+	    throw new IllegalStateException("Impossibile creare l'istanza di ILogVRicEventi", ex);
 	}
 	entity.setIdApplic(this.getIdApplic());
 	entity.setNmApplic(this.getNmApplic());

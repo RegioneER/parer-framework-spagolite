@@ -99,11 +99,10 @@ public class RefreshableRelyingPartyRegistrationRepository implements
 
 	String applicationEntityId = System.getProperty(nomeApplicazione + "-sp-identity-id");
 	if (applicationEntityId == null || applicationEntityId.isEmpty()) {
-	    LOGGER.warn("Non ï¿½ stato definito il parametro {}-sp-identity-id in JBoss!",
+	    LOGGER.warn("Non è stato definito il parametro {}-sp-identity-id in JBoss!",
 		    nomeApplicazione);
 	} else {
-	    LOGGER.info(
-		    "L'entity ID configurato sul server nel parametro {}-sp-identity-id ï¿½ [{}]",
+	    LOGGER.info("L'entity ID configurato sul server nel parametro {}-sp-identity-id è [{}]",
 		    nomeApplicazione, applicationEntityId);
 	}
 
@@ -126,7 +125,7 @@ public class RefreshableRelyingPartyRegistrationRepository implements
 		String idpFed = idpTemp.getAssertingPartyDetails().getEntityId();
 		/*
 		 * Deve generare un registrationId univoco per ogni associazione tra idp e sp.
-		 * Quello con nome "saceriam" ï¿½ quello dell'associazione con keycloak vero sui
+		 * Quello con nome "saceriam" è quello dell'associazione con keycloak vero sui
 		 * derver e non il locale e nemmeno gli SPID
 		 */
 		String registrationId = nomeApplicazione;
@@ -150,7 +149,7 @@ public class RefreshableRelyingPartyRegistrationRepository implements
     }
 
     /*
-     * Effettua il fetch del federationMetadata dall'USL parametrizzato e se non puï¿½ collegarsi
+     * Effettua il fetch del federationMetadata dall'USL parametrizzato e se non può collegarsi
      * utilizza l'XML tenuto in cache scaricato in precedenza.
      */
     private String fetchAndCacheMetadata() {
@@ -165,8 +164,8 @@ public class RefreshableRelyingPartyRegistrationRepository implements
 	    metadata = t.getForObject(metadataUrl, String.class);
 	    LOGGER.info("Letto il federationMetadata da {}", metadataUrl);
 	    if (StringUtils.isBlank(metadata)) {
-		LOGGER.error("Il federationMetadata ï¿½ vuoto!");
-		throw new MetadataRuntimeException("Il federationMetadata ï¿½ vuoto!");
+		LOGGER.error("Il federationMetadata è vuoto!");
+		throw new MetadataRuntimeException("Il federationMetadata è vuoto!");
 	    }
 	    checkFirmaEIntegrita(metadata);
 	} catch (RestClientException ex) {
@@ -217,7 +216,7 @@ public class RefreshableRelyingPartyRegistrationRepository implements
     }
 
     /*
-     * Effettua il check della firma e della validitï¿½ dell'XML firmato utilizzando il certificato
+     * Effettua il check della firma e della validità  dell'XML firmato utilizzando il certificato
      * pubblico contenuto nello stesso XML, e controlla che il certificato che ha firmato sia stato
      * emesso dalla CA della federazione.
      */
@@ -243,7 +242,7 @@ public class RefreshableRelyingPartyRegistrationRepository implements
 		if (pk != null) {
 		    isValid = signature.checkSignatureValue(pk);
 		    LOGGER.info("Firma federationMetadata VALIDA.");
-		    // Controlla validitï¿½ del certificato che ha firmato il metadata contro la CA
+		    // Controlla validità  del certificato che ha firmato il metadata contro la CA
 		    // che lo ha emesso
 		    X509Certificate certificatoCheHaFirmatoLaFederazione = ki.getX509Certificate();
 		    String keystorePath = System.getProperty(nomeApplicazione + "-jks-path");
@@ -256,16 +255,16 @@ public class RefreshableRelyingPartyRegistrationRepository implements
 		    Certificate caCert = keyStore.getCertificate("federation_ca");
 		    PublicKey caPublicKey = caCert.getPublicKey();
 		    certificatoCheHaFirmatoLaFederazione.verify(caPublicKey);
-		    LOGGER.info("Certificato emesso dalla CA della federazione ed ï¿½ VALIDO.");
+		    LOGGER.info("Certificato emesso dalla CA della federazione ed è VALIDO.");
 		} else {
 		    LOGGER.warn(
-			    "Firma federationMetadata NON VALIDA perchï¿½ non ï¿½ stata trovata la chiave pubblica del firmatario.");
+			    "Firma federationMetadata NON VALIDA perché non è stata trovata la chiave pubblica del firmatario.");
 		    throw new MetadataRuntimeException(FIRMA_NON_VALIDA);
 		}
 	    } else {
 		LOGGER.warn("No KeyInfo found in Signature");
 		LOGGER.warn(
-			"Firma federationMetadata NON VALIDA perchï¿½ non ï¿½ stata trovato l'elemento KeyInfo nella firma.");
+			"Firma federationMetadata NON VALIDA perché non è stata trovato l'elemento KeyInfo nella firma.");
 		throw new MetadataRuntimeException(FIRMA_NON_VALIDA);
 	    }
 	} catch (ParserConfigurationException | SAXException | IOException | SignatureException

@@ -37,22 +37,22 @@ public class NavigationValidator {
 
     /**
      * Verifica se una stringa rappresenta un intero valido compreso tra 0 e un valore massimo
-     * specificato per la validazione del numero di pagina nella funzionalitï¿½ goToPage
+     * specificato per la validazione del numero di pagina nella funzionalità goToPage
      *
      * @param request   contiene il valore della pagina su cui atterrare
      * @param nomeLista nome della lista
      * @param maxVal    Il valore massimo consentito (incluso).
      *
-     * @return Un oggetto Integer contenente il valore numerico della stringa se la stringa ï¿½ un
-     *         intero valido compreso tra 0 e maxVal. Restituisce null se la stringa non ï¿½ un
-     *         intero valido o ï¿½ fuori dal range.
+     * @return Un oggetto Integer contenente il valore numerico della stringa se la stringa è un
+     *         intero valido compreso tra 0 e maxVal. Restituisce null se la stringa non è un intero
+     *         valido o è fuori dal range.
      */
     public Integer getValidNavigationInteger(HttpServletRequest request, int maxVal,
 	    String nomeLista) {
 	// Recupero il parametro in servletRequest relativo al numero di pagina
-	// impostato il cui nome sarï¿½ numPag +
+	// impostato il cui nome sarà numPag +
 	// nome_lista.
-	// Mi recupero un array perchï¿½ potrei avere piï¿½ di una barra di scorrimento (una
+	// Mi recupero un array perchè potrei avere più di una barra di scorrimento (una
 	// sopra e una sotto la lista)
 	String[] str = (String[]) request.getParameterValues("numPag" + nomeLista);
 
@@ -61,7 +61,7 @@ public class NavigationValidator {
 	// 1. Verifico di aver inserito un solo valore in caso l'array sia maggiore di 1
 	if (str.length > 2) {
 	    getMessageBox().addError(
-		    "Attenzione: sono presenti piï¿½ di 2 barre di scorrimento per la stessa lista, operazione non consentita");
+		    "Attenzione: sono presenti più di 2 barre di scorrimento per la stessa lista, operazione non consentita");
 	}
 
 	if (str.length == 2) {
@@ -85,7 +85,7 @@ public class NavigationValidator {
 
 	if (valoreNumeroPagina == null || valoreNumeroPagina.isEmpty()) {
 	    getMessageBox().addError("Numero di pagina non indicato");
-	    return null; // Stringa nulla o vuota non ï¿½ un intero valido
+	    return null; // Stringa nulla o vuota non è un intero valido
 	}
 
 	try {
@@ -98,12 +98,12 @@ public class NavigationValidator {
 		return null; // Fuori dal range consentito
 	    }
 
-	    // 3. Se arriviamo qui, la stringa ï¿½ un intero valido nel range
+	    // 3. Se arriviamo qui, la stringa è un intero valido nel range
 	    return num; // Restituisci l'Integer
 	} catch (NumberFormatException e) {
 	    getMessageBox().addError(
-		    "Attenzione: il numero fornito per selezionare la pagina desiderata non ï¿½ formalmente corretto");
-	    // L'eccezione NumberFormatException viene lanciata se la stringa non puï¿½ essere
+		    "Attenzione: il numero fornito per selezionare la pagina desiderata non è formalmente corretto");
+	    // L'eccezione NumberFormatException viene lanciata se la stringa non può essere
 	    // convertita in un intero.
 	    return null; // La stringa non rappresenta un intero valido
 	} catch (Exception e) {

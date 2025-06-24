@@ -173,7 +173,7 @@ public class Input<O> extends SingleValueField<O> {
     }
 
     public boolean isFileInMemory() {
-	return fileItem != null ? fileItem.isInMemory() : null;
+	return fileItem != null && fileItem.isInMemory();
     }
 
     public void writeUploadedFile(File file) throws Exception {
