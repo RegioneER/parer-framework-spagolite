@@ -1,14 +1,18 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version. <p/> This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
- * have received a copy of the GNU Affero General Public License along with this program. If not,
- * see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.spagoLite.model.rowsmandrupper;
@@ -21,42 +25,42 @@ public abstract class AbstractRowSmandrupper implements RowSmandrupperInterface 
     private boolean insertable;
 
     public AbstractRowSmandrupper() {
-	this.visible = false;
-	this.editable = false;
-	this.deletable = false;
-	this.insertable = false;
+        this.visible = false;
+        this.editable = false;
+        this.deletable = false;
+        this.insertable = false;
     }
 
     public boolean isVisible() {
-	return visible;
+        return visible;
     }
 
     public boolean isEditable() {
-	return editable;
+        return editable;
     }
 
     public boolean isDeletable() {
-	return deletable;
+        return deletable;
     }
 
     public boolean isInsertable() {
-	return insertable;
+        return insertable;
     }
 
     protected void setVisible(boolean visible) {
-	this.visible = visible;
+        this.visible = visible;
     }
 
     protected void setEditable(boolean editable) {
-	this.editable = editable;
+        this.editable = editable;
     }
 
     protected void setDeletable(boolean deletable) {
-	this.deletable = deletable;
+        this.deletable = deletable;
     }
 
     protected void setInsertable(boolean insertable) {
-	this.insertable = insertable;
+        this.insertable = insertable;
     }
 
 }

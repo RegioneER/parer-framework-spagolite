@@ -1,14 +1,18 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version. <p/> This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
- * have received a copy of the GNU Affero General Public License along with this program. If not,
- * see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.parer.jboss.timer.helper;
@@ -26,8 +30,8 @@ import it.eng.parer.jboss.timer.common.JobTable.STATO_TIMER;
 import it.eng.parer.jboss.timer.exception.TimerNotFoundException;
 
 /**
- * Helper. Questa è l'unica classe che deve essere esplicitamente implementata nello strato ejb
- * delle applicazioni che utilizzano i timer.
+ * Helper. Questa è l'unica classe che deve essere esplicitamente implementata nello strato ejb delle applicazioni che
+ * utilizzano i timer.
  *
  * @author Snidero_L
  */
@@ -35,39 +39,44 @@ import it.eng.parer.jboss.timer.exception.TimerNotFoundException;
 public interface JbossTimerHelper {
 
     /**
-     * Operazione di cambio nodo per il job. Al momento non è utilizzata. Potrebbe essere utile se
-     * si deciderà di cambiare nodo tramite una funzione applicativa.
+     * Operazione di cambio nodo per il job. Al momento non è utilizzata. Potrebbe essere utile se si deciderà di
+     * cambiare nodo tramite una funzione applicativa.
      *
-     * @param jobName  nome del job (solitamente una costante)
-     * @param nodeName nome del nodo.
+     * @param jobName
+     *            nome del job (solitamente una costante)
+     * @param nodeName
+     *            nome del nodo.
      *
-     * @throws TimerNotFoundException nel caso in cui il job non esista
+     * @throws TimerNotFoundException
+     *             nel caso in cui il job non esista
      */
     void changeNode(String jobName, String nodeName) throws TimerNotFoundException;
 
     /**
-     * Nome dell'applicazione chiamante. Si è rivelato necessario aggiungere questo metodo per
-     * ottemperare ai contratti dei job di sacerlog.
+     * Nome dell'applicazione chiamante. Si è rivelato necessario aggiungere questo metodo per ottemperare ai contratti
+     * dei job di sacerlog.
      *
      * @return il nome dell'applicazione chiamante.
      */
     String getApplicationName();
 
     /**
-     * Entity del job. E' stata creata un'interfaccia per disaccoppiare le tabelle specifiche. In
-     * futuro ne metteremo una in uno schema separato?
+     * Entity del job. E' stata creata un'interfaccia per disaccoppiare le tabelle specifiche. In futuro ne metteremo
+     * una in uno schema separato?
      *
-     * @param jobName nome del job
+     * @param jobName
+     *            nome del job
      *
      * @return entity della tabella che memorizza lo stato dei job
      *
-     * @throws TimerNotFoundException nel caso in cui il job non esista
+     * @throws TimerNotFoundException
+     *             nel caso in cui il job non esista
      */
     JobTable getJob(String jobName) throws TimerNotFoundException;
 
     /**
-     * Lista dei job. Lista delle entity che rappresentano i job. Il sistema agisce solo sui job il
-     * cui stato {@link JobTable#getTiStatoTimer() } sia diverso da null.
+     * Lista dei job. Lista delle entity che rappresentano i job. Il sistema agisce solo sui job il cui stato
+     * {@link JobTable#getTiStatoTimer() } sia diverso da null.
      *
      * @return lista di job
      */
@@ -76,7 +85,8 @@ public interface JbossTimerHelper {
     /**
      * Lista dei job configurati sul nodo <strong>nodeName</strong>. Non restituisce null.
      *
-     * @param nodeName nome del nodo
+     * @param nodeName
+     *            nome del nodo
      *
      * @return lista di job
      */
@@ -85,102 +95,125 @@ public interface JbossTimerHelper {
     /**
      * Flag di accuratezza della data.
      *
-     * @param jobName nome del job
+     * @param jobName
+     *            nome del job
      *
      * @return true se il timer lo ha impostato. false altrimenti
      *
-     * @throws TimerNotFoundException nel caso in cui il job non esista
+     * @throws TimerNotFoundException
+     *             nel caso in cui il job non esista
      */
     boolean isDataAccurata(String jobName) throws TimerNotFoundException;
 
     /**
      * Reimposta il record del job. Si suggerisce una transazione nuova.
      *
-     * @param jobName nome del job
+     * @param jobName
+     *            nome del job
      *
-     * @throws TimerNotFoundException nel caso in cui il job non esista
+     * @throws TimerNotFoundException
+     *             nel caso in cui il job non esista
      */
     void resetStatus(String jobName) throws TimerNotFoundException;
 
     /**
-     * Imposta la data di nuova attivazione. Utilizzato nel caso di "start". Anche qui si suggerisce
-     * di creare una nuova transazione. Nota: è lecito che la nuova data sia null.
+     * Imposta la data di nuova attivazione. Utilizzato nel caso di "start". Anche qui si suggerisce di creare una nuova
+     * transazione. Nota: è lecito che la nuova data sia null.
      *
-     * @param jobName nome del job
-     * @param newDate nuova data
+     * @param jobName
+     *            nome del job
+     * @param newDate
+     *            nuova data
      *
-     * @throws TimerNotFoundException nel caso in cui il job non esista
+     * @throws TimerNotFoundException
+     *             nel caso in cui il job non esista
      */
     void setDataProssimaAttivazione(String jobName, Date newDate) throws TimerNotFoundException;
 
     /**
      * Imposta il job a {@link STATO_TIMER#ESECUZIONE_SINGOLA}
      *
-     * @param jobName nome del job
+     * @param jobName
+     *            nome del job
      *
-     * @throws TimerNotFoundException nel caso in cui il job non esista
+     * @throws TimerNotFoundException
+     *             nel caso in cui il job non esista
      */
     void setJobAttivo(String jobName) throws TimerNotFoundException;
 
     /**
      * Imposta il job a {@link STATO_TIMER#ESECUZIONE_SINGOLA}
      *
-     * @param jobName nome del job
+     * @param jobName
+     *            nome del job
      *
-     * @throws TimerNotFoundException nel caso in cui il job non esista
+     * @throws TimerNotFoundException
+     *             nel caso in cui il job non esista
      */
     void setJobEsecuzioneSingola(String jobName) throws TimerNotFoundException;
 
     /**
-     * Imposta il job a {@link STATO_TIMER#ESECUZIONE_SINGOLA}. Permette di specificare una data
-     * diversa. Verrà considerata attendibile.
+     * Imposta il job a {@link STATO_TIMER#ESECUZIONE_SINGOLA}. Permette di specificare una data diversa. Verrà
+     * considerata attendibile.
      *
-     * @param jobName nome del job
-     * @param newDate nuova data
+     * @param jobName
+     *            nome del job
+     * @param newDate
+     *            nuova data
      *
-     * @throws TimerNotFoundException nel caso in cui il job non esista
+     * @throws TimerNotFoundException
+     *             nel caso in cui il job non esista
      */
     void setJobEsecuzioneSingola(String jobName, Date newDate) throws TimerNotFoundException;
 
     /**
      * Imposta il job a {@link STATO_TIMER#INATTIVO}
      *
-     * @param jobName nome del job
+     * @param jobName
+     *            nome del job
      *
-     * @throws TimerNotFoundException nel caso in cui il job non esista
+     * @throws TimerNotFoundException
+     *             nel caso in cui il job non esista
      */
     void setJobInattivo(String jobName) throws TimerNotFoundException;
 
     /**
-     * Ottiene l'istanza del job a seconda del nome. Non è passato come costante perché ci possono
-     * essere dei job non appartenenti a questo modulo.
+     * Ottiene l'istanza del job a seconda del nome. Non è passato come costante perché ci possono essere dei job non
+     * appartenenti a questo modulo.
      *
-     * @param jobName nome del job
+     * @param jobName
+     *            nome del job
      *
      * @return istanza del timer
      *
-     * @throws TimerNotFoundException nel caso in cui il job non esista
+     * @throws TimerNotFoundException
+     *             nel caso in cui il job non esista
      */
     JbossJobTimer getTimer(String jobName) throws TimerNotFoundException;
 
     /**
      * Aggiorna lo stato del job
      *
-     * @param jobName nome del job
-     * @param stato   nuovo stato
+     * @param jobName
+     *            nome del job
+     * @param stato
+     *            nuovo stato
      *
-     * @throws TimerNotFoundException nel caso in cui il job non esista
+     * @throws TimerNotFoundException
+     *             nel caso in cui il job non esista
      */
     void aggiornaStato(String jobName, String stato) throws TimerNotFoundException;
 
     /**
      * Ottiene la data di prossima attivazione del job.
      *
-     * @param jobName nome del job
+     * @param jobName
+     *            nome del job
      *
      * @return data di prossima attivazione oppure null
      *
-     * @throws TimerNotFoundException nel caso in cui il job non esista
+     * @throws TimerNotFoundException
+     *             nel caso in cui il job non esista
      */
     Date getDataProssimaAttivazione(String jobName) throws TimerNotFoundException;
 
@@ -194,11 +227,13 @@ public interface JbossTimerHelper {
     /**
      * Ottieni la schedulazione del job.
      *
-     * @param jobName nome del job
+     * @param jobName
+     *            nome del job
      *
      * @return l'oggetto cronschedule
      *
-     * @throws TimerNotFoundException nel caso in cui il job non esista
+     * @throws TimerNotFoundException
+     *             nel caso in cui il job non esista
      */
     public CronSchedule getSchedule(String jobName) throws TimerNotFoundException;
 

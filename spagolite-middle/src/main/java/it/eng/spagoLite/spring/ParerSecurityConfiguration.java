@@ -36,52 +36,47 @@ public class ParerSecurityConfiguration {
     private static final Logger LOGGER = LoggerFactory.getLogger(ParerSecurityConfiguration.class);
 
     protected RequestedAuthnContext buildRequestedAuthnContext() {
-	// Create AuthnContextClassRef
-	AuthnContextClassRefBuilder authnContextClassRefBuilder = new AuthnContextClassRefBuilder();
-	boolean abilitaLivello1Spid = Boolean
-		.parseBoolean(System.getProperty("abilita-livello-1-spid", "false"));
+        // Create AuthnContextClassRef
+        AuthnContextClassRefBuilder authnContextClassRefBuilder = new AuthnContextClassRefBuilder();
+        boolean abilitaLivello1Spid = Boolean.parseBoolean(System.getProperty("abilita-livello-1-spid", "false"));
 
-	AuthnContextClassRef authnContextClassRef = authnContextClassRefBuilder.buildObject(
-		SAMLConstants.SAML20_NS, AuthnContextClassRef.DEFAULT_ELEMENT_LOCAL_NAME,
-		SAMLConstants.SAML20_PREFIX);
-	authnContextClassRef.setURI(AuthnContext.PPT_AUTHN_CTX);
+        AuthnContextClassRef authnContextClassRef = authnContextClassRefBuilder.buildObject(SAMLConstants.SAML20_NS,
+                AuthnContextClassRef.DEFAULT_ELEMENT_LOCAL_NAME, SAMLConstants.SAML20_PREFIX);
+        authnContextClassRef.setURI(AuthnContext.PPT_AUTHN_CTX);
 
-	AuthnContextClassRef authnContextClassRef2 = authnContextClassRefBuilder.buildObject(
-		SAMLConstants.SAML20_NS, AuthnContextClassRef.DEFAULT_ELEMENT_LOCAL_NAME,
-		SAMLConstants.SAML20_PREFIX);
-	authnContextClassRef2.setURI(AuthnContext.SRP_AUTHN_CTX);
+        AuthnContextClassRef authnContextClassRef2 = authnContextClassRefBuilder.buildObject(SAMLConstants.SAML20_NS,
+                AuthnContextClassRef.DEFAULT_ELEMENT_LOCAL_NAME, SAMLConstants.SAML20_PREFIX);
+        authnContextClassRef2.setURI(AuthnContext.SRP_AUTHN_CTX);
 
-	AuthnContextClassRef authnContextClassRef3 = authnContextClassRefBuilder.buildObject(
-		SAMLConstants.SAML20_NS, AuthnContextClassRef.DEFAULT_ELEMENT_LOCAL_NAME,
-		SAMLConstants.SAML20_PREFIX);
-	authnContextClassRef3.setURI(AuthnContext.SMARTCARD_AUTHN_CTX);
+        AuthnContextClassRef authnContextClassRef3 = authnContextClassRefBuilder.buildObject(SAMLConstants.SAML20_NS,
+                AuthnContextClassRef.DEFAULT_ELEMENT_LOCAL_NAME, SAMLConstants.SAML20_PREFIX);
+        authnContextClassRef3.setURI(AuthnContext.SMARTCARD_AUTHN_CTX);
 
-	// Create RequestedAuthnContext
-	RequestedAuthnContextBuilder requestedAuthnContextBuilder = new RequestedAuthnContextBuilder();
-	RequestedAuthnContext requestedAuthnContext = requestedAuthnContextBuilder.buildObject();
-	requestedAuthnContext.setComparison(AuthnContextComparisonTypeEnumeration.EXACT);
+        // Create RequestedAuthnContext
+        RequestedAuthnContextBuilder requestedAuthnContextBuilder = new RequestedAuthnContextBuilder();
+        RequestedAuthnContext requestedAuthnContext = requestedAuthnContextBuilder.buildObject();
+        requestedAuthnContext.setComparison(AuthnContextComparisonTypeEnumeration.EXACT);
 
-	// Se configurato abilita il livello 1 di SPID altrimenti il 2
-	if (abilitaLivello1Spid) {
-	    requestedAuthnContext.getAuthnContextClassRefs().add(authnContextClassRef);
-	}
-	requestedAuthnContext.getAuthnContextClassRefs().add(authnContextClassRef2);
-	requestedAuthnContext.getAuthnContextClassRefs().add(authnContextClassRef3);
+        // Se configurato abilita il livello 1 di SPID altrimenti il 2
+        if (abilitaLivello1Spid) {
+            requestedAuthnContext.getAuthnContextClassRefs().add(authnContextClassRef);
+        }
+        requestedAuthnContext.getAuthnContextClassRefs().add(authnContextClassRef2);
+        requestedAuthnContext.getAuthnContextClassRefs().add(authnContextClassRef3);
 
-	return requestedAuthnContext;
+        return requestedAuthnContext;
     }
 
     @Bean
     RefreshableRelyingPartyRegistrationRepository refreshableRelyingPartyRegistrationRepository(
-	    ThreadPoolTaskScheduler threadPoolTaskScheduler) {
-	long fixedRate = Long.parseLong(
-		System.getProperty(nomeApplicazione + "-refresh-check-interval", "60000"));
-	LOGGER.info("Il federationMetadata si aggiorna ogni {} millisecondi.", fixedRate);
-	RefreshableRelyingPartyRegistrationRepository r = new RefreshableRelyingPartyRegistrationRepository(
-		nomeApplicazione);
-	threadPoolTaskScheduler.scheduleAtFixedRate(r, fixedRate);
-	LOGGER.info("Nome dell'applicazione configurato [{}]", nomeApplicazione);
-	return r;
+            ThreadPoolTaskScheduler threadPoolTaskScheduler) {
+        long fixedRate = Long.parseLong(System.getProperty(nomeApplicazione + "-refresh-check-interval", "60000"));
+        LOGGER.info("Il federationMetadata si aggiorna ogni {} millisecondi.", fixedRate);
+        RefreshableRelyingPartyRegistrationRepository r = new RefreshableRelyingPartyRegistrationRepository(
+                nomeApplicazione);
+        threadPoolTaskScheduler.scheduleAtFixedRate(r, fixedRate);
+        LOGGER.info("Nome dell'applicazione configurato [{}]", nomeApplicazione);
+        return r;
     }
 
     /*
@@ -89,56 +84,53 @@ public class ParerSecurityConfiguration {
      */
     @Bean
     public ThreadPoolTaskScheduler threadPoolTaskScheduler() {
-	ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
-	threadPoolTaskScheduler.setPoolSize(2);
-	threadPoolTaskScheduler.setThreadNamePrefix("ThreadPoolTaskScheduler");
-	return threadPoolTaskScheduler;
+        ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
+        threadPoolTaskScheduler.setPoolSize(2);
+        threadPoolTaskScheduler.setThreadNamePrefix("ThreadPoolTaskScheduler");
+        return threadPoolTaskScheduler;
     }
 
     @Bean
     Saml2AuthenticationRequestResolver authenticationRequestResolver(
-	    RefreshableRelyingPartyRegistrationRepository registrations) {
-	RelyingPartyRegistrationResolver registrationResolver = new DefaultRelyingPartyRegistrationResolver(
-		registrations);
-	OpenSaml4AuthenticationRequestResolver authenticationRequestResolver = new OpenSaml4AuthenticationRequestResolver(
-		registrationResolver);
-	authenticationRequestResolver.setAuthnRequestCustomizer(context -> {
-	    context.getAuthnRequest().setRequestedAuthnContext(buildRequestedAuthnContext());
-	    /*
-	     * Testa se l'utente ha scelto di loggarsi con lo SPID PROFESSIONALE. Se si la richiesta
-	     * SAML include questi tag:
-	     *
-	     * <saml2p:Extensions> <spid:Purpose
-	     * xmlns:spid="https://spid.gov.it/saml-extensions">PX</spid:Purpose>
-	     * </saml2p:Extensions>
-	     *
-	     */
-	    String spidProf = context.getRequest()
-		    .getParameter(PARAMETRO_MODALITA_SPID_PROFESSIONALE);
-	    if (spidProf != null && spidProf.equalsIgnoreCase(MODALITA_SPID_PROFESSIONALE)) {
-		XSAny extraElement = new XSAnyBuilder()
-			.buildObject("https://spid.gov.it/saml-extensions", "Purpose", "spid");
-		extraElement.setTextContent(MODALITA_SPID_PROFESSIONALE);
-		Extensions extensions = new ExtensionsBuilder().buildObject();
-		extensions.getUnknownXMLObjects().add(extraElement);
-		context.getAuthnRequest().setExtensions(extensions);
-	    }
+            RefreshableRelyingPartyRegistrationRepository registrations) {
+        RelyingPartyRegistrationResolver registrationResolver = new DefaultRelyingPartyRegistrationResolver(
+                registrations);
+        OpenSaml4AuthenticationRequestResolver authenticationRequestResolver = new OpenSaml4AuthenticationRequestResolver(
+                registrationResolver);
+        authenticationRequestResolver.setAuthnRequestCustomizer(context -> {
+            context.getAuthnRequest().setRequestedAuthnContext(buildRequestedAuthnContext());
+            /*
+             * Testa se l'utente ha scelto di loggarsi con lo SPID PROFESSIONALE. Se si la richiesta SAML include questi
+             * tag:
+             *
+             * <saml2p:Extensions> <spid:Purpose xmlns:spid="https://spid.gov.it/saml-extensions">PX</spid:Purpose>
+             * </saml2p:Extensions>
+             *
+             */
+            String spidProf = context.getRequest().getParameter(PARAMETRO_MODALITA_SPID_PROFESSIONALE);
+            if (spidProf != null && spidProf.equalsIgnoreCase(MODALITA_SPID_PROFESSIONALE)) {
+                XSAny extraElement = new XSAnyBuilder().buildObject("https://spid.gov.it/saml-extensions", "Purpose",
+                        "spid");
+                extraElement.setTextContent(MODALITA_SPID_PROFESSIONALE);
+                Extensions extensions = new ExtensionsBuilder().buildObject();
+                extensions.getUnknownXMLObjects().add(extraElement);
+                context.getAuthnRequest().setExtensions(extensions);
+            }
 
-	    /*
-	     * Inserisce il suffisso che vuole la Puglia da accosare all'Issuer della richiesta SAML
-	     * Aggiunto per risolvere il problema dell'Issuer della Puglia che voleva accodato il
-	     * Tenant dopo l'entityId ('@conservazione' ad esempio).
-	     */
-	    String suffissoIssuerPuglia = System.getProperty("suffisso-issuer-saml-request", "");
-	    if (!suffissoIssuerPuglia.trim().equals("")) {
-		String issuerOriginale = context.getAuthnRequest().getIssuer().getValue();
-		context.getAuthnRequest().getIssuer()
-			.setValue(issuerOriginale + suffissoIssuerPuglia);
-	    }
+            /*
+             * Inserisce il suffisso che vuole la Puglia da accosare all'Issuer della richiesta SAML Aggiunto per
+             * risolvere il problema dell'Issuer della Puglia che voleva accodato il Tenant dopo l'entityId
+             * ('@conservazione' ad esempio).
+             */
+            String suffissoIssuerPuglia = System.getProperty("suffisso-issuer-saml-request", "");
+            if (!suffissoIssuerPuglia.trim().equals("")) {
+                String issuerOriginale = context.getAuthnRequest().getIssuer().getValue();
+                context.getAuthnRequest().getIssuer().setValue(issuerOriginale + suffissoIssuerPuglia);
+            }
 
-	});
+        });
 
-	return authenticationRequestResolver;
+        return authenticationRequestResolver;
     }
 
 }

@@ -1,14 +1,18 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version. <p/> This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
- * have received a copy of the GNU Affero General Public License along with this program. If not,
- * see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.spagoLite.form.grid;
@@ -40,187 +44,184 @@ public class Grid<T extends SingleValueField> extends BaseElements<T> {
     private List<GridRow> rowList;
 
     public Grid(Component parent, String name, String description) {
-	super(parent, name, description);
-	table = new BaseTable();
+        super(parent, name, description);
+        table = new BaseTable();
     }
 
     public BaseElements<T> getRowsHierachy() {
-	return rowsHierachy;
+        return rowsHierachy;
     }
 
     public void setRowsHierachy(BaseElements<T> rowsHierachy) {
-	this.rowsHierachy = rowsHierachy;
+        this.rowsHierachy = rowsHierachy;
     }
 
     public BaseElements<T> getColumnsHierachy() {
-	return columnsHierachy;
+        return columnsHierachy;
     }
 
     public void setColumnsHierachy(BaseElements<T> columnsHierachy) {
-	this.columnsHierachy = columnsHierachy;
+        this.columnsHierachy = columnsHierachy;
     }
 
     public BaseElements<T> getValuesHierachy() {
-	return valuesHierachy;
+        return valuesHierachy;
     }
 
     public void setValuesHierachy(BaseElements<T> valuesHierachy) {
-	this.valuesHierachy = valuesHierachy;
+        this.valuesHierachy = valuesHierachy;
     }
 
     public BaseTableInterface<?> getTable() {
-	return table;
+        return table;
     }
 
     public void setTable(BaseTableInterface table) {
-	this.table = table;
+        this.table = table;
     }
 
     private int checkRottura(BaseRowInterface oldRow, BaseRowInterface newRow) {
-	int size = getRowsHierachy().getComponentList().size();
+        int size = getRowsHierachy().getComponentList().size();
 
-	for (Field field : getRowsHierachy().getComponentList()) {
-	    Object oldValue = oldRow.getObject(field.getName());
-	    Object newValue = newRow.getObject(field.getName());
+        for (Field field : getRowsHierachy().getComponentList()) {
+            Object oldValue = oldRow.getObject(field.getName());
+            Object newValue = newRow.getObject(field.getName());
 
-	    if (oldValue == null && newValue != null) {
-		return size;
-	    } else if (oldValue != null && newValue == null) {
-		return size;
-	    } else if (oldValue == null && newValue == null) {
-		size--;
-	    } else if (!oldValue.equals(newValue)) {
-		return size;
-	    } else {
-		size--;
-	    }
-	}
+            if (oldValue == null && newValue != null) {
+                return size;
+            } else if (oldValue != null && newValue == null) {
+                return size;
+            } else if (oldValue == null && newValue == null) {
+                size--;
+            } else if (!oldValue.equals(newValue)) {
+                return size;
+            } else {
+                size--;
+            }
+        }
 
-	return 0;
+        return 0;
     }
 
     public List<List<Object>> getPackTable() {
-	return packTable;
+        return packTable;
     }
 
     public List<Object> getPackColumn() {
-	return packColumn;
+        return packColumn;
     }
 
     public void pack() throws EMFError {
-	packTable = new ArrayList<List<Object>>();
-	packColumn = null;
+        packTable = new ArrayList<List<Object>>();
+        packColumn = null;
 
-	List<Object> packRow = null;
-	if (table.size() > 0) {
-	    table.first();
-	    BaseRowInterface oldRow = table.getCurrentRow();
+        List<Object> packRow = null;
+        if (table.size() > 0) {
+            table.first();
+            BaseRowInterface oldRow = table.getCurrentRow();
 
-	    packRow = new ArrayList<Object>();
-	    packColumn = new ArrayList<Object>();
-	    packTable.add(packRow);
+            packRow = new ArrayList<Object>();
+            packColumn = new ArrayList<Object>();
+            packTable.add(packRow);
 
-	    for (SingleValueField field : getRowsHierachy()) {
-		packRow.add(oldRow.getObject(field.getName()));
-	    }
+            for (SingleValueField field : getRowsHierachy()) {
+                packRow.add(oldRow.getObject(field.getName()));
+            }
 
-	    for (BaseRowInterface row : table) {
-		int livello = checkRottura(oldRow, row);
+            for (BaseRowInterface row : table) {
+                int livello = checkRottura(oldRow, row);
 
-		if (livello != 0) {
-		    packRow = new ArrayList<Object>();
-		    packColumn = new ArrayList<Object>();
-		    packTable.add(packRow);
+                if (livello != 0) {
+                    packRow = new ArrayList<Object>();
+                    packColumn = new ArrayList<Object>();
+                    packTable.add(packRow);
 
-		    for (SingleValueField field : getRowsHierachy()) {
-			packRow.add(row.getObject(field.getName()));
-		    }
-		}
+                    for (SingleValueField field : getRowsHierachy()) {
+                        packRow.add(row.getObject(field.getName()));
+                    }
+                }
 
-		for (SingleValueField field : getColumnsHierachy()) {
-		    packColumn.add(row.getObject(field.getName()));
-		}
+                for (SingleValueField field : getColumnsHierachy()) {
+                    packColumn.add(row.getObject(field.getName()));
+                }
 
-		for (SingleValueField field : getValuesHierachy()) {
-		    packRow.add(row.getObject(field.getName()));
-		}
+                for (SingleValueField field : getValuesHierachy()) {
+                    packRow.add(row.getObject(field.getName()));
+                }
 
-		oldRow = row;
-	    }
+                oldRow = row;
+            }
 
-	}
+        }
 
-	// RowList
-	int numLivelli = getRowsHierachy().getComponentList().size();
+        // RowList
+        int numLivelli = getRowsHierachy().getComponentList().size();
 
-	rowList = new ArrayList<GridRow>();
-	if (table.size() > 0) {
-	    table.first();
-	    BaseRowInterface oldRow = new BaseRow();
-	    for (BaseRowInterface row : table) {
-		int livelloRottura = checkRottura(oldRow, row);
-		GridRow gridRow = null;
+        rowList = new ArrayList<GridRow>();
+        if (table.size() > 0) {
+            table.first();
+            BaseRowInterface oldRow = new BaseRow();
+            for (BaseRowInterface row : table) {
+                int livelloRottura = checkRottura(oldRow, row);
+                GridRow gridRow = null;
 
-		if (livelloRottura != 0) {
-		    for (int i = (numLivelli - livelloRottura); i < numLivelli; i++) {
-			GridRow gridRow2 = new GridRow(numLivelli - i);
-			gridRow.addCell(getRowsHierachy().getComponentList().get(i), row);
+                if (livelloRottura != 0) {
+                    for (int i = (numLivelli - livelloRottura); i < numLivelli; i++) {
+                        GridRow gridRow2 = new GridRow(numLivelli - i);
+                        gridRow.addCell(getRowsHierachy().getComponentList().get(i), row);
 
-			// if (i == grid.getRowsHierachy().getComponentList().size() - 1) {
-			// writeln(" <tr>");
-			// writeln(" <td class=\"livello0\">" + FieldTag.Factory.htmlField(field,
-			// null,
-			// null, null) +
-			// "</td>");
-			// } else if (row.getObject(field.getName()) != null) {
-			// writeln(" <tr>");
-			// writeln(" <td class=\"livello" + (3- i) + "\" colspan=\"" +
-			// (grid.getPackColumn().size() + 1)
-			// + "\">" + field.getHtmlDecodedValue() + "</td>");
-			// writeln(" </tr>");
-			// }
-		    }
+                        // if (i == grid.getRowsHierachy().getComponentList().size() - 1) {
+                        // writeln(" <tr>");
+                        // writeln(" <td class=\"livello0\">" + FieldTag.Factory.htmlField(field, null, null, null) +
+                        // "</td>");
+                        // } else if (row.getObject(field.getName()) != null) {
+                        // writeln(" <tr>");
+                        // writeln(" <td class=\"livello" + (3- i) + "\" colspan=\"" + (grid.getPackColumn().size() + 1)
+                        // + "\">" + field.getHtmlDecodedValue() + "</td>");
+                        // writeln(" </tr>");
+                        // }
+                    }
 
-		}
+                }
 
-		int livello = checkRottura(oldRow, row);
+                int livello = checkRottura(oldRow, row);
 
-		if (livello != 0) {
-		    packRow = new ArrayList<Object>();
-		    packColumn = new ArrayList<Object>();
-		    packTable.add(packRow);
+                if (livello != 0) {
+                    packRow = new ArrayList<Object>();
+                    packColumn = new ArrayList<Object>();
+                    packTable.add(packRow);
 
-		    for (SingleValueField field : getRowsHierachy()) {
-			packRow.add(row.getObject(field.getName()));
-		    }
-		}
+                    for (SingleValueField field : getRowsHierachy()) {
+                        packRow.add(row.getObject(field.getName()));
+                    }
+                }
 
-		for (SingleValueField field : getColumnsHierachy()) {
-		    packColumn.add(row.getObject(field.getName()));
-		}
+                for (SingleValueField field : getColumnsHierachy()) {
+                    packColumn.add(row.getObject(field.getName()));
+                }
 
-		for (SingleValueField field : getValuesHierachy()) {
-		    packRow.add(row.getObject(field.getName()));
-		}
+                for (SingleValueField field : getValuesHierachy()) {
+                    packRow.add(row.getObject(field.getName()));
+                }
 
-		oldRow = row;
-	    }
+                oldRow = row;
+            }
 
-	}
+        }
 
     }
 
     @Override
     public String toString() {
-	StringBuilder stringBuilder = new StringBuilder();
-	stringBuilder.append("<grid>");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<grid>");
 
-	for (GridRow gridRow : rowList) {
-	    stringBuilder.append(gridRow.toString());
-	}
+        for (GridRow gridRow : rowList) {
+            stringBuilder.append(gridRow.toString());
+        }
 
-	stringBuilder.append("</grid>");
+        stringBuilder.append("</grid>");
 
-	return super.toString();
+        return super.toString();
     }
 }

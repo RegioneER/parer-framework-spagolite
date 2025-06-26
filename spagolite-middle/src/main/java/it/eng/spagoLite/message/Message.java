@@ -1,14 +1,18 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version. <p/> This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
- * have received a copy of the GNU Affero General Public License along with this program. If not,
- * see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.spagoLite.message;
@@ -21,7 +25,7 @@ public class Message extends FrameElement {
 
     // con riferimento al type Oracle presente in LogMessages si sisanagstrutt
     public enum MessageLevel {
-	INF, WAR, ERR, FATAL
+        INF, WAR, ERR, FATAL
     };
 
     private MessageLevel messageLevel;
@@ -29,51 +33,51 @@ public class Message extends FrameElement {
     private Throwable throwable;
 
     public Message() {
-	this(MessageLevel.INF, "");
+        this(MessageLevel.INF, "");
     }
 
     public Message(MessageLevel messageLevel, String text, Throwable throwable) {
-	this.messageLevel = messageLevel;
-	this.text = text;
-	this.throwable = throwable;
+        this.messageLevel = messageLevel;
+        this.text = text;
+        this.throwable = throwable;
     }
 
     public Message(MessageLevel messageLevel, String text) {
-	this(messageLevel, text, null);
+        this(messageLevel, text, null);
     }
 
     public MessageLevel getMessageLevel() {
-	return messageLevel;
+        return messageLevel;
     }
 
     public void setMessageLevel(MessageLevel messageLevel) {
-	this.messageLevel = messageLevel;
+        this.messageLevel = messageLevel;
     }
 
     public String getText() {
-	return text;
+        return text;
     }
 
     public void setText(String text) {
-	this.text = text;
+        this.text = text;
     }
 
     public Throwable getThrowable() {
-	return throwable;
+        return throwable;
     }
 
     public void setThrowable(Throwable throwable) {
-	this.throwable = throwable;
+        this.throwable = throwable;
     }
 
     @Override
     public Element asXml() {
-	Element element = super.asXml();
+        Element element = super.asXml();
 
-	element.addAttribute("messageLevel", getMessageLevel().toString());
-	element.addAttribute("text", getText());
+        element.addAttribute("messageLevel", getMessageLevel().toString());
+        element.addAttribute("text", getText());
 
-	return element;
+        return element;
     }
 
 }

@@ -1,18 +1,23 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version. <p/> This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
- * have received a copy of the GNU Affero General Public License along with this program. If not,
- * see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
 /*
- * To change this template, choose Tools | Templates and open the template in the editor.
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
 package it.eng.parer.sacerlog.job;
 
@@ -53,46 +58,46 @@ public class SacerLogJobHelper implements Serializable {
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void writeAtomicLogJob(String jobName, String opType) {
-	writeLogJob(jobName, opType, null);
+        writeLogJob(jobName, opType, null);
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void writeAtomicLogJob(String jobName, String opType, String descr) {
-	writeLogJob(jobName, opType, descr);
+        writeLogJob(jobName, opType, descr);
     }
 
     public void writeLogJob(String jobName, String opType, String descr) {
-	Date now = new Date();
-	Timestamp date = new Timestamp(now.getTime());
-	PreparedStatement ps = null;
-	Connection con = null;
-	try {
-	    con = JpaUtils.provideConnectionFrom(em);
-	    ps = con.prepareStatement(
-		    "INSERT INTO APL_V_LOG_JOB (ID_LOG_JOB, NM_JOB, TI_REG_LOG_JOB, DT_REG_LOG_JOB, DL_MSG_ERR, CD_IND_SERVER)"
-			    + "VALUES (SSLOG_JOB.nextVal, ?, ?, ?, ?, ?)");
-	    ps.setString(1, jobName);
-	    ps.setString(2, opType);
-	    ps.setTimestamp(3, date);
-	    ps.setString(4, descr);
-	    ps.setString(5, appServerInstance.getName());
-	    ps.executeUpdate();
-	} catch (Exception ex) {
-	    // ex.printStackTrace();
-	    logger.debug("Errore inserimento nella tabella di LOG del JOB", ex);
-	} finally {
-	    try {
-		if (ps != null) {
-		    ps.close();
-		}
+        Date now = new Date();
+        Timestamp date = new Timestamp(now.getTime());
+        PreparedStatement ps = null;
+        Connection con = null;
+        try {
+            con = JpaUtils.provideConnectionFrom(em);
+            ps = con.prepareStatement(
+                    "INSERT INTO APL_V_LOG_JOB (ID_LOG_JOB, NM_JOB, TI_REG_LOG_JOB, DT_REG_LOG_JOB, DL_MSG_ERR, CD_IND_SERVER)"
+                            + "VALUES (SSLOG_JOB.nextVal, ?, ?, ?, ?, ?)");
+            ps.setString(1, jobName);
+            ps.setString(2, opType);
+            ps.setTimestamp(3, date);
+            ps.setString(4, descr);
+            ps.setString(5, appServerInstance.getName());
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            // ex.printStackTrace();
+            logger.debug("Errore inserimento nella tabella di LOG del JOB", ex);
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
 
-		if (con != null) {
-		    con.close();
-		}
+                if (con != null) {
+                    con.close();
+                }
 
-	    } catch (Exception ex) {
+            } catch (Exception ex) {
 
-	    }
-	}
+            }
+        }
     }
 }

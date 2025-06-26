@@ -1,14 +1,18 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version. <p/> This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
- * have received a copy of the GNU Affero General Public License along with this program. If not,
- * see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.spagoLite.actions.security;
@@ -17,22 +21,21 @@ import it.eng.spagoCore.error.EMFError;
 import it.eng.spagoLite.actions.ActionBase;
 
 public class LogoutAction extends ActionBase {
-    // private static Logger logger =
-    // LoggerFactory.getLogger(LogoutAction.class.getName());
+    // private static Logger logger = LoggerFactory.getLogger(LogoutAction.class.getName());
 
     @Override
     public String getControllerName() {
-	return "Logout.html";
+        return "Logout.html";
     }
 
     @Override
     public void process() throws EMFError {
-	redirectToAction("Login.html?operation=logout");
+        redirectToAction("Login.html?operation=logout");
     }
 
     @Override
     protected boolean isAuthorized(String destination) {
-	return true;
+        return true;
     }
 
     @Override
@@ -41,17 +44,16 @@ public class LogoutAction extends ActionBase {
     }
 
     public void success() {
-	forwardToPublisher(getDefaultPublsherName());
+        forwardToPublisher(getDefaultPublsherName());
     }
 
     /*
-     * Intercettata la chiamata al logout locale che richiede eventualmente un SAML GLOBAL LOGOUT
-     * nel caso di utente con login classico (IDP INTERNO, PUGLIA e tutti gli altri casi) altrimenti
-     * nel caso di IDP FEDERA SPID il Global logout non ï¿½ gestito e quindi fa solo un logout
-     * LOCALE
+     * Intercettata la chiamata al logout locale che richiede eventualmente un SAML GLOBAL LOGOUT nel caso di utente con
+     * login classico (IDP INTERNO, PUGLIA e tutti gli altri casi) altrimenti nel caso di IDP FEDERA SPID il Global
+     * logout non è gestito e quindi fa solo un logout LOCALE
      */
     @Override
     protected String getDefaultPublsherName() {
-	return "/login/logout";
+        return "/login/logout";
     }
 }

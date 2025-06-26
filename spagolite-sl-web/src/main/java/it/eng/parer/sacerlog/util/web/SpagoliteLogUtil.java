@@ -1,14 +1,18 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version. <p/> This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
- * have received a copy of the GNU Affero General Public License along with this program. If not,
- * see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.parer.sacerlog.util.web;
@@ -47,108 +51,105 @@ public class SpagoliteLogUtil {
     private final static String TOOLBAR_UPDATE = "toolbar/update";
 
     public static String getDetailActionNameView(BaseForm form, BaseComponent component) {
-	return DETAIL + getActionName(form, component) + VIEW;
+        return DETAIL + getActionName(form, component) + VIEW;
     }
 
     public static String getDetailActionNameEdit(BaseForm form, BaseComponent component) {
-	return DETAIL + getActionName(form, component) + EDIT;
+        return DETAIL + getActionName(form, component) + EDIT;
     }
 
     public static String getDetailActionNameDelete(BaseForm form, BaseComponent component) {
-	return DETAIL + getActionName(form, component) + DELETE;
+        return DETAIL + getActionName(form, component) + DELETE;
     }
 
     public static String getDetailActionNameInsert(BaseForm form, BaseComponent component) {
-	return DETAIL + getActionName(form, component) + INSERT;
+        return DETAIL + getActionName(form, component) + INSERT;
     }
 
-    public static String getButtonActionName(BaseForm form, BaseComponent component,
-	    String nomeMetodo) {
-	String metodoCorretto = null;
-	if (nomeMetodo != null && nomeMetodo.length() > 0) {
-	    String primoCarattere = nomeMetodo.substring(0, 1).toLowerCase();
-	    String resto = nomeMetodo.substring(1);
-	    metodoCorretto = primoCarattere + resto;
-	}
-	return BUTTON + getActionName(form, component) + SLASH + metodoCorretto;
+    public static String getButtonActionName(BaseForm form, BaseComponent component, String nomeMetodo) {
+        String metodoCorretto = null;
+        if (nomeMetodo != null && nomeMetodo.length() > 0) {
+            String primoCarattere = nomeMetodo.substring(0, 1).toLowerCase();
+            String resto = nomeMetodo.substring(1);
+            metodoCorretto = primoCarattere + resto;
+        }
+        return BUTTON + getActionName(form, component) + SLASH + metodoCorretto;
     }
 
-    public static String getDetailActionName(BaseForm form, BaseComponent component,
-	    String nomeMetodo) {
-	String metodoCorretto = null;
-	if (nomeMetodo != null && nomeMetodo.length() > 0) {
-	    String primoCarattere = nomeMetodo.substring(0, 1).toLowerCase();
-	    String resto = nomeMetodo.substring(1);
-	    metodoCorretto = primoCarattere + resto;
-	}
-	return DETAIL + getActionName(form, component) + SLASH + metodoCorretto;
+    public static String getDetailActionName(BaseForm form, BaseComponent component, String nomeMetodo) {
+        String metodoCorretto = null;
+        if (nomeMetodo != null && nomeMetodo.length() > 0) {
+            String primoCarattere = nomeMetodo.substring(0, 1).toLowerCase();
+            String resto = nomeMetodo.substring(1);
+            metodoCorretto = primoCarattere + resto;
+        }
+        return DETAIL + getActionName(form, component) + SLASH + metodoCorretto;
     }
 
     private static String getActionName(BaseForm form, BaseComponent component) {
-	return form.getClass().getSimpleName() + SEPARATORE + component.getName();
+        return form.getClass().getSimpleName() + SEPARATORE + component.getName();
     }
 
     public static String getToolbarEdit() {
-	return TOOLBAR_EDIT;
+        return TOOLBAR_EDIT;
     }
 
     public static String getToolbarSave(boolean isModify) {
-	return isModify ? TOOLBAR_UPDATE : TOOLBAR_INSERT;
+        return isModify ? TOOLBAR_UPDATE : TOOLBAR_INSERT;
     }
 
     public static String getToolbarDelete() {
-	return TOOLBAR_DELETE;
+        return TOOLBAR_DELETE;
     }
 
     public static String getToolbarInsert() {
-	return TOOLBAR_INSERT;
+        return TOOLBAR_INSERT;
     }
 
     public static String getToolbarUpdate() {
-	return TOOLBAR_UPDATE;
+        return TOOLBAR_UPDATE;
     }
 
     public static String getPageName(BaseController action) {
-	String nomePagina = action.getLastPublisher();
-	if (nomePagina == null || nomePagina.trim().equals("")) {
-	    ExecutionHistory storia = SessionManager.getLastExecutionHistory(action.getSession());
-	    nomePagina = storia.getPublisherName();
-	}
-	return nomePagina;
+        String nomePagina = action.getLastPublisher();
+        if (nomePagina == null || nomePagina.trim().equals("")) {
+            ExecutionHistory storia = SessionManager.getLastExecutionHistory(action.getSession());
+            nomePagina = storia.getPublisherName();
+        }
+        return nomePagina;
     }
 
     public static Form getForm(FormAction action) {
-	Form form = null;
-	String nomePagina = action.getLastPublisher();
-	if (nomePagina == null || nomePagina.trim().equals("")) {
-	    ExecutionHistory storia = SessionManager.getLastExecutionHistory(action.getSession());
-	    form = storia.getForm();
-	    if (form == null) {
-		form = action.getForm();
-	    }
-	} else {
-	    form = action.getForm();
-	}
-	return form;
+        Form form = null;
+        String nomePagina = action.getLastPublisher();
+        if (nomePagina == null || nomePagina.trim().equals("")) {
+            ExecutionHistory storia = SessionManager.getLastExecutionHistory(action.getSession());
+            form = storia.getForm();
+            if (form == null) {
+                form = action.getForm();
+            }
+        } else {
+            form = action.getForm();
+        }
+        return form;
     }
 
-    public static LogParam getLogParam(String nomeApplicazione, String nomeUtente,
-	    String nomePagina, String nomeAzione, BigDecimal idOggetto) {
-	return new LogParam(nomeApplicazione, nomeUtente, nomePagina, nomeAzione, idOggetto);
+    public static LogParam getLogParam(String nomeApplicazione, String nomeUtente, String nomePagina, String nomeAzione,
+            BigDecimal idOggetto) {
+        return new LogParam(nomeApplicazione, nomeUtente, nomePagina, nomeAzione, idOggetto);
     }
 
-    public static LogParam getLogParam(String nomeApplicazione, String nomeUtente,
-	    String nomePagina, String nomeAzione) {
-	return new LogParam(nomeApplicazione, nomeUtente, nomePagina, nomeAzione);
+    public static LogParam getLogParam(String nomeApplicazione, String nomeUtente, String nomePagina,
+            String nomeAzione) {
+        return new LogParam(nomeApplicazione, nomeUtente, nomePagina, nomeAzione);
     }
 
-    public static LogParam getLogParam(String nomeApplicazione, String nomeUtente,
-	    String nomePagina) {
-	return new LogParam(nomeApplicazione, nomeUtente, nomePagina);
+    public static LogParam getLogParam(String nomeApplicazione, String nomeUtente, String nomePagina) {
+        return new LogParam(nomeApplicazione, nomeUtente, nomePagina);
     }
 
     public static LogParam getLogParam(String nomeApplicazione, String nomeUtente) {
-	return new LogParam(nomeApplicazione, nomeUtente);
+        return new LogParam(nomeApplicazione, nomeUtente);
     }
 
 }
