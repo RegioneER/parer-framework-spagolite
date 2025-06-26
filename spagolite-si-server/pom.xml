@@ -6,7 +6,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>7.1.1</version>
+        <version>7.1.1-SNAPSHOT</version>
     </parent>
     <packaging>war</packaging>
     <dependencies>
