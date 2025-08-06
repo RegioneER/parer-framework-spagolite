@@ -1,18 +1,14 @@
 /*
  * Engineering Ingegneria Informatica S.p.A.
  *
- * Copyright (C) 2023 Regione Emilia-Romagna
- * <p/>
- * This program is free software: you can redistribute it and/or modify it under the terms of
- * the GNU Affero General Public License as published by the Free Software Foundation,
- * either version 3 of the License, or (at your option) any later version.
- * <p/>
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Affero General Public License for more details.
- * <p/>
- * You should have received a copy of the GNU Affero General Public License along with this program.
- * If not, see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the License, or (at your option)
+ * any later version. <p/> This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
+ * have received a copy of the GNU Affero General Public License along with this program. If not,
+ * see <https://www.gnu.org/licenses/>.
  */
 
 package it.eng.spagoLite.db.base;
@@ -32,8 +28,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
     /**
      * Imposta riga corrente sulla prima riga della pagina passata come parametro.
      *
-     * @param page
-     *            value
+     * @param page value
      */
     public void goPage(int page);
 
@@ -74,8 +69,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
     /**
      * Imposta il numero della riga corrente (0 - n).
      *
-     * @param rigaCorrente
-     *            value
+     * @param rigaCorrente value
      */
     public void setCurrentRowIndex(int rigaCorrente);
 
@@ -85,8 +79,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
     public int getPageSize();
 
     /**
-     * @param pageSize
-     *            The pageSize to set.
+     * @param pageSize The pageSize to set.
      */
     public void setPageSize(int pageSize);
 
@@ -139,8 +132,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
     /**
      * Carica il table bean a partire dalla tbella passata
      *
-     * @param table
-     *            value
+     * @param table value
      */
     void load(BaseTableInterface<?> table);
 
@@ -154,8 +146,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
     /**
      * Aggiunge una riga all'elenco
      *
-     * @param row
-     *            value
+     * @param row value
      *
      * @return oggetto generico T aggiunto
      */
@@ -169,12 +160,11 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
     public T remove();
 
     /**
-     * Rimuove la riga con indice relativo rowIndex dalla lista e decrementa la "fullSize". Ritorna la riga rimossa
-     * aggiungendogli un attributo che indica l'indice assoluto della riga rispetto la lista se tale indice non era già
-     * stato settato
+     * Rimuove la riga con indice relativo rowIndex dalla lista e decrementa la "fullSize". Ritorna
+     * la riga rimossa aggiungendogli un attributo che indica l'indice assoluto della riga rispetto
+     * la lista se tale indice non era già stato settato
      *
-     * @param rowIndex
-     *            indice relativo della riga
+     * @param rowIndex indice relativo della riga
      *
      * @return la riga rimossa
      */
@@ -202,8 +192,7 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
      *
      * ritorna null.
      *
-     * @param index
-     *            indice riga
+     * @param index indice riga
      *
      * @return riga passata
      */
@@ -212,10 +201,8 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
     /**
      * Aggiunge un criterio di ordinamento
      *
-     * @param columnName
-     *            value
-     * @param sortType
-     *            value
+     * @param columnName value
+     * @param sortType   value
      */
     public void addSortingRule(String columnName, int sortType);
 
@@ -242,19 +229,17 @@ public interface BaseTableInterface<T extends BaseRowInterface> extends Iterable
     /**
      * Rimuove la riga con indice assoluto RowIndex dalla lista e decrementa la "fullsize"
      *
-     * @param rowIndex
-     *            indice assoluto della riga
+     * @param rowIndex indice assoluto della riga
      *
      * @return la riga rimossa
      */
     public T removeFullIdx(int rowIndex);
 
     /**
-     * Aggiunge una riga alla lista nella posizione assoluta specificata dall'attributo ABSOLUTE_INDEX settato
-     * all'interno della riga stessa. Provvede a ripulire l'indice.
+     * Aggiunge una riga alla lista nella posizione assoluta specificata dall'attributo
+     * ABSOLUTE_INDEX settato all'interno della riga stessa. Provvede a ripulire l'indice.
      *
-     * @param baseRowInterface
-     *            value
+     * @param baseRowInterface value
      *
      * @return la riga aggiunta
      */

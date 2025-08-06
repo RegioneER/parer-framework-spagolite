@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spagofat</artifactId>
-    <version>7.0.2-SNAPSHOT</version>
+    <version>7.1.1</version>
     <packaging>pom</packaging>
     <name>Spagolite</name>
     <description>Framework utilizzato dalle applicazioni web, si tratta di uno strato software comune contenente anche le dipendenze di terze parti ed ereditato come bom.</description>
@@ -21,11 +21,11 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>parer-pom</artifactId>
-        <version>7.0.0</version>
+        <version>7.1.0</version>
     </parent>
 <scm>
         <developerConnection>scm:git:https://github.com/RegioneER/parer-framework-spagolite.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>spagofat-7.1.1</tag>
     </scm>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -53,7 +53,6 @@
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <velocity-engine-core.version>2.3</velocity-engine-core.version>
         <javax.activation.version>1.2.0</javax.activation.version>
-        <junit-jupiter.version>5.10.3</junit-jupiter.version>      
         <log4j.version>2.23.1</log4j.version> 
     </properties>
     <dependencyManagement>
@@ -292,7 +291,7 @@
             <dependency>
                 <groupId>org.jboss.bom</groupId>
                 <artifactId>jboss-eap-jakartaee8</artifactId>
-                <version>${version.bom}</version>
+                <version>${jboss-eap-jakartaee8-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -422,13 +421,14 @@
                 <version>${owasp.version}</version>
             </dependency>
             <!-- Junit -->
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <!-- WEBJARS -->
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>${junit.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!-- WEBJARS -->
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>jquery</artifactId>
@@ -474,7 +474,7 @@
                 <artifactId>highlightjs-badgejs</artifactId>
                 <version>${highlightjs-badgejs.version}</version>
             </dependency>
-            <!-- UTILS -->
+			<!-- UTILS -->
             <dependency>
                 <groupId>org.keycloak</groupId>
                 <artifactId>keycloak-servlet-filter-adapter</artifactId>
