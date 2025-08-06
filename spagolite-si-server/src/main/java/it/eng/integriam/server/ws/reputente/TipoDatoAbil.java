@@ -20,7 +20,7 @@ package it.eng.integriam.server.ws.reputente;
 public class TipoDatoAbil {
 
     private String nmClasseTipoDato;
-    private Integer idTipoDatoApplic;
+    private Long idTipoDatoApplic;
 
     public String getNmClasseTipoDato() {
 	return nmClasseTipoDato;
@@ -30,11 +30,11 @@ public class TipoDatoAbil {
 	this.nmClasseTipoDato = nmClasseTipoDato;
     }
 
-    public Integer getIdTipoDatoApplic() {
+    public Long getIdTipoDatoApplic() {
 	return idTipoDatoApplic;
     }
 
-    public void setIdTipoDatoApplic(Integer idTipoDatoApplic) {
+    public void setIdTipoDatoApplic(Long idTipoDatoApplic) {
 	this.idTipoDatoApplic = idTipoDatoApplic;
     }
 }

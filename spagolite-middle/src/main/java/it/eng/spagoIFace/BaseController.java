@@ -37,7 +37,7 @@ import org.springframework.web.servlet.view.RedirectView;
  */
 public abstract class BaseController implements Controller, BaseControllerIFace {
 
-    protected final Logger logger = LoggerFactory.getLogger(BaseController.class.getName());
+    private final Logger logger = LoggerFactory.getLogger(BaseController.class);
 
     public static final String LAST_PUBLISHER = "###_LAST_PUBLISHER";
 

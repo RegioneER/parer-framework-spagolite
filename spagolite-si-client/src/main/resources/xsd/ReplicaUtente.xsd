@@ -75,7 +75,7 @@
 
 <xs:complexType name="tipoDatoAbil">
 <xs:sequence>
-<xs:element name="idTipoDatoApplic" type="xs:int" minOccurs="0"/>
+<xs:element name="idTipoDatoApplic" type="xs:long" minOccurs="0"/>
 <xs:element name="nmClasseTipoDato" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
