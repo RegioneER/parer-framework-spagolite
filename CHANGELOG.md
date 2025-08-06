@@ -1,4 +1,12 @@
 
+## 7.1.2 (14-07-2025)
+
+### Bugfix: 1
+- [#38414](https://parermine.regione.emilia-romagna.it/issues/38414) Correzione utente non abilitato ad accedere al dettaglio dell'unità documentaria selazionata
+
+### Novità: 1
+- [#38419](https://parermine.regione.emilia-romagna.it/issues/38419) Adattamento framework per DPI con nuove librerie SAML2
+
 ## 7.1.1 (24-06-2025)
 
 ### Bugfix: 1
@@ -8,6 +16,11 @@
 
 ### Novità: 1
 - [#37617](https://parermine.regione.emilia-romagna.it/issues/37617) Aggiornamento librerie obsolete primo quadrimestre 2025
+
+## 7.0.1 (24-06-2025)
+
+### Bugfix: 1
+- [#38324](https://parermine.regione.emilia-romagna.it/issues/38324) Correzione join di allineamento organizzazioni
 
 ## 7.0.0 (24-03-2025)
 

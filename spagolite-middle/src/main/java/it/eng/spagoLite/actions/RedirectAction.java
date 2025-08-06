@@ -15,6 +15,9 @@ package it.eng.spagoLite.actions;
 
 import static it.eng.spagoCore.ConfigProperties.StandardProperty.DISABLE_SECURITY;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.eng.spagoCore.ConfigSingleton;
 import it.eng.spagoIFace.BaseController;
 import it.eng.spagoLite.SessionManager;
@@ -28,6 +31,8 @@ import it.eng.spagoLite.security.IUser;
  *
  */
 public class RedirectAction extends BaseController {
+
+    private final Logger logger = LoggerFactory.getLogger(RedirectAction.class);
 
     @Override
     public String getControllerName() {

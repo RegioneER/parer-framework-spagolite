@@ -3,17 +3,12 @@ package it.eng.spagoLite.spring;
 import org.opensaml.core.xml.schema.XSAny;
 import org.opensaml.core.xml.schema.impl.XSAnyBuilder;
 import org.opensaml.saml.common.xml.SAMLConstants;
-import org.opensaml.saml.saml2.core.AuthnContext;
-import org.opensaml.saml.saml2.core.AuthnContextClassRef;
-import org.opensaml.saml.saml2.core.AuthnContextComparisonTypeEnumeration;
-import org.opensaml.saml.saml2.core.Extensions;
-import org.opensaml.saml.saml2.core.RequestedAuthnContext;
+import org.opensaml.saml.saml2.core.*;
 import org.opensaml.saml.saml2.core.impl.AuthnContextClassRefBuilder;
 import org.opensaml.saml.saml2.core.impl.ExtensionsBuilder;
 import org.opensaml.saml.saml2.core.impl.RequestedAuthnContextBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.security.saml2.provider.service.web.DefaultRelyingPartyRegistrationResolver;
@@ -30,8 +25,7 @@ public class ParerSecurityConfiguration {
     public static final String MODALITA_SPID_PROFESSIONALE = "PX";
     public static final String PARAMETRO_MODALITA_SPID_PROFESSIONALE = "SlitePur";
 
-    @Autowired
-    public String nomeApplicazione;
+    public static String nomeApplicazione;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ParerSecurityConfiguration.class);
 
@@ -72,10 +66,10 @@ public class ParerSecurityConfiguration {
     }
 
     @Bean
-    RefreshableRelyingPartyRegistrationRepository refreshableRelyingPartyRegistrationRepository(
+    public static RefreshableRelyingPartyRegistrationRepository refreshableRelyingPartyRegistrationRepository(
 	    ThreadPoolTaskScheduler threadPoolTaskScheduler) {
 	long fixedRate = Long.parseLong(
-		System.getProperty(nomeApplicazione + "-refresh-check-interval", "60000"));
+		System.getProperty(nomeApplicazione + "-refresh-check-interval", "600000"));
 	LOGGER.info("Il federationMetadata si aggiorna ogni {} millisecondi.", fixedRate);
 	RefreshableRelyingPartyRegistrationRepository r = new RefreshableRelyingPartyRegistrationRepository(
 		nomeApplicazione);

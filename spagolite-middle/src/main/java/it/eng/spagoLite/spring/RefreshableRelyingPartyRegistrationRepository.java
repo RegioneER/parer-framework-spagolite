@@ -126,7 +126,7 @@ public class RefreshableRelyingPartyRegistrationRepository implements
 		/*
 		 * Deve generare un registrationId univoco per ogni associazione tra idp e sp.
 		 * Quello con nome "saceriam" è quello dell'associazione con keycloak vero sui
-		 * derver e non il locale e nemmeno gli SPID
+		 * server e non il locale e nemmeno gli SPID
 		 */
 		String registrationId = nomeApplicazione;
 		if (idpFed.contains(".lepida")) {
@@ -211,7 +211,7 @@ public class RefreshableRelyingPartyRegistrationRepository implements
 	} catch (IOException | KeyStoreException | NoSuchAlgorithmException | CertificateException
 		| UnrecoverableKeyException ex) {
 	    throw new MetadataRuntimeException(
-		    "Errore nel caricamento dei ccertificati dell'applicazione!", ex);
+		    "Errore nel caricamento dei certificati dell'applicazione!", ex);
 	}
     }
 
