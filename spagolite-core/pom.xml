@@ -8,7 +8,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>7.1.2</version>
+        <version>7.1.2-SNAPSHOT</version>
     </parent>
     <dependencies>
         <!-- BOM per JBoss EAP 7.4 (jboss-eap-jakartaee8) dependencies -->
