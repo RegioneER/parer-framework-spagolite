@@ -1,7 +1,8 @@
-## 7.1.2 (14-07-2025)
+## 7.1.3 (11-09-2025)
 
 ### Bugfix: 1
-- [#38414](https://parermine.regione.emilia-romagna.it/issues/38414) Correzione utente non abilitato ad accedere al dettaglio dell'unità documentaria selazionata
+- [#38887](https://parermine.regione.emilia-romagna.it/issues/38887) Apportare modifiche per far funzionare correttamente la gestione Log Eventi 
 
-### Novità: 1
-- [#38419](https://parermine.regione.emilia-romagna.it/issues/38419) Adattamento framework per DPI con nuove librerie SAML2
+### Novità: 2
+- [#38178](https://parermine.regione.emilia-romagna.it/issues/38178)  Ottimizzazioni e refactor codice per recupero debito tecnico (SonarQube)
+- [#37773](https://parermine.regione.emilia-romagna.it/issues/37773)  Ottimizzazioni e refactor codice per recupero debito tecnico (SonarQube)
