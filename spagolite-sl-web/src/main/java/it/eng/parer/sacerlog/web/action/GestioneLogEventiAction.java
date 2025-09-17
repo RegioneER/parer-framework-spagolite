@@ -263,6 +263,7 @@ public class GestioneLogEventiAction extends GestioneLogEventiAbstractAction {
 	    form.getListaEventi().setTable(tabella);
 	    form.getListaEventi().getTable().setPageSize(10);
 	    form.getListaEventi().getTable().first();
+	    forwardToPublisher(Application.Publisher.GESTIONE_LOG_EVENTI);
 	} else {
 	    getMessageBox().addWarning("Attenzione: non esistono eventi per l'oggetto "
 		    + form.getOggettoDetail().getNm_tipo_oggetto().getValue());
