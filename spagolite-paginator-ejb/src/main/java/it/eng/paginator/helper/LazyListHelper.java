@@ -18,7 +18,9 @@ import it.eng.paginator.util.QueryUtils;
 import it.eng.spagoLite.db.base.table.AbstractBaseTable;
 import it.eng.spagoLite.db.base.table.LazyListBean;
 import it.eng.spagoLite.db.base.table.LazyQuery;
+import org.hibernate.query.internal.NativeQueryImpl;
 import org.springframework.util.Assert;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 import java.util.function.Function;
@@ -59,15 +61,30 @@ public class LazyListHelper {
 		    lazyListBean.getFirstResult(), lazyListBean.getOrderByColumnName(),
 		    lazyListBean.getOrderBySortingRule());
 	} else {
+	    // MEV #39292 blocco modificato per gestire JPQL e native
 	    if (lazyListBean.getCountResultSize() <= 0) {
+		// Creiamo la query di conteggio, usando il nuovo metodo che sa gestire entrambi i
+		// tipi
 		Query count = createQuery(lazyQuery.getCountQueryString(),
-			lazyQuery.getQueryParams());
-		lazyListBean
-			.setCountResultSize(Long.class.cast(count.getSingleResult()).intValue());
+			lazyQuery.getQueryParams(), lazyQuery.isNativeQuery(), null // <- La query
+										    // di conteggio
+										    // non mappa a
+										    // nessuna
+										    // classe/DTO
+		);
+		// Il risultato di una query di conteggio nativa potrebbe essere BigDecimal,
+		// "castiamo" a Number
+		lazyListBean.setCountResultSize(((Number) count.getSingleResult()).intValue());
 	    }
+
+	    // Eseguiamo la query per i dati, usando il nuovo metodo "potenziato" per gestire i 2
+	    // casi
 	    resultList = execQuery(lazyQuery.getQueryString(), lazyQuery.getQueryParams(),
 		    lazyListBean.getMaxResult(), lazyListBean.getFirstResult(),
-		    lazyListBean.getOrderByColumnName(), lazyListBean.getOrderBySortingRule());
+		    lazyListBean.getOrderByColumnName(), lazyListBean.getOrderBySortingRule(),
+		    lazyQuery.isNativeQuery(), // <- Passiamo il flag
+		    lazyQuery.getResultSetMappingName() // <- Passiamo il nome della mappatura
+	    );
 	}
 
 	final T tableBean = tansformFunc.apply(resultList);
@@ -111,12 +128,53 @@ public class LazyListHelper {
 	return getTableBean(query, tansformFunc, countDistinctField, lazyListBean);
     }
 
+    // ===================================================================================
+    // MEV #39292 - NUOVO METODO: sarà il NUOVO punto d'ingresso per le query native paginate.
+    // ===================================================================================
+    public <T extends AbstractBaseTable> T getTableBeanForNativeQuery(Query nativeDataQuery,
+	    Function<List, T> transformFunc, String countDistinctField,
+	    String resultSetMappingName) {
+
+	final LazyListBean lazyListBean = new LazyListBean();
+	setRecordLimits(lazyListBean, nativeDataQuery);
+
+	// Sappiamo che è una query nativa
+	boolean isNative = true;
+
+	// Creiamo la query di conteggio.
+	String countQueryString = QueryUtils.selectToCount(nativeDataQuery, countDistinctField);
+
+	// Usiamo il nuovo costruttore di LazyQuery, passando esplicitamente le informazioni.
+	lazyListBean.setLazyQuery(new LazyQuery(QueryUtils.queryStringFrom(nativeDataQuery),
+		countQueryString, QueryUtils.extractParameters(nativeDataQuery), isNative,
+		resultSetMappingName // Memorizzazione del nome della mappa per le pagine successive
+	));
+
+	lazyListBean.setResultListToTableBeanFunc(transformFunc);
+
+	// Delechiamo l'esecuzione al "motore", che ora ha tutte le info corrette.
+	return getTableBean(lazyListBean, transformFunc);
+    }
+
+    // MEV #39292 - METODO MODIFICATO
     private <T extends AbstractBaseTable> T getTableBean(Query query,
 	    Function<List, T> tansformFunc, String countDistinctField, LazyListBean lazyListBean) {
 	setRecordLimits(lazyListBean, query);
-	lazyListBean.setLazyQuery(new LazyQuery(QueryUtils.queryStringFrom(query),
-		QueryUtils.selectToCount(query, countDistinctField),
-		QueryUtils.extractParameters(query)));
+
+	// Recupera l'info per sapere se la query è nativa o neno
+	boolean isNative = QueryUtils.isNativeQuery(query);
+
+	// Creiamo la query di conteggio.
+	String countQueryString = QueryUtils.selectToCount(query, countDistinctField);
+
+	// Otteniamo il nome della mappatura, se presente.
+	String resultSetMappingName = getResultSetMappingName(query);
+
+	// Usiamo il nuovo costruttore di LazyQuery
+	lazyListBean.setLazyQuery(new LazyQuery(QueryUtils.queryStringFrom(query), countQueryString,
+		QueryUtils.extractParameters(query), isNative, // Passiamo il flag
+		resultSetMappingName // Passiamo il nome della mappatura
+	));
 	lazyListBean.setResultListToTableBeanFunc(tansformFunc);
 	return getTableBean(lazyListBean, tansformFunc);
     }
@@ -139,20 +197,71 @@ public class LazyListHelper {
 	return getTableBean(lazyListBean, tansformFunc);
     }
 
-    private Query createQuery(String queryString, Map<String, Object> params) {
-	Query query = entityManager.createQuery(queryString);
-	params.keySet().forEach(k -> query.setParameter(k, params.get(k)));
+    // MEV #39292 - METODO NUOVO
+    private String getResultSetMappingName(Query query) {
+	if (QueryUtils.isNativeQuery(query)) {
+	    try {
+		// Usiamo la reflection per accedere a un campo privato di Hibernate.
+		NativeQueryImpl<?> nativeQuery = query.unwrap(NativeQueryImpl.class);
+		java.lang.reflect.Field field = nativeQuery.getClass()
+			.getDeclaredField("sqlResultSetMappingName");
+		field.setAccessible(true);
+		return (String) field.get(nativeQuery);
+	    } catch (NoSuchFieldException | IllegalAccessException | ClassCastException e) {
+		// Nessun problema se fallisce, significa che non c'è una mappatura.
+		return null;
+	    }
+	}
+	return null;
+    }
+
+    // MEV #39292 - METODO MODIFICATO per discernere tra native e non
+    private Query createQuery(String queryString, Map<String, Object> params, boolean isNative,
+	    String resultSetMappingName) {
+	Query query;
+	if (isNative) {
+	    if (StringUtils.isNotBlank(resultSetMappingName)) {
+		query = entityManager.createNativeQuery(queryString, resultSetMappingName);
+	    } else {
+		query = entityManager.createNativeQuery(queryString);
+	    }
+	} else {
+	    query = entityManager.createQuery(queryString);
+	}
+
+	if (params != null) {
+	    params.keySet().forEach(k -> query.setParameter(k, params.get(k)));
+	}
 	return query;
     }
 
+    // MEV #39292 - METODO NUOVO
+    private Query createQuery(String queryString, Map<String, Object> params) {
+	// Mantenuto per retrocompatibilità, delega al nuovo metodo assumendo JPQL.
+	return createQuery(queryString, params, false, null);
+    }
+
+    // MEV #39292 - METODO MODIFICATO
     private List execQuery(final String queryString, Map<String, Object> params, int maxResults,
-	    int firstResult, String sortColumnName, int sortingRule) {
+	    int firstResult, String sortColumnName, int sortingRule, boolean isNative,
+	    String resultSetMappingName) {
+
 	String sortedQueryString = QueryUtils.handleOrderBy(queryString, sortColumnName,
 		sortingRule);
-	Query sortedQuerty = createQuery(sortedQueryString, params);
-	sortedQuerty.setFirstResult(firstResult);
-	sortedQuerty.setMaxResults(maxResults);
-	return sortedQuerty.getResultList();
+
+	Query sortedQuery = createQuery(sortedQueryString, params, isNative, resultSetMappingName);
+
+	sortedQuery.setFirstResult(firstResult);
+	sortedQuery.setMaxResults(maxResults);
+	return sortedQuery.getResultList();
+    }
+
+    // MEV #39292 - METODO NUOVO
+    private List execQuery(final String queryString, Map<String, Object> params, int maxResults,
+	    int firstResult, String sortColumnName, int sortingRule) {
+	// Mantenuto per retrocompatibilità, delega al nuovo metodo assumendo JPQL.
+	return execQuery(queryString, params, maxResults, firstResult, sortColumnName, sortingRule,
+		false, null);
     }
 
     private List execQuery(final CriteriaQuery cq, int maxResults, int firstResult,
