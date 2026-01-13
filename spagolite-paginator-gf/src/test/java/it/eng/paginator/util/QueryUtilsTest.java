@@ -10,7 +10,6 @@
  * have received a copy of the GNU Affero General Public License along with this program. If not,
  * see <https://www.gnu.org/licenses/>.
  */
-
 package it.eng.paginator.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -149,9 +148,18 @@ public class QueryUtilsTest {
     @Test
     public void getCountQueryStringFromQueryAndDistinctField() {
 	String queryStr = "SELECT DISTINCT p FROM PigAmbienteVers p";
-	System.out.println(QueryUtils.selectToCount(queryStr, "idAmbienteVers"));
+	System.out.println(QueryUtils.selectToCountFromJpql(queryStr, "idAmbienteVers"));
 	assertEquals("SELECT COUNT(DISTINCT idAmbienteVers) FROM PigAmbienteVers p",
-		QueryUtils.selectToCount(queryStr, "idAmbienteVers"));
+		QueryUtils.selectToCountFromJpql(queryStr, "idAmbienteVers"));
+
+    }
+
+    @Test
+    public void getCountQueryStringFromNativeQueryAndDistinctField() {
+	String queryStr = "SELECT DISTINCT p.* FROM Pig_Ambiente_Vers p";
+	System.out.println(QueryUtils.selectToCountFromNative(queryStr, "id_Ambiente_Vers"));
+	assertEquals("SELECT COUNT(DISTINCT p.id_Ambiente_Vers) FROM Pig_Ambiente_Vers p",
+		QueryUtils.selectToCountFromNative(queryStr, "id_Ambiente_Vers"));
 
     }
 
@@ -200,21 +208,42 @@ public class QueryUtilsTest {
     public void countQueryWithOneFieldForDistinct() {
 	final String selectQuery = "SELECT u FROM AroVLisArchivUnitaDoc u      where u.idUnitaDoc = :idud ORDER BY u.dsClassif,u.cdFascic";
 	final String expected = "SELECT COUNT(DISTINCT idUnitaDoc) FROM AroVLisArchivUnitaDoc u where u.idUnitaDoc = :idud";
-	assertEquals(expected, QueryUtils.selectToCount(selectQuery, "idUnitaDoc"));
+	assertEquals(expected, QueryUtils.selectToCountFromNative(selectQuery, "idUnitaDoc"));
     }
 
     @Test
     public void countQueryWithEmptyStringForDistinctIsTheSameOfNoDistinctFields() {
 	final String selectQuery = "SELECT u FROM AroVLisArchivUnitaDoc u      where u.idUnitaDoc = :idud ORDER BY u.dsClassif,u.cdFascic";
 	final String expected = "SELECT COUNT(*) FROM AroVLisArchivUnitaDoc u where u.idUnitaDoc = :idud";
-	assertEquals(expected, QueryUtils.selectToCount(selectQuery, ""));
+	assertEquals(expected, QueryUtils.selectToCountFromNative(selectQuery, ""));
     }
 
     @Test
     public void countQueryWithNullDistinctIsTheSameOfNoDistinctFields() {
 	final String selectQuery = "SELECT u FROM AroVLisArchivUnitaDoc u      where u.idUnitaDoc = :idud ORDER BY u.dsClassif,u.cdFascic";
 	final String expected = "SELECT COUNT(*) FROM AroVLisArchivUnitaDoc u where u.idUnitaDoc = :idud";
-	assertEquals(expected, QueryUtils.selectToCount(selectQuery, null));
+	assertEquals(expected, QueryUtils.selectToCountFromNative(selectQuery, null));
+    }
+
+    @Test
+    public void countNativeQueryWithOneFieldForDistinct() {
+	final String selectQuery = "SELECT * FROM Aro_V_Lis_Archiv_Unita_Doc u      where u.id_Unita_Doc = :idud ORDER BY u.ds_Classif,u.cd_Fascic";
+	final String expected = "SELECT COUNT(DISTINCT u.*) FROM Aro_V_Lis_Archiv_Unita_Doc u where u.id_Unita_Doc = :idud";
+	assertEquals(expected, QueryUtils.selectToCountFromNative(selectQuery, "id_Unita_Doc"));
+    }
+
+    @Test
+    public void countNativeQueryWithEmptyStringForDistinctIsTheSameOfNoDistinctFields() {
+	final String selectQuery = "SELECT * FROM Aro_V_Lis_Archiv_Unita_Doc u      where u.id_Unita_Doc = :idud ORDER BY u.ds_Classif,u.cd_Fascic";
+	final String expected = "SELECT COUNT(*) FROM Aro_V_Lis_Archiv_Unita_Doc u where u.id_Unita_Doc = :idud";
+	assertEquals(expected, QueryUtils.selectToCountFromNative(selectQuery, ""));
+    }
+
+    @Test
+    public void countNativeQueryWithNullDistinctIsTheSameOfNoDistinctFields() {
+	final String selectQuery = "SELECT * FROM Aro_V_Lis_Archiv_Unita_Doc u      where u.id_Unita_Doc = :idud ORDER BY u.ds_Classif,u.cd_Fascic";
+	final String expected = "SELECT COUNT(*) FROM Aro_V_Lis_Archiv_Unita_Doc u where u.id_Unita_Doc = :idud";
+	assertEquals(expected, QueryUtils.selectToCountFromNative(selectQuery, null));
     }
 
     @Test
