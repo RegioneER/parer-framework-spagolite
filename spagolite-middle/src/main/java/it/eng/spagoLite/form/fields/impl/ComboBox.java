@@ -39,128 +39,128 @@ public class ComboBox<O> extends SingleValueField<O> implements IMappableField {
     private boolean withSearchComp;
 
     public ComboBox(Component parent, String name, String description, String alias, Enum type,
-	    String format, boolean required, boolean hidden, boolean readonly, boolean trigger,
-	    int maxLength, boolean addBlank, boolean withSearchComp) {
-	super(parent, name, description, alias, type, format, required, hidden, readonly, trigger);
-	this.maxLength = maxLength;
-	this.addBlank = addBlank;
-	this.withSearchComp = withSearchComp;
+            String format, boolean required, boolean hidden, boolean readonly, boolean trigger,
+            int maxLength, boolean addBlank, boolean withSearchComp) {
+        super(parent, name, description, alias, type, format, required, hidden, readonly, trigger);
+        this.maxLength = maxLength;
+        this.addBlank = addBlank;
+        this.withSearchComp = withSearchComp;
     }
 
     public DecodeMapIF getDecodeMap() {
-	return decodeMap;
+        return decodeMap;
     }
 
     public void setDecodeMap(DecodeMapIF decodeMap) {
-	try {
-	    this.decodeMap = decodeMap;
-	    if (StringUtils.isNotBlank(this.getValue()) && decodeMap != null
-		    && !decodeMap.containsKey(parse())) {
-		setValue(null);
-	    }
-	} catch (EMFError ex) {
-	    log.error("DECODE MAP " + getName() + "ERRORE di conversione valore : "
-		    + ex.getDescription(), ex);
-	}
+        try {
+            this.decodeMap = decodeMap;
+            if (StringUtils.isNotBlank(this.getValue()) && decodeMap != null
+                    && !decodeMap.containsKey(parse())) {
+                setValue(null);
+            }
+        } catch (EMFError ex) {
+            log.error("DECODE MAP " + getName() + "ERRORE di conversione valore : "
+                    + ex.getDescription(), ex);
+        }
     }
 
     public int getMaxLength() {
-	return maxLength;
+        return maxLength;
     }
 
     public void setMaxLength(int maxLength) {
-	this.maxLength = maxLength;
+        this.maxLength = maxLength;
     }
 
     public boolean isAddBlank() {
-	return addBlank;
+        return addBlank;
     }
 
     public void setAddBlank(boolean addBlank) {
-	this.addBlank = addBlank;
+        this.addBlank = addBlank;
     }
 
     @Override
     public String getDecodedValue() throws EMFError {
-	if (check()) {
-	    Object object = parse();
-	    if (check() && object != null && !object.equals("")) {
-		if (getDecodeMap() == null) {
-		    return (String) object;
-		}
-		return getDecodeMap().getDescrizione(parse());
-	    }
-	}
-	return "";
+        if (check()) {
+            Object object = parse();
+            if (check() && object != null && !object.equals("")) {
+                if (getDecodeMap() == null) {
+                    return (String) object;
+                }
+                return getDecodeMap().getDescrizione(parse());
+            }
+        }
+        return "";
     }
 
     @Override
     public String getHtmlDecodedValue() throws EMFError {
-	String htmlDecodedValue = JavaScript.stringToHTMLString(getDecodedValue());
-	String htmlIcon = getIconUrl() == null ? ""
-		: "<img src=\"" + getIconUrl() + "\" alt=\"" + htmlDecodedValue + "\" title=\""
-			+ htmlDecodedValue + "\" />&nbsp;";
+        String htmlDecodedValue = JavaScript.stringToHTMLString(getDecodedValue());
+        String htmlIcon = getIconUrl() == null ? ""
+                : "<img src=\"" + getIconUrl() + "\" alt=\"" + htmlDecodedValue + "\" title=\""
+                        + htmlDecodedValue + "\" />&nbsp;";
 
-	return htmlIcon + htmlDecodedValue;
+        return htmlIcon + htmlDecodedValue;
     }
 
     public String getValue(Object key) {
-	if (getDecodeMap() != null && getDecodeMap().containsKey(key)) {
-	    return getDecodeMap().getDescrizione(key);
-	}
-	return (String) key;
+        if (getDecodeMap() != null && getDecodeMap().containsKey(key)) {
+            return getDecodeMap().getDescrizione(key);
+        }
+        return (String) key;
     }
 
     @Override
     public JSONObject asJSON() throws EMFError {
-	JSONObject json = super.asJSON();
-	try {
-	    JSONArray sons = new JSONArray();
-	    if (decodeMap != null) {
-		sons.put(decodeMap.asJSON());
-	    }
-	    json.put("map", sons);
-	    json.put("withEmptyVal", isAddBlank());
-	    json.put("type", "ComboBox");
-	} catch (JSONException e) {
-	    throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
-	}
+        JSONObject json = super.asJSON();
+        try {
+            JSONArray sons = new JSONArray();
+            if (decodeMap != null) {
+                sons.put(decodeMap.asJSON());
+            }
+            json.put("map", sons);
+            json.put("withEmptyVal", isAddBlank());
+            json.put("type", "ComboBox");
+        } catch (JSONException e) {
+            throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
+        }
 
-	return json;
+        return json;
     }
 
     @Override
     public void reset() {
-	super.reset();
-	setDecodeMap(null);
+        super.reset();
+        setDecodeMap(null);
     }
 
     @Override
     public void setValue(String value) {
-	try {
-	    if (getDecodeMap() != null) {
-		Object val = Casting.parse(value, getType());
-		if (val == null || getDecodeMap().containsKey(val)) {
-		    super.setValue(value);
-		}
-	    } else {
-		if (StringUtils.isNotBlank(value)) {
-		    log.warn(
-			    "ATTENZIONE: \u00E8 stato impostato un valore per la combo senza DecodeMap presente.");
-		}
-		super.setValue(value);
-	    }
-	} catch (EMFError ex) {
-	    log.error("DECODE MAP " + getName() + "ERRORE di conversione valore : "
-		    + ex.getDescription(), ex);
-	}
+        try {
+            if (getDecodeMap() != null) {
+                Object val = Casting.parse(value, getType());
+                if (val == null || getDecodeMap().containsKey(val)) {
+                    super.setValue(value);
+                }
+            } else {
+                if (StringUtils.isNotBlank(value)) {
+                    log.warn(
+                            "ATTENZIONE: \u00E8 stato impostato un valore per la combo senza DecodeMap presente.");
+                }
+                super.setValue(value);
+            }
+        } catch (EMFError ex) {
+            log.error("DECODE MAP " + getName() + "ERRORE di conversione valore : "
+                    + ex.getDescription(), ex);
+        }
     }
 
     public boolean isWithSearchComp() {
-	return withSearchComp;
+        return withSearchComp;
     }
 
     public void setWithSearchComp(boolean withSearchComp) {
-	this.withSearchComp = withSearchComp;
+        this.withSearchComp = withSearchComp;
     }
 }

@@ -37,43 +37,43 @@ public class ApplicationBaseProperties {
     private String urlHelp;
 
     public ApplicationBaseProperties(String applicationName, String applicationUserName,
-	    String applicationPassword, String urlHelp) {
-	this.applicationName = applicationName;
-	this.applicationUserName = applicationUserName;
-	this.applicationPassword = applicationPassword;
-	this.urlHelp = urlHelp;
+            String applicationPassword, String urlHelp) {
+        this.applicationName = applicationName;
+        this.applicationUserName = applicationUserName;
+        this.applicationPassword = applicationPassword;
+        this.urlHelp = urlHelp;
     }
 
     public String getApplicationName() {
-	return applicationName;
+        return applicationName;
     }
 
     public void setApplicationName(String applicationName) {
-	this.applicationName = applicationName;
+        this.applicationName = applicationName;
     }
 
     public String getApplicationUserName() {
-	return applicationUserName;
+        return applicationUserName;
     }
 
     public void setApplicationUserName(String applicationUserName) {
-	this.applicationUserName = applicationUserName;
+        this.applicationUserName = applicationUserName;
     }
 
     public String getApplicationPassword() {
-	return applicationPassword;
+        return applicationPassword;
     }
 
     public void setApplicationPassword(String applicationPassword) {
-	this.applicationPassword = applicationPassword;
+        this.applicationPassword = applicationPassword;
     }
 
     public String getUrlHelp() {
-	return urlHelp;
+        return urlHelp;
     }
 
     public void setUrlHelp(String urlHelp) {
-	this.urlHelp = urlHelp;
+        this.urlHelp = urlHelp;
     }
 
 }

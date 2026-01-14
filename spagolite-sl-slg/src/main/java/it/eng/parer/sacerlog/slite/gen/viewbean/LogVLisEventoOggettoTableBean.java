@@ -32,19 +32,19 @@ public class LogVLisEventoOggettoTableBean extends AbstractBaseTable<LogVLisEven
     public static LogVLisEventoOggettoTableDescriptor TABLE_DESCRIPTOR = new LogVLisEventoOggettoTableDescriptor();
 
     public LogVLisEventoOggettoTableBean() {
-	super();
+        super();
     }
 
     protected LogVLisEventoOggettoRowBean createRow() {
-	return new LogVLisEventoOggettoRowBean();
+        return new LogVLisEventoOggettoRowBean();
     }
 
     public TableDescriptor getTableDescriptor() {
-	return TABLE_DESCRIPTOR;
+        return TABLE_DESCRIPTOR;
     }
 
     @Deprecated
     public Iterator<LogVLisEventoOggettoRowBean> getRowsIterator() {
-	return iterator();
+        return iterator();
     }
 }

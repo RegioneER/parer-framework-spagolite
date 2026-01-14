@@ -23,18 +23,18 @@ public class FilterBoxTag extends BaseSpagoLiteTag {
 
     @Override
     public int doStartTag() throws JspException {
-	writeln("<div class=\"filterBox\">");
+        writeln("<div class=\"filterBox\">");
 
-	return EVAL_BODY_INCLUDE;
+        return EVAL_BODY_INCLUDE;
     }
 
     @Override
     public int doEndTag() throws JspException {
 
-	writeln("</div>");
-	writeln(NewLineTag.Factory.htmlNewLine(true));
+        writeln("</div>");
+        writeln(NewLineTag.Factory.htmlNewLine(true));
 
-	return EVAL_PAGE;
+        return EVAL_PAGE;
     }
 
 }

@@ -58,73 +58,73 @@ public class SOAPServerLoginHandler implements SOAPHandler<SOAPMessageContext> {
     @Override
     public boolean handleMessage(SOAPMessageContext msgCtx) {
 
-	Boolean outbound = (Boolean) msgCtx.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-	Object obj = msgCtx.get(MessageContext.SERVLET_REQUEST);
-	String ipAddress = X_FORWARDED_UNDEFINED;
-	if (obj != null && obj instanceof HttpServletRequest) {
-	    ipAddress = ((HttpServletRequest) obj).getHeader("X-FORWARDED-FOR");
-	}
-	log.debug("SOAPServerLoginHandler attivato. Client IP Address: " + ipAddress);
-	if (!outbound) {
+        Boolean outbound = (Boolean) msgCtx.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+        Object obj = msgCtx.get(MessageContext.SERVLET_REQUEST);
+        String ipAddress = X_FORWARDED_UNDEFINED;
+        if (obj != null && obj instanceof HttpServletRequest) {
+            ipAddress = ((HttpServletRequest) obj).getHeader("X-FORWARDED-FOR");
+        }
+        log.debug("SOAPServerLoginHandler attivato. Client IP Address: " + ipAddress);
+        if (!outbound) {
 
-	    EntityManager em = null;
-	    String username = null;
-	    String password = null;
-	    try {
-		em = emf.createEntityManager();
-		NodeList usernameEl = (NodeList) msgCtx.getMessage().getSOAPHeader()
-			.getElementsByTagNameNS(WSSE_XSD_URI, "Username");
-		NodeList passwordEl = (NodeList) msgCtx.getMessage().getSOAPHeader()
-			.getElementsByTagNameNS(WSSE_XSD_URI, "Password");
-		Node userNode = null;
-		Node passNode = null;
-		if (usernameEl != null && passwordEl != null
-			&& (userNode = usernameEl.item(0)) != null
-			&& (passNode = passwordEl.item(0)) != null) {
-		    username = userNode.getFirstChild().getNodeValue();
-		    password = passNode.getFirstChild().getNodeValue();
-		    WSLoginHandler.login(username, password, ipAddress, em);
-		    msgCtx.put(AuthenticationHandlerConstants.AUTHN_STAUTS, java.lang.Boolean.TRUE);
-		    msgCtx.put(AuthenticationHandlerConstants.USER, username);
-		    msgCtx.put(AuthenticationHandlerConstants.PWD, password);
-		} else {
-		    throw new ProtocolException("Username e password sono obbligatorie");
-		}
-	    } catch (AuthWSException e) {
-		WSLoginHandler.throwSOAPFault(msgCtx, e);
-	    } catch (DOMException | SOAPException e) {
-		throw new ProtocolException(e);
-	    } finally {
-		if (em != null) {
-		    em.close();
-		}
-	    }
-	    msgCtx.setScope(AuthenticationHandlerConstants.AUTHN_STAUTS,
-		    MessageContext.Scope.APPLICATION);
-	    msgCtx.setScope(AuthenticationHandlerConstants.USER, MessageContext.Scope.APPLICATION);
-	    msgCtx.setScope(AuthenticationHandlerConstants.PWD, MessageContext.Scope.APPLICATION);
-	}
-	return true;
+            EntityManager em = null;
+            String username = null;
+            String password = null;
+            try {
+                em = emf.createEntityManager();
+                NodeList usernameEl = (NodeList) msgCtx.getMessage().getSOAPHeader()
+                        .getElementsByTagNameNS(WSSE_XSD_URI, "Username");
+                NodeList passwordEl = (NodeList) msgCtx.getMessage().getSOAPHeader()
+                        .getElementsByTagNameNS(WSSE_XSD_URI, "Password");
+                Node userNode = null;
+                Node passNode = null;
+                if (usernameEl != null && passwordEl != null
+                        && (userNode = usernameEl.item(0)) != null
+                        && (passNode = passwordEl.item(0)) != null) {
+                    username = userNode.getFirstChild().getNodeValue();
+                    password = passNode.getFirstChild().getNodeValue();
+                    WSLoginHandler.login(username, password, ipAddress, em);
+                    msgCtx.put(AuthenticationHandlerConstants.AUTHN_STAUTS, java.lang.Boolean.TRUE);
+                    msgCtx.put(AuthenticationHandlerConstants.USER, username);
+                    msgCtx.put(AuthenticationHandlerConstants.PWD, password);
+                } else {
+                    throw new ProtocolException("Username e password sono obbligatorie");
+                }
+            } catch (AuthWSException e) {
+                WSLoginHandler.throwSOAPFault(msgCtx, e);
+            } catch (DOMException | SOAPException e) {
+                throw new ProtocolException(e);
+            } finally {
+                if (em != null) {
+                    em.close();
+                }
+            }
+            msgCtx.setScope(AuthenticationHandlerConstants.AUTHN_STAUTS,
+                    MessageContext.Scope.APPLICATION);
+            msgCtx.setScope(AuthenticationHandlerConstants.USER, MessageContext.Scope.APPLICATION);
+            msgCtx.setScope(AuthenticationHandlerConstants.PWD, MessageContext.Scope.APPLICATION);
+        }
+        return true;
     }
 
     @Override
     public boolean handleFault(SOAPMessageContext context) {
 
-	return true;
+        return true;
     }
 
     @Override
     public void close(MessageContext context) {
-	// TODO Auto-generated method stub
+        // TODO Auto-generated method stub
 
     }
 
     @Override
     public Set<QName> getHeaders() {
 
-	HashSet<QName> headers = new HashSet<QName>();
-	headers.add(QNAME_WSSE_HEADER);
-	return headers;
+        HashSet<QName> headers = new HashSet<QName>();
+        headers.add(QNAME_WSSE_HEADER);
+        return headers;
     }
 
 }

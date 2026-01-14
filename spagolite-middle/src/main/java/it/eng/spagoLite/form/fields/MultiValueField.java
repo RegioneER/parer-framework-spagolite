@@ -40,107 +40,107 @@ public abstract class MultiValueField<O> extends Field {
     private LinkedHashSet<String> values;
 
     public MultiValueField(Component parent, String name, String description, String alias,
-	    Enum type, String format, boolean required, boolean hidden, boolean readonly,
-	    boolean trigger) {
-	super(parent, name, description, alias, type, format, required, hidden, readonly, trigger);
-	values = new LinkedHashSet<String>();
+            Enum type, String format, boolean required, boolean hidden, boolean readonly,
+            boolean trigger) {
+        super(parent, name, description, alias, type, format, required, hidden, readonly, trigger);
+        values = new LinkedHashSet<String>();
     }
 
     public Set<String> getValues() {
-	return values;
+        return values;
     }
 
     public void setValues(String values[]) {
-	this.values.clear();
+        this.values.clear();
 
-	if (values != null) {
-	    CollectionUtils.addAll(this.values, values);
-	}
+        if (values != null) {
+            CollectionUtils.addAll(this.values, values);
+        }
     }
 
     public Set<String> getDecodedValues() throws EMFError {
-	return getValues();
+        return getValues();
     }
 
     @Override
     public boolean check() {
-	return Casting.check(getValues(), getType());
+        return Casting.check(getValues(), getType());
     }
 
     @Override
     public Message validate() {
-	if (!check()) {
-	    return new Message(MessageLevel.ERR,
-		    "Campo '" + getDescription() + "' formalmente errato");
-	}
-	if (isRequired() && (getValues() == null || getValues().isEmpty())) {
-	    return new Message(MessageLevel.ERR, "Campo  '" + getDescription() + "' obbligatorio");
-	}
+        if (!check()) {
+            return new Message(MessageLevel.ERR,
+                    "Campo '" + getDescription() + "' formalmente errato");
+        }
+        if (isRequired() && (getValues() == null || getValues().isEmpty())) {
+            return new Message(MessageLevel.ERR, "Campo  '" + getDescription() + "' obbligatorio");
+        }
 
-	return null;
+        return null;
     }
 
     @SuppressWarnings("unchecked")
     public List<O> parse() throws EMFError {
-	if (check() && getValues() != null) {
-	    List<O> list = new ArrayList<O>();
-	    for (String value : getValues()) {
-		list.add((O) Casting.parse(value, getType()));
-	    }
-	    // return (O[]) list.toArray();
-	    return list;
-	}
-	return null;
+        if (check() && getValues() != null) {
+            List<O> list = new ArrayList<O>();
+            for (String value : getValues()) {
+                list.add((O) Casting.parse(value, getType()));
+            }
+            // return (O[]) list.toArray();
+            return list;
+        }
+        return null;
     }
 
     @Override
     public void post(HttpServletRequest servletRequest) {
-	if (!isReadonly() && isEditMode()) {
-	    String[] postedValues = servletRequest.getParameterValues(getName());
-	    setValues(postedValues);
-	}
+        if (!isReadonly() && isEditMode()) {
+            String[] postedValues = servletRequest.getParameterValues(getName());
+            setValues(postedValues);
+        }
     }
 
     @Override
     public Element asXml() {
-	return super.asXml().addAttribute("values",
-		getValues() == null ? "" : getValues().toString());
+        return super.asXml().addAttribute("values",
+                getValues() == null ? "" : getValues().toString());
     }
 
     @Override
     public JSONObject asJSON() throws EMFError {
-	JSONObject result = new JSONObject();
-	try {
-	    result.put("name", getName());
-	    result.put("description", getDescription());
-	    String state;
-	    if (isHidden()) {
-		state = "hidden";
-	    } else if (isReadonly()) {
-		state = "readonly";
-	    } else if (isViewMode()) {
-		state = "view";
-	    } else {
-		state = "edit";
-	    }
-	    result.put("required", isRequired());
-	    result.put("state", state);
-	    if (getValues() != null) {
-		JSONArray sons = new JSONArray();
-		for (String value : getValues()) {
-		    sons.put(value);
-		}
-		result.put("values", sons);
-	    }
-	} catch (JSONException e) {
-	    throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
-	}
-	return result;
+        JSONObject result = new JSONObject();
+        try {
+            result.put("name", getName());
+            result.put("description", getDescription());
+            String state;
+            if (isHidden()) {
+                state = "hidden";
+            } else if (isReadonly()) {
+                state = "readonly";
+            } else if (isViewMode()) {
+                state = "view";
+            } else {
+                state = "edit";
+            }
+            result.put("required", isRequired());
+            result.put("state", state);
+            if (getValues() != null) {
+                JSONArray sons = new JSONArray();
+                for (String value : getValues()) {
+                    sons.put(value);
+                }
+                result.put("values", sons);
+            }
+        } catch (JSONException e) {
+            throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
+        }
+        return result;
     }
 
     @Override
     public void clear() {
-	setValues(null);
+        setValues(null);
     }
 
 }

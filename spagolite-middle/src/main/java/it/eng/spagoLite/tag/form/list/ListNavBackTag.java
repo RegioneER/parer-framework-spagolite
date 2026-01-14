@@ -29,17 +29,17 @@ public class ListNavBackTag extends AbstractListNavBarTag {
 
     @Override
     public int doStartTag() throws JspException {
-	BaseTableInterface<?> table = getComponent().getTable();
+        BaseTableInterface<?> table = getComponent().getTable();
 
-	if (table != null) {
-	    if (table.size() == 0) {
-		return SKIP_BODY;
-	    }
-	    // writeln("<div>");
-	    // writeBack();
-	    // writeln("</div>");
-	}
+        if (table != null) {
+            if (table.size() == 0) {
+                return SKIP_BODY;
+            }
+            // writeln("<div>");
+            // writeBack();
+            // writeln("</div>");
+        }
 
-	return SKIP_BODY;
+        return SKIP_BODY;
     }
 }

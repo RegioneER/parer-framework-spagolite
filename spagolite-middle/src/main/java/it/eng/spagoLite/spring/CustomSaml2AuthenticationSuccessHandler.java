@@ -1,3 +1,16 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the License, or (at your option)
+ * any later version. <p/> This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
+ * have received a copy of the GNU Affero General Public License along with this program. If not,
+ * see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.spring;
 
 import it.eng.spagoLite.SessionManager;
@@ -24,10 +37,10 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
  * @author Marco Iacolucci
  */
 public abstract class CustomSaml2AuthenticationSuccessHandler
-	implements AuthenticationSuccessHandler {
+        implements AuthenticationSuccessHandler {
 
     private static final Logger log = LoggerFactory
-	    .getLogger(CustomSaml2AuthenticationSuccessHandler.class.getName());
+            .getLogger(CustomSaml2AuthenticationSuccessHandler.class.getName());
     // Costanti attributi SAML valide per PUGLIA E VECCHIO IDP INTERNO PARER
     protected static final String USERID = "urn:oid:0.9.2342.19200300.100.1.1";
     protected static final String COGNOME = "urn:oid:2.5.4.4";
@@ -51,7 +64,7 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
     protected static final String SPID_PUGLIA_COGNOME = "familyName";
     protected static final String SPID_PUGLIA_CODICE_FISCALE = "fiscalNumber";
     protected static final String SPID_PUGLIA_EMAIL = "email"; // DA VERIFICARE !!! Inserito
-							       // leggendo il documento di
+    // leggendo il documento di
     // specifiche di integrazione SPID Puglia
 
     // Messaggi utilizzabili nelle classi derivate nella funziona
@@ -63,108 +76,108 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
     protected static final String MSG_UTENTE_AGGIUNTIVO_RER = ", contatti helpdeskparer@regione.emilia-romagna.it per accedere.";
     // Inizializza la proprietà di sistema abilita-livello-1-spid sull AppServer
     protected static boolean abilitaLivello1Spid = System
-	    .getProperty("abilita-livello-1-spid", "false").equals("true");
+            .getProperty("abilita-livello-1-spid", "false").equals("true");
 
     private static final String STR_CARICATO = "Caricato attributo {} con valore {}";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-	    Authentication authentication) throws IOException, ServletException {
-	Saml2Authentication saml2Auth = (Saml2Authentication) authentication;
-	Saml2AuthenticatedPrincipal principal = (Saml2AuthenticatedPrincipal) saml2Auth
-		.getPrincipal();
-	// Estrai gli attributi SAML
-	Map<String, List<Object>> attributes = principal.getAttributes();
-	log.debug("--CONTEXT--{}", request.getContextPath());
-	User u = new User();
-	if (verificaSeUtenteSpidValido(principal, u)) {
-	    /**
-	     * SI TRATTA DI UN UTENTE SPID VALIDO! Ed ho gi� determinato se RER o PUGLIA
-	     */
-	    List<UtenteDb> l = null;
-	    if (u.getUserType().equals(IUser.UserType.SPID_PUGLIA)) {
-		l = findUtentiPerUsernameCaseInsensitive(u.getCodiceFiscale());
-	    } else {
-		l = findUtentiPerCodiceFiscale(u.getCodiceFiscale());
-	    }
-	    if (l.size() > 1) {
-		String msg = String.format(getMessaggioUtente(MSG_TROPPE_OCCORRENZE_UTENTE, u),
-			u.getNome(), u.getCognome(), u.getCodiceFiscale());
-		log.warn(msg);
-		throw new UsernameNotFoundException(msg);
-	    } else if (l.isEmpty()) {
-		/* Si tratta di utente SPID senza utenza parer su DB */
-		String msg = String.format(getMessaggioUtente(MSG_UTENTE_NON_AUTORIZZATO, u),
-			u.getNome(), u.getCognome(), u.getCodiceFiscale());
-		log.warn(msg);
-		u.setUtenteDaAssociare(true); // nella prossima action si verà  rediretti su IAM !
-	    } else {
-		/*
-		 * L'utente esiste sul db locale PARER recupero l'id dell'utente e lo setto
-		 * nell'oggetto utente e lo metto in sessione. Modifica fatta perchÃ¨ idp generici
-		 * non conoscono l'id dell'utente del db di iam.
-		 */
-		UtenteDb ut = l.iterator().next();
-		u.setUsername(ut.getUsername());
-		u.setIdUtente(ut.getId());
-		// Logga tutti gli attributi dell'utente SPID
-		logInfoUtenteSAML(principal.getAttributes());
-	    }
-	} else {
-	    /**
-	     * * UTENTE IDP PARER O PUGLIA, prende gli attributi classici dell'idp normale **
-	     */
-	    // Inizia a riempire gli attributi SAML di interesse ricevuti
-	    List<Object> att = attributes.get(USERID);
-	    if (att != null) {
-		String valore = att.get(0).toString();
-		if (NumberUtils.isCreatable(valore)) {
-		    u.setIdUtente(Long.parseLong(att.get(0).toString()));
-		} else {
-		    log.info("Nell'attributo SAML [{}] non è presente un dato numerico", USERID);
-		    u.setIdUtente(0);
-		}
-		log.info(STR_CARICATO, USERID, u.getIdUtente());
-	    }
-	    att = attributes.get(USERNAME);
-	    if (att != null) {
-		u.setUsername(att.get(0).toString());
-		log.info(STR_CARICATO, USERNAME, u.getUsername());
-	    }
-	    att = attributes.get(COGNOME);
-	    if (att != null) {
-		u.setCognome(att.get(0).toString());
-		log.info(STR_CARICATO, COGNOME, u.getCognome());
-	    }
-	    att = attributes.get(NOME);
-	    if (att != null) {
-		u.setNome(att.get(0).toString());
-		log.info(STR_CARICATO, NOME, u.getNome());
-	    }
-	    att = attributes.get(EMAIL);
-	    if (att != null) {
-		u.setEmail(att.get(0).toString());
-		log.info(STR_CARICATO, EMAIL, u.getEmail());
-	    } else {
-		u.setEmail("");
-	    }
-	    UtenteDb uDb = getUtentePerUsername(u.getUsername());
-	    /*
-	     * nel caso di DPI il metodo non � ridefinito e la superclasse torna un null che va
-	     * controllato!
-	     */
-	    if (uDb != null) {
-		u.setIdUtente(uDb.getId());
-		u.setScadenzaPwd(uDb.getDataScadenzaPassword());
-		u.setCodiceFiscale(uDb.getCodiceFiscale());
-	    }
-	}
-	log.info("Username: {}, id: {}, Cognome. {}, Nome: {}, email: {}", u.getUsername(),
-		u.getIdUtente(), u.getCognome(), u.getNome(), u.getEmail());
-	SessionManager.setUser(request.getSession(), u);
-	saml2Auth.setDetails(u);
-	// REDIRIGE per esempio su /verso
-	response.sendRedirect(getSendRedirectForLogin(request));
+            Authentication authentication) throws IOException, ServletException {
+        Saml2Authentication saml2Auth = (Saml2Authentication) authentication;
+        Saml2AuthenticatedPrincipal principal = (Saml2AuthenticatedPrincipal) saml2Auth
+                .getPrincipal();
+        // Estrai gli attributi SAML
+        Map<String, List<Object>> attributes = principal.getAttributes();
+        log.debug("--CONTEXT--{}", request.getContextPath());
+        User u = new User();
+        if (verificaSeUtenteSpidValido(principal, u)) {
+            /**
+             * SI TRATTA DI UN UTENTE SPID VALIDO! Ed ho gi� determinato se RER o PUGLIA
+             */
+            List<UtenteDb> l = null;
+            if (u.getUserType().equals(IUser.UserType.SPID_PUGLIA)) {
+                l = findUtentiPerUsernameCaseInsensitive(u.getCodiceFiscale());
+            } else {
+                l = findUtentiPerCodiceFiscale(u.getCodiceFiscale());
+            }
+            if (l.size() > 1) {
+                String msg = String.format(getMessaggioUtente(MSG_TROPPE_OCCORRENZE_UTENTE, u),
+                        u.getNome(), u.getCognome(), u.getCodiceFiscale());
+                log.warn(msg);
+                throw new UsernameNotFoundException(msg);
+            } else if (l.isEmpty()) {
+                /* Si tratta di utente SPID senza utenza parer su DB */
+                String msg = String.format(getMessaggioUtente(MSG_UTENTE_NON_AUTORIZZATO, u),
+                        u.getNome(), u.getCognome(), u.getCodiceFiscale());
+                log.warn(msg);
+                u.setUtenteDaAssociare(true); // nella prossima action si verà  rediretti su IAM !
+            } else {
+                /*
+                 * L'utente esiste sul db locale PARER recupero l'id dell'utente e lo setto
+                 * nell'oggetto utente e lo metto in sessione. Modifica fatta perchÃ¨ idp generici
+                 * non conoscono l'id dell'utente del db di iam.
+                 */
+                UtenteDb ut = l.iterator().next();
+                u.setUsername(ut.getUsername());
+                u.setIdUtente(ut.getId());
+                // Logga tutti gli attributi dell'utente SPID
+                logInfoUtenteSAML(principal.getAttributes());
+            }
+        } else {
+            /**
+             * * UTENTE IDP PARER O PUGLIA, prende gli attributi classici dell'idp normale **
+             */
+            // Inizia a riempire gli attributi SAML di interesse ricevuti
+            List<Object> att = attributes.get(USERID);
+            if (att != null) {
+                String valore = att.get(0).toString();
+                if (NumberUtils.isCreatable(valore)) {
+                    u.setIdUtente(Long.parseLong(att.get(0).toString()));
+                } else {
+                    log.info("Nell'attributo SAML [{}] non è presente un dato numerico", USERID);
+                    u.setIdUtente(0);
+                }
+                log.info(STR_CARICATO, USERID, u.getIdUtente());
+            }
+            att = attributes.get(USERNAME);
+            if (att != null) {
+                u.setUsername(att.get(0).toString());
+                log.info(STR_CARICATO, USERNAME, u.getUsername());
+            }
+            att = attributes.get(COGNOME);
+            if (att != null) {
+                u.setCognome(att.get(0).toString());
+                log.info(STR_CARICATO, COGNOME, u.getCognome());
+            }
+            att = attributes.get(NOME);
+            if (att != null) {
+                u.setNome(att.get(0).toString());
+                log.info(STR_CARICATO, NOME, u.getNome());
+            }
+            att = attributes.get(EMAIL);
+            if (att != null) {
+                u.setEmail(att.get(0).toString());
+                log.info(STR_CARICATO, EMAIL, u.getEmail());
+            } else {
+                u.setEmail("");
+            }
+            UtenteDb uDb = getUtentePerUsername(u.getUsername());
+            /*
+             * nel caso di DPI il metodo non � ridefinito e la superclasse torna un null che va
+             * controllato!
+             */
+            if (uDb != null) {
+                u.setIdUtente(uDb.getId());
+                u.setScadenzaPwd(uDb.getDataScadenzaPassword());
+                u.setCodiceFiscale(uDb.getCodiceFiscale());
+            }
+        }
+        log.info("Username: {}, id: {}, Cognome. {}, Nome: {}, email: {}", u.getUsername(),
+                u.getIdUtente(), u.getCognome(), u.getNome(), u.getEmail());
+        SessionManager.setUser(request.getSession(), u);
+        saml2Auth.setDetails(u);
+        // REDIRIGE per esempio su /verso
+        response.sendRedirect(getSendRedirectForLogin(request));
     }
 
     /*
@@ -172,7 +185,7 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
      * qualora il default non andasse bene.
      */
     protected String getSendRedirectForLogin(HttpServletRequest request) {
-	return request.getContextPath() + "/Login.html";
+        return request.getContextPath() + "/Login.html";
     }
 
     /*
@@ -183,86 +196,86 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
      * Nel caso di Puglia...
      */
     protected boolean verificaSeUtenteSpidValido(Saml2AuthenticatedPrincipal principal, User u)
-	    throws UsernameNotFoundException {
-	Map<String, List<Object>> attributes = principal.getAttributes();
-	if (attributes.get(SPID_CODE) != null) {
-	    // SE PROVIENE DA UN IDP SPID...
-	    String codiceFiscaleSpid = getAttribute(attributes, SPID_CODICE_FISCALE);
-	    String codiceFiscaleSpidPuglia = getAttribute(attributes, SPID_PUGLIA_CODICE_FISCALE);
-	    String emailSpid = getAttribute(attributes, SPID_EMAIL);
-	    String emailSpidPuglia = getAttribute(attributes, SPID_PUGLIA_EMAIL);
-	    if (codiceFiscaleSpid != null) {
-		// RAMO RER
-		// MAC#26002 - Correzione gestione proprieta di sistema relativa al livello di
-		// autenticazione spid
-		String metodoAutenticazioneSpid = getAttribute(attributes,
-			SPID_AUTHENTICATION_METHOD);
-		u.setCognome(getAttribute(attributes, SPID_COGNOME));
-		u.setNome(getAttribute(attributes, SPID_NOME));
-		u.setCodiceFiscale(codiceFiscaleSpid);
-		u.setEmail(emailSpid);
-		u.setUserType(IUser.UserType.SPID_FEDERA);
-		/*
-		 * Se � stato abilitato il livello uno allora autorizza uno dei tre metodi di
-		 * autenticazione 1-2-3 oppure se non � abilitato il livello uno permette solo i
-		 * livelli 2-3
-		 */
-		if (metodoAutenticazioneSpid != null
-			&& ((isAbilitaLivello1Spid() && (metodoAutenticazioneSpid
-				.equalsIgnoreCase(SPID_AUTHENTICATION_METHOD_ENABLED_1)
-				|| metodoAutenticazioneSpid
-					.equalsIgnoreCase(SPID_AUTHENTICATION_METHOD_ENABLED_2)
-				|| metodoAutenticazioneSpid
-					.equalsIgnoreCase(SPID_AUTHENTICATION_METHOD_ENABLED_3)))
-				|| (!isAbilitaLivello1Spid() && (metodoAutenticazioneSpid
-					.equalsIgnoreCase(SPID_AUTHENTICATION_METHOD_ENABLED_2)
-					|| metodoAutenticazioneSpid.equalsIgnoreCase(
-						SPID_AUTHENTICATION_METHOD_ENABLED_3))))) {
-		    // va avanti
-		} else {
-		    /*
-		     * Se l'utente non ha scelto secondo livello SPID ma un'altro metodo di
-		     * autenticazione (federa passa il codice fiscale) Il sistema impedisce di
-		     * entrare!
-		     */
-		    String msg = String.format(
-			    getMessaggioUtente(MSG_UTENTE_LIVELLO_AUTH_INADEGUATO, u), u.getNome(),
-			    u.getCognome(), codiceFiscaleSpid, metodoAutenticazioneSpid);
-		    log.warn(msg);
-		    throw new UsernameNotFoundException(String.format(msg));
-		}
-	    } else if (codiceFiscaleSpidPuglia != null) {
-		// RAMO PUGLIA, toglie il prefizzo di PUGLIA "TINIT-" dal codice fiscale
-		u.setCodiceFiscale(codiceFiscaleSpidPuglia.substring(6));
-		u.setCognome(getAttribute(attributes, SPID_PUGLIA_COGNOME));
-		u.setNome(getAttribute(attributes, SPID_PUGLIA_NOME));
-		u.setEmail(emailSpidPuglia);
-		u.setUserType(IUser.UserType.SPID_PUGLIA);
-	    } else { // Interrompe il flusso con un'eccezione!
-		String msg = String.format(getMessaggioUtente(MSG_UTENTE_SPID_NON_VALIDO, u),
-			u.getNome(), u.getCognome());
-		log.warn(msg);
-		throw new UsernameNotFoundException(msg);
-	    }
-	    u.setExternalId(getAttribute(attributes, SPID_CODE));
-	    // USERNAME E ID UTENTE NON CI SONO!!
-	    return true;
-	} else {
-	    return false;
-	}
+            throws UsernameNotFoundException {
+        Map<String, List<Object>> attributes = principal.getAttributes();
+        if (attributes.get(SPID_CODE) != null) {
+            // SE PROVIENE DA UN IDP SPID...
+            String codiceFiscaleSpid = getAttribute(attributes, SPID_CODICE_FISCALE);
+            String codiceFiscaleSpidPuglia = getAttribute(attributes, SPID_PUGLIA_CODICE_FISCALE);
+            String emailSpid = getAttribute(attributes, SPID_EMAIL);
+            String emailSpidPuglia = getAttribute(attributes, SPID_PUGLIA_EMAIL);
+            if (codiceFiscaleSpid != null) {
+                // RAMO RER
+                // MAC#26002 - Correzione gestione proprieta di sistema relativa al livello di
+                // autenticazione spid
+                String metodoAutenticazioneSpid = getAttribute(attributes,
+                        SPID_AUTHENTICATION_METHOD);
+                u.setCognome(getAttribute(attributes, SPID_COGNOME));
+                u.setNome(getAttribute(attributes, SPID_NOME));
+                u.setCodiceFiscale(codiceFiscaleSpid);
+                u.setEmail(emailSpid);
+                u.setUserType(IUser.UserType.SPID_FEDERA);
+                /*
+                 * Se � stato abilitato il livello uno allora autorizza uno dei tre metodi di
+                 * autenticazione 1-2-3 oppure se non � abilitato il livello uno permette solo i
+                 * livelli 2-3
+                 */
+                if (metodoAutenticazioneSpid != null
+                        && ((isAbilitaLivello1Spid() && (metodoAutenticazioneSpid
+                                .equalsIgnoreCase(SPID_AUTHENTICATION_METHOD_ENABLED_1)
+                                || metodoAutenticazioneSpid
+                                        .equalsIgnoreCase(SPID_AUTHENTICATION_METHOD_ENABLED_2)
+                                || metodoAutenticazioneSpid
+                                        .equalsIgnoreCase(SPID_AUTHENTICATION_METHOD_ENABLED_3)))
+                                || (!isAbilitaLivello1Spid() && (metodoAutenticazioneSpid
+                                        .equalsIgnoreCase(SPID_AUTHENTICATION_METHOD_ENABLED_2)
+                                        || metodoAutenticazioneSpid.equalsIgnoreCase(
+                                                SPID_AUTHENTICATION_METHOD_ENABLED_3))))) {
+                    // va avanti
+                } else {
+                    /*
+                     * Se l'utente non ha scelto secondo livello SPID ma un'altro metodo di
+                     * autenticazione (federa passa il codice fiscale) Il sistema impedisce di
+                     * entrare!
+                     */
+                    String msg = String.format(
+                            getMessaggioUtente(MSG_UTENTE_LIVELLO_AUTH_INADEGUATO, u), u.getNome(),
+                            u.getCognome(), codiceFiscaleSpid, metodoAutenticazioneSpid);
+                    log.warn(msg);
+                    throw new UsernameNotFoundException(String.format(msg));
+                }
+            } else if (codiceFiscaleSpidPuglia != null) {
+                // RAMO PUGLIA, toglie il prefizzo di PUGLIA "TINIT-" dal codice fiscale
+                u.setCodiceFiscale(codiceFiscaleSpidPuglia.substring(6));
+                u.setCognome(getAttribute(attributes, SPID_PUGLIA_COGNOME));
+                u.setNome(getAttribute(attributes, SPID_PUGLIA_NOME));
+                u.setEmail(emailSpidPuglia);
+                u.setUserType(IUser.UserType.SPID_PUGLIA);
+            } else { // Interrompe il flusso con un'eccezione!
+                String msg = String.format(getMessaggioUtente(MSG_UTENTE_SPID_NON_VALIDO, u),
+                        u.getNome(), u.getCognome());
+                log.warn(msg);
+                throw new UsernameNotFoundException(msg);
+            }
+            u.setExternalId(getAttribute(attributes, SPID_CODE));
+            // USERNAME E ID UTENTE NON CI SONO!!
+            return true;
+        } else {
+            return false;
+        }
     }
 
     protected String getAttribute(Map<String, List<Object>> attributes, String nomeAttributo) {
-	List<Object> att = attributes.get(nomeAttributo);
-	if (att != null) {
-	    return att.get(0).toString();
-	} else {
-	    return null;
-	}
+        List<Object> att = attributes.get(nomeAttributo);
+        if (att != null) {
+            return att.get(0).toString();
+        } else {
+            return null;
+        }
     }
 
     protected static boolean isAbilitaLivello1Spid() {
-	return abilitaLivello1Spid;
+        return abilitaLivello1Spid;
     }
 
     /*
@@ -270,11 +283,11 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
      * SPID_FEDERA
      */
     protected String getMessaggioUtente(String mes, User u) {
-	if (u.getUserType() != null && u.getUserType().equals(IUser.UserType.SPID_FEDERA)) {
-	    return mes + MSG_UTENTE_AGGIUNTIVO_RER;
-	} else {
-	    return mes + ".";
-	}
+        if (u.getUserType() != null && u.getUserType().equals(IUser.UserType.SPID_FEDERA)) {
+            return mes + MSG_UTENTE_AGGIUNTIVO_RER;
+        } else {
+            return mes + ".";
+        }
     }
 
     /*
@@ -283,72 +296,72 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
      */
     protected class UtenteDb {
 
-	private String username;
-	private long id;
-	private Date dataScadenzaPassword;
-	private String codiceFiscale;
+        private String username;
+        private long id;
+        private Date dataScadenzaPassword;
+        private String codiceFiscale;
 
-	public UtenteDb() {
-	    //
-	}
+        public UtenteDb() {
+            //
+        }
 
-	public String getUsername() {
-	    return username;
-	}
+        public String getUsername() {
+            return username;
+        }
 
-	public void setUsername(String username) {
-	    this.username = username;
-	}
+        public void setUsername(String username) {
+            this.username = username;
+        }
 
-	public long getId() {
-	    return id;
-	}
+        public long getId() {
+            return id;
+        }
 
-	public void setId(long id) {
-	    this.id = id;
-	}
+        public void setId(long id) {
+            this.id = id;
+        }
 
-	public Date getDataScadenzaPassword() {
-	    return dataScadenzaPassword;
-	}
+        public Date getDataScadenzaPassword() {
+            return dataScadenzaPassword;
+        }
 
-	public void setDataScadenzaPassword(Date dataScadenzaPassword) {
-	    this.dataScadenzaPassword = dataScadenzaPassword;
-	}
+        public void setDataScadenzaPassword(Date dataScadenzaPassword) {
+            this.dataScadenzaPassword = dataScadenzaPassword;
+        }
 
-	public String getCodiceFiscale() {
-	    return codiceFiscale;
-	}
+        public String getCodiceFiscale() {
+            return codiceFiscale;
+        }
 
-	public void setCodiceFiscale(String codiceFiscale) {
-	    this.codiceFiscale = codiceFiscale;
-	}
+        public void setCodiceFiscale(String codiceFiscale) {
+            this.codiceFiscale = codiceFiscale;
+        }
 
     }
 
     protected void logInfoUtenteSAML(Map<String, List<Object>> attributes) {
-	logUtenteSAML(attributes, false);
+        logUtenteSAML(attributes, false);
     }
 
     protected void logDebugUtenteSAML(Map<String, List<Object>> attributes) {
-	logUtenteSAML(attributes, true);
+        logUtenteSAML(attributes, true);
     }
 
     protected void logUtenteSAML(Map<String, List<Object>> attributes, boolean isDebug) {
-	// Logga tutti gli attributi dell'utente SPID
-	StringBuilder str = new StringBuilder();
-	for (Map.Entry<String, List<Object>> entry : attributes.entrySet()) {
-	    String key = entry.getKey();
-	    List<Object> value = entry.getValue();
-	    str.append(key).append(": ");
-	    str.append(value);
-	}
+        // Logga tutti gli attributi dell'utente SPID
+        StringBuilder str = new StringBuilder();
+        for (Map.Entry<String, List<Object>> entry : attributes.entrySet()) {
+            String key = entry.getKey();
+            List<Object> value = entry.getValue();
+            str.append(key).append(": ");
+            str.append(value);
+        }
 
-	if (isDebug) {
-	    log.debug("Utente SAML loggato con i seguenti attributi: {}", str);
-	} else {
-	    log.info("Utente SAML loggato con i seguenti attributi: {}", str);
-	}
+        if (isDebug) {
+            log.debug("Utente SAML loggato con i seguenti attributi: {}", str);
+        } else {
+            log.info("Utente SAML loggato con i seguenti attributi: {}", str);
+        }
     }
 
     /*

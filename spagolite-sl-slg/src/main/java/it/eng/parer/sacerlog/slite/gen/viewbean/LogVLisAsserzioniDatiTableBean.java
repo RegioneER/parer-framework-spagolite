@@ -23,7 +23,7 @@ import it.eng.spagoLite.db.oracle.bean.column.TableDescriptor;
  *
  */
 public class LogVLisAsserzioniDatiTableBean
-	extends AbstractBaseTable<LogVLisAsserzioniDatiRowBean> {
+        extends AbstractBaseTable<LogVLisAsserzioniDatiRowBean> {
 
     /*
      * @Generated( value = "it.eg.dbtool.db.oracle.beangen.Oracle4JPAClientBeanGen$ViewBeanWriter",
@@ -33,19 +33,19 @@ public class LogVLisAsserzioniDatiTableBean
     public static LogVLisAsserzioniDatiTableDescriptor TABLE_DESCRIPTOR = new LogVLisAsserzioniDatiTableDescriptor();
 
     public LogVLisAsserzioniDatiTableBean() {
-	super();
+        super();
     }
 
     protected LogVLisAsserzioniDatiRowBean createRow() {
-	return new LogVLisAsserzioniDatiRowBean();
+        return new LogVLisAsserzioniDatiRowBean();
     }
 
     public TableDescriptor getTableDescriptor() {
-	return TABLE_DESCRIPTOR;
+        return TABLE_DESCRIPTOR;
     }
 
     @Deprecated
     public Iterator<LogVLisAsserzioniDatiRowBean> getRowsIterator() {
-	return iterator();
+        return iterator();
     }
 }

@@ -29,7 +29,7 @@ public class TabElement extends BaseComponent {
     private List<String> iconUrlList = new ArrayList<String>();
 
     public TabElement(Component parent, String name, String description) {
-	this(parent, name, description, false, false, false, null);
+        this(parent, name, description, false, false, false, null);
     }
 
     /**
@@ -43,45 +43,45 @@ public class TabElement extends BaseComponent {
      * @param iconUrls    url separati da spazio
      */
     public TabElement(Component parent, String name, String description, boolean current,
-	    boolean hidden, boolean disabled, String iconUrls) {
-	super(parent, name, description);
-	this.current = current;
-	this.hidden = hidden;
-	this.disabled = disabled;
-	setIconUrlList(iconUrls);
+            boolean hidden, boolean disabled, String iconUrls) {
+        super(parent, name, description);
+        this.current = current;
+        this.hidden = hidden;
+        this.disabled = disabled;
+        setIconUrlList(iconUrls);
 
     }
 
     public boolean isCurrent() {
-	return current;
+        return current;
     }
 
     public void setCurrent(boolean current) {
-	this.current = current;
+        this.current = current;
     }
 
     public boolean isHidden() {
-	return hidden;
+        return hidden;
     }
 
     public void setHidden(boolean hidden) {
-	this.hidden = hidden;
+        this.hidden = hidden;
     }
 
     public boolean isDisabled() {
-	return disabled;
+        return disabled;
     }
 
     public void setDisabled(boolean disabled) {
-	this.disabled = disabled;
+        this.disabled = disabled;
     }
 
     public List<String> getIconUrlList() {
-	return iconUrlList;
+        return iconUrlList;
     }
 
     public void setIconUrlList(List<String> iconUrlList) {
-	this.iconUrlList = iconUrlList;
+        this.iconUrlList = iconUrlList;
     }
 
     /**
@@ -89,12 +89,12 @@ public class TabElement extends BaseComponent {
      * @param iconUrls {@link String} di url separati da spazio
      */
     public void setIconUrlList(String iconUrls) {
-	if (iconUrls != null) {
-	    String[] split = iconUrls.split(" ");
-	    iconUrlList = Arrays.asList(split);
-	} else {
-	    iconUrlList = null;
-	}
+        if (iconUrls != null) {
+            String[] split = iconUrls.split(" ");
+            iconUrlList = Arrays.asList(split);
+        } else {
+            iconUrlList = null;
+        }
     }
 
 }

@@ -34,23 +34,23 @@ public abstract class SessionCoreManager {
      * @return resituisce l'action corrente
      */
     public static String getCurrentActionUrl(HttpSession httpSession) {
-	return (String) httpSession.getAttribute(ACTION_CONTAINER);
+        return (String) httpSession.getAttribute(ACTION_CONTAINER);
     }
 
     public static String getRedirectView(HttpSession httpSession) {
-	return (String) httpSession.getAttribute(VIEW_REDIRECT);
+        return (String) httpSession.getAttribute(VIEW_REDIRECT);
     }
 
     public static void setRedirectView(HttpSession httpSession, String redirectView) {
-	httpSession.setAttribute(VIEW_REDIRECT, redirectView);
+        httpSession.setAttribute(VIEW_REDIRECT, redirectView);
     }
 
     public static void setLastPublisher(HttpSession httpSession, String lastPublisher) {
-	httpSession.setAttribute(LAST_PUBLISHER, lastPublisher);
+        httpSession.setAttribute(LAST_PUBLISHER, lastPublisher);
     }
 
     public static String getLastPublisher(HttpSession httpSession) {
-	return (String) httpSession.getAttribute(LAST_PUBLISHER);
+        return (String) httpSession.getAttribute(LAST_PUBLISHER);
     }
 
     /**
@@ -63,13 +63,13 @@ public abstract class SessionCoreManager {
      * @return restituisce l'URL con query parameters
      */
     public static String getOperationUrl(HttpSession httpSession, String operation,
-	    String additionalInfo) {
-	String actionUrl = getCurrentActionUrl(httpSession);
-	if (additionalInfo != null && !additionalInfo.isEmpty()) {
-	    return actionUrl + "?operation=" + operation + "&amp;" + additionalInfo;
-	} else {
-	    return actionUrl + "?operation=" + operation;
-	}
+            String additionalInfo) {
+        String actionUrl = getCurrentActionUrl(httpSession);
+        if (additionalInfo != null && !additionalInfo.isEmpty()) {
+            return actionUrl + "?operation=" + operation + "&amp;" + additionalInfo;
+        } else {
+            return actionUrl + "?operation=" + operation;
+        }
     }
 
 }

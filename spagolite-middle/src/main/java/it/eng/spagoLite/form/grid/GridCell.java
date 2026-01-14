@@ -21,20 +21,20 @@ public class GridCell {
     private String value;
 
     public GridCell(SingleValueField field, BaseRowInterface row) throws EMFError {
-	field.format(row);
-	this.value = field.getValue();
+        field.format(row);
+        this.value = field.getValue();
     }
 
     public String getValue() {
-	return value;
+        return value;
     }
 
     public void setValue(String value) {
-	this.value = value;
+        this.value = value;
     }
 
     @Override
     public String toString() {
-	return "  <cell value=\"" + getValue() + "\"/>\n";
+        return "  <cell value=\"" + getValue() + "\"/>\n";
     }
 }

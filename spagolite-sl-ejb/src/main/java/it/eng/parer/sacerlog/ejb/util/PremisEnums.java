@@ -21,10 +21,10 @@ public class PremisEnums {
 
     public class TipoAgente {
 
-	public static final String PERSON = "person";
-	public static final String ORGANIZATION = "organization";
-	public static final String SOFTWARE = "software";
-	public static final String HARDWARE = "hardware";
+        public static final String PERSON = "person";
+        public static final String ORGANIZATION = "organization";
+        public static final String SOFTWARE = "software";
+        public static final String HARDWARE = "hardware";
     };
 
     /*
@@ -35,27 +35,27 @@ public class PremisEnums {
      */
 
     public enum TipoOrigineAgente {
-	UTENTE, COMPONENTE_SW
+        UTENTE, COMPONENTE_SW
     };
 
     public class TipoEvento {
-	public static final String CAPTURE = "capture";
-	public static final String COMPRESSION = "compression";
-	public static final String CREATION = "creation";
-	public static final String DEACCESSION = "deaccession";
-	public static final String DECOMPRESSION = "decompression";
-	public static final String DECRYPTION = "decryption";
-	public static final String DELETION = "deletion";
-	public static final String DIGITAL_SIGNATURE_VALIDATION = "digital signature validation";
-	public static final String FIXITY_CHECK = "fixity check";
-	public static final String INGESTION = "ingestion";
-	public static final String MESSAGE_DIGEST = "message digest";
-	public static final String CALCULATION = "calculation";
-	public static final String MIGRATION = "migration";
-	public static final String NORMALIZATION = "normalization";
-	public static final String REPLICATION = "replication";
-	public static final String VALIDATION = "validation";
-	public static final String VIRUS_CHECK = "virus check";
+        public static final String CAPTURE = "capture";
+        public static final String COMPRESSION = "compression";
+        public static final String CREATION = "creation";
+        public static final String DEACCESSION = "deaccession";
+        public static final String DECOMPRESSION = "decompression";
+        public static final String DECRYPTION = "decryption";
+        public static final String DELETION = "deletion";
+        public static final String DIGITAL_SIGNATURE_VALIDATION = "digital signature validation";
+        public static final String FIXITY_CHECK = "fixity check";
+        public static final String INGESTION = "ingestion";
+        public static final String MESSAGE_DIGEST = "message digest";
+        public static final String CALCULATION = "calculation";
+        public static final String MIGRATION = "migration";
+        public static final String NORMALIZATION = "normalization";
+        public static final String REPLICATION = "replication";
+        public static final String VALIDATION = "validation";
+        public static final String VIRUS_CHECK = "virus check";
     };
 
     /*
@@ -66,21 +66,21 @@ public class PremisEnums {
      */
 
     public enum TipoClasseEvento {
-	CANCELLAZIONE, INSERIMENTO, INSERIMENTO_MODIFICA, MODIFICA, VISUALIZZAZIONE
+        CANCELLAZIONE, INSERIMENTO, INSERIMENTO_MODIFICA, MODIFICA, VISUALIZZAZIONE
     };
 
     public class TipoAgenteEvento {
 
-	public static final String AUTHORIZER = "authorizer";
-	public static final String EXECUTING_PROGRAM = "executing program";
-	public static final String IMPLEMENTER = "implementer";
-	public static final String VALIDATOR = "validator";
+        public static final String AUTHORIZER = "authorizer";
+        public static final String EXECUTING_PROGRAM = "executing program";
+        public static final String IMPLEMENTER = "implementer";
+        public static final String VALIDATOR = "validator";
     };
 
     public class TipoEventoOggetto {
 
-	public static final String SOURCE = "source";
-	public static final String OUTCOME = "outcome";
+        public static final String SOURCE = "source";
+        public static final String OUTCOME = "outcome";
     };
 
 }

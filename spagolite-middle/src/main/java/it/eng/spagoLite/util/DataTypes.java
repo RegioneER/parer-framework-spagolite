@@ -39,35 +39,35 @@ public class DataTypes {
     public final static String HTML = "html";
 
     public static int getSqlTypes(String dataType) {
-	if (STRING.equals(dataType))
-	    return Types.VARCHAR;
-	if (CODICEFISCALE.equals(dataType))
-	    return Types.VARCHAR;
-	if (MAIL.equals(dataType))
-	    return Types.VARCHAR;
-	if (BOOLEAN.equals(dataType))
-	    return Types.VARCHAR;
-	if (HTML.equals(dataType))
-	    return Types.VARCHAR;
+        if (STRING.equals(dataType))
+            return Types.VARCHAR;
+        if (CODICEFISCALE.equals(dataType))
+            return Types.VARCHAR;
+        if (MAIL.equals(dataType))
+            return Types.VARCHAR;
+        if (BOOLEAN.equals(dataType))
+            return Types.VARCHAR;
+        if (HTML.equals(dataType))
+            return Types.VARCHAR;
 
-	if (INTEGER.equals(dataType))
-	    return Types.DECIMAL;
-	if (DECIMAL.equals(dataType))
-	    return Types.DECIMAL;
-	if (CURRENCY.equals(dataType))
-	    return Types.DECIMAL;
+        if (INTEGER.equals(dataType))
+            return Types.DECIMAL;
+        if (DECIMAL.equals(dataType))
+            return Types.DECIMAL;
+        if (CURRENCY.equals(dataType))
+            return Types.DECIMAL;
 
-	if (DATE.equals(dataType))
-	    return Types.DATE;
-	if (DATE_TIME.equals(dataType))
-	    return Types.DATE;
-	if (TIME.equals(dataType))
-	    return Types.DATE;
-	if (MONTH.equals(dataType))
-	    return Types.DATE;
-	if (YEAR.equals(dataType))
-	    return Types.DATE;
+        if (DATE.equals(dataType))
+            return Types.DATE;
+        if (DATE_TIME.equals(dataType))
+            return Types.DATE;
+        if (TIME.equals(dataType))
+            return Types.DATE;
+        if (MONTH.equals(dataType))
+            return Types.DATE;
+        if (YEAR.equals(dataType))
+            return Types.DATE;
 
-	return Types.VARCHAR;
+        return Types.VARCHAR;
     }
 }

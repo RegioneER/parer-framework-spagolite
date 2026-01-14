@@ -18,10 +18,10 @@ public class CancellaUtenteRisposta extends ReplicaUtenteRispostaAbstract {
     private Integer idUserIam;
 
     public Integer getIdUserIam() {
-	return idUserIam;
+        return idUserIam;
     }
 
     public void setIdUserIam(Integer idUserIam) {
-	this.idUserIam = idUserIam;
+        this.idUserIam = idUserIam;
     }
 }

@@ -34,68 +34,68 @@ public class BaseForm implements Form {
     String description;
 
     public BaseForm(String description) {
-	map = new LinkedHashMap<String, Component>();
-	this.description = description;
+        map = new LinkedHashMap<String, Component>();
+        this.description = description;
     }
 
     public String getDescription() {
-	return description;
+        return description;
     }
 
     public void setDescription(String description) {
-	this.description = description;
+        this.description = description;
     }
 
     // @Override
     @SuppressWarnings("rawtypes")
     public Component getComponent(String name) {
-	int indexOf = name.indexOf(".");
-	if (indexOf > 0) {
-	    return ((Elements) map.get(name.toLowerCase().substring(0, indexOf)))
-		    .getComponent(name.substring(indexOf + 1));
-	} else {
-	    return map.get(name.toLowerCase());
-	}
+        int indexOf = name.indexOf(".");
+        if (indexOf > 0) {
+            return ((Elements) map.get(name.toLowerCase().substring(0, indexOf)))
+                    .getComponent(name.substring(indexOf + 1));
+        } else {
+            return map.get(name.toLowerCase());
+        }
     }
 
     // @Override
     public Component addComponent(Component component) {
-	map.put(component.getName().toLowerCase(), component);
-	return component;
+        map.put(component.getName().toLowerCase(), component);
+        return component;
     }
 
     // @Override
     public List<Component> getComponentList(String name) {
-	return new ArrayList<Component>(map.values());
+        return new ArrayList<Component>(map.values());
     }
 
     public String asXml() {
-	StringBuffer stringBuffer = new StringBuffer();
-	stringBuffer.append("<form description=\"" + getDescription() + "\">\n");
-	for (Component component : map.values()) {
-	    stringBuffer.append(component.asXml());
-	}
-	stringBuffer.append("</form>\n");
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("<form description=\"" + getDescription() + "\">\n");
+        for (Component component : map.values()) {
+            stringBuffer.append(component.asXml());
+        }
+        stringBuffer.append("</form>\n");
 
-	return stringBuffer.toString();
+        return stringBuffer.toString();
     }
 
     public JSONObject asJSON() throws EMFError {
-	JSONObject result = new JSONObject();
-	try {
-	    result.put("name", "Form");
-	    result.put("description", getDescription());
+        JSONObject result = new JSONObject();
+        try {
+            result.put("name", "Form");
+            result.put("description", getDescription());
 
-	    JSONArray sons = new JSONArray();
-	    for (Component component : map.values()) {
-		sons.put(component.asJSON());
-	    }
-	    result.put("map", sons);
-	    result.put("type", "Form");
-	} catch (JSONException e) {
-	    throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
-	}
-	return result;
+            JSONArray sons = new JSONArray();
+            for (Component component : map.values()) {
+                sons.put(component.asJSON());
+            }
+            result.put("map", sons);
+            result.put("type", "Form");
+        } catch (JSONException e) {
+            throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
+        }
+        return result;
 
     }
 

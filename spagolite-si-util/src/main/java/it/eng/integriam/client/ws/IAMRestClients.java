@@ -26,12 +26,12 @@ public class IAMRestClients {
     private static RestTemplate restTemplate = null;
 
     static {
-	restTemplate = new RestTemplate();
+        restTemplate = new RestTemplate();
     }
 
     private IAMRestClients() {
-	throw new IllegalArgumentException(
-		"Impossibile istanziare la classe. Contiene solamente metodi statici.");
+        throw new IllegalArgumentException(
+                "Impossibile istanziare la classe. Contiene solamente metodi statici.");
     }
 
     /**
@@ -45,18 +45,18 @@ public class IAMRestClients {
      * @return stringa contenente la serializzazione dell'help online.
      */
     public static String recuperoHelpClient(String serviceURL, long idApplic, String tiHelpOnLine,
-	    String nmPaginaWeb) {
-	final String oggettoJson;
-	URI targetUrl = UriComponentsBuilder.fromHttpUrl(serviceURL)
-		.queryParam("idApplic", idApplic).queryParam("tiHelpOnLine", tiHelpOnLine)
-		.queryParam("nmPaginaWeb", nmPaginaWeb).build().toUri();
-	try {
-	    oggettoJson = restTemplate.getForObject(targetUrl, String.class);
-	    return oggettoJson;
-	} catch (RuntimeException ex) {
-	    log.error("Errore durante l'invocazione del WS Rest per l'Help Online.", ex);
-	    return null;
-	}
+            String nmPaginaWeb) {
+        final String oggettoJson;
+        URI targetUrl = UriComponentsBuilder.fromHttpUrl(serviceURL)
+                .queryParam("idApplic", idApplic).queryParam("tiHelpOnLine", tiHelpOnLine)
+                .queryParam("nmPaginaWeb", nmPaginaWeb).build().toUri();
+        try {
+            oggettoJson = restTemplate.getForObject(targetUrl, String.class);
+            return oggettoJson;
+        } catch (RuntimeException ex) {
+            log.error("Errore durante l'invocazione del WS Rest per l'Help Online.", ex);
+            return null;
+        }
     }
 
 }

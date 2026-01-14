@@ -35,67 +35,67 @@ public class ExecutionHistory implements Serializable {
     private String backParameter = "";
 
     public ExecutionHistory(String name, Form form, boolean isAction, boolean isForward) {
-	super();
-	this.name = name;
-	this.form = form;
-	this.isAction = isAction;
-	this.isForward = isForward;
+        super();
+        this.name = name;
+        this.form = form;
+        this.isAction = isAction;
+        this.isForward = isForward;
     }
 
     public Form getForm() {
-	return form;
+        return form;
     }
 
     public void setForm(Form form) {
-	this.form = form;
+        this.form = form;
     }
 
     public String getName() {
-	return name;
+        return name;
     }
 
     public void setName(String name) {
-	this.name = name;
+        this.name = name;
     }
 
     public boolean isAction() {
-	return isAction;
+        return isAction;
     }
 
     public void setAction(boolean isAction) {
-	this.isAction = isAction;
+        this.isAction = isAction;
     }
 
     public boolean isForward() {
-	return isForward;
+        return isForward;
     }
 
     public void setForward(boolean isForward) {
-	this.isForward = isForward;
+        this.isForward = isForward;
     }
 
     public boolean isActionPublished() {
-	return isActionPublished;
+        return isActionPublished;
     }
 
     public void setActionPublished(boolean isActionPublished) {
-	this.isActionPublished = isActionPublished;
+        this.isActionPublished = isActionPublished;
     }
 
     public String getPublisherName() {
-	return publisherName;
+        return publisherName;
     }
 
     public void setPublisherName(String publisherName) {
-	this.publisherName = publisherName;
+        this.publisherName = publisherName;
     }
 
     public String getBackParameter() {
-	return backParameter;
+        return backParameter;
     }
 
     public void setBackParameter(String backParameter) {
-	this.backParameter = backParameter;
+        this.backParameter = backParameter;
     }
 
 }

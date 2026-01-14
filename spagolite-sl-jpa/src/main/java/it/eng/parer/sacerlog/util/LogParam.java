@@ -34,115 +34,115 @@ public class LogParam {
     private TransactionLogContext transactionLogContext;
 
     public String getNomeApplicazione() {
-	return nomeApplicazione;
+        return nomeApplicazione;
     }
 
     public void setNomeApplicazione(String nomeApplicazione) {
-	this.nomeApplicazione = nomeApplicazione;
+        this.nomeApplicazione = nomeApplicazione;
     }
 
     public String getNomeUtente() {
-	return nomeUtente;
+        return nomeUtente;
     }
 
     public void setNomeUtente(String nomeUtente) {
-	this.nomeUtente = nomeUtente;
+        this.nomeUtente = nomeUtente;
     }
 
     public String getNomePagina() {
-	return nomePagina;
+        return nomePagina;
     }
 
     public void setNomePagina(String nomePagina) {
-	this.nomePagina = nomePagina;
+        this.nomePagina = nomePagina;
     }
 
     public String getNomeAzione() {
-	return nomeAzione;
+        return nomeAzione;
     }
 
     public void setNomeAzione(String nomeAzione) {
-	this.nomeAzione = nomeAzione;
+        this.nomeAzione = nomeAzione;
     }
 
     public BigDecimal getIdOggetto() {
-	return idOggetto;
+        return idOggetto;
     }
 
     public void setIdOggetto(BigDecimal idOggetto) {
-	this.idOggetto = idOggetto;
+        this.idOggetto = idOggetto;
     }
 
     public String getNomeComponenteSoftware() {
-	return nomeComponenteSoftware;
+        return nomeComponenteSoftware;
     }
 
     public void setNomeComponenteSoftware(String nomeComponenteSoftware) {
-	this.nomeComponenteSoftware = nomeComponenteSoftware;
+        this.nomeComponenteSoftware = nomeComponenteSoftware;
     }
 
     public String getNomeTipoOggetto() {
-	return nomeTipoOggetto;
+        return nomeTipoOggetto;
     }
 
     public void setNomeTipoOggetto(String nomeTipoOggetto) {
-	this.nomeTipoOggetto = nomeTipoOggetto;
+        this.nomeTipoOggetto = nomeTipoOggetto;
     }
 
     public LogParam(String nomeApplicazione, String nomeUtente, String nomePagina,
-	    String nomeAzione, BigDecimal idOggetto) {
-	this.nomeApplicazione = nomeApplicazione;
-	this.nomeUtente = nomeUtente;
-	this.nomePagina = nomePagina;
-	this.nomeAzione = nomeAzione;
-	this.idOggetto = idOggetto;
+            String nomeAzione, BigDecimal idOggetto) {
+        this.nomeApplicazione = nomeApplicazione;
+        this.nomeUtente = nomeUtente;
+        this.nomePagina = nomePagina;
+        this.nomeAzione = nomeAzione;
+        this.idOggetto = idOggetto;
     }
 
     public LogParam(String nomeApplicazione, String nomeUtente, String nomePagina,
-	    String nomeAzione) {
-	this.nomeApplicazione = nomeApplicazione;
-	this.nomeUtente = nomeUtente;
-	this.nomePagina = nomePagina;
-	this.nomeAzione = nomeAzione;
+            String nomeAzione) {
+        this.nomeApplicazione = nomeApplicazione;
+        this.nomeUtente = nomeUtente;
+        this.nomePagina = nomePagina;
+        this.nomeAzione = nomeAzione;
     }
 
     public LogParam(String nomeApplicazione, String nomeUtente, String nomePagina) {
-	this.nomeApplicazione = nomeApplicazione;
-	this.nomeUtente = nomeUtente;
-	this.nomePagina = nomePagina;
+        this.nomeApplicazione = nomeApplicazione;
+        this.nomeUtente = nomeUtente;
+        this.nomePagina = nomePagina;
     }
 
     public LogParam(String nomeApplicazione, String nomeUtente) {
-	this.nomeApplicazione = nomeApplicazione;
-	this.nomeUtente = nomeUtente;
+        this.nomeApplicazione = nomeApplicazione;
+        this.nomeUtente = nomeUtente;
     }
 
     public LogParam(String nomeApplicazione) {
-	this.nomeApplicazione = nomeApplicazione;
+        this.nomeApplicazione = nomeApplicazione;
     }
 
     public LogParam() {
     }
 
     public TransactionLogContext getTransactionLogContext() {
-	return transactionLogContext;
+        return transactionLogContext;
     }
 
     public void setTransactionLogContext(TransactionLogContext transactionLogContext) {
-	this.transactionLogContext = transactionLogContext;
+        this.transactionLogContext = transactionLogContext;
     }
 
     public boolean isTransactionActive() {
-	return this.transactionLogContext == null ? false : true;
+        return this.transactionLogContext == null ? false : true;
     }
 
     @Override
     public String toString() {
-	return "LogParam{" + "nomeApplicazione=" + nomeApplicazione + ", nomeUtente=" + nomeUtente
-		+ ", nomePagina=" + nomePagina + ", nomeAzione=" + nomeAzione
-		+ ", nomeComponenteSoftware=" + nomeComponenteSoftware + ", nomeTipoOggetto="
-		+ nomeTipoOggetto + ", idOggetto=" + idOggetto + ", ctx="
-		+ this.transactionLogContext + '}';
+        return "LogParam{" + "nomeApplicazione=" + nomeApplicazione + ", nomeUtente=" + nomeUtente
+                + ", nomePagina=" + nomePagina + ", nomeAzione=" + nomeAzione
+                + ", nomeComponenteSoftware=" + nomeComponenteSoftware + ", nomeTipoOggetto="
+                + nomeTipoOggetto + ", idOggetto=" + idOggetto + ", ctx="
+                + this.transactionLogContext + '}';
     }
 
 }

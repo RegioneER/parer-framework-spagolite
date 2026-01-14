@@ -63,7 +63,7 @@ public interface IUser<T extends Profile> extends Serializable {
 
     // ***** Aggiunti per la gestione dei diversi tipi di IDP
     public enum UserType {
-	SPID_FEDERA, SPID_PUGLIA
+        SPID_FEDERA, SPID_PUGLIA
     }
 
     public UserType getUserType();

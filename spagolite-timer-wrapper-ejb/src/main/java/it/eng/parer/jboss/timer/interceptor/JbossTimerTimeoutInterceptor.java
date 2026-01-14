@@ -53,24 +53,24 @@ public class JbossTimerTimeoutInterceptor {
      */
     @AroundTimeout
     public Object timeout(InvocationContext inv) throws Exception {
-	final String logPrefix = "[" + service.getApplicationName()
-		+ " Jboss Timer Interceptor timeout] -";
-	if (service.isStandalone()) {
-	    log.debug(String.format("%s Modalità standalone. Procedo con l'interceptor successivo.",
-		    logPrefix));
-	    return inv.proceed();
-	}
-	JbossJobTimer target = (JbossJobTimer) inv.getTarget();
+        final String logPrefix = "[" + service.getApplicationName()
+                + " Jboss Timer Interceptor timeout] -";
+        if (service.isStandalone()) {
+            log.debug(String.format("%s Modalità standalone. Procedo con l'interceptor successivo.",
+                    logPrefix));
+            return inv.proceed();
+        }
+        JbossJobTimer target = (JbossJobTimer) inv.getTarget();
 
-	Timer timer = (Timer) inv.getTimer();
+        Timer timer = (Timer) inv.getTimer();
 
-	String jobName = target.getJobName();
-	Date nextElaboration = timer.isCalendarTimer()
-		? target.getNextElaboration(service.getApplicationName())
-		: null;
-	service.setDataProssimaAttivazione(jobName, nextElaboration);
-	log.debug(String.format("%s Timeout del job %s ", logPrefix, jobName));
-	return inv.proceed();
+        String jobName = target.getJobName();
+        Date nextElaboration = timer.isCalendarTimer()
+                ? target.getNextElaboration(service.getApplicationName())
+                : null;
+        service.setDataProssimaAttivazione(jobName, nextElaboration);
+        log.debug(String.format("%s Timeout del job %s ", logPrefix, jobName));
+        return inv.proceed();
     }
 
 }

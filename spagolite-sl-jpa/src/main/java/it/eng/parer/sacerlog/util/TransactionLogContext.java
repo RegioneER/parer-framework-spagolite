@@ -27,16 +27,16 @@ public class TransactionLogContext {
     private BigDecimal transactionId;
 
     public TransactionLogContext(BigDecimal transactionId) {
-	this.transactionId = transactionId;
+        this.transactionId = transactionId;
     }
 
     public BigDecimal getTransactionId() {
-	return transactionId;
+        return transactionId;
     }
 
     @Override
     public String toString() {
-	return transactionId.toPlainString();
+        return transactionId.toPlainString();
     }
 
 }

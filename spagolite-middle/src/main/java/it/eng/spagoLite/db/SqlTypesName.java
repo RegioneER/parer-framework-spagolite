@@ -56,109 +56,109 @@ public final class SqlTypesName {
     }
 
     public static Set<BigDecimal> arrayString = new HashSet<BigDecimal>() {
-	private static final long serialVersionUID = 1L;
-	{
-	    add(BigDecimal.valueOf(Types.VARCHAR));
-	    add(BigDecimal.valueOf(Types.CHAR));
-	    add(BigDecimal.valueOf(Types.LONGVARCHAR));
-	}
+        private static final long serialVersionUID = 1L;
+        {
+            add(BigDecimal.valueOf(Types.VARCHAR));
+            add(BigDecimal.valueOf(Types.CHAR));
+            add(BigDecimal.valueOf(Types.LONGVARCHAR));
+        }
     };
     public static Set<BigDecimal> dateString = new HashSet<BigDecimal>() {
-	private static final long serialVersionUID = 1L;
-	{
-	    add(BigDecimal.valueOf(Types.DATE));
-	    add(BigDecimal.valueOf(Types.TIMESTAMP));
-	}
+        private static final long serialVersionUID = 1L;
+        {
+            add(BigDecimal.valueOf(Types.DATE));
+            add(BigDecimal.valueOf(Types.TIMESTAMP));
+        }
     };
     public static Set<BigDecimal> decimalString = new HashSet<BigDecimal>() {
-	private static final long serialVersionUID = 1L;
-	{
-	    add(BigDecimal.valueOf(Types.DECIMAL));
-	    add(BigDecimal.valueOf(Types.DOUBLE));
-	    add(BigDecimal.valueOf(Types.FLOAT));
-	}
+        private static final long serialVersionUID = 1L;
+        {
+            add(BigDecimal.valueOf(Types.DECIMAL));
+            add(BigDecimal.valueOf(Types.DOUBLE));
+            add(BigDecimal.valueOf(Types.FLOAT));
+        }
     };
     public static Set<BigDecimal> integerString = new HashSet<BigDecimal>() {
-	private static final long serialVersionUID = 1L;
-	{
-	    add(BigDecimal.valueOf(Types.NUMERIC));
-	    add(BigDecimal.valueOf(Types.BIGINT));
-	    add(BigDecimal.valueOf(Types.INTEGER));
-	    add(BigDecimal.valueOf(Types.SMALLINT));
-	    add(BigDecimal.valueOf(Types.TINYINT));
-	    add(BigDecimal.valueOf(Types.DECIMAL));
-	    add(BigDecimal.valueOf(Types.DOUBLE));
-	    add(BigDecimal.valueOf(Types.FLOAT));
-	}
+        private static final long serialVersionUID = 1L;
+        {
+            add(BigDecimal.valueOf(Types.NUMERIC));
+            add(BigDecimal.valueOf(Types.BIGINT));
+            add(BigDecimal.valueOf(Types.INTEGER));
+            add(BigDecimal.valueOf(Types.SMALLINT));
+            add(BigDecimal.valueOf(Types.TINYINT));
+            add(BigDecimal.valueOf(Types.DECIMAL));
+            add(BigDecimal.valueOf(Types.DOUBLE));
+            add(BigDecimal.valueOf(Types.FLOAT));
+        }
     };
 
     public static String getName(int sqlType) {
-	switch (sqlType) {
-	case Types.ARRAY:
-	    return ARRAY;
-	case Types.BIGINT:
-	    return BIGINT;
-	case Types.BINARY:
-	    return BINARY;
-	case Types.BIT:
-	    return BIT;
-	case Types.BLOB:
-	    return BLOB;
-	case Types.BOOLEAN:
-	    return BOOLEAN;
-	case Types.CHAR:
-	    return CHAR;
-	case Types.CLOB:
-	    return CLOB;
-	case Types.DATALINK:
-	    return DATALINK;
-	case Types.DATE:
-	    return DATE;
-	case Types.DECIMAL:
-	    return DECIMAL;
-	case Types.DISTINCT:
-	    return DISTINCT;
-	case Types.DOUBLE:
-	    return DOUBLE;
-	case Types.FLOAT:
-	    return FLOAT;
-	case Types.INTEGER:
-	    return INTEGER;
-	case Types.JAVA_OBJECT:
-	    return JAVA_OBJECT;
-	case Types.LONGVARBINARY:
-	    return LONGVARBINARY;
-	case Types.LONGVARCHAR:
-	    return LONGVARCHAR;
-	case Types.NULL:
-	    return NULL;
-	case Types.NUMERIC:
-	    return NUMERIC;
-	case Types.OTHER:
-	    return OTHER;
-	case Types.REAL:
-	    return REAL;
-	case Types.REF:
-	    return REF;
-	case Types.SMALLINT:
-	    return SMALLINT;
-	case Types.STRUCT:
-	    return STRUCT;
-	case Types.TIME:
-	    return TIME;
-	case Types.TIMESTAMP:
-	    return TIMESTAMP;
-	case Types.TINYINT:
-	    return TINYINT;
-	case Types.VARBINARY:
-	    return VARBINARY;
-	case Types.VARCHAR:
-	    return VARCHAR;
+        switch (sqlType) {
+        case Types.ARRAY:
+            return ARRAY;
+        case Types.BIGINT:
+            return BIGINT;
+        case Types.BINARY:
+            return BINARY;
+        case Types.BIT:
+            return BIT;
+        case Types.BLOB:
+            return BLOB;
+        case Types.BOOLEAN:
+            return BOOLEAN;
+        case Types.CHAR:
+            return CHAR;
+        case Types.CLOB:
+            return CLOB;
+        case Types.DATALINK:
+            return DATALINK;
+        case Types.DATE:
+            return DATE;
+        case Types.DECIMAL:
+            return DECIMAL;
+        case Types.DISTINCT:
+            return DISTINCT;
+        case Types.DOUBLE:
+            return DOUBLE;
+        case Types.FLOAT:
+            return FLOAT;
+        case Types.INTEGER:
+            return INTEGER;
+        case Types.JAVA_OBJECT:
+            return JAVA_OBJECT;
+        case Types.LONGVARBINARY:
+            return LONGVARBINARY;
+        case Types.LONGVARCHAR:
+            return LONGVARCHAR;
+        case Types.NULL:
+            return NULL;
+        case Types.NUMERIC:
+            return NUMERIC;
+        case Types.OTHER:
+            return OTHER;
+        case Types.REAL:
+            return REAL;
+        case Types.REF:
+            return REF;
+        case Types.SMALLINT:
+            return SMALLINT;
+        case Types.STRUCT:
+            return STRUCT;
+        case Types.TIME:
+            return TIME;
+        case Types.TIMESTAMP:
+            return TIMESTAMP;
+        case Types.TINYINT:
+            return TINYINT;
+        case Types.VARBINARY:
+            return VARBINARY;
+        case Types.VARCHAR:
+            return VARCHAR;
 
-	default:
-	    break;
-	}
-	throw new IllegalArgumentException("Tipo sql non gestito: " + sqlType);
+        default:
+            break;
+        }
+        throw new IllegalArgumentException("Tipo sql non gestito: " + sqlType);
 
     }
 }

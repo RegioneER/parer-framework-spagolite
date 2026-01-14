@@ -55,44 +55,44 @@ public class LogVLisAsserzioniDatiTableDescriptor extends TableDescriptor {
     private static Map<String, ColumnDescriptor> map = new LinkedHashMap<String, ColumnDescriptor>();
 
     static {
-	map.put(COL_ID_OGGETTO_EVENTO,
-		new ColumnDescriptor(COL_ID_OGGETTO_EVENTO, Types.DECIMAL, 22, true));
-	map.put(COL_NM_TIPO_RECORD,
-		new ColumnDescriptor(COL_NM_TIPO_RECORD, Types.VARCHAR, 60, true));
-	map.put(COL_ID_RECORD, new ColumnDescriptor(COL_ID_RECORD, Types.DECIMAL, 22, true));
-	map.put(COL_TIPO_MODIFICA,
-		new ColumnDescriptor(COL_TIPO_MODIFICA, Types.VARCHAR, 24, true));
-	map.put(COL_ID_ASSERZIONE_DELTA_FOTO,
-		new ColumnDescriptor(COL_ID_ASSERZIONE_DELTA_FOTO, Types.DECIMAL, 22, true));
-	map.put(COL_PATH, new ColumnDescriptor(COL_PATH, Types.VARCHAR, 512, true));
-	map.put(COL_PATH_KEY, new ColumnDescriptor(COL_PATH_KEY, Types.VARCHAR, 3072, true));
-	map.put(COL_DS_CHIAVE_TIPO_RECORD,
-		new ColumnDescriptor(COL_DS_CHIAVE_TIPO_RECORD, Types.VARCHAR, 256, true));
-	map.put(COL_ID_RECORD_PADRE,
-		new ColumnDescriptor(COL_ID_RECORD_PADRE, Types.VARCHAR, 256, true));
-	map.put(COL_LABEL_CAMPO, new ColumnDescriptor(COL_LABEL_CAMPO, Types.VARCHAR, 256, true));
-	map.put(COL_DS_VALORE_NEW_CAMPO,
-		new ColumnDescriptor(COL_DS_VALORE_NEW_CAMPO, Types.VARCHAR, 4000, true));
-	map.put(COL_DS_VALORE_OLD_CAMPO,
-		new ColumnDescriptor(COL_DS_VALORE_OLD_CAMPO, Types.VARCHAR, 4000, true));
-	map.put(COL_TIPO_VALORE, new ColumnDescriptor(COL_TIPO_VALORE, Types.VARCHAR, 1, true));
-	map.put(COL_BL_VALORE_NEW_CAMPO,
-		new ColumnDescriptor(COL_BL_VALORE_NEW_CAMPO, Types.CLOB, 4000, true));
-	map.put(COL_BL_VALORE_OLD_CAMPO,
-		new ColumnDescriptor(COL_BL_VALORE_OLD_CAMPO, Types.CLOB, 4000, true));
-	map.put(COL_DS_MODIFICA, new ColumnDescriptor(COL_DS_MODIFICA, Types.VARCHAR, 4000, true));
+        map.put(COL_ID_OGGETTO_EVENTO,
+                new ColumnDescriptor(COL_ID_OGGETTO_EVENTO, Types.DECIMAL, 22, true));
+        map.put(COL_NM_TIPO_RECORD,
+                new ColumnDescriptor(COL_NM_TIPO_RECORD, Types.VARCHAR, 60, true));
+        map.put(COL_ID_RECORD, new ColumnDescriptor(COL_ID_RECORD, Types.DECIMAL, 22, true));
+        map.put(COL_TIPO_MODIFICA,
+                new ColumnDescriptor(COL_TIPO_MODIFICA, Types.VARCHAR, 24, true));
+        map.put(COL_ID_ASSERZIONE_DELTA_FOTO,
+                new ColumnDescriptor(COL_ID_ASSERZIONE_DELTA_FOTO, Types.DECIMAL, 22, true));
+        map.put(COL_PATH, new ColumnDescriptor(COL_PATH, Types.VARCHAR, 512, true));
+        map.put(COL_PATH_KEY, new ColumnDescriptor(COL_PATH_KEY, Types.VARCHAR, 3072, true));
+        map.put(COL_DS_CHIAVE_TIPO_RECORD,
+                new ColumnDescriptor(COL_DS_CHIAVE_TIPO_RECORD, Types.VARCHAR, 256, true));
+        map.put(COL_ID_RECORD_PADRE,
+                new ColumnDescriptor(COL_ID_RECORD_PADRE, Types.VARCHAR, 256, true));
+        map.put(COL_LABEL_CAMPO, new ColumnDescriptor(COL_LABEL_CAMPO, Types.VARCHAR, 256, true));
+        map.put(COL_DS_VALORE_NEW_CAMPO,
+                new ColumnDescriptor(COL_DS_VALORE_NEW_CAMPO, Types.VARCHAR, 4000, true));
+        map.put(COL_DS_VALORE_OLD_CAMPO,
+                new ColumnDescriptor(COL_DS_VALORE_OLD_CAMPO, Types.VARCHAR, 4000, true));
+        map.put(COL_TIPO_VALORE, new ColumnDescriptor(COL_TIPO_VALORE, Types.VARCHAR, 1, true));
+        map.put(COL_BL_VALORE_NEW_CAMPO,
+                new ColumnDescriptor(COL_BL_VALORE_NEW_CAMPO, Types.CLOB, 4000, true));
+        map.put(COL_BL_VALORE_OLD_CAMPO,
+                new ColumnDescriptor(COL_BL_VALORE_OLD_CAMPO, Types.CLOB, 4000, true));
+        map.put(COL_DS_MODIFICA, new ColumnDescriptor(COL_DS_MODIFICA, Types.VARCHAR, 4000, true));
     }
 
     public Map<String, ColumnDescriptor> getColumnMap() {
-	return map;
+        return map;
     }
 
     public String getTableName() {
-	return TABLE_NAME;
+        return TABLE_NAME;
     }
 
     public String getStatement() {
-	return SELECT;
+        return SELECT;
     }
 
 }

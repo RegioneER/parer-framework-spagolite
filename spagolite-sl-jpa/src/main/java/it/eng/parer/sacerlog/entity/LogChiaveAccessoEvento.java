@@ -39,8 +39,8 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(schema = "SACER_LOG", name = "LOG_CHIAVE_ACCESSO_EVENTO")
 @NamedQueries({
-	@NamedQuery(name = "LogChiaveAccessoEvento.findAll", query = "SELECT l FROM LogChiaveAccessoEvento l"),
-	@NamedQuery(name = "LogChiaveAccessoEvento.deleteAll", query = "DELETE FROM LogChiaveAccessoEvento") })
+        @NamedQuery(name = "LogChiaveAccessoEvento.findAll", query = "SELECT l FROM LogChiaveAccessoEvento l"),
+        @NamedQuery(name = "LogChiaveAccessoEvento.deleteAll", query = "DELETE FROM LogChiaveAccessoEvento") })
 public class LogChiaveAccessoEvento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -59,60 +59,60 @@ public class LogChiaveAccessoEvento implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_CHIAVE_ACCESSO_EVENTO_IDCHIAVEACCESSOEVENTO_GENERATOR")
     @Column(name = "ID_CHIAVE_ACCESSO_EVENTO")
     public long getIdChiaveAccessoEvento() {
-	return this.idChiaveAccessoEvento;
+        return this.idChiaveAccessoEvento;
     }
 
     public void setIdChiaveAccessoEvento(long idChiaveAccessoEvento) {
-	this.idChiaveAccessoEvento = idChiaveAccessoEvento;
+        this.idChiaveAccessoEvento = idChiaveAccessoEvento;
     }
 
     @Column(name = "ID_APPLIC")
     public BigDecimal getIdApplic() {
-	return this.idApplic;
+        return this.idApplic;
     }
 
     public void setIdApplic(BigDecimal idApplic) {
-	this.idApplic = idApplic;
+        this.idApplic = idApplic;
     }
 
     @Column(name = "ID_OGGETTO")
     public BigDecimal getIdOggetto() {
-	return this.idOggetto;
+        return this.idOggetto;
     }
 
     public void setIdOggetto(BigDecimal idOggetto) {
-	this.idOggetto = idOggetto;
+        this.idOggetto = idOggetto;
     }
 
     @Column(name = "ID_TIPO_OGGETTO")
     public BigDecimal getIdTipoOggetto() {
-	return this.idTipoOggetto;
+        return this.idTipoOggetto;
     }
 
     public void setIdTipoOggetto(BigDecimal idTipoOggetto) {
-	this.idTipoOggetto = idTipoOggetto;
+        this.idTipoOggetto = idTipoOggetto;
     }
 
     // @org.eclipse.persistence.annotations.Convert("ORACLE_DATE")
     @Column(name = "DT_REG_EVENTO")
     @Temporal(TemporalType.TIMESTAMP)
     public Calendar getDtRegEvento() {
-	return this.dtRegEvento;
+        return this.dtRegEvento;
     }
 
     public void setDtRegEvento(Calendar dtRegEvento) {
-	this.dtRegEvento = dtRegEvento;
+        this.dtRegEvento = dtRegEvento;
     }
 
     // bi-directional many-to-one association to LogEvento
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_EVENTO")
     public LogEvento getLogEvento() {
-	return this.logEvento;
+        return this.logEvento;
     }
 
     public void setLogEvento(LogEvento logEvento) {
-	this.logEvento = logEvento;
+        this.logEvento = logEvento;
     }
 
 }

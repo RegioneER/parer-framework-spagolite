@@ -25,40 +25,40 @@ public class OrganizAbil {
     private ListaTipiDatoAbil listaTipiDatoAbil;
 
     public Integer getIdOrganizApplicAbil() {
-	return idOrganizApplicAbil;
+        return idOrganizApplicAbil;
     }
 
     public void setIdOrganizApplicAbil(Integer idOrganizApplicAbil) {
-	this.idOrganizApplicAbil = idOrganizApplicAbil;
+        this.idOrganizApplicAbil = idOrganizApplicAbil;
     }
 
     public ListaServiziAutor getListaServiziAutor() {
-	if (listaServiziAutor == null) {
-	    listaServiziAutor = new ListaServiziAutor();
-	}
-	return listaServiziAutor;
+        if (listaServiziAutor == null) {
+            listaServiziAutor = new ListaServiziAutor();
+        }
+        return listaServiziAutor;
     }
 
     public void setListaServiziAutor(ListaServiziAutor listaServiziAutor) {
-	this.listaServiziAutor = listaServiziAutor;
+        this.listaServiziAutor = listaServiziAutor;
     }
 
     public ListaTipiDatoAbil getListaTipiDatoAbil() {
-	if (listaTipiDatoAbil == null) {
-	    listaTipiDatoAbil = new ListaTipiDatoAbil();
-	}
-	return listaTipiDatoAbil;
+        if (listaTipiDatoAbil == null) {
+            listaTipiDatoAbil = new ListaTipiDatoAbil();
+        }
+        return listaTipiDatoAbil;
     }
 
     public void setListaTipiDatoAbil(ListaTipiDatoAbil listaTipiDatoAbil) {
-	this.listaTipiDatoAbil = listaTipiDatoAbil;
+        this.listaTipiDatoAbil = listaTipiDatoAbil;
     }
 
     public boolean isFlOrganizDefault() {
-	return flOrganizDefault;
+        return flOrganizDefault;
     }
 
     public void setFlOrganizDefault(boolean flOrganizDefault) {
-	this.flOrganizDefault = flOrganizDefault;
+        this.flOrganizDefault = flOrganizDefault;
     }
 }

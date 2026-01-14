@@ -33,19 +33,19 @@ public class LogVVisOggettoTableBean extends AbstractBaseTable<LogVVisOggettoRow
     public static LogVVisOggettoTableDescriptor TABLE_DESCRIPTOR = new LogVVisOggettoTableDescriptor();
 
     public LogVVisOggettoTableBean() {
-	super();
+        super();
     }
 
     protected LogVVisOggettoRowBean createRow() {
-	return new LogVVisOggettoRowBean();
+        return new LogVVisOggettoRowBean();
     }
 
     public TableDescriptor getTableDescriptor() {
-	return TABLE_DESCRIPTOR;
+        return TABLE_DESCRIPTOR;
     }
 
     @Deprecated
     public Iterator<LogVVisOggettoRowBean> getRowsIterator() {
-	return iterator();
+        return iterator();
     }
 }

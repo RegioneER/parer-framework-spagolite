@@ -36,29 +36,29 @@ public class RedirectAction extends BaseController {
 
     @Override
     public String getControllerName() {
-	return "View.html";
+        return "View.html";
     }
 
     @Override
     public void service() throws Exception {
-	forwardToPublisher(SessionManager.getRedirectView(getSession()));
+        forwardToPublisher(SessionManager.getRedirectView(getSession()));
     }
 
     // Controllo delle autorizzazioni per le pagine
     @Override
     protected final boolean isAuthorized(String pub) {
-	if (ConfigSingleton.getInstance().getBooleanValue(DISABLE_SECURITY.name())) {
-	    return true;
-	}
-	IUser user = SessionManager.getUser(getSession());
-	if (pub.contains("?"))
-	    pub = pub.substring(0, pub.indexOf("?"));
-	if (user != null && user.getProfile() != null && user.getProfile().getChild(pub) == null) {
-	    logger.debug("Utente " + user.getUsername()
-		    + " non autorizzato alla visualizzazione della pagina " + pub);
-	    return false;
-	}
-	return true;
+        if (ConfigSingleton.getInstance().getBooleanValue(DISABLE_SECURITY.name())) {
+            return true;
+        }
+        IUser user = SessionManager.getUser(getSession());
+        if (pub.contains("?"))
+            pub = pub.substring(0, pub.indexOf("?"));
+        if (user != null && user.getProfile() != null && user.getProfile().getChild(pub) == null) {
+            logger.debug("Utente " + user.getUsername()
+                    + " non autorizzato alla visualizzazione della pagina " + pub);
+            return false;
+        }
+        return true;
 
     }
 

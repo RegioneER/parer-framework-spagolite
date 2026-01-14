@@ -37,18 +37,18 @@ public class NonMonotonicSequenceGenerator extends SequenceStyleGenerator {
     private static final int MIN = 1000;
 
     private int random() {
-	return (RAND.nextInt((MAX - MIN) + 1) + MIN);
+        return (RAND.nextInt((MAX - MIN) + 1) + MIN);
     }
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object)
-	    throws HibernateException {
-	return Long.parseLong(String.format(FORMAT, random(), super.generate(session, object)));
+            throws HibernateException {
+        return Long.parseLong(String.format(FORMAT, random(), super.generate(session, object)));
     }
 
     @Override
     public void configure(Type type, Properties params, ServiceRegistry serviceRegistry)
-	    throws MappingException {
-	super.configure(LongType.INSTANCE, params, serviceRegistry);
+            throws MappingException {
+        super.configure(LongType.INSTANCE, params, serviceRegistry);
     }
 }

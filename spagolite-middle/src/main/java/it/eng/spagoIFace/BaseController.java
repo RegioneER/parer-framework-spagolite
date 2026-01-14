@@ -46,96 +46,96 @@ public abstract class BaseController implements Controller, BaseControllerIFace 
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	// Inizializzo il controller
-	this.request = request;
-	this.response = response;
+            throws Exception {
+        // Inizializzo il controller
+        this.request = request;
+        this.response = response;
 
-	// Eseguo la logica di business
-	service();
+        // Eseguo la logica di business
+        service();
 
-	// Gestico la pubblicazione
-	ModelAndView mav = null;
-	// Forward-to-publisher
-	if (publisherInfo.getType().equals(PublisherInfo.Override.forward)
-		|| publisherInfo.getType().equals(PublisherInfo.Override.forwardSkipSetLast)) {
-	    // controllo le autorizzazioni di pagina
-	    String codiceOrganizzazione = getNomeOrganizzazione(publisherInfo.getDestination());
-	    String nuovaDestinazione = publisherInfo.getDestination();
-	    if (codiceOrganizzazione != null) {
-		nuovaDestinazione = "[" + codiceOrganizzazione + "]" + nuovaDestinazione;
-	    }
-	    if (isAuthorized(nuovaDestinazione)) {
-		logger.info("Forward to: " + publisherInfo.getDestination());
-		if (!publisherInfo.getType().equals(PublisherInfo.Override.forwardSkipSetLast)) {
-		    setLastPublisher(publisherInfo.getDestination());
-		}
-		mav = new ModelAndView(publisherInfo.getDestination());
-	    } else {
-		mav = new ModelAndView("/login/notAuthorized");
-		logger.info("Unable to forward to: " + publisherInfo.getDestination()
-			+ " user not authorized");
-		request.setAttribute("destination", publisherInfo.getDestination());
-	    }
-	    // Forward-to-action
-	} else if (publisherInfo.getType().equals(PublisherInfo.Override.actionForward)) {
-	    logger.info("Forward to action: " + publisherInfo.getDestination());
-	    // Resetto il lastpublisher utilizzato per le autorizzazione
-	    setLastPublisher("");
-	    mav = new ModelAndView("forward:/" + publisherInfo.getDestination());
-	    // Redirect-to-action
-	} else if (publisherInfo.getType().equals(PublisherInfo.Override.actionRedirect)) {
-	    logger.info("Redirect to action: " + publisherInfo.getDestination());
-	    // Resetto il lastpublisher utilizzato per le autorizzazione
-	    setLastPublisher("");
-	    RedirectView rv = new RedirectView(publisherInfo.getDestination(), true, false);
-	    mav = new ModelAndView(rv);
-	    // Redirect-to-action with fake publisher
-	} else if (publisherInfo.getType().equals(PublisherInfo.Override.actionProfiledRedirect)) {
-	    logger.info("Redirect to action: " + publisherInfo.getDestination());
-	    // il publisher gia fornito permette di simulare l'accesso con profilazione
-	    RedirectView rv = new RedirectView(publisherInfo.getDestination(), true, false);
-	    mav = new ModelAndView(rv);
-	    // Redirect-to-publisher
-	} else if (publisherInfo.getType().equals(PublisherInfo.Override.redirect)) {
-	    SessionCoreManager.setRedirectView(getSession(), publisherInfo.getDestination());
-	    RedirectView rv = new RedirectView("View.html", true, false);
-	    mav = new ModelAndView(rv);
-	    // Ajax response
-	} else if (publisherInfo.getType().equals(PublisherInfo.Override.ajaxRedirect)) {
-	    getResponse().setContentType("text/x-json;charset=UTF-8");
-	    getResponse().setHeader("Cache-Control", "no-cache");
-	    JSONObject result = new JSONObject();
-	    result.put("name", "Form");
-	    result.put("type", "Form");
-	    result.put("description", "");
-	    JSONArray sons = new JSONArray();
-	    sons.put(publisherInfo.getJsonObject());
-	    result.put("map", sons);
-	    getResponse().getOutputStream().write(result.toString().getBytes("UTF-8"));
-	    getResponse().getOutputStream().flush();
-	    // reimposto il publisher a forward con l'ultima destination
-	    forwardToPublisher(getLastPublisher());
-	    // Freeze
-	} else if (publisherInfo.getType().equals(PublisherInfo.Override.freeze)) {
-	    mav = null;
-	    // reimposto il publisher a forward con l'ultima destination
-	    forwardToPublisher(getLastPublisher());
-	}
+        // Gestico la pubblicazione
+        ModelAndView mav = null;
+        // Forward-to-publisher
+        if (publisherInfo.getType().equals(PublisherInfo.Override.forward)
+                || publisherInfo.getType().equals(PublisherInfo.Override.forwardSkipSetLast)) {
+            // controllo le autorizzazioni di pagina
+            String codiceOrganizzazione = getNomeOrganizzazione(publisherInfo.getDestination());
+            String nuovaDestinazione = publisherInfo.getDestination();
+            if (codiceOrganizzazione != null) {
+                nuovaDestinazione = "[" + codiceOrganizzazione + "]" + nuovaDestinazione;
+            }
+            if (isAuthorized(nuovaDestinazione)) {
+                logger.info("Forward to: " + publisherInfo.getDestination());
+                if (!publisherInfo.getType().equals(PublisherInfo.Override.forwardSkipSetLast)) {
+                    setLastPublisher(publisherInfo.getDestination());
+                }
+                mav = new ModelAndView(publisherInfo.getDestination());
+            } else {
+                mav = new ModelAndView("/login/notAuthorized");
+                logger.info("Unable to forward to: " + publisherInfo.getDestination()
+                        + " user not authorized");
+                request.setAttribute("destination", publisherInfo.getDestination());
+            }
+            // Forward-to-action
+        } else if (publisherInfo.getType().equals(PublisherInfo.Override.actionForward)) {
+            logger.info("Forward to action: " + publisherInfo.getDestination());
+            // Resetto il lastpublisher utilizzato per le autorizzazione
+            setLastPublisher("");
+            mav = new ModelAndView("forward:/" + publisherInfo.getDestination());
+            // Redirect-to-action
+        } else if (publisherInfo.getType().equals(PublisherInfo.Override.actionRedirect)) {
+            logger.info("Redirect to action: " + publisherInfo.getDestination());
+            // Resetto il lastpublisher utilizzato per le autorizzazione
+            setLastPublisher("");
+            RedirectView rv = new RedirectView(publisherInfo.getDestination(), true, false);
+            mav = new ModelAndView(rv);
+            // Redirect-to-action with fake publisher
+        } else if (publisherInfo.getType().equals(PublisherInfo.Override.actionProfiledRedirect)) {
+            logger.info("Redirect to action: " + publisherInfo.getDestination());
+            // il publisher gia fornito permette di simulare l'accesso con profilazione
+            RedirectView rv = new RedirectView(publisherInfo.getDestination(), true, false);
+            mav = new ModelAndView(rv);
+            // Redirect-to-publisher
+        } else if (publisherInfo.getType().equals(PublisherInfo.Override.redirect)) {
+            SessionCoreManager.setRedirectView(getSession(), publisherInfo.getDestination());
+            RedirectView rv = new RedirectView("View.html", true, false);
+            mav = new ModelAndView(rv);
+            // Ajax response
+        } else if (publisherInfo.getType().equals(PublisherInfo.Override.ajaxRedirect)) {
+            getResponse().setContentType("text/x-json;charset=UTF-8");
+            getResponse().setHeader("Cache-Control", "no-cache");
+            JSONObject result = new JSONObject();
+            result.put("name", "Form");
+            result.put("type", "Form");
+            result.put("description", "");
+            JSONArray sons = new JSONArray();
+            sons.put(publisherInfo.getJsonObject());
+            result.put("map", sons);
+            getResponse().getOutputStream().write(result.toString().getBytes("UTF-8"));
+            getResponse().getOutputStream().flush();
+            // reimposto il publisher a forward con l'ultima destination
+            forwardToPublisher(getLastPublisher());
+            // Freeze
+        } else if (publisherInfo.getType().equals(PublisherInfo.Override.freeze)) {
+            mav = null;
+            // reimposto il publisher a forward con l'ultima destination
+            forwardToPublisher(getLastPublisher());
+        }
 
-	return mav;
+        return mav;
     }
 
     public HttpServletRequest getRequest() {
-	return request;
+        return request;
     }
 
     public HttpServletResponse getResponse() {
-	return response;
+        return response;
     }
 
     public HttpSession getSession() {
-	return getRequest().getSession();
+        return getRequest().getSession();
     }
 
     public abstract String getControllerName();
@@ -147,47 +147,47 @@ public abstract class BaseController implements Controller, BaseControllerIFace 
     private PublisherInfo publisherInfo;
 
     protected void forwardToPublisher(String publisherName) {
-	publisherInfo = new PublisherInfo(PublisherInfo.Override.forward, publisherName, null);
+        publisherInfo = new PublisherInfo(PublisherInfo.Override.forward, publisherName, null);
     }
 
     protected void forwardToPublisherSkipSetLast(String publisherName) {
-	publisherInfo = new PublisherInfo(PublisherInfo.Override.forwardSkipSetLast, publisherName,
-		null);
+        publisherInfo = new PublisherInfo(PublisherInfo.Override.forwardSkipSetLast, publisherName,
+                null);
     }
 
     protected void forwardToAction(String publisherName) {
-	publisherInfo = new PublisherInfo(PublisherInfo.Override.actionForward, publisherName,
-		null);
+        publisherInfo = new PublisherInfo(PublisherInfo.Override.actionForward, publisherName,
+                null);
     }
 
     protected void redirectToAction(String publisherName) {
-	publisherInfo = new PublisherInfo(PublisherInfo.Override.actionRedirect, publisherName,
-		null);
+        publisherInfo = new PublisherInfo(PublisherInfo.Override.actionRedirect, publisherName,
+                null);
     }
 
     protected void redirectToActionProfiled(String publisherName) {
-	publisherInfo = new PublisherInfo(PublisherInfo.Override.actionProfiledRedirect,
-		publisherName, null);
+        publisherInfo = new PublisherInfo(PublisherInfo.Override.actionProfiledRedirect,
+                publisherName, null);
     }
 
     protected void redirectToPublisher(String publisherName) {
-	publisherInfo = new PublisherInfo(PublisherInfo.Override.redirect, publisherName, null);
+        publisherInfo = new PublisherInfo(PublisherInfo.Override.redirect, publisherName, null);
     }
 
     protected void redirectToAjax(JSONObject jsonObject) {
-	publisherInfo = new PublisherInfo(PublisherInfo.Override.ajaxRedirect, null, jsonObject);
+        publisherInfo = new PublisherInfo(PublisherInfo.Override.ajaxRedirect, null, jsonObject);
     }
 
     protected void freeze() {
-	publisherInfo = new PublisherInfo(PublisherInfo.Override.freeze, null, null);
+        publisherInfo = new PublisherInfo(PublisherInfo.Override.freeze, null, null);
     }
 
     public void setLastPublisher(String lastPublisher) {
-	getSession().setAttribute(LAST_PUBLISHER, lastPublisher);
+        getSession().setAttribute(LAST_PUBLISHER, lastPublisher);
     }
 
     public String getLastPublisher() {
-	return (String) getSession().getAttribute(LAST_PUBLISHER);
+        return (String) getSession().getAttribute(LAST_PUBLISHER);
     }
 
     /*
@@ -195,7 +195,7 @@ public abstract class BaseController implements Controller, BaseControllerIFace 
      * dell'organizzazione (es. DIPS (LUM, Pievesestina ecc.))
      */
     protected String getNomeOrganizzazione(String destination) {
-	return null;
+        return null;
     }
 
 }

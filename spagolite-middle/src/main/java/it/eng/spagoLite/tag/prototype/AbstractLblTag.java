@@ -36,74 +36,74 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
     private String labelPosition;
 
     public boolean isEditable() {
-	return editable;
+        return editable;
     }
 
     public void setEditable(boolean editable) {
-	this.editable = editable;
+        this.editable = editable;
     }
 
     public String getWidth() {
-	if (width == null || "".equals(width))
-	    return ContainerTag.WIDTH_50;
-	else
-	    return width;
+        if (width == null || "".equals(width))
+            return ContainerTag.WIDTH_50;
+        else
+            return width;
     }
 
     public void setWidth(String width) {
-	this.width = width;
+        this.width = width;
     }
 
     public String getLabelWidth() {
-	if (labelWidth == null || "".equals(labelWidth)) {
-	    if (ContainerTag.LEFT.equalsIgnoreCase(getLabelPosition()))
-		return ContainerTag.WIDTH_40;
-	    else
-		return ContainerTag.WIDTH_60;
-	} else {
-	    return labelWidth;
-	}
+        if (labelWidth == null || "".equals(labelWidth)) {
+            if (ContainerTag.LEFT.equalsIgnoreCase(getLabelPosition()))
+                return ContainerTag.WIDTH_40;
+            else
+                return ContainerTag.WIDTH_60;
+        } else {
+            return labelWidth;
+        }
     }
 
     public void setLabelWidth(String labelWidth) {
-	this.labelWidth = labelWidth;
+        this.labelWidth = labelWidth;
     }
 
     public String getControlwidth() {
-	if (controlwidth == null || controlwidth.equals("")) {
-	    if (ContainerTag.LEFT.equalsIgnoreCase(getLabelPosition()))
-		return ContainerTag.WIDTH_60;
-	    else
-		return ContainerTag.WIDTH_40;
-	} else {
-	    return controlwidth;
-	}
+        if (controlwidth == null || controlwidth.equals("")) {
+            if (ContainerTag.LEFT.equalsIgnoreCase(getLabelPosition()))
+                return ContainerTag.WIDTH_60;
+            else
+                return ContainerTag.WIDTH_40;
+        } else {
+            return controlwidth;
+        }
     }
 
     public void setControlwidth(String controlwidth) {
-	this.controlwidth = controlwidth;
+        this.controlwidth = controlwidth;
     }
 
     public String getPosition() {
-	if (position != null && position.equalsIgnoreCase(ContainerTag.RIGHT))
-	    return ContainerTag.RIGHT;
-	else
-	    return ContainerTag.LEFT;
+        if (position != null && position.equalsIgnoreCase(ContainerTag.RIGHT))
+            return ContainerTag.RIGHT;
+        else
+            return ContainerTag.LEFT;
     }
 
     public void setPosition(String position) {
-	this.position = position;
+        this.position = position;
     }
 
     public String getLabelPosition() {
-	if (labelPosition != null && labelPosition.equalsIgnoreCase(ContainerTag.RIGHT))
-	    return ContainerTag.RIGHT;
-	else
-	    return ContainerTag.LEFT;
+        if (labelPosition != null && labelPosition.equalsIgnoreCase(ContainerTag.RIGHT))
+            return ContainerTag.RIGHT;
+        else
+            return ContainerTag.LEFT;
     }
 
     public void setLabelPosition(String labelPosition) {
-	this.labelPosition = labelPosition;
+        this.labelPosition = labelPosition;
     }
 
     /**
@@ -112,15 +112,15 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
      * @throws JspException eccezione generica
      */
     protected void writeLabel() throws JspException {
-	String label = ContainerTag.LEFT.equalsIgnoreCase(getLabelPosition())
-		? JavaScript.stringToHTMLString(getLabel()) + ":&nbsp;"
-		: JavaScript.stringToHTMLString(getLabel());
-	String className = ContainerTag.LEFT.equalsIgnoreCase(getLabelPosition())
-		? "slLabel " + getLabelWidth()
-		: "slLabelRight " + getLabelWidth();
+        String label = ContainerTag.LEFT.equalsIgnoreCase(getLabelPosition())
+                ? JavaScript.stringToHTMLString(getLabel()) + ":&nbsp;"
+                : JavaScript.stringToHTMLString(getLabel());
+        String className = ContainerTag.LEFT.equalsIgnoreCase(getLabelPosition())
+                ? "slLabel " + getLabelWidth()
+                : "slLabelRight " + getLabelWidth();
 
-	writeln(" <label for=\"" + getId() + "\" class=\"" + className + "\">" + label
-		+ "</label>");
+        writeln(" <label for=\"" + getId() + "\" class=\"" + className + "\">" + label
+                + "</label>");
     }
 
     /**
@@ -136,8 +136,8 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
      * @throws JspException eccezione generica
      */
     protected void writeStartContainer() throws JspException {
-	writeln("");
-	writeln(ContainerTag.Factory.htmlStartContainer(getWidth(), getPosition()));
+        writeln("");
+        writeln(ContainerTag.Factory.htmlStartContainer(getWidth(), getPosition()));
     }
 
     /**
@@ -146,27 +146,27 @@ public abstract class AbstractLblTag extends BaseSpagoLiteTag {
      * @throws JspException eccezione generica
      */
     protected void writeEndContainer() throws JspException {
-	writeln(ContainerTag.Factory.htmlEndContainer());
+        writeln(ContainerTag.Factory.htmlEndContainer());
     }
 
     public int doStartTag() throws JspException {
-	return SKIP_BODY;
+        return SKIP_BODY;
     }
 
     @Override
     public int doEndTag() throws JspException {
-	writeStartContainer();
+        writeStartContainer();
 
-	if (ContainerTag.LEFT.equalsIgnoreCase(getLabelPosition())) {
-	    writeLabel();
-	    writeControl();
-	} else {
-	    writeControl();
-	    writeLabel();
-	}
-	writeEndContainer();
+        if (ContainerTag.LEFT.equalsIgnoreCase(getLabelPosition())) {
+            writeLabel();
+            writeControl();
+        } else {
+            writeControl();
+            writeLabel();
+        }
+        writeEndContainer();
 
-	return super.doEndTag();
+        return super.doEndTag();
     }
 
 }

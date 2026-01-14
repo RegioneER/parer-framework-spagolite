@@ -37,86 +37,86 @@ public class BaseSpagoLiteTag extends BodyTagSupport {
     protected String codiceOrganizzazione;
 
     public String getContextPath() {
-	return ((HttpServletRequest) pageContext.getRequest()).getContextPath();
+        return ((HttpServletRequest) pageContext.getRequest()).getContextPath();
     }
 
     public MessageBox getMessageBox() {
-	return SessionManager.getMessageBox(pageContext.getSession());
+        return SessionManager.getMessageBox(pageContext.getSession());
     }
 
     public boolean isReadonly() {
-	return BooleanUtils.toBoolean(readonly);
+        return BooleanUtils.toBoolean(readonly);
     }
 
     public String getLabel() {
-	return label;
+        return label;
     }
 
     public void setLabel(String label) {
-	this.label = label;
+        this.label = label;
     }
 
     public String getClasslabel() {
-	return classlabel;
+        return classlabel;
     }
 
     public void setClasslabel(String classlable) {
-	this.classlabel = classlable;
+        this.classlabel = classlable;
     }
 
     public String getTarget() {
-	return target;
+        return target;
     }
 
     public void setTarget(String target) {
-	this.target = target;
+        this.target = target;
     }
 
     public boolean isBlank() {
-	return blank;
+        return blank;
     }
 
     public void setBlank(boolean blank) {
-	this.blank = blank;
+        this.blank = blank;
     }
 
     public void setReadonly(boolean readonly) {
-	this.readonly = readonly;
+        this.readonly = readonly;
     }
 
     protected void write(String htmlStream) throws JspException {
-	try {
-	    pageContext.getOut().print(htmlStream);
-	} catch (IOException e) {
-	}
+        try {
+            pageContext.getOut().print(htmlStream);
+        } catch (IOException e) {
+        }
     }
 
     protected void writeln(String htmlStream) throws JspException {
-	write(htmlStream + "\n");
+        write(htmlStream + "\n");
     }
 
     protected void write(StringBuilder htmlStream) throws JspException {
-	write(htmlStream.toString());
+        write(htmlStream.toString());
     }
 
     protected void writeln(StringBuilder htmlStream) throws JspException {
-	writeln(htmlStream.toString());
+        writeln(htmlStream.toString());
     }
 
     public String getActionName() {
-	return SessionManager.getCurrentAction(pageContext.getSession());
+        return SessionManager.getCurrentAction(pageContext.getSession());
     }
 
     public IUser getUser() {
-	return (IUser) SessionManager.getUser(pageContext.getSession());
+        return (IUser) SessionManager.getUser(pageContext.getSession());
     }
 
     public String getCodiceOrganizzazione() {
-	return codiceOrganizzazione;
+        return codiceOrganizzazione;
     }
 
     public void setCodiceOrganizzazione(String codiceOrganizzazione) {
-	this.codiceOrganizzazione = codiceOrganizzazione;
+        this.codiceOrganizzazione = codiceOrganizzazione;
     }
 
 }

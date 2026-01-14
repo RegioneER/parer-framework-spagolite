@@ -39,49 +39,49 @@ public class ContainerTag extends BaseSpagoLiteTag {
     private String position;
 
     public String getWidth() {
-	if (width == null || "".equals(width))
-	    return WIDTH_50;
-	else
-	    return width;
+        if (width == null || "".equals(width))
+            return WIDTH_50;
+        else
+            return width;
     }
 
     public void setWidth(String width) {
-	this.width = width;
+        this.width = width;
     }
 
     public String getPosition() {
-	return position;
+        return position;
     }
 
     public void setPosition(String position) {
-	this.position = position;
+        this.position = position;
     }
 
     @Override
     public int doStartTag() throws JspException {
-	writeln("");
-	writeln(Factory.htmlStartContainer(getWidth(), getPosition()));
+        writeln("");
+        writeln(Factory.htmlStartContainer(getWidth(), getPosition()));
 
-	return EVAL_BODY_INCLUDE;
+        return EVAL_BODY_INCLUDE;
     }
 
     @Override
     public int doEndTag() throws JspException {
-	writeln(Factory.htmlEndContainer());
-	return EVAL_PAGE;
+        writeln(Factory.htmlEndContainer());
+        return EVAL_PAGE;
     }
 
     public static class Factory {
 
-	public static String htmlStartContainer(String width, String position) throws JspException {
-	    String containerClass = RIGHT.equals(position) ? "containerRight" : "containerLeft";
+        public static String htmlStartContainer(String width, String position) throws JspException {
+            String containerClass = RIGHT.equals(position) ? "containerRight" : "containerLeft";
 
-	    return "<div class=\"" + containerClass + " " + width + "\">";
-	}
+            return "<div class=\"" + containerClass + " " + width + "\">";
+        }
 
-	public static String htmlEndContainer() throws JspException {
-	    return "</div>";
-	}
+        public static String htmlEndContainer() throws JspException {
+            return "</div>";
+        }
 
     }
 

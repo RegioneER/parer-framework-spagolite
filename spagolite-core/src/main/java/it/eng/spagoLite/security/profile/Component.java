@@ -20,16 +20,16 @@ public class Component extends ProfileElement<Attribute> {
     private boolean checked;
 
     public Component(String name, String description) {
-	super(name, description);
-	this.checked = false;
+        super(name, description);
+        this.checked = false;
     }
 
     public boolean isChecked() {
-	return checked;
+        return checked;
     }
 
     public void setChecked(boolean checked) {
-	this.checked = checked;
+        this.checked = checked;
     }
 
 }

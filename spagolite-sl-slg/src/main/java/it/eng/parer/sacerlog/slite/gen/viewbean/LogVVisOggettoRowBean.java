@@ -27,7 +27,7 @@ import it.eng.spagoLite.db.oracle.bean.column.TableDescriptor;
  *
  */
 public class LogVVisOggettoRowBean extends BaseRow
-	implements BaseRowInterface, JEEBaseRowInterface {
+        implements BaseRowInterface, JEEBaseRowInterface {
 
     /*
      * @Generated( value = "it.eg.dbtool.db.oracle.beangen.Oracle4JPAClientBeanGen$ViewBeanWriter",
@@ -38,187 +38,187 @@ public class LogVVisOggettoRowBean extends BaseRow
     public static LogVVisOggettoTableDescriptor TABLE_DESCRIPTOR = new LogVVisOggettoTableDescriptor();
 
     public LogVVisOggettoRowBean() {
-	super();
+        super();
     }
 
     public TableDescriptor getTableDescriptor() {
-	return TABLE_DESCRIPTOR;
+        return TABLE_DESCRIPTOR;
     }
 
     public BigDecimal getIdApplic() {
-	return getBigDecimal("id_applic");
+        return getBigDecimal("id_applic");
     }
 
     public void setIdApplic(BigDecimal id_applic) {
-	setObject("id_applic", id_applic);
+        setObject("id_applic", id_applic);
     }
 
     public String getNmApplic() {
-	return getString("nm_applic");
+        return getString("nm_applic");
     }
 
     public void setNmApplic(String nm_applic) {
-	setObject("nm_applic", nm_applic);
+        setObject("nm_applic", nm_applic);
     }
 
     public BigDecimal getIdTipoOggetto() {
-	return getBigDecimal("id_tipo_oggetto");
+        return getBigDecimal("id_tipo_oggetto");
     }
 
     public void setIdTipoOggetto(BigDecimal id_tipo_oggetto) {
-	setObject("id_tipo_oggetto", id_tipo_oggetto);
+        setObject("id_tipo_oggetto", id_tipo_oggetto);
     }
 
     public String getNmTipoOggetto() {
-	return getString("nm_tipo_oggetto");
+        return getString("nm_tipo_oggetto");
     }
 
     public void setNmTipoOggetto(String nm_tipo_oggetto) {
-	setObject("nm_tipo_oggetto", nm_tipo_oggetto);
+        setObject("nm_tipo_oggetto", nm_tipo_oggetto);
     }
 
     public BigDecimal getIdOggetto() {
-	return getBigDecimal("id_oggetto");
+        return getBigDecimal("id_oggetto");
     }
 
     public void setIdOggetto(BigDecimal id_oggetto) {
-	setObject("id_oggetto", id_oggetto);
+        setObject("id_oggetto", id_oggetto);
     }
 
     public BigDecimal getIdEvento() {
-	return getBigDecimal("id_evento");
+        return getBigDecimal("id_evento");
     }
 
     public void setIdEvento(BigDecimal id_evento) {
-	setObject("id_evento", id_evento);
+        setObject("id_evento", id_evento);
     }
 
     public Timestamp getDtRegEvento() {
-	return getTimestamp("dt_reg_evento");
+        return getTimestamp("dt_reg_evento");
     }
 
     public void setDtRegEvento(Timestamp dt_reg_evento) {
-	setObject("dt_reg_evento", dt_reg_evento);
+        setObject("dt_reg_evento", dt_reg_evento);
     }
 
     public BigDecimal getIdOggettoEvento() {
-	return getBigDecimal("id_oggetto_evento");
+        return getBigDecimal("id_oggetto_evento");
     }
 
     public void setIdOggettoEvento(BigDecimal id_oggetto_evento) {
-	setObject("id_oggetto_evento", id_oggetto_evento);
+        setObject("id_oggetto_evento", id_oggetto_evento);
     }
 
     public String getDsKeyOggetto() {
-	return getString("ds_key_oggetto");
+        return getString("ds_key_oggetto");
     }
 
     public void setDsKeyOggetto(String ds_key_oggetto) {
-	setObject("ds_key_oggetto", ds_key_oggetto);
+        setObject("ds_key_oggetto", ds_key_oggetto);
     }
 
     public String getNmAmbiente() {
-	return getString("nm_ambiente");
+        return getString("nm_ambiente");
     }
 
     public void setNmAmbiente(String nm_ambiente) {
-	setObject("nm_ambiente", nm_ambiente);
+        setObject("nm_ambiente", nm_ambiente);
     }
 
     public String getNmEnte() {
-	return getString("nm_ente");
+        return getString("nm_ente");
     }
 
     public void setNmEnte(String nm_ente) {
-	setObject("nm_ente", nm_ente);
+        setObject("nm_ente", nm_ente);
     }
 
     public String getNmStruttura() {
-	return getString("nm_struttura");
+        return getString("nm_struttura");
     }
 
     public void setNmStruttura(String nm_struttura) {
-	setObject("nm_struttura", nm_struttura);
+        setObject("nm_struttura", nm_struttura);
     }
 
     public String getNmOggetto() {
-	return getString("nm_oggetto");
+        return getString("nm_oggetto");
     }
 
     public void setNmOggetto(String nm_oggetto) {
-	setObject("nm_oggetto", nm_oggetto);
+        setObject("nm_oggetto", nm_oggetto);
     }
 
     public String getNmVersatore() {
-	return getString("nm_versatore");
+        return getString("nm_versatore");
     }
 
     public void setNmVersatore(String nm_versatore) {
-	setObject("nm_versatore", nm_versatore);
+        setObject("nm_versatore", nm_versatore);
     }
 
     @Override
     public void entityToRowBean(Object obj) {
-	LogVVisOggetto entity = (LogVVisOggetto) obj;
-	this.setIdApplic(entity.getIdApplic());
-	this.setNmApplic(entity.getNmApplic());
-	this.setIdTipoOggetto(entity.getIdTipoOggetto());
-	this.setNmTipoOggetto(entity.getNmTipoOggetto());
-	this.setIdOggetto(entity.getIdOggetto());
-	this.setIdEvento(entity.getIdEvento());
-	this.setDtRegEvento(entity.getDtRegEvento());
-	this.setIdOggettoEvento(entity.getIdOggettoEvento());
-	this.setDsKeyOggetto(entity.getDsKeyOggetto());
-	this.setNmAmbiente(entity.getNmAmbiente());
-	this.setNmEnte(entity.getNmEnte());
-	this.setNmStruttura(entity.getNmStruttura());
-	this.setNmOggetto(entity.getNmOggetto());
-	this.setNmVersatore(entity.getNmVersatore());
+        LogVVisOggetto entity = (LogVVisOggetto) obj;
+        this.setIdApplic(entity.getIdApplic());
+        this.setNmApplic(entity.getNmApplic());
+        this.setIdTipoOggetto(entity.getIdTipoOggetto());
+        this.setNmTipoOggetto(entity.getNmTipoOggetto());
+        this.setIdOggetto(entity.getIdOggetto());
+        this.setIdEvento(entity.getIdEvento());
+        this.setDtRegEvento(entity.getDtRegEvento());
+        this.setIdOggettoEvento(entity.getIdOggettoEvento());
+        this.setDsKeyOggetto(entity.getDsKeyOggetto());
+        this.setNmAmbiente(entity.getNmAmbiente());
+        this.setNmEnte(entity.getNmEnte());
+        this.setNmStruttura(entity.getNmStruttura());
+        this.setNmOggetto(entity.getNmOggetto());
+        this.setNmVersatore(entity.getNmVersatore());
     }
 
     @Override
     public LogVVisOggetto rowBeanToEntity() {
-	LogVVisOggetto entity = new LogVVisOggetto();
-	entity.setIdApplic(this.getIdApplic());
-	entity.setNmApplic(this.getNmApplic());
-	entity.setIdTipoOggetto(this.getIdTipoOggetto());
-	entity.setNmTipoOggetto(this.getNmTipoOggetto());
-	entity.setIdOggetto(this.getIdOggetto());
-	entity.setIdEvento(this.getIdEvento());
-	entity.setDtRegEvento(this.getDtRegEvento());
-	entity.setIdOggettoEvento(this.getIdOggettoEvento());
-	entity.setDsKeyOggetto(this.getDsKeyOggetto());
-	entity.setNmAmbiente(this.getNmAmbiente());
-	entity.setNmEnte(this.getNmEnte());
-	entity.setNmStruttura(this.getNmStruttura());
-	entity.setNmOggetto(this.getNmOggetto());
-	entity.setNmVersatore(this.getNmVersatore());
-	return entity;
+        LogVVisOggetto entity = new LogVVisOggetto();
+        entity.setIdApplic(this.getIdApplic());
+        entity.setNmApplic(this.getNmApplic());
+        entity.setIdTipoOggetto(this.getIdTipoOggetto());
+        entity.setNmTipoOggetto(this.getNmTipoOggetto());
+        entity.setIdOggetto(this.getIdOggetto());
+        entity.setIdEvento(this.getIdEvento());
+        entity.setDtRegEvento(this.getDtRegEvento());
+        entity.setIdOggettoEvento(this.getIdOggettoEvento());
+        entity.setDsKeyOggetto(this.getDsKeyOggetto());
+        entity.setNmAmbiente(this.getNmAmbiente());
+        entity.setNmEnte(this.getNmEnte());
+        entity.setNmStruttura(this.getNmStruttura());
+        entity.setNmOggetto(this.getNmOggetto());
+        entity.setNmVersatore(this.getNmVersatore());
+        return entity;
     }
 
     // gestione della paginazione
     public void setRownum(Integer rownum) {
-	setObject("rownum", rownum);
+        setObject("rownum", rownum);
     }
 
     public Integer getRownum() {
-	return Integer.parseInt(getObject("rownum").toString());
+        return Integer.parseInt(getObject("rownum").toString());
     }
 
     public void setRnum(Integer rnum) {
-	setObject("rnum", rnum);
+        setObject("rnum", rnum);
     }
 
     public Integer getRnum() {
-	return Integer.parseInt(getObject("rnum").toString());
+        return Integer.parseInt(getObject("rnum").toString());
     }
 
     public void setNumrecords(Integer numRecords) {
-	setObject("numrecords", numRecords);
+        setObject("numrecords", numRecords);
     }
 
     public Integer getNumrecords() {
-	return Integer.parseInt(getObject("numrecords").toString());
+        return Integer.parseInt(getObject("numrecords").toString());
     }
 
 }

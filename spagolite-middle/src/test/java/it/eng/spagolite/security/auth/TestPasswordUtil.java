@@ -50,17 +50,17 @@ public class TestPasswordUtil {
 
     @Test
     public void testPasswordWitoutSalt() {
-	String actualPassword = PwdUtil.encodePassword("password");
-	final String expectedPassword = "W6ph5Mm5Pz8GgiULbPgzG37mj9g=";
-	Assertions.assertEquals(expectedPassword, actualPassword);
+        String actualPassword = PwdUtil.encodePassword("password");
+        final String expectedPassword = "W6ph5Mm5Pz8GgiULbPgzG37mj9g=";
+        Assertions.assertEquals(expectedPassword, actualPassword);
     }
 
     @Test
     public void testPasswordWithSalt() {
-	byte[] salt = PwdUtil.decodeUFT8Base64String("7TtONHgKep1bl7wmDGQ5jA==");
-	String actualPassword = PwdUtil.encodePBKDF2Password(salt, "password");
-	final String expectedPassword = "BQ9fmLrh2aNFQGRmtD+jjGiv6UaDKBcKvSzKaVWQ1NcHj8ZELAH1ZZXphSFzHlNJXlMjSIYl0Fd597B1kntbRw==";
-	Assertions.assertEquals(expectedPassword, actualPassword);
+        byte[] salt = PwdUtil.decodeUFT8Base64String("7TtONHgKep1bl7wmDGQ5jA==");
+        String actualPassword = PwdUtil.encodePBKDF2Password(salt, "password");
+        final String expectedPassword = "BQ9fmLrh2aNFQGRmtD+jjGiv6UaDKBcKvSzKaVWQ1NcHj8ZELAH1ZZXphSFzHlNJXlMjSIYl0Fd597B1kntbRw==";
+        Assertions.assertEquals(expectedPassword, actualPassword);
 
     }
 

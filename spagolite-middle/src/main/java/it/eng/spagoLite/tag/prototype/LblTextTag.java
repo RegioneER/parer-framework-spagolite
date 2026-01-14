@@ -27,34 +27,34 @@ public class LblTextTag extends AbstractLblTag {
     private String maxLength;
 
     public String getText() {
-	return text;
+        return text;
     }
 
     public void setText(String text) {
-	this.text = text;
+        this.text = text;
     }
 
     public String getMaxLength() {
-	return maxLength;
+        return maxLength;
     }
 
     public void setMaxLength(String maxLength) {
-	this.maxLength = maxLength;
+        this.maxLength = maxLength;
     }
 
     @Override
     protected void writeControl() throws JspException {
-	String text = JavaScript.stringToHTMLString(getText());
-	String controlWidth = getControlwidth();
-	String maxLength = StringUtils.isNotBlank(getMaxLength())
-		? " maxlength=\"" + getMaxLength() + "\" "
-		: "";
+        String text = JavaScript.stringToHTMLString(getText());
+        String controlWidth = getControlwidth();
+        String maxLength = StringUtils.isNotBlank(getMaxLength())
+                ? " maxlength=\"" + getMaxLength() + "\" "
+                : "";
 
-	if (isEditable()) {
-	    writeln(" <input class=\"slText " + controlWidth + "\" type=\"text\" value=\""
-		    + getText() + "\" " + maxLength + " />");
-	} else {
-	    writeln(" <div class=\"slText " + controlWidth + "\" >" + text + "</div>");
-	}
+        if (isEditable()) {
+            writeln(" <input class=\"slText " + controlWidth + "\" type=\"text\" value=\""
+                    + getText() + "\" " + maxLength + " />");
+        } else {
+            writeln(" <div class=\"slText " + controlWidth + "\" >" + text + "</div>");
+        }
     }
 }

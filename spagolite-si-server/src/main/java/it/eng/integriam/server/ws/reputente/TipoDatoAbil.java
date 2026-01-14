@@ -23,18 +23,18 @@ public class TipoDatoAbil {
     private Long idTipoDatoApplic;
 
     public String getNmClasseTipoDato() {
-	return nmClasseTipoDato;
+        return nmClasseTipoDato;
     }
 
     public void setNmClasseTipoDato(String nmClasseTipoDato) {
-	this.nmClasseTipoDato = nmClasseTipoDato;
+        this.nmClasseTipoDato = nmClasseTipoDato;
     }
 
     public Long getIdTipoDatoApplic() {
-	return idTipoDatoApplic;
+        return idTipoDatoApplic;
     }
 
     public void setIdTipoDatoApplic(Long idTipoDatoApplic) {
-	this.idTipoDatoApplic = idTipoDatoApplic;
+        this.idTipoDatoApplic = idTipoDatoApplic;
     }
 }

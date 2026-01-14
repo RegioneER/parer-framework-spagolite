@@ -25,38 +25,38 @@ public class LogOggettoRuolo {
     private BigDecimal idOggetto;
 
     public String getNmTipoOggetto() {
-	return nmTipoOggetto;
+        return nmTipoOggetto;
     }
 
     public void setNmTipoOggetto(String nmTipoOggetto) {
-	this.nmTipoOggetto = nmTipoOggetto;
+        this.nmTipoOggetto = nmTipoOggetto;
     }
 
     public String getTiRuoloPremis() {
-	return tiRuoloPremis;
+        return tiRuoloPremis;
     }
 
     public void setTiRuoloPremis(String tiRuoloPremis) {
-	this.tiRuoloPremis = tiRuoloPremis;
+        this.tiRuoloPremis = tiRuoloPremis;
     }
 
     public BigDecimal getIdOggetto() {
-	return idOggetto;
+        return idOggetto;
     }
 
     public void setIdOggetto(BigDecimal idOggetto) {
-	this.idOggetto = idOggetto;
+        this.idOggetto = idOggetto;
     }
 
     public LogOggettoRuolo(String nmTipoOggetto, BigDecimal idOggetto, String tiRuoloPremis) {
-	this.nmTipoOggetto = nmTipoOggetto;
-	this.tiRuoloPremis = tiRuoloPremis;
-	this.idOggetto = idOggetto;
+        this.nmTipoOggetto = nmTipoOggetto;
+        this.tiRuoloPremis = tiRuoloPremis;
+        this.idOggetto = idOggetto;
     }
 
     public LogOggettoRuolo(String nmTipoOggetto, BigDecimal idOggetto) {
-	this.nmTipoOggetto = nmTipoOggetto;
-	this.idOggetto = idOggetto;
+        this.nmTipoOggetto = nmTipoOggetto;
+        this.idOggetto = idOggetto;
     }
 
 }

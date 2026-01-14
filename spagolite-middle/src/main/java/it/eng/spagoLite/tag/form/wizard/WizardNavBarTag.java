@@ -24,29 +24,29 @@ public class WizardNavBarTag extends AbstractWizardTag {
 
     @Override
     public int doStartTag() throws JspException {
-	if (getComponent().isEndPage() && getComponent().getEndPage().isHideBar()) {
-	    return SKIP_BODY;
-	}
+        if (getComponent().isEndPage() && getComponent().getEndPage().isHideBar()) {
+            return SKIP_BODY;
+        }
 
-	writeln("<div class=\"wizardBar\">");
-	calculateAuthorization();
+        writeln("<div class=\"wizardBar\">");
+        calculateAuthorization();
 
-	writeCancel();
-	if (isEditAction() || isInsertAction()) {
-	    debugAuthorization(insertAction);
-	    debugAuthorization(editAction);
-	    writeSave();
-	}
-	writePrev();
-	writeNext();
+        writeCancel();
+        if (isEditAction() || isInsertAction()) {
+            debugAuthorization(insertAction);
+            debugAuthorization(editAction);
+            writeSave();
+        }
+        writePrev();
+        writeNext();
 
-	writeln("&nbsp;</div>");
+        writeln("&nbsp;</div>");
 
-	return SKIP_BODY;
+        return SKIP_BODY;
     }
 
     private void calculateAuthorization() {
-	setEditAction(isUserAuthorized(editAction));
-	setInsertAction(isUserAuthorized(insertAction));
+        setEditAction(isUserAuthorized(editAction));
+        setInsertAction(isUserAuthorized(insertAction));
     }
 }

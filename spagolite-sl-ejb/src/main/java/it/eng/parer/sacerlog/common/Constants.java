@@ -24,11 +24,11 @@ package it.eng.parer.sacerlog.common;
 public class Constants {
 
     public enum nmApplic {
-	SACER_IAM, SACER, SACER_PREINGEST
+        SACER_IAM, SACER, SACER_PREINGEST
     }
 
     public enum NmParamApplic {
-	SERVER_NAME_SYSTEM_PROPERTY, NM_APPLIC, MAX_RESULT_RICERCA_LOG_EVENTI
+        SERVER_NAME_SYSTEM_PROPERTY, NM_APPLIC, MAX_RESULT_RICERCA_LOG_EVENTI
     }
 
 }

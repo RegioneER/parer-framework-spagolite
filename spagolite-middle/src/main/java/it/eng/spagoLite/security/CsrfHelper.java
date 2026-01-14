@@ -29,37 +29,37 @@ import org.springframework.security.web.csrf.CsrfToken;
 public class CsrfHelper {
 
     public static boolean hasTokenFromRequest(HttpServletRequest request) {
-	return getTokenFromRequest(request) != null;
+        return getTokenFromRequest(request) != null;
     }
 
     public static String getCsrfInputToken(HttpServletRequest request) {
-	CsrfToken token = getTokenFromRequest(request);
-	return token != null
-		? "<input type=\"hidden\" name=\"" + token.getParameterName() + "\" value=\""
-			+ token.getToken() + "\" /> \n"
-		: StringUtils.EMPTY;
+        CsrfToken token = getTokenFromRequest(request);
+        return token != null
+                ? "<input type=\"hidden\" name=\"" + token.getParameterName() + "\" value=\""
+                        + token.getToken() + "\" /> \n"
+                : StringUtils.EMPTY;
     }
 
     public static String getCsrfMetaDataToken(HttpServletRequest request) {
-	CsrfToken token = getTokenFromRequest(request);
-	return token != null
-		? "  <meta name=\"_csrf_parameter\" content=\"" + token.getParameterName() + "\" />"
-			+ "\n" + "  <meta name=\"_csrf_header\" content=\"" + token.getHeaderName()
-			+ "\" />" + "\n" + "  <meta name=\"_csrf\" content=\"" + token.getToken()
-			+ "\" /> \n"
-		: StringUtils.EMPTY;
+        CsrfToken token = getTokenFromRequest(request);
+        return token != null
+                ? "  <meta name=\"_csrf_parameter\" content=\"" + token.getParameterName() + "\" />"
+                        + "\n" + "  <meta name=\"_csrf_header\" content=\"" + token.getHeaderName()
+                        + "\" />" + "\n" + "  <meta name=\"_csrf\" content=\"" + token.getToken()
+                        + "\" /> \n"
+                : StringUtils.EMPTY;
     }
 
     public static String getCsrfQueryStringToken(HttpServletRequest request) {
-	CsrfToken token = getTokenFromRequest(request);
-	return token != null ? token.getParameterName() + "=" + token.getToken()
-		: StringUtils.EMPTY;
+        CsrfToken token = getTokenFromRequest(request);
+        return token != null ? token.getParameterName() + "=" + token.getToken()
+                : StringUtils.EMPTY;
     }
 
     private static CsrfToken getTokenFromRequest(HttpServletRequest request) {
-	return request.getAttribute(CsrfToken.class.getName()) != null
-		? (CsrfToken) request.getAttribute(CsrfToken.class.getName())
-		: null;
+        return request.getAttribute(CsrfToken.class.getName()) != null
+                ? (CsrfToken) request.getAttribute(CsrfToken.class.getName())
+                : null;
     }
 
 }

@@ -26,79 +26,79 @@ public class ButtonListWriter {
     private ButtonList buttonList;
 
     public ButtonListWriter(ButtonList buttonList) {
-	this.buttonList = buttonList;
+        this.buttonList = buttonList;
     }
 
     public void write(Writer writer) throws IOException {
 
-	writer.write("  public static class " + ClassUtil.getClassName(buttonList.getName())
-		+ " extends ButtonList {\n");
-	writer.write("\n");
-	writer.write("    public static String NAME = \""
-		+ ClassUtil.getClassName(buttonList.getName()) + "\";\n");
-	writer.write("    public static String DESCRIPTION = \"" + buttonList.getDescription()
-		+ "\";\n");
+        writer.write("  public static class " + ClassUtil.getClassName(buttonList.getName())
+                + " extends ButtonList {\n");
+        writer.write("\n");
+        writer.write("    public static String NAME = \""
+                + ClassUtil.getClassName(buttonList.getName()) + "\";\n");
+        writer.write("    public static String DESCRIPTION = \"" + buttonList.getDescription()
+                + "\";\n");
 
-	writeConstants(writer);
+        writeConstants(writer);
 
-	writer.write("\n");
-	writer.write("    public " + ClassUtil.getClassName(buttonList.getName()) + "() {\n");
-	writer.write("      super(null, NAME, DESCRIPTION, "
-		+ (buttonList.getDisableAll() ? "true" : "false") + ");\n");
-	writeAdds(writer);
-	writer.write("    }\n");
-	writer.write("\n");
+        writer.write("\n");
+        writer.write("    public " + ClassUtil.getClassName(buttonList.getName()) + "() {\n");
+        writer.write("      super(null, NAME, DESCRIPTION, "
+                + (buttonList.getDisableAll() ? "true" : "false") + ");\n");
+        writeAdds(writer);
+        writer.write("    }\n");
+        writer.write("\n");
 
-	writeGets(writer);
+        writeGets(writer);
 
-	writer.write("  }\n");
+        writer.write("  }\n");
     }
 
     private void writeConstants(Writer writer) throws IOException {
-	writer.write("\n");
+        writer.write("\n");
 
-	try (XmlCursor cursor = buttonList.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeConstant(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        try (XmlCursor cursor = buttonList.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeConstant(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
 
-	writer.write("\n");
+        writer.write("\n");
 
-	try (XmlCursor cursor = buttonList.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeConstantFull(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        try (XmlCursor cursor = buttonList.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeConstantFull(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
     }
 
     private void writeAdds(Writer writer) throws IOException {
-	writer.write("\n");
-	try (XmlCursor cursor = buttonList.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeAdd(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        writer.write("\n");
+        try (XmlCursor cursor = buttonList.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeAdd(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
     }
 
     private void writeGets(Writer writer) throws IOException {
-	writer.write("\n");
-	try (XmlCursor cursor = buttonList.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeGet(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        writer.write("\n");
+        try (XmlCursor cursor = buttonList.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeGet(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
     }
 }

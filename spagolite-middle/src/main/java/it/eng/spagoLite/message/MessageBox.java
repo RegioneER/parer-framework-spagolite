@@ -31,31 +31,31 @@ public class MessageBox extends FrameElement implements Iterable<Message> {
     static final String SEPARATORE_ORA_MSG = "#";
 
     public enum ViewMode {
-	alert, plain
+        alert, plain
     }
 
     private List<Message> list;
     private ViewMode viewMode;
 
     public MessageBox() {
-	clear();
+        clear();
     }
 
     public ViewMode getViewMode() {
-	return viewMode;
+        return viewMode;
     }
 
     public void setViewMode(ViewMode viewMode) {
-	this.viewMode = viewMode;
+        this.viewMode = viewMode;
     }
 
     public Iterator<Message> iterator() {
-	return list.iterator();
+        return list.iterator();
     }
 
     public void clear() {
-	list = new ArrayList<Message>();
-	viewMode = ViewMode.alert;
+        list = new ArrayList<Message>();
+        viewMode = ViewMode.alert;
     }
 
     /**
@@ -66,117 +66,117 @@ public class MessageBox extends FrameElement implements Iterable<Message> {
      * @param regexOracle value regular expression
      */
     public void addMessagesFromOracle(String regexOracle) {
-	if (regexOracle == null || "".equals(regexOracle)) {
-	    return;
-	}
+        if (regexOracle == null || "".equals(regexOracle)) {
+            return;
+        }
 
-	String[] oraMessages = StringUtils.split(regexOracle, SEPARATORE_ORA_MSG);
+        String[] oraMessages = StringUtils.split(regexOracle, SEPARATORE_ORA_MSG);
 
-	for (String oraMessage : oraMessages) {
-	    String livello = oraMessage.substring(0, 3);
-	    String msg = oraMessage.substring(3);
-	    if (livello.equals(ERR_ORA_MSG)) {
-		addError(msg);
-	    } else if (livello.equals(WAR_ORA_MSG)) {
-		addWarning(msg);
-	    } else if (livello.equals(INF_ORA_MSG)) {
-		addInfo(msg);
-	    }
-	}
+        for (String oraMessage : oraMessages) {
+            String livello = oraMessage.substring(0, 3);
+            String msg = oraMessage.substring(3);
+            if (livello.equals(ERR_ORA_MSG)) {
+                addError(msg);
+            } else if (livello.equals(WAR_ORA_MSG)) {
+                addWarning(msg);
+            } else if (livello.equals(INF_ORA_MSG)) {
+                addInfo(msg);
+            }
+        }
     }
 
     public void addMessage(Message message) {
-	if (message != null) {
-	    list.add(message);
-	}
+        if (message != null) {
+            list.add(message);
+        }
     }
 
     public void addMessages(List<Message> messages) {
-	for (Message message : messages) {
-	    list.add(message);
-	}
+        for (Message message : messages) {
+            list.add(message);
+        }
     }
 
     public void addMessage(MessageLevel level, String text) {
-	list.add(new Message(level, text));
+        list.add(new Message(level, text));
     }
 
     public void addInfo(String text) {
-	list.add(new Message(MessageLevel.INF, text));
+        list.add(new Message(MessageLevel.INF, text));
     }
 
     public void addWarning(String text) {
-	list.add(new Message(MessageLevel.WAR, text));
+        list.add(new Message(MessageLevel.WAR, text));
     }
 
     public void addError(String text) {
-	list.add(new Message(MessageLevel.ERR, text));
+        list.add(new Message(MessageLevel.ERR, text));
     }
 
     public void addError(String text, Throwable throwable) {
-	list.add(new Message(MessageLevel.ERR, text, throwable));
+        list.add(new Message(MessageLevel.ERR, text, throwable));
     }
 
     public void addFatal(String text) {
-	list.add(new Message(MessageLevel.FATAL, text));
+        list.add(new Message(MessageLevel.FATAL, text));
     }
 
     public void addFatal(String text, Throwable throwable) {
-	list.add(new Message(MessageLevel.FATAL, text, throwable));
+        list.add(new Message(MessageLevel.FATAL, text, throwable));
     }
 
     public boolean isEmpty() {
-	return list.isEmpty();
+        return list.isEmpty();
     }
 
     public boolean hasInfo() {
-	for (Message message : list) {
-	    if (message.getMessageLevel().equals(MessageLevel.INF)) {
-		return true;
-	    }
-	}
+        for (Message message : list) {
+            if (message.getMessageLevel().equals(MessageLevel.INF)) {
+                return true;
+            }
+        }
 
-	return false;
+        return false;
     }
 
     public boolean hasWarning() {
-	for (Message message : list) {
-	    if (message.getMessageLevel().equals(MessageLevel.WAR)) {
-		return true;
-	    }
-	}
+        for (Message message : list) {
+            if (message.getMessageLevel().equals(MessageLevel.WAR)) {
+                return true;
+            }
+        }
 
-	return false;
+        return false;
     }
 
     public boolean hasError() {
-	for (Message message : list) {
-	    if (message.getMessageLevel().equals(MessageLevel.ERR)) {
-		return true;
-	    }
-	}
+        for (Message message : list) {
+            if (message.getMessageLevel().equals(MessageLevel.ERR)) {
+                return true;
+            }
+        }
 
-	return false;
+        return false;
     }
 
     public boolean hasFatal() {
-	for (Message message : list) {
-	    if (message.getMessageLevel().equals(MessageLevel.FATAL)) {
-		return true;
-	    }
-	}
+        for (Message message : list) {
+            if (message.getMessageLevel().equals(MessageLevel.FATAL)) {
+                return true;
+            }
+        }
 
-	return false;
+        return false;
     }
 
     @Override
     public Element asXml() {
-	Element element = super.asXml();
+        Element element = super.asXml();
 
-	for (Message message : list) {
-	    element.add(message.asXml());
-	}
+        for (Message message : list) {
+            element.add(message.asXml());
+        }
 
-	return element;
+        return element;
     }
 }

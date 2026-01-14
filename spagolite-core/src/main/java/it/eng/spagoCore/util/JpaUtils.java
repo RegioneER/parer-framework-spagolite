@@ -29,7 +29,7 @@ import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 public class JpaUtils {
 
     public static Connection provideConnectionFrom(EntityManager em) throws SQLException {
-	return em.unwrap(Session.class).getSessionFactory().getSessionFactoryOptions()
-		.getServiceRegistry().getService(ConnectionProvider.class).getConnection();
+        return em.unwrap(Session.class).getSessionFactory().getSessionFactoryOptions()
+                .getServiceRegistry().getService(ConnectionProvider.class).getConnection();
     }
 }

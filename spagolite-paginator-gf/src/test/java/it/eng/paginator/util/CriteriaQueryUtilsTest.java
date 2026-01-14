@@ -54,57 +54,57 @@ public class CriteriaQueryUtilsTest {
 
     @Deployment
     public static Archive<?> createTestArchive() {
-	return ShrinkWrap
-		.create(WebArchive.class,
-			CriteriaQueryUtilsTest.class.getSimpleName() + "Tests.war")
-		.addAsResource(CriteriaQueryUtilsTest.class.getClassLoader()
-			.getResource("persistence.xml"), "META-INF/persistence.xml")
-		.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-		.addClass(org.apache.commons.lang3.StringUtils.class)
-		.addPackages(false, "org.springframework.beans", "org.springframework.util")
-		.addPackages(true, "it.eng.spagoLite.db.base", "it.eng.paginator.util");
+        return ShrinkWrap
+                .create(WebArchive.class,
+                        CriteriaQueryUtilsTest.class.getSimpleName() + "Tests.war")
+                .addAsResource(CriteriaQueryUtilsTest.class.getClassLoader()
+                        .getResource("persistence.xml"), "META-INF/persistence.xml")
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+                .addClass(org.apache.commons.lang3.StringUtils.class)
+                .addPackages(false, "org.springframework.beans", "org.springframework.util")
+                .addPackages(true, "it.eng.spagoLite.db.base", "it.eng.paginator.util");
     }
 
     @Test
     public void entityManagerIsHere() {
-	assertNotNull(em);
+        assertNotNull(em);
     }
 
     @Test
     public void countFromCriteriaQuery_noParams() {
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<PigAmbienteVers> query = cb.createQuery(PigAmbienteVers.class);
-	Root<PigAmbienteVers> pav = query.from(PigAmbienteVers.class);
-	query.select(pav);
-	List<PigAmbienteVers> resultList = em.createQuery(query).getResultList();
-	int result = CriteriaQueryUtils.count(em, query);
-	assertEquals(resultList.size(), result);
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<PigAmbienteVers> query = cb.createQuery(PigAmbienteVers.class);
+        Root<PigAmbienteVers> pav = query.from(PigAmbienteVers.class);
+        query.select(pav);
+        List<PigAmbienteVers> resultList = em.createQuery(query).getResultList();
+        int result = CriteriaQueryUtils.count(em, query);
+        assertEquals(resultList.size(), result);
     }
 
     @Test
     public void countFromCriteriaQuery_withParams() {
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<PigAmbienteVers> query = cb.createQuery(PigAmbienteVers.class);
-	Root<PigAmbienteVers> pav = query.from(PigAmbienteVers.class);
-	List<Predicate> condition = new ArrayList<>();
-	condition.add(cb.equal(pav.get("idAmbienteVers"), cb.parameter(Long.class, "id")));
-	query.select(pav);
-	query.where(condition.toArray(new Predicate[] {}));
-	Set<Param> params = new HashSet<>();
-	params.add(new Param("id", 3l));
-	int result = CriteriaQueryUtils.count(em, query, params);
-	assertEquals(1, result);
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<PigAmbienteVers> query = cb.createQuery(PigAmbienteVers.class);
+        Root<PigAmbienteVers> pav = query.from(PigAmbienteVers.class);
+        List<Predicate> condition = new ArrayList<>();
+        condition.add(cb.equal(pav.get("idAmbienteVers"), cb.parameter(Long.class, "id")));
+        query.select(pav);
+        query.where(condition.toArray(new Predicate[] {}));
+        Set<Param> params = new HashSet<>();
+        params.add(new Param("id", 3l));
+        int result = CriteriaQueryUtils.count(em, query, params);
+        assertEquals(1, result);
     }
 
     @Test
     public void testHandleOrderBy() {
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<PigAmbienteVers> query = cb.createQuery(PigAmbienteVers.class);
-	Root<PigAmbienteVers> pav = query.from(PigAmbienteVers.class);
-	query.select(pav);
-	CriteriaQueryUtils.handleOrderBy(query, "NM_AMBIENTE_VERS", SortingRule.DESC, cb);
-	List<PigAmbienteVers> resultList = em.createQuery(query).getResultList();
-	assertEquals("prova", resultList.get(0).getNmAmbienteVers());
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<PigAmbienteVers> query = cb.createQuery(PigAmbienteVers.class);
+        Root<PigAmbienteVers> pav = query.from(PigAmbienteVers.class);
+        query.select(pav);
+        CriteriaQueryUtils.handleOrderBy(query, "NM_AMBIENTE_VERS", SortingRule.DESC, cb);
+        List<PigAmbienteVers> resultList = em.createQuery(query).getResultList();
+        assertEquals("prova", resultList.get(0).getNmAmbienteVers());
     }
 
 }

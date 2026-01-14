@@ -23,14 +23,14 @@ public abstract class Authenticator {
     private static final Logger log = LoggerFactory.getLogger(Authenticator.class);
 
     public User doLogin(HttpSession httpSession) {
-	User utente = (User) SessionManager.currentUserDetails();
-	if (utente != null) {
-	    if (!isAutorized(utente)) {
-		return null;
-	    }
-	    SessionManager.setUser(httpSession, utente);
-	}
-	return utente;
+        User utente = (User) SessionManager.currentUserDetails();
+        if (utente != null) {
+            if (!isAutorized(utente)) {
+                return null;
+            }
+            SessionManager.setUser(httpSession, utente);
+        }
+        return utente;
     }
 
     /**
@@ -50,7 +50,7 @@ public abstract class Authenticator {
     // return false;
     // }
     public boolean isAutorized(User utente) {
-	return true;
+        return true;
     }
 
     /**

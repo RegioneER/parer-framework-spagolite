@@ -38,15 +38,15 @@ public abstract class HibernateUtils {
      * @return
      */
     public static List<BigDecimal> bigDecimalListFrom(Collection<Long> longCollection) {
-	if (longCollection == null) {
-	    return null;
-	}
+        if (longCollection == null) {
+            return null;
+        }
 
-	if (longCollection.isEmpty()) {
-	    return new ArrayList<>();
-	}
-	return longCollection.stream().filter(Objects::nonNull).map(l -> BigDecimal.valueOf(l))
-		.collect(Collectors.toList());
+        if (longCollection.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return longCollection.stream().filter(Objects::nonNull).map(l -> BigDecimal.valueOf(l))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -61,11 +61,11 @@ public abstract class HibernateUtils {
      * @return
      */
     public static Long longFrom(Number number) {
-	return number == null ? null : number.longValue();
+        return number == null ? null : number.longValue();
     }
 
     public static boolean isCollectionOf(final Class<?> c, Collection collection) {
-	return collection.stream().allMatch(o -> c.isInstance(o));
+        return collection.stream().allMatch(o -> c.isInstance(o));
     }
 
     /**
@@ -78,14 +78,14 @@ public abstract class HibernateUtils {
      * @return
      */
     public static List<Long> longListFrom(Collection<? extends BigDecimal> collection) {
-	if (collection == null) {
-	    return null;
-	}
-	if (collection.isEmpty()) {
-	    return new ArrayList<>();
-	}
-	return collection.stream().filter(Objects::nonNull).map(BigDecimal::longValue)
-		.collect(Collectors.toList());
+        if (collection == null) {
+            return null;
+        }
+        if (collection.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return collection.stream().filter(Objects::nonNull).map(BigDecimal::longValue)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -100,26 +100,26 @@ public abstract class HibernateUtils {
      * @return
      */
     public static BigDecimal bigDecimalFrom(Number numero) {
-	if (numero == null) {
-	    return null;
-	}
-	if (numero instanceof Long) {
-	    return BigDecimal.valueOf(numero.longValue());
-	}
-	if (numero instanceof Integer) {
-	    return BigDecimal.valueOf(numero.intValue());
-	}
-	throw new IllegalArgumentException(
-		"Conversione da " + numero.getClass() + " a BigDecimal non gestita");
+        if (numero == null) {
+            return null;
+        }
+        if (numero instanceof Long) {
+            return BigDecimal.valueOf(numero.longValue());
+        }
+        if (numero instanceof Integer) {
+            return BigDecimal.valueOf(numero.intValue());
+        }
+        throw new IllegalArgumentException(
+                "Conversione da " + numero.getClass() + " a BigDecimal non gestita");
     }
 
     public static <T> T unproxyEntity(T entity) {
-	if (entity instanceof HibernateProxy) {
-	    HibernateProxy hibernateProxy = (HibernateProxy) entity;
-	    LazyInitializer initializer = hibernateProxy.getHibernateLazyInitializer();
-	    return (T) initializer.getImplementation();
-	} else {
-	    return entity;
-	}
+        if (entity instanceof HibernateProxy) {
+            HibernateProxy hibernateProxy = (HibernateProxy) entity;
+            LazyInitializer initializer = hibernateProxy.getHibernateLazyInitializer();
+            return (T) initializer.getImplementation();
+        } else {
+            return entity;
+        }
     }
 }

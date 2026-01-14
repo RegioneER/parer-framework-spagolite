@@ -34,69 +34,69 @@ public class SOAPClientLoginHandler implements SOAPHandler<SOAPMessageContext> {
 
     @Override
     public boolean handleMessage(SOAPMessageContext msgCtx) {
-	Boolean outbound = (Boolean) msgCtx.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+        Boolean outbound = (Boolean) msgCtx.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
-	if (outbound) {
-	    try {
-		String user = null;
-		String pass = null;
-		log.debug(
-			"SOAPClientLoginHandler attivato. Aggiungo username e password all'header SOAP");
-		if (msgCtx.containsKey(USER) && msgCtx.containsKey(PWD)) {
-		    user = (String) msgCtx.get(USER);
-		    pass = (String) msgCtx.get(PWD);
-		} else {
-		    throw new IllegalArgumentException(
-			    "Please set username and password in message context before using this service");
-		}
-		SOAPEnvelope envelope = msgCtx.getMessage().getSOAPPart().getEnvelope();
-		/*
-		 * Vedi
-		 * http://stackoverflow.com/questions/17058752/severe-saaj0120-cant-add-a-header
-		 * -when-one-is-already- present
-		 */
-		if (envelope.getHeader() != null) {
-		    envelope.getHeader().detachNode();
-		}
-		SOAPHeader header = envelope.addHeader();
+        if (outbound) {
+            try {
+                String user = null;
+                String pass = null;
+                log.debug(
+                        "SOAPClientLoginHandler attivato. Aggiungo username e password all'header SOAP");
+                if (msgCtx.containsKey(USER) && msgCtx.containsKey(PWD)) {
+                    user = (String) msgCtx.get(USER);
+                    pass = (String) msgCtx.get(PWD);
+                } else {
+                    throw new IllegalArgumentException(
+                            "Please set username and password in message context before using this service");
+                }
+                SOAPEnvelope envelope = msgCtx.getMessage().getSOAPPart().getEnvelope();
+                /*
+                 * Vedi
+                 * http://stackoverflow.com/questions/17058752/severe-saaj0120-cant-add-a-header
+                 * -when-one-is-already- present
+                 */
+                if (envelope.getHeader() != null) {
+                    envelope.getHeader().detachNode();
+                }
+                SOAPHeader header = envelope.addHeader();
 
-		SOAPElement security = header.addChildElement(QNAME_WSSE_HEADER);
-		SOAPElement usernameToken = security.addChildElement("UsernameToken", WSSE_PREFIX);
-		usernameToken.addAttribute(new QName("xmlns:wsu"), WSU_SXD_URI);
-		usernameToken.addAttribute(new QName("wsu:Id"), "UsernameToken-2");
-		SOAPElement username = usernameToken.addChildElement("Username", WSSE_PREFIX);
+                SOAPElement security = header.addChildElement(QNAME_WSSE_HEADER);
+                SOAPElement usernameToken = security.addChildElement("UsernameToken", WSSE_PREFIX);
+                usernameToken.addAttribute(new QName("xmlns:wsu"), WSU_SXD_URI);
+                usernameToken.addAttribute(new QName("wsu:Id"), "UsernameToken-2");
+                SOAPElement username = usernameToken.addChildElement("Username", WSSE_PREFIX);
 
-		username.addTextNode(user);
-		SOAPElement password = usernameToken.addChildElement("Password", WSSE_PREFIX);
-		password.setAttribute("Type",
-			"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText");
-		password.addTextNode(pass);
+                username.addTextNode(user);
+                SOAPElement password = usernameToken.addChildElement("Password", WSSE_PREFIX);
+                password.setAttribute("Type",
+                        "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText");
+                password.addTextNode(pass);
 
-	    } catch (Exception e) {
-		log.error(
-			"Si è verificato un errore durante l'inserimento di username e password nell'header SOAP",
-			e);
-	    }
-	}
-	return true;
+            } catch (Exception e) {
+                log.error(
+                        "Si è verificato un errore durante l'inserimento di username e password nell'header SOAP",
+                        e);
+            }
+        }
+        return true;
     }
 
     @Override
     public boolean handleFault(SOAPMessageContext context) {
-	return true;
+        return true;
     }
 
     @Override
     public void close(MessageContext context) {
-	// TODO Auto-generated method stub
+        // TODO Auto-generated method stub
 
     }
 
     @Override
     public Set<QName> getHeaders() {
-	HashSet<QName> headers = new HashSet<QName>();
-	headers.add(QNAME_WSSE_HEADER);
-	return headers;
+        HashSet<QName> headers = new HashSet<QName>();
+        headers.add(QNAME_WSSE_HEADER);
+        return headers;
     }
 
 }

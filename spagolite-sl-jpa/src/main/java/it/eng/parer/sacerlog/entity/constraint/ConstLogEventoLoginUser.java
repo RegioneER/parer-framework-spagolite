@@ -20,7 +20,7 @@ package it.eng.parer.sacerlog.entity.constraint;
 public class ConstLogEventoLoginUser {
 
     public enum TipoEvento {
-	BAD_PASS, BAD_USER, EXPIRED, LOCKED, LOGIN_OK, SET_PSW, BAD_USER_ASSOCIATION, BAD_CF
+        BAD_PASS, BAD_USER, EXPIRED, LOCKED, LOGIN_OK, SET_PSW, BAD_USER_ASSOCIATION, BAD_CF
     }
 
     public static final String NM_ATTORE_ONLINE = "SacerIam OnLine";

@@ -27,7 +27,7 @@ import it.eng.spagoLite.db.oracle.bean.column.TableDescriptor;
  *
  */
 public class LogVVisEventoPrincTxRowBean extends BaseRow
-	implements BaseRowInterface, JEEBaseRowInterface {
+        implements BaseRowInterface, JEEBaseRowInterface {
 
     /*
      * @Generated( value = "it.eg.dbtool.db.oracle.beangen.Oracle4JPAClientBeanGen$ViewBeanWriter",
@@ -37,187 +37,187 @@ public class LogVVisEventoPrincTxRowBean extends BaseRow
     public static LogVVisEventoPrincTxTableDescriptor TABLE_DESCRIPTOR = new LogVVisEventoPrincTxTableDescriptor();
 
     public LogVVisEventoPrincTxRowBean() {
-	super();
+        super();
     }
 
     public TableDescriptor getTableDescriptor() {
-	return TABLE_DESCRIPTOR;
+        return TABLE_DESCRIPTOR;
     }
 
     public BigDecimal getIdTransazione() {
-	return getBigDecimal("id_transazione");
+        return getBigDecimal("id_transazione");
     }
 
     public void setIdTransazione(BigDecimal id_transazione) {
-	setObject("id_transazione", id_transazione);
+        setObject("id_transazione", id_transazione);
     }
 
     public BigDecimal getIdEvento() {
-	return getBigDecimal("id_evento");
+        return getBigDecimal("id_evento");
     }
 
     public void setIdEvento(BigDecimal id_evento) {
-	setObject("id_evento", id_evento);
+        setObject("id_evento", id_evento);
     }
 
     public Timestamp getDtRegEvento() {
-	return getTimestamp("dt_reg_evento");
+        return getTimestamp("dt_reg_evento");
     }
 
     public void setDtRegEvento(Timestamp dt_reg_evento) {
-	setObject("dt_reg_evento", dt_reg_evento);
+        setObject("dt_reg_evento", dt_reg_evento);
     }
 
     public String getDsGeneratoreAzione() {
-	return getString("ds_generatore_azione");
+        return getString("ds_generatore_azione");
     }
 
     public void setDsGeneratoreAzione(String ds_generatore_azione) {
-	setObject("ds_generatore_azione", ds_generatore_azione);
+        setObject("ds_generatore_azione", ds_generatore_azione);
     }
 
     public String getDsAzione() {
-	return getString("ds_azione");
+        return getString("ds_azione");
     }
 
     public void setDsAzione(String ds_azione) {
-	setObject("ds_azione", ds_azione);
+        setObject("ds_azione", ds_azione);
     }
 
     public BigDecimal getIdTipoEvento() {
-	return getBigDecimal("id_tipo_evento");
+        return getBigDecimal("id_tipo_evento");
     }
 
     public void setIdTipoEvento(BigDecimal id_tipo_evento) {
-	setObject("id_tipo_evento", id_tipo_evento);
+        setObject("id_tipo_evento", id_tipo_evento);
     }
 
     public String getNmTipoEvento() {
-	return getString("nm_tipo_evento");
+        return getString("nm_tipo_evento");
     }
 
     public void setNmTipoEvento(String nm_tipo_evento) {
-	setObject("nm_tipo_evento", nm_tipo_evento);
+        setObject("nm_tipo_evento", nm_tipo_evento);
     }
 
     public String getTipoOrigineEvento() {
-	return getString("tipo_origine_evento");
+        return getString("tipo_origine_evento");
     }
 
     public void setTipoOrigineEvento(String tipo_origine_evento) {
-	setObject("tipo_origine_evento", tipo_origine_evento);
+        setObject("tipo_origine_evento", tipo_origine_evento);
     }
 
     public String getTipoClasseEvento() {
-	return getString("tipo_classe_evento");
+        return getString("tipo_classe_evento");
     }
 
     public void setTipoClasseEvento(String tipo_classe_evento) {
-	setObject("tipo_classe_evento", tipo_classe_evento);
+        setObject("tipo_classe_evento", tipo_classe_evento);
     }
 
     public BigDecimal getIdAgenteEvento() {
-	return getBigDecimal("id_agente_evento");
+        return getBigDecimal("id_agente_evento");
     }
 
     public void setIdAgenteEvento(BigDecimal id_agente_evento) {
-	setObject("id_agente_evento", id_agente_evento);
+        setObject("id_agente_evento", id_agente_evento);
     }
 
     public String getTiRuoloAgenteEvento() {
-	return getString("ti_ruolo_agente_evento");
+        return getString("ti_ruolo_agente_evento");
     }
 
     public void setTiRuoloAgenteEvento(String ti_ruolo_agente_evento) {
-	setObject("ti_ruolo_agente_evento", ti_ruolo_agente_evento);
+        setObject("ti_ruolo_agente_evento", ti_ruolo_agente_evento);
     }
 
     public BigDecimal getIdAgente() {
-	return getBigDecimal("id_agente");
+        return getBigDecimal("id_agente");
     }
 
     public void setIdAgente(BigDecimal id_agente) {
-	setObject("id_agente", id_agente);
+        setObject("id_agente", id_agente);
     }
 
     public String getNmAgente() {
-	return getString("nm_agente");
+        return getString("nm_agente");
     }
 
     public void setNmAgente(String nm_agente) {
-	setObject("nm_agente", nm_agente);
+        setObject("nm_agente", nm_agente);
     }
 
     public String getTipoOrigineAgente() {
-	return getString("tipo_origine_agente");
+        return getString("tipo_origine_agente");
     }
 
     public void setTipoOrigineAgente(String tipo_origine_agente) {
-	setObject("tipo_origine_agente", tipo_origine_agente);
+        setObject("tipo_origine_agente", tipo_origine_agente);
     }
 
     @Override
     public void entityToRowBean(Object obj) {
-	LogVVisEventoPrincTx entity = (LogVVisEventoPrincTx) obj;
-	this.setIdTransazione(entity.getIdTransazione());
-	this.setIdEvento(entity.getIdEvento());
-	this.setDtRegEvento(entity.getDtRegEvento());
-	this.setDsGeneratoreAzione(entity.getDsGeneratoreAzione());
-	this.setDsAzione(entity.getDsAzione());
-	this.setIdTipoEvento(entity.getIdTipoEvento());
-	this.setNmTipoEvento(entity.getNmTipoEvento());
-	this.setTipoOrigineEvento(entity.getTipoOrigineEvento());
-	this.setTipoClasseEvento(entity.getTipoClasseEvento());
-	this.setIdAgenteEvento(entity.getIdAgenteEvento());
-	this.setTiRuoloAgenteEvento(entity.getTiRuoloAgenteEvento());
-	this.setIdAgente(entity.getIdAgente());
-	this.setNmAgente(entity.getNmAgente());
-	this.setTipoOrigineAgente(entity.getTipoOrigineAgente());
+        LogVVisEventoPrincTx entity = (LogVVisEventoPrincTx) obj;
+        this.setIdTransazione(entity.getIdTransazione());
+        this.setIdEvento(entity.getIdEvento());
+        this.setDtRegEvento(entity.getDtRegEvento());
+        this.setDsGeneratoreAzione(entity.getDsGeneratoreAzione());
+        this.setDsAzione(entity.getDsAzione());
+        this.setIdTipoEvento(entity.getIdTipoEvento());
+        this.setNmTipoEvento(entity.getNmTipoEvento());
+        this.setTipoOrigineEvento(entity.getTipoOrigineEvento());
+        this.setTipoClasseEvento(entity.getTipoClasseEvento());
+        this.setIdAgenteEvento(entity.getIdAgenteEvento());
+        this.setTiRuoloAgenteEvento(entity.getTiRuoloAgenteEvento());
+        this.setIdAgente(entity.getIdAgente());
+        this.setNmAgente(entity.getNmAgente());
+        this.setTipoOrigineAgente(entity.getTipoOrigineAgente());
     }
 
     @Override
     public LogVVisEventoPrincTx rowBeanToEntity() {
-	LogVVisEventoPrincTx entity = new LogVVisEventoPrincTx();
-	entity.setIdTransazione(this.getIdTransazione());
-	entity.setIdEvento(this.getIdEvento());
-	entity.setDtRegEvento(this.getDtRegEvento());
-	entity.setDsGeneratoreAzione(this.getDsGeneratoreAzione());
-	entity.setDsAzione(this.getDsAzione());
-	entity.setIdTipoEvento(this.getIdTipoEvento());
-	entity.setNmTipoEvento(this.getNmTipoEvento());
-	entity.setTipoOrigineEvento(this.getTipoOrigineEvento());
-	entity.setTipoClasseEvento(this.getTipoClasseEvento());
-	entity.setIdAgenteEvento(this.getIdAgenteEvento());
-	entity.setTiRuoloAgenteEvento(this.getTiRuoloAgenteEvento());
-	entity.setIdAgente(this.getIdAgente());
-	entity.setNmAgente(this.getNmAgente());
-	entity.setTipoOrigineAgente(this.getTipoOrigineAgente());
-	return entity;
+        LogVVisEventoPrincTx entity = new LogVVisEventoPrincTx();
+        entity.setIdTransazione(this.getIdTransazione());
+        entity.setIdEvento(this.getIdEvento());
+        entity.setDtRegEvento(this.getDtRegEvento());
+        entity.setDsGeneratoreAzione(this.getDsGeneratoreAzione());
+        entity.setDsAzione(this.getDsAzione());
+        entity.setIdTipoEvento(this.getIdTipoEvento());
+        entity.setNmTipoEvento(this.getNmTipoEvento());
+        entity.setTipoOrigineEvento(this.getTipoOrigineEvento());
+        entity.setTipoClasseEvento(this.getTipoClasseEvento());
+        entity.setIdAgenteEvento(this.getIdAgenteEvento());
+        entity.setTiRuoloAgenteEvento(this.getTiRuoloAgenteEvento());
+        entity.setIdAgente(this.getIdAgente());
+        entity.setNmAgente(this.getNmAgente());
+        entity.setTipoOrigineAgente(this.getTipoOrigineAgente());
+        return entity;
     }
 
     // gestione della paginazione
     public void setRownum(Integer rownum) {
-	setObject("rownum", rownum);
+        setObject("rownum", rownum);
     }
 
     public Integer getRownum() {
-	return Integer.parseInt(getObject("rownum").toString());
+        return Integer.parseInt(getObject("rownum").toString());
     }
 
     public void setRnum(Integer rnum) {
-	setObject("rnum", rnum);
+        setObject("rnum", rnum);
     }
 
     public Integer getRnum() {
-	return Integer.parseInt(getObject("rnum").toString());
+        return Integer.parseInt(getObject("rnum").toString());
     }
 
     public void setNumrecords(Integer numRecords) {
-	setObject("numrecords", numRecords);
+        setObject("numrecords", numRecords);
     }
 
     public Integer getNumrecords() {
-	return Integer.parseInt(getObject("numrecords").toString());
+        return Integer.parseInt(getObject("numrecords").toString());
     }
 
 }

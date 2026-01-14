@@ -30,11 +30,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "APL_V_LOG_TI_OGG", schema = "SACER_IAM")
 @NamedQueries({
-	@NamedQuery(name = "AplVLogTiOgg.findAll", query = "SELECT a FROM AplVLogTiOgg a"),
-	@NamedQuery(name = "AplVLogTiOgg.findTipoOggettoByNome", query = "SELECT a FROM AplVLogTiOgg a WHERE a.nmApplic = :nmApplic AND a.nmTipoOggetto = :nmTipoOggetto"),
-	@NamedQuery(name = "AplVLogTiOgg.findTipoOggettoById", query = "SELECT a FROM AplVLogTiOgg a WHERE a.idTipoOggetto = :idTipoOggetto"),
-	@NamedQuery(name = "AplVLogTiOgg.findByAppName", query = "SELECT a FROM AplVLogTiOgg a WHERE a.nmApplic = :nmApplic ORDER BY a.nmTipoOggetto"),
-	@NamedQuery(name = "AplVLogTiOgg.findByAppNameExcludingTipoOggetto", query = "SELECT a FROM AplVLogTiOgg a WHERE a.nmApplic = :nmApplic AND a.nmTipoOggetto != :nmTipoOggetto ORDER BY a.nmTipoOggetto") })
+        @NamedQuery(name = "AplVLogTiOgg.findAll", query = "SELECT a FROM AplVLogTiOgg a"),
+        @NamedQuery(name = "AplVLogTiOgg.findTipoOggettoByNome", query = "SELECT a FROM AplVLogTiOgg a WHERE a.nmApplic = :nmApplic AND a.nmTipoOggetto = :nmTipoOggetto"),
+        @NamedQuery(name = "AplVLogTiOgg.findTipoOggettoById", query = "SELECT a FROM AplVLogTiOgg a WHERE a.idTipoOggetto = :idTipoOggetto"),
+        @NamedQuery(name = "AplVLogTiOgg.findByAppName", query = "SELECT a FROM AplVLogTiOgg a WHERE a.nmApplic = :nmApplic ORDER BY a.nmTipoOggetto"),
+        @NamedQuery(name = "AplVLogTiOgg.findByAppNameExcludingTipoOggetto", query = "SELECT a FROM AplVLogTiOgg a WHERE a.nmApplic = :nmApplic AND a.nmTipoOggetto != :nmTipoOggetto ORDER BY a.nmTipoOggetto") })
 public class AplVLogTiOgg implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,48 +49,48 @@ public class AplVLogTiOgg implements Serializable {
 
     @Column(name = "ID_APPLIC")
     public BigDecimal getIdApplic() {
-	return this.idApplic;
+        return this.idApplic;
     }
 
     public void setIdApplic(BigDecimal idApplic) {
-	this.idApplic = idApplic;
+        this.idApplic = idApplic;
     }
 
     @Id
     @Column(name = "ID_TIPO_OGGETTO")
     public BigDecimal getIdTipoOggetto() {
-	return this.idTipoOggetto;
+        return this.idTipoOggetto;
     }
 
     public void setIdTipoOggetto(BigDecimal idTipoOggetto) {
-	this.idTipoOggetto = idTipoOggetto;
+        this.idTipoOggetto = idTipoOggetto;
     }
 
     @Column(name = "ID_TIPO_OGGETTO_PADRE")
     public BigDecimal getIdTipoOggettoPadre() {
-	return this.idTipoOggettoPadre;
+        return this.idTipoOggettoPadre;
     }
 
     public void setIdTipoOggettoPadre(BigDecimal idTipoOggettoPadre) {
-	this.idTipoOggettoPadre = idTipoOggettoPadre;
+        this.idTipoOggettoPadre = idTipoOggettoPadre;
     }
 
     @Column(name = "NM_APPLIC")
     public String getNmApplic() {
-	return this.nmApplic;
+        return this.nmApplic;
     }
 
     public void setNmApplic(String nmApplic) {
-	this.nmApplic = nmApplic;
+        this.nmApplic = nmApplic;
     }
 
     @Column(name = "NM_TIPO_OGGETTO")
     public String getNmTipoOggetto() {
-	return this.nmTipoOggetto;
+        return this.nmTipoOggetto;
     }
 
     public void setNmTipoOggetto(String nmTipoOggetto) {
-	this.nmTipoOggetto = nmTipoOggetto;
+        this.nmTipoOggetto = nmTipoOggetto;
     }
 
 }

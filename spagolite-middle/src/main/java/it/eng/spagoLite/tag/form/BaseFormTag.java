@@ -32,68 +32,68 @@ public abstract class BaseFormTag<T extends Component> extends BaseTag {
     protected String codiceOrganizzazione;
 
     public String getName() {
-	return name;
+        return name;
     }
 
     public void setName(String name) {
-	this.name = name;
+        this.name = name;
     }
 
     public String getCodiceOrganizzazione() {
-	return codiceOrganizzazione;
+        return codiceOrganizzazione;
     }
 
     public void setCodiceOrganizzazione(String codiceOrganizzazione) {
-	this.codiceOrganizzazione = codiceOrganizzazione;
+        this.codiceOrganizzazione = codiceOrganizzazione;
     }
 
     @SuppressWarnings("unchecked")
     public T getComponent() {
-	return (T) getForm().getComponent(getName());
+        return (T) getForm().getComponent(getName());
     }
 
     @SuppressWarnings("unchecked")
     public T getComponent(String componentName) {
-	return (T) getForm().getComponent(componentName);
+        return (T) getForm().getComponent(componentName);
     }
 
     public void debugAuthorization(StringBuilder body, String authorization) {
-	if (ConfigSingleton.getInstance().getBooleanValue(DEBUG_AUTHORIZATION.name())) {
-	    body.append(" <!-- pagina: ").append(getLastPublisher()).append(" azione: ")
-		    .append(authorization).append(" -->\n");
-	}
+        if (ConfigSingleton.getInstance().getBooleanValue(DEBUG_AUTHORIZATION.name())) {
+            body.append(" <!-- pagina: ").append(getLastPublisher()).append(" azione: ")
+                    .append(authorization).append(" -->\n");
+        }
     }
 
     public void debugAuthorization(String authorization) throws JspException {
-	if (ConfigSingleton.getInstance().getBooleanValue(DEBUG_AUTHORIZATION.name())) {
-	    writeln(" <!-- pagina: " + getLastPublisher() + " azione: " + authorization + " -->");
-	}
+        if (ConfigSingleton.getInstance().getBooleanValue(DEBUG_AUTHORIZATION.name())) {
+            writeln(" <!-- pagina: " + getLastPublisher() + " azione: " + authorization + " -->");
+        }
     }
 
     public boolean isUserAuthorized(String action) {
-	if (ConfigSingleton.getInstance().getBooleanValue(DISABLE_SECURITY.name())) {
-	    return true;
-	}
-	IUser<?> user = getUser();
-	if (user != null) {
-	    /*
-	     * Nuovo comportamento per pagine dinamiche per DIPS
-	     */
-	    String nuovaPagina = getLastPublisher();
-	    if (codiceOrganizzazione != null && !codiceOrganizzazione.trim().equals("")) {
-		nuovaPagina = "[" + codiceOrganizzazione + "]" + getLastPublisher();
-	    }
+        if (ConfigSingleton.getInstance().getBooleanValue(DISABLE_SECURITY.name())) {
+            return true;
+        }
+        IUser<?> user = getUser();
+        if (user != null) {
+            /*
+             * Nuovo comportamento per pagine dinamiche per DIPS
+             */
+            String nuovaPagina = getLastPublisher();
+            if (codiceOrganizzazione != null && !codiceOrganizzazione.trim().equals("")) {
+                nuovaPagina = "[" + codiceOrganizzazione + "]" + getLastPublisher();
+            }
 
-	    Pagina p = (Pagina) user.getProfile().getChild(nuovaPagina);
-	    if (p != null && p.getChild(action) != null) {
-		return true;
-	    } else {
-		logger.trace("Utente " + user.getUsername()
-			+ " non autorizzato all'esecuzione dell'azione " + action + " nella pagina "
-			+ getLastPublisher());
-	    }
-	}
-	return false;
+            Pagina p = (Pagina) user.getProfile().getChild(nuovaPagina);
+            if (p != null && p.getChild(action) != null) {
+                return true;
+            } else {
+                logger.trace("Utente " + user.getUsername()
+                        + " non autorizzato all'esecuzione dell'azione " + action + " nella pagina "
+                        + getLastPublisher());
+            }
+        }
+        return false;
     }
 
 }

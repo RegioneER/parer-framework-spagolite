@@ -32,19 +32,19 @@ public class LogVVisEventoPrincTxTableBean extends AbstractBaseTable<LogVVisEven
     public static LogVVisEventoPrincTxTableDescriptor TABLE_DESCRIPTOR = new LogVVisEventoPrincTxTableDescriptor();
 
     public LogVVisEventoPrincTxTableBean() {
-	super();
+        super();
     }
 
     protected LogVVisEventoPrincTxRowBean createRow() {
-	return new LogVVisEventoPrincTxRowBean();
+        return new LogVVisEventoPrincTxRowBean();
     }
 
     public TableDescriptor getTableDescriptor() {
-	return TABLE_DESCRIPTOR;
+        return TABLE_DESCRIPTOR;
     }
 
     @Deprecated
     public Iterator<LogVVisEventoPrincTxRowBean> getRowsIterator() {
-	return iterator();
+        return iterator();
     }
 }

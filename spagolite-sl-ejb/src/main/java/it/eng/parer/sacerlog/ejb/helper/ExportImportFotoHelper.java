@@ -62,27 +62,27 @@ public class ExportImportFotoHelper {
      * foto XML dell'entità a cui fa capo l'idOggetto passato.
      */
     public String exportFoto(BigDecimal idOggetto, String functionName) {
-	Clob clob = null;
-	String risultato = null;
-	ResultSet rs = null;
-	try (Connection con = JpaUtils.provideConnectionFrom(entityManager);
-		PreparedStatement ps = con
-			.prepareStatement("SELECT " + functionName + "(?) AS FOTO FROM DUAL")) {
-	    ps.setBigDecimal(1, idOggetto);
-	    rs = ps.executeQuery();
-	    if (rs != null && rs.next()) {
-		clob = rs.getClob("FOTO");
-		risultato = clob == null ? null : getClobAsString(clob);
-	    }
-	} catch (Exception ex) {
-	    throw SacerLogRuntimeException.builder().cause(ex)
-		    .category(SacerLogErrorCategory.SQL_ERROR)
-		    .message(
-			    "Errore esportazione foto dalla funzione oracle {0}() per l'oggetto con ID {1,number,#}",
-			    functionName, idOggetto)
-		    .build();
-	}
-	return risultato;
+        Clob clob = null;
+        String risultato = null;
+        ResultSet rs = null;
+        try (Connection con = JpaUtils.provideConnectionFrom(entityManager);
+                PreparedStatement ps = con
+                        .prepareStatement("SELECT " + functionName + "(?) AS FOTO FROM DUAL")) {
+            ps.setBigDecimal(1, idOggetto);
+            rs = ps.executeQuery();
+            if (rs != null && rs.next()) {
+                clob = rs.getClob("FOTO");
+                risultato = clob == null ? null : getClobAsString(clob);
+            }
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex)
+                    .category(SacerLogErrorCategory.SQL_ERROR)
+                    .message(
+                            "Errore esportazione foto dalla funzione oracle {0}() per l'oggetto con ID {1,number,#}",
+                            functionName, idOggetto)
+                    .build();
+        }
+        return risultato;
     }
 
     /*
@@ -91,31 +91,31 @@ public class ExportImportFotoHelper {
      * all'entità fotografata nell'XML. Restituisce l'idOggetto dell'entità appena importata.
      */
     public long importFoto(String fotoXml, String procedureName) {
-	long risultato = -1;
-	String istruzione = "{call " + procedureName + "(?,?)}";
-	try (Connection con = JpaUtils.provideConnectionFrom(entityManager);
-		CallableStatement cs = con.prepareCall(istruzione);) {
-	    cs.registerOutParameter(2, java.sql.Types.NUMERIC);
-	    cs.setString(1, fotoXml);
-	    cs.executeUpdate();
-	    risultato = cs.getLong(2);
-	} catch (Exception ex) {
-	    throw SacerLogRuntimeException.builder().cause(ex)
-		    .category(SacerLogErrorCategory.SQL_ERROR).message("Errore importazione Foto")
-		    .build();
-	}
-	return risultato;
+        long risultato = -1;
+        String istruzione = "{call " + procedureName + "(?,?)}";
+        try (Connection con = JpaUtils.provideConnectionFrom(entityManager);
+                CallableStatement cs = con.prepareCall(istruzione);) {
+            cs.registerOutParameter(2, java.sql.Types.NUMERIC);
+            cs.setString(1, fotoXml);
+            cs.executeUpdate();
+            risultato = cs.getLong(2);
+        } catch (Exception ex) {
+            throw SacerLogRuntimeException.builder().cause(ex)
+                    .category(SacerLogErrorCategory.SQL_ERROR).message("Errore importazione Foto")
+                    .build();
+        }
+        return risultato;
     }
 
     private String getClobAsString(Clob clob) throws SQLException, IOException {
-	StringBuilder sb = new StringBuilder((int) clob.length());
-	Reader r = clob.getCharacterStream();
-	char[] cbuf = new char[2048];
-	int n;
-	while ((n = r.read(cbuf, 0, cbuf.length)) != -1) {
-	    sb.append(cbuf, 0, n);
-	}
-	return sb.toString();
+        StringBuilder sb = new StringBuilder((int) clob.length());
+        Reader r = clob.getCharacterStream();
+        char[] cbuf = new char[2048];
+        int n;
+        while ((n = r.read(cbuf, 0, cbuf.length)) != -1) {
+            sb.append(cbuf, 0, n);
+        }
+        return sb.toString();
     }
 
     /*
@@ -125,11 +125,11 @@ public class ExportImportFotoHelper {
      */
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public String sostituisciTutto(String stringa, Map<String, String> mappa) {
-	// Fà l'escape dei caratteri NON XML! Su tutta la mappa.
-	for (Entry<String, String> entry : mappa.entrySet()) {
-	    entry.setValue(StringEscapeUtils.escapeXml10(entry.getValue()));
-	}
-	return StringSubstitutor.replace(stringa, mappa, "$#${", "}$#$");
+        // Fà l'escape dei caratteri NON XML! Su tutta la mappa.
+        for (Entry<String, String> entry : mappa.entrySet()) {
+            entry.setValue(StringEscapeUtils.escapeXml10(entry.getValue()));
+        }
+        return StringSubstitutor.replace(stringa, mappa, "$#${", "}$#$");
     }
 
 }

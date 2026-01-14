@@ -19,8 +19,8 @@ import javax.xml.ws.WebFault;
 public class AuthWSException extends Exception {
 
     public enum CodiceErrore {
-	LOGIN_FALLITO, UTENTE_NON_ATTIVO, UTENTE_SCADUTO, UTENTE_NON_AUTORIZZATO,
-	PROBLEMA_ESTRAZIONE_APPLICAZIONE
+        LOGIN_FALLITO, UTENTE_NON_ATTIVO, UTENTE_SCADUTO, UTENTE_NON_AUTORIZZATO,
+        PROBLEMA_ESTRAZIONE_APPLICAZIONE
     };
 
     private static final long serialVersionUID = 1L;
@@ -29,25 +29,25 @@ public class AuthWSException extends Exception {
     private String descrizioneErrore;
 
     public AuthWSException(CodiceErrore code, String msg) {
-	super();
-	this.codiceErrore = code;
-	this.descrizioneErrore = msg;
+        super();
+        this.codiceErrore = code;
+        this.descrizioneErrore = msg;
     }
 
     public CodiceErrore getCodiceErrore() {
-	return codiceErrore;
+        return codiceErrore;
     }
 
     public void setCodiceErrore(CodiceErrore codiceErrore) {
-	this.codiceErrore = codiceErrore;
+        this.codiceErrore = codiceErrore;
     }
 
     public String getDescrizioneErrore() {
-	return descrizioneErrore;
+        return descrizioneErrore;
     }
 
     public void setDescrizioneErrore(String descrizioneErrore) {
-	this.descrizioneErrore = descrizioneErrore;
+        this.descrizioneErrore = descrizioneErrore;
     }
 
 }

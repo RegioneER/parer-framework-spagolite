@@ -35,16 +35,16 @@ public class ReplicaUtente {
 
     @WebMethod(operationName = "inserimentoUtente")
     public InserimentoUtenteRisposta inserimentoUtente(@WebParam(name = "utente") Utente utente) {
-	return repUsr.inserimentoUtente(utente);
+        return repUsr.inserimentoUtente(utente);
     }
 
     @WebMethod(operationName = "cancellaUtente")
     public CancellaUtenteRisposta cancellaUtente(@WebParam(name = "idUserIam") Integer idUserIam) {
-	return repUsr.cancellaUtente(idUserIam);
+        return repUsr.cancellaUtente(idUserIam);
     }
 
     @WebMethod(operationName = "modificaUtente")
     public ModificaUtenteRisposta modificaUtente(@WebParam(name = "utente") Utente utente) {
-	return repUsr.modificaUtente(utente);
+        return repUsr.modificaUtente(utente);
     }
 }

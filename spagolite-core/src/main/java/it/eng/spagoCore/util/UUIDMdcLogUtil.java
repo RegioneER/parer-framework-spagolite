@@ -23,8 +23,8 @@ public class UUIDMdcLogUtil {
     private static final String UUID_LOG_MDC = "log_uuid";
 
     private UUIDMdcLogUtil() {
-	throw new IllegalStateException(
-		"Impossibile istanziare la classe, contiene solo metodi statici");
+        throw new IllegalStateException(
+                "Impossibile istanziare la classe, contiene solo metodi statici");
     }
 
     /**
@@ -39,7 +39,7 @@ public class UUIDMdcLogUtil {
      * sarebbe quindi garantito (l'UUID non è trasmesso tra thread cge non sono parenti).
      */
     public static void genUuid() {
-	MDC.put(UUID_LOG_MDC, UUID.randomUUID().toString());
+        MDC.put(UUID_LOG_MDC, UUID.randomUUID().toString());
     }
 
     /**
@@ -48,9 +48,9 @@ public class UUIDMdcLogUtil {
      * @return String of uuid
      */
     public static String getUuid() {
-	if (StringUtils.isBlank(MDC.get(UUIDMdcLogUtil.UUID_LOG_MDC))) {
-	    genUuid();
-	}
-	return MDC.get(UUIDMdcLogUtil.UUID_LOG_MDC);
+        if (StringUtils.isBlank(MDC.get(UUIDMdcLogUtil.UUID_LOG_MDC))) {
+            genUuid();
+        }
+        return MDC.get(UUIDMdcLogUtil.UUID_LOG_MDC);
     }
 }

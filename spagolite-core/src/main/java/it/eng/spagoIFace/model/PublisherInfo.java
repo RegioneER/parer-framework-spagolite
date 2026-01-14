@@ -18,8 +18,8 @@ import org.codehaus.jettison.json.JSONObject;
 public class PublisherInfo {
 
     public enum Override {
-	forward, actionForward, actionRedirect, actionProfiledRedirect, redirect, ajaxRedirect,
-	freeze, forwardSkipSetLast
+        forward, actionForward, actionRedirect, actionProfiledRedirect, redirect, ajaxRedirect,
+        freeze, forwardSkipSetLast
     }
 
     private Override type;
@@ -27,33 +27,33 @@ public class PublisherInfo {
     private JSONObject jsonObject;
 
     public Override getType() {
-	return type;
+        return type;
     }
 
     public void setType(Override type) {
-	this.type = type;
+        this.type = type;
     }
 
     public String getDestination() {
-	return destination;
+        return destination;
     }
 
     public void setDestination(String destination) {
-	this.destination = destination;
+        this.destination = destination;
     }
 
     public JSONObject getJsonObject() {
-	return jsonObject;
+        return jsonObject;
     }
 
     public void setJsonObject(JSONObject jsonObject) {
-	this.jsonObject = jsonObject;
+        this.jsonObject = jsonObject;
     }
 
     public PublisherInfo(Override type, String destination, JSONObject jsonObject) {
-	this.type = type;
-	this.destination = destination;
-	this.jsonObject = jsonObject;
+        this.type = type;
+        this.destination = destination;
+        this.jsonObject = jsonObject;
     }
 
 }

@@ -24,14 +24,14 @@ public class RowTag extends BaseSpagoLiteTag {
 
     @Override
     public int doStartTag() throws JspException {
-	return EVAL_BODY_INCLUDE;
+        return EVAL_BODY_INCLUDE;
 
     }
 
     @Override
     public int doEndTag() throws JspException {
-	writeln(NewLineTag.Factory.htmlNewLine());
-	return EVAL_PAGE;
+        writeln(NewLineTag.Factory.htmlNewLine());
+        return EVAL_PAGE;
     }
 
 }

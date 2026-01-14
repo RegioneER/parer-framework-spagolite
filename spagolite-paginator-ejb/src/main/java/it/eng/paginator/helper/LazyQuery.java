@@ -33,80 +33,80 @@ public class LazyQuery {
     private final Integer maxResults;
 
     public LazyQuery(Query query, String countDistinctField) {
-	this.query = query;
-	this.countDistinctField = countDistinctField;
-	this.criteriaQuery = null;
-	this.criteriaQueryParams = null;
-	this.maxResults = null;
+        this.query = query;
+        this.countDistinctField = countDistinctField;
+        this.criteriaQuery = null;
+        this.criteriaQueryParams = null;
+        this.maxResults = null;
     }
 
     public LazyQuery(Query query) {
-	this.query = query;
-	this.countDistinctField = null;
-	this.criteriaQuery = null;
-	this.criteriaQueryParams = null;
-	this.maxResults = null;
+        this.query = query;
+        this.countDistinctField = null;
+        this.criteriaQuery = null;
+        this.criteriaQueryParams = null;
+        this.maxResults = null;
     }
 
     public LazyQuery(CriteriaQuery criteriaQuery, Set<Param> criteriaQueryParams) {
-	this.criteriaQueryParams = criteriaQueryParams;
-	this.criteriaQuery = criteriaQuery;
-	this.query = null;
-	this.countDistinctField = null;
-	this.maxResults = null;
+        this.criteriaQueryParams = criteriaQueryParams;
+        this.criteriaQuery = criteriaQuery;
+        this.query = null;
+        this.countDistinctField = null;
+        this.maxResults = null;
     }
 
     public LazyQuery(CriteriaQuery criteriaQuery) {
-	this.criteriaQueryParams = new HashSet<>();
-	this.criteriaQuery = criteriaQuery;
-	this.query = null;
-	this.countDistinctField = null;
-	this.maxResults = null;
+        this.criteriaQueryParams = new HashSet<>();
+        this.criteriaQuery = criteriaQuery;
+        this.query = null;
+        this.countDistinctField = null;
+        this.maxResults = null;
     }
 
     public LazyQuery(CriteriaQuery criteriaQuery, Set<Param> criteriaQueryParams, int maxResults) {
-	this.criteriaQueryParams = criteriaQueryParams;
-	this.criteriaQuery = criteriaQuery;
-	this.maxResults = maxResults;
-	this.query = null;
-	this.countDistinctField = null;
+        this.criteriaQueryParams = criteriaQueryParams;
+        this.criteriaQuery = criteriaQuery;
+        this.maxResults = maxResults;
+        this.query = null;
+        this.countDistinctField = null;
 
     }
 
     public LazyQuery(CriteriaQuery criteriaQuery, int maxResults) {
-	this.criteriaQueryParams = new HashSet<>();
-	this.criteriaQuery = criteriaQuery;
-	this.maxResults = maxResults;
-	this.query = null;
-	this.countDistinctField = null;
+        this.criteriaQueryParams = new HashSet<>();
+        this.criteriaQuery = criteriaQuery;
+        this.maxResults = maxResults;
+        this.query = null;
+        this.countDistinctField = null;
     }
 
     public Query getQuery() {
-	return query;
+        return query;
     }
 
     public Set<Param> getCriteriaQueryParams() {
-	return criteriaQueryParams;
+        return criteriaQueryParams;
     }
 
     public CriteriaQuery getCriteriaQuery() {
-	return criteriaQuery;
+        return criteriaQuery;
     }
 
     public String getCountDistinctField() {
-	return countDistinctField;
+        return countDistinctField;
     }
 
     public boolean isCriteriaQuery() {
-	return criteriaQuery != null;
+        return criteriaQuery != null;
     }
 
     public boolean isQuery() {
-	return query != null;
+        return query != null;
     }
 
     public Integer getMaxResults() {
-	return maxResults;
+        return maxResults;
     }
 
 }

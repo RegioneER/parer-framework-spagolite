@@ -55,40 +55,40 @@ public class LogVVisOggettoTableDescriptor extends TableDescriptor {
     private static Map<String, ColumnDescriptor> map = new LinkedHashMap<String, ColumnDescriptor>();
 
     static {
-	map.put(COL_ID_APPLIC, new ColumnDescriptor(COL_ID_APPLIC, Types.DECIMAL, 22, true));
-	map.put(COL_ID_TRANSAZIONE,
-		new ColumnDescriptor(COL_ID_TRANSAZIONE, Types.DECIMAL, 22, true));
-	map.put(COL_NM_APPLIC, new ColumnDescriptor(COL_NM_APPLIC, Types.VARCHAR, 100, true));
-	map.put(COL_ID_TIPO_OGGETTO,
-		new ColumnDescriptor(COL_ID_TIPO_OGGETTO, Types.DECIMAL, 22, true));
-	map.put(COL_NM_TIPO_OGGETTO,
-		new ColumnDescriptor(COL_NM_TIPO_OGGETTO, Types.VARCHAR, 100, true));
-	map.put(COL_ID_CHIAVE_ACCESSO_EVENTO,
-		new ColumnDescriptor(COL_ID_CHIAVE_ACCESSO_EVENTO, Types.DECIMAL, 22, true));
-	map.put(COL_ID_OGGETTO, new ColumnDescriptor(COL_ID_OGGETTO, Types.DECIMAL, 22, true));
-	map.put(COL_ID_EVENTO, new ColumnDescriptor(COL_ID_EVENTO, Types.DECIMAL, 22, true));
-	map.put(COL_DT_REG_EVENTO,
-		new ColumnDescriptor(COL_DT_REG_EVENTO, Types.TIMESTAMP, 11, true));
-	map.put(COL_ID_OGGETTO_EVENTO,
-		new ColumnDescriptor(COL_ID_OGGETTO_EVENTO, Types.DECIMAL, 22, true));
-	map.put(COL_DS_KEY_OGGETTO,
-		new ColumnDescriptor(COL_DS_KEY_OGGETTO, Types.VARCHAR, 254, true));
-	map.put(COL_NM_AMBIENTE, new ColumnDescriptor(COL_NM_AMBIENTE, Types.VARCHAR, 254, true));
-	map.put(COL_NM_ENTE, new ColumnDescriptor(COL_NM_ENTE, Types.VARCHAR, 254, true));
-	map.put(COL_NM_STRUTTURA, new ColumnDescriptor(COL_NM_STRUTTURA, Types.VARCHAR, 254, true));
-	map.put(COL_NM_OGGETTO, new ColumnDescriptor(COL_NM_OGGETTO, Types.VARCHAR, 254, true));
+        map.put(COL_ID_APPLIC, new ColumnDescriptor(COL_ID_APPLIC, Types.DECIMAL, 22, true));
+        map.put(COL_ID_TRANSAZIONE,
+                new ColumnDescriptor(COL_ID_TRANSAZIONE, Types.DECIMAL, 22, true));
+        map.put(COL_NM_APPLIC, new ColumnDescriptor(COL_NM_APPLIC, Types.VARCHAR, 100, true));
+        map.put(COL_ID_TIPO_OGGETTO,
+                new ColumnDescriptor(COL_ID_TIPO_OGGETTO, Types.DECIMAL, 22, true));
+        map.put(COL_NM_TIPO_OGGETTO,
+                new ColumnDescriptor(COL_NM_TIPO_OGGETTO, Types.VARCHAR, 100, true));
+        map.put(COL_ID_CHIAVE_ACCESSO_EVENTO,
+                new ColumnDescriptor(COL_ID_CHIAVE_ACCESSO_EVENTO, Types.DECIMAL, 22, true));
+        map.put(COL_ID_OGGETTO, new ColumnDescriptor(COL_ID_OGGETTO, Types.DECIMAL, 22, true));
+        map.put(COL_ID_EVENTO, new ColumnDescriptor(COL_ID_EVENTO, Types.DECIMAL, 22, true));
+        map.put(COL_DT_REG_EVENTO,
+                new ColumnDescriptor(COL_DT_REG_EVENTO, Types.TIMESTAMP, 11, true));
+        map.put(COL_ID_OGGETTO_EVENTO,
+                new ColumnDescriptor(COL_ID_OGGETTO_EVENTO, Types.DECIMAL, 22, true));
+        map.put(COL_DS_KEY_OGGETTO,
+                new ColumnDescriptor(COL_DS_KEY_OGGETTO, Types.VARCHAR, 254, true));
+        map.put(COL_NM_AMBIENTE, new ColumnDescriptor(COL_NM_AMBIENTE, Types.VARCHAR, 254, true));
+        map.put(COL_NM_ENTE, new ColumnDescriptor(COL_NM_ENTE, Types.VARCHAR, 254, true));
+        map.put(COL_NM_STRUTTURA, new ColumnDescriptor(COL_NM_STRUTTURA, Types.VARCHAR, 254, true));
+        map.put(COL_NM_OGGETTO, new ColumnDescriptor(COL_NM_OGGETTO, Types.VARCHAR, 254, true));
     }
 
     public Map<String, ColumnDescriptor> getColumnMap() {
-	return map;
+        return map;
     }
 
     public String getTableName() {
-	return TABLE_NAME;
+        return TABLE_NAME;
     }
 
     public String getStatement() {
-	return SELECT;
+        return SELECT;
     }
 
 }

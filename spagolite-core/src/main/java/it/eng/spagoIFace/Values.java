@@ -31,7 +31,7 @@ public final class Values {
     public static final String SUB_LIST = "TABELLA";
 
     private Values() {
-	throw new IllegalStateException("Impossibile istanziare la classe, contiene solo costanti");
+        throw new IllegalStateException("Impossibile istanziare la classe, contiene solo costanti");
     }
 
 }

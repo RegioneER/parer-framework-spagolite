@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spagofat</artifactId>
-    <version>7.1.5-SNAPSHOT</version>
+    <version>7.2.0</version>
     <packaging>pom</packaging>
     <name>Spagolite</name>
     <description>Framework utilizzato dalle applicazioni web, si tratta di uno strato software comune contenente anche le dipendenze di terze parti ed ereditato come bom.</description>
@@ -428,7 +428,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<!-- WEBJARS -->
+	    <!-- WEBJARS -->
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>jquery</artifactId>
@@ -474,7 +474,7 @@
                 <artifactId>highlightjs-badgejs</artifactId>
                 <version>${highlightjs-badgejs.version}</version>
             </dependency>
-			<!-- UTILS -->
+            <!-- UTILS -->
             <dependency>
                 <groupId>org.keycloak</groupId>
                 <artifactId>keycloak-servlet-filter-adapter</artifactId>

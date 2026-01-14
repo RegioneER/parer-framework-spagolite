@@ -53,46 +53,46 @@ public class SacerLogJobHelper implements Serializable {
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void writeAtomicLogJob(String jobName, String opType) {
-	writeLogJob(jobName, opType, null);
+        writeLogJob(jobName, opType, null);
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void writeAtomicLogJob(String jobName, String opType, String descr) {
-	writeLogJob(jobName, opType, descr);
+        writeLogJob(jobName, opType, descr);
     }
 
     public void writeLogJob(String jobName, String opType, String descr) {
-	Date now = new Date();
-	Timestamp date = new Timestamp(now.getTime());
-	PreparedStatement ps = null;
-	Connection con = null;
-	try {
-	    con = JpaUtils.provideConnectionFrom(em);
-	    ps = con.prepareStatement(
-		    "INSERT INTO APL_V_LOG_JOB (ID_LOG_JOB, NM_JOB, TI_REG_LOG_JOB, DT_REG_LOG_JOB, DL_MSG_ERR, CD_IND_SERVER)"
-			    + "VALUES (SSLOG_JOB.nextVal, ?, ?, ?, ?, ?)");
-	    ps.setString(1, jobName);
-	    ps.setString(2, opType);
-	    ps.setTimestamp(3, date);
-	    ps.setString(4, descr);
-	    ps.setString(5, appServerInstance.getName());
-	    ps.executeUpdate();
-	} catch (Exception ex) {
-	    // ex.printStackTrace();
-	    logger.debug("Errore inserimento nella tabella di LOG del JOB", ex);
-	} finally {
-	    try {
-		if (ps != null) {
-		    ps.close();
-		}
+        Date now = new Date();
+        Timestamp date = new Timestamp(now.getTime());
+        PreparedStatement ps = null;
+        Connection con = null;
+        try {
+            con = JpaUtils.provideConnectionFrom(em);
+            ps = con.prepareStatement(
+                    "INSERT INTO APL_V_LOG_JOB (ID_LOG_JOB, NM_JOB, TI_REG_LOG_JOB, DT_REG_LOG_JOB, DL_MSG_ERR, CD_IND_SERVER)"
+                            + "VALUES (SSLOG_JOB.nextVal, ?, ?, ?, ?, ?)");
+            ps.setString(1, jobName);
+            ps.setString(2, opType);
+            ps.setTimestamp(3, date);
+            ps.setString(4, descr);
+            ps.setString(5, appServerInstance.getName());
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            // ex.printStackTrace();
+            logger.debug("Errore inserimento nella tabella di LOG del JOB", ex);
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
 
-		if (con != null) {
-		    con.close();
-		}
+                if (con != null) {
+                    con.close();
+                }
 
-	    } catch (Exception ex) {
+            } catch (Exception ex) {
 
-	    }
-	}
+            }
+        }
     }
 }

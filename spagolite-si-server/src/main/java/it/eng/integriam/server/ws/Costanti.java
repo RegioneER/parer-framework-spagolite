@@ -24,6 +24,6 @@ public class Costanti {
 
     public enum EsitoServizio {
 
-	OK, KO, WARN
+        OK, KO, WARN
     }
 }

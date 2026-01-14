@@ -55,77 +55,77 @@ public class SOAPIamLoginHandler implements SOAPHandler<SOAPMessageContext> {
 
     @Override
     public boolean handleMessage(SOAPMessageContext msgCtx) {
-	Boolean outbound = (Boolean) msgCtx.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+        Boolean outbound = (Boolean) msgCtx.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
-	Object obj = msgCtx.get(MessageContext.SERVLET_REQUEST);
-	String ipAddress = X_FORWARDED_UNDEFINED;
-	if (obj != null && obj instanceof HttpServletRequest) {
-	    ipAddress = ((HttpServletRequest) obj).getHeader("X-FORWARDED-FOR");
-	}
-	log.debug("SOAPServerLoginHandler attivato. Client IP Address: " + ipAddress);
-	if (!outbound) {
-	    // Validate the message.
-	    EntityManager em = null;
-	    String username = null;
-	    String password = null;
-	    String servizioWeb = null;
-	    try {
-		em = emf.createEntityManager();
-		QName svcn = (QName) msgCtx.get(MessageContext.WSDL_SERVICE);
-		NodeList usernameEl = (NodeList) msgCtx.getMessage().getSOAPHeader()
-			.getElementsByTagNameNS(WSSE_XSD_URI, "Username");
-		NodeList passwordEl = (NodeList) msgCtx.getMessage().getSOAPHeader()
-			.getElementsByTagNameNS(WSSE_XSD_URI, "Password");
-		Node userNode = null;
-		Node passNode = null;
-		if (usernameEl != null && passwordEl != null && svcn != null
-			&& (userNode = usernameEl.item(0)) != null
-			&& (passNode = passwordEl.item(0)) != null
-			&& (servizioWeb = svcn.getLocalPart()) != null) {
-		    username = userNode.getFirstChild().getNodeValue();
-		    password = passNode.getFirstChild().getNodeValue();
-		    WSLoginHandler.loginAndCheckAuthzIAM(username, password, servizioWeb, ipAddress,
-			    em, false);
-		    msgCtx.put(AuthenticationHandlerConstants.AUTHN_STAUTS, java.lang.Boolean.TRUE);
-		    msgCtx.put(AuthenticationHandlerConstants.USER, username);
-		    msgCtx.put(AuthenticationHandlerConstants.PWD, password);
-		} else
-		    throw new ProtocolException("Username e password sono obbligatorie");
-	    } catch (AuthWSException e) {
-		WSLoginHandler.throwSOAPFault(msgCtx, e);
-	    } catch (DOMException | SOAPException e) {
-		throw new ProtocolException(e);
-	    } finally {
-		if (em != null) {
-		    em.close();
-		}
-	    }
-	    msgCtx.setScope(AuthenticationHandlerConstants.AUTHN_STAUTS,
-		    MessageContext.Scope.APPLICATION);
-	    msgCtx.setScope(AuthenticationHandlerConstants.USER, MessageContext.Scope.APPLICATION);
-	    msgCtx.setScope(AuthenticationHandlerConstants.PWD, MessageContext.Scope.APPLICATION);
-	}
-	return true;
+        Object obj = msgCtx.get(MessageContext.SERVLET_REQUEST);
+        String ipAddress = X_FORWARDED_UNDEFINED;
+        if (obj != null && obj instanceof HttpServletRequest) {
+            ipAddress = ((HttpServletRequest) obj).getHeader("X-FORWARDED-FOR");
+        }
+        log.debug("SOAPServerLoginHandler attivato. Client IP Address: " + ipAddress);
+        if (!outbound) {
+            // Validate the message.
+            EntityManager em = null;
+            String username = null;
+            String password = null;
+            String servizioWeb = null;
+            try {
+                em = emf.createEntityManager();
+                QName svcn = (QName) msgCtx.get(MessageContext.WSDL_SERVICE);
+                NodeList usernameEl = (NodeList) msgCtx.getMessage().getSOAPHeader()
+                        .getElementsByTagNameNS(WSSE_XSD_URI, "Username");
+                NodeList passwordEl = (NodeList) msgCtx.getMessage().getSOAPHeader()
+                        .getElementsByTagNameNS(WSSE_XSD_URI, "Password");
+                Node userNode = null;
+                Node passNode = null;
+                if (usernameEl != null && passwordEl != null && svcn != null
+                        && (userNode = usernameEl.item(0)) != null
+                        && (passNode = passwordEl.item(0)) != null
+                        && (servizioWeb = svcn.getLocalPart()) != null) {
+                    username = userNode.getFirstChild().getNodeValue();
+                    password = passNode.getFirstChild().getNodeValue();
+                    WSLoginHandler.loginAndCheckAuthzIAM(username, password, servizioWeb, ipAddress,
+                            em, false);
+                    msgCtx.put(AuthenticationHandlerConstants.AUTHN_STAUTS, java.lang.Boolean.TRUE);
+                    msgCtx.put(AuthenticationHandlerConstants.USER, username);
+                    msgCtx.put(AuthenticationHandlerConstants.PWD, password);
+                } else
+                    throw new ProtocolException("Username e password sono obbligatorie");
+            } catch (AuthWSException e) {
+                WSLoginHandler.throwSOAPFault(msgCtx, e);
+            } catch (DOMException | SOAPException e) {
+                throw new ProtocolException(e);
+            } finally {
+                if (em != null) {
+                    em.close();
+                }
+            }
+            msgCtx.setScope(AuthenticationHandlerConstants.AUTHN_STAUTS,
+                    MessageContext.Scope.APPLICATION);
+            msgCtx.setScope(AuthenticationHandlerConstants.USER, MessageContext.Scope.APPLICATION);
+            msgCtx.setScope(AuthenticationHandlerConstants.PWD, MessageContext.Scope.APPLICATION);
+        }
+        return true;
     }
 
     @Override
     public boolean handleFault(SOAPMessageContext context) {
 
-	return true;
+        return true;
     }
 
     @Override
     public void close(MessageContext context) {
-	// TODO Auto-generated method stub
+        // TODO Auto-generated method stub
 
     }
 
     @Override
     public Set<QName> getHeaders() {
 
-	HashSet<QName> headers = new HashSet<QName>();
-	headers.add(QNAME_WSSE_HEADER);
-	return headers;
+        HashSet<QName> headers = new HashSet<QName>();
+        headers.add(QNAME_WSSE_HEADER);
+        return headers;
     }
 
 }

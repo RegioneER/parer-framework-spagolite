@@ -21,18 +21,18 @@ public class PulsantieraTag extends BaseSpagoLiteTag {
 
     @Override
     public int doStartTag() throws JspException {
-	writeln("<div class=\"pulsantiera\">");
+        writeln("<div class=\"pulsantiera\">");
 
-	return EVAL_BODY_INCLUDE;
+        return EVAL_BODY_INCLUDE;
 
     }
 
     @Override
     public int doEndTag() throws JspException {
-	writeln("</div>");
-	writeln(NewLineTag.Factory.htmlNewLine(false));
+        writeln("</div>");
+        writeln(NewLineTag.Factory.htmlNewLine(false));
 
-	return EVAL_PAGE;
+        return EVAL_PAGE;
     }
 
 }

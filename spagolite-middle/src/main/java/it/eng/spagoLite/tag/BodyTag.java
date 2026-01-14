@@ -21,18 +21,18 @@ public class BodyTag extends BaseSpagoLiteTag {
 
     @Override
     public int doStartTag() throws JspException {
-	writeln("<body>");
-	writeln("<div id=\"helpDialog\"></div>");
+        writeln("<body>");
+        writeln("<div id=\"helpDialog\"></div>");
 
-	return EVAL_BODY_INCLUDE;
+        return EVAL_BODY_INCLUDE;
 
     }
 
     @Override
     public int doEndTag() throws JspException {
 
-	writeln("</body>");
-	return EVAL_PAGE;
+        writeln("</body>");
+        return EVAL_PAGE;
     }
 
 }
