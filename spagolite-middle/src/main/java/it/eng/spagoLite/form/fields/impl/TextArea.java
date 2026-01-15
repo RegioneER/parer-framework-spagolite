@@ -29,71 +29,71 @@ public class TextArea<O> extends SingleValueField<O> {
     private String tooltip;
 
     public TextArea(Component parent, String name, String description, String alias, Enum type,
-	    String format, boolean required, boolean hidden, boolean readonly, boolean trigger,
-	    int rows, int cols, int maxLength, String tooltip) {
-	super(parent, name, description, alias, type, format, required, hidden, readonly, trigger);
-	this.rows = rows;
-	this.cols = cols;
-	this.maxLength = maxLength;
-	this.tooltip = tooltip;
+            String format, boolean required, boolean hidden, boolean readonly, boolean trigger,
+            int rows, int cols, int maxLength, String tooltip) {
+        super(parent, name, description, alias, type, format, required, hidden, readonly, trigger);
+        this.rows = rows;
+        this.cols = cols;
+        this.maxLength = maxLength;
+        this.tooltip = tooltip;
     }
 
     public int getRows() {
-	return rows;
+        return rows;
     }
 
     public void setRows(int rows) {
-	this.rows = rows;
+        this.rows = rows;
     }
 
     public int getCols() {
-	return cols;
+        return cols;
     }
 
     public void setCols(int cols) {
-	this.cols = cols;
+        this.cols = cols;
     }
 
     public int getMaxLength() {
-	return maxLength;
+        return maxLength;
     }
 
     public void setMaxLength(int maxLength) {
-	this.maxLength = maxLength;
+        this.maxLength = maxLength;
     }
 
     @Override
     public void reset() {
-	this.setValue(null);
+        this.setValue(null);
     }
 
     public String getTooltip() {
-	return tooltip;
+        return tooltip;
     }
 
     public void setTooltip(String tooltip) {
-	this.tooltip = tooltip;
+        this.tooltip = tooltip;
     }
 
     @Override
     public void setValue(String value) {
-	if (value != null && value.length() > getMaxLength()) {
-	    value = value.substring(0, getMaxLength());
-	}
-	super.setValue(value);
+        if (value != null && value.length() > getMaxLength()) {
+            value = value.substring(0, getMaxLength());
+        }
+        super.setValue(value);
     }
 
     @Override
     public JSONObject asJSON() throws EMFError {
-	String value = ((getValue() == null) ? "" : getValue());
-	JSONObject json = super.asJSON();
-	try {
-	    json.put("value", value);
-	    json.put("type", "TextArea");
-	} catch (JSONException e) {
-	    throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
-	}
-	return json;
+        String value = ((getValue() == null) ? "" : getValue());
+        JSONObject json = super.asJSON();
+        try {
+            json.put("value", value);
+            json.put("type", "TextArea");
+        } catch (JSONException e) {
+            throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
+        }
+        return json;
     }
 
 }

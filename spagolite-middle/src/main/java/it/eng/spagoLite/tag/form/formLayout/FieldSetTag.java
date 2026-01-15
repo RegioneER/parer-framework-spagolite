@@ -38,126 +38,126 @@ public class FieldSetTag extends BaseSpagoLiteTag {
 
     @Override
     public int doStartTag() throws JspException {
-	writeln("<!-- field -->");
+        writeln("<!-- field -->");
 
-	writeln("<fieldset " + getHtmlClass() + getHtmlInlineStyle() + ">");
-	writeln(getCompleteLegend());
+        writeln("<fieldset " + getHtmlClass() + getHtmlInlineStyle() + ">");
+        writeln(getCompleteLegend());
 
-	return EVAL_BODY_INCLUDE;
+        return EVAL_BODY_INCLUDE;
     }
 
     @Override
     public int doEndTag() throws JspException {
-	writeln("</fieldset>");
-	return EVAL_PAGE;
+        writeln("</fieldset>");
+        return EVAL_PAGE;
     }
 
     private String getHtmlClass() {
-	if (isBorderHidden()) {
-	    return " class=\"noborder " + getStyleClass() + "\"";
-	} else {
-	    return " class=\"" + getStyleClass() + "\"";
-	}
+        if (isBorderHidden()) {
+            return " class=\"noborder " + getStyleClass() + "\"";
+        } else {
+            return " class=\"" + getStyleClass() + "\"";
+        }
     }
 
     private String getHtmlInlineStyle() {
-	if (StringUtils.isNotBlank(getStyle())) {
-	    return " style=\"" + getStyle() + "\" ";
-	} else {
-	    return "";
-	}
+        if (StringUtils.isNotBlank(getStyle())) {
+            return " style=\"" + getStyle() + "\" ";
+        } else {
+            return "";
+        }
     }
 
     private String getCompleteLegend() {
-	String completeLegend = "";
-	boolean hasLegend = false;
-	if (StringUtils.isNotBlank(getLegend())) {
-	    hasLegend = true;
-	    completeLegend = getLegend();
-	}
-	if (isShowButton()) {
-	    hasLegend = true;
-	    completeLegend += getButton(
-		    ((HttpServletRequest) pageContext.getRequest()).getContextPath());
-	}
-	return hasLegend ? " <legend> " + completeLegend + "</legend>" : "";
+        String completeLegend = "";
+        boolean hasLegend = false;
+        if (StringUtils.isNotBlank(getLegend())) {
+            hasLegend = true;
+            completeLegend = getLegend();
+        }
+        if (isShowButton()) {
+            hasLegend = true;
+            completeLegend += getButton(
+                    ((HttpServletRequest) pageContext.getRequest()).getContextPath());
+        }
+        return hasLegend ? " <legend> " + completeLegend + "</legend>" : "";
     }
 
     private String getButton(String contextPath) {
-	String openImgStyle = "";
-	String closeImgStyle = "";
-	String buttonClass = "class=\"windowButton ";
-	if (isLoadOpened()) { // se deve essere presentato chiuso visualizza l'immagine di apertura
-	    closeImgStyle = " class=\"imgClose displayNone \"";
-	    buttonClass += " isLoadOpened\"";
-	} else {
-	    openImgStyle = " class=\"imgOpen displayNone \"";
-	    buttonClass += " \"";
+        String openImgStyle = "";
+        String closeImgStyle = "";
+        String buttonClass = "class=\"windowButton ";
+        if (isLoadOpened()) { // se deve essere presentato chiuso visualizza l'immagine di apertura
+            closeImgStyle = " class=\"imgClose displayNone \"";
+            buttonClass += " isLoadOpened\"";
+        } else {
+            openImgStyle = " class=\"imgOpen displayNone \"";
+            buttonClass += " \"";
 
-	}
+        }
 
-	StringBuilder stringBuilder = new StringBuilder("<span>\n");
-	stringBuilder.append("  <button " + buttonClass + " type=\"button\">\n");
-	stringBuilder.append("    <img src=\"" + contextPath + IMG_OPEN + "\" title=\"" + IMG_TITLE
-		+ "\" alt=\"" + ALT_IMG_OPEN + "\" " + closeImgStyle + " />\n");
-	stringBuilder.append("    <img src=\"" + contextPath + IMG_CLOSE + "\" title=\"" + IMG_TITLE
-		+ "\" alt=\"" + ALT_IMG_CLOSE + "\" " + openImgStyle + " />\n");
-	stringBuilder.append("  </button>\n");
-	stringBuilder.append("</span>");
-	return stringBuilder.toString();
+        StringBuilder stringBuilder = new StringBuilder("<span>\n");
+        stringBuilder.append("  <button " + buttonClass + " type=\"button\">\n");
+        stringBuilder.append("    <img src=\"" + contextPath + IMG_OPEN + "\" title=\"" + IMG_TITLE
+                + "\" alt=\"" + ALT_IMG_OPEN + "\" " + closeImgStyle + " />\n");
+        stringBuilder.append("    <img src=\"" + contextPath + IMG_CLOSE + "\" title=\"" + IMG_TITLE
+                + "\" alt=\"" + ALT_IMG_CLOSE + "\" " + openImgStyle + " />\n");
+        stringBuilder.append("  </button>\n");
+        stringBuilder.append("</span>");
+        return stringBuilder.toString();
     }
 
     // getter and setter
     public String getLegend() {
-	return legend;
+        return legend;
     }
 
     public void setLegend(String legend) {
-	this.legend = legend;
+        this.legend = legend;
     }
 
     public boolean isBorderHidden() {
-	return borderHidden;
+        return borderHidden;
     }
 
     public void setBorderHidden(boolean borderHidden) {
-	this.borderHidden = borderHidden;
+        this.borderHidden = borderHidden;
     }
 
     public boolean isShowButton() {
-	return showButton;
+        return showButton;
     }
 
     public void setShowButton(boolean showButton) {
-	this.showButton = showButton;
+        this.showButton = showButton;
     }
 
     public boolean isLoadOpened() {
-	return loadOpened;
+        return loadOpened;
     }
 
     public void setLoadOpened(boolean loadOpened) {
-	this.loadOpened = loadOpened;
+        this.loadOpened = loadOpened;
     }
 
     public String getStyle() {
-	return style;
+        return style;
     }
 
     public void setStyle(String style) {
-	this.style = style;
+        this.style = style;
     }
 
     public String getStyleClass() {
-	if (styleClass == null) {
-	    return "";
-	} else {
-	    return styleClass;
-	}
+        if (styleClass == null) {
+            return "";
+        } else {
+            return styleClass;
+        }
     }
 
     public void setStyleClass(String styleClass) {
-	this.styleClass = styleClass;
+        this.styleClass = styleClass;
     }
 
 }

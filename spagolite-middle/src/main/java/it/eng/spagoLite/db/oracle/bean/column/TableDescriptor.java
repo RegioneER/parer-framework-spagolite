@@ -25,23 +25,23 @@ public abstract class TableDescriptor {
     private final Map map;
 
     public TableDescriptor() {
-	this.map = null;
+        this.map = null;
     }
 
     public TableDescriptor(Map map) {
-	this.map = new HashMap();
-	for (Iterator iter = map.entrySet().iterator(); iter.hasNext();) {
-	    Map.Entry e = (Entry) iter.next();
-	    this.map.put(((String) e.getKey()).toLowerCase(), e.getValue());
-	}
+        this.map = new HashMap();
+        for (Iterator iter = map.entrySet().iterator(); iter.hasNext();) {
+            Map.Entry e = (Entry) iter.next();
+            this.map.put(((String) e.getKey()).toLowerCase(), e.getValue());
+        }
     }
 
     public ColumnDescriptor get(String name) {
-	return (ColumnDescriptor) getColumnMap().get(name.toLowerCase());
+        return (ColumnDescriptor) getColumnMap().get(name.toLowerCase());
     }
 
     public Map getColumnMap() {
-	return this.map;
+        return this.map;
     }
 
     public abstract String getTableName();
@@ -99,7 +99,7 @@ public abstract class TableDescriptor {
     // }
 
     public final boolean existColumn(String column) {
-	return getColumnMap().containsKey(column);
+        return getColumnMap().containsKey(column);
     }
 
 }

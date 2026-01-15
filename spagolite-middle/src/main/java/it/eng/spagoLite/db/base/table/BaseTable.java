@@ -19,7 +19,7 @@ public class BaseTable extends AbstractBaseTable<BaseRow> {
     private static final long serialVersionUID = 1L;
 
     public BaseRow createRow() {
-	return new BaseRow();
+        return new BaseRow();
     }
 
 }

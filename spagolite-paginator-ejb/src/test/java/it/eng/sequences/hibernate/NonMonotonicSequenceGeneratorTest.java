@@ -53,52 +53,52 @@ public class NonMonotonicSequenceGeneratorTest {
 
     @Deployment
     public static Archive<?> createTestArchive() {
-	return ShrinkWrap
-		.create(WebArchive.class,
-			NonMonotonicSequenceGeneratorTest.class.getSimpleName() + "Tests.war")
-		.addAsResource(NonMonotonicSequenceGeneratorTest.class.getClassLoader()
-			.getResource("persistence.xml"), "META-INF/persistence.xml")
-		.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-		.addClasses(org.apache.commons.lang3.StringUtils.class)
-		.addPackages(false, "org.springframework.beans", "org.springframework.util")
-		.addPackages(true, "it.eng.sequences.hibernate");
+        return ShrinkWrap
+                .create(WebArchive.class,
+                        NonMonotonicSequenceGeneratorTest.class.getSimpleName() + "Tests.war")
+                .addAsResource(NonMonotonicSequenceGeneratorTest.class.getClassLoader()
+                        .getResource("persistence.xml"), "META-INF/persistence.xml")
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+                .addClasses(org.apache.commons.lang3.StringUtils.class)
+                .addPackages(false, "org.springframework.beans", "org.springframework.util")
+                .addPackages(true, "it.eng.sequences.hibernate");
 
     }
 
     @Test
     public void userTransactionIsHere() {
-	assertNotNull(tx);
+        assertNotNull(tx);
     }
 
     @Test
     public void entityManagerIsHere() {
-	assertNotNull(em);
+        assertNotNull(em);
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void insertNuoviRecord() throws Exception {
-	tx.begin();
-	try {
-	    SequenceEntity entity1 = new SequenceEntity();
-	    entity1.setNote("First JUnit insertRecordConSequence");
-	    em.persist(entity1);
+        tx.begin();
+        try {
+            SequenceEntity entity1 = new SequenceEntity();
+            entity1.setNote("First JUnit insertRecordConSequence");
+            em.persist(entity1);
 
-	    SequenceEntity entity2 = new SequenceEntity();
-	    entity2.setNote("Second JUnit insertRecordConSequence");
-	    em.persist(entity2);
+            SequenceEntity entity2 = new SequenceEntity();
+            entity2.setNote("Second JUnit insertRecordConSequence");
+            em.persist(entity2);
 
-	    // se generata correttamente la seconda sequence non è il numero successivo
-	    // rispetto alla prima
-	    assertThat(entity2.getId(), is(not(entity1.getId() + 1L)));
-	    assertThat(entity2.getId(), is(not(entity1.getId() - 1L)));
+            // se generata correttamente la seconda sequence non è il numero successivo
+            // rispetto alla prima
+            assertThat(entity2.getId(), is(not(entity1.getId() + 1L)));
+            assertThat(entity2.getId(), is(not(entity1.getId() - 1L)));
 
-	    Query query = em.createNamedQuery("SequenceEntity.findAll");
-	    List<SequenceEntity> entities = query.getResultList();
-	    assertEquals(2, entities.size());
-	} finally {
-	    tx.rollback();
-	}
+            Query query = em.createNamedQuery("SequenceEntity.findAll");
+            List<SequenceEntity> entities = query.getResultList();
+            assertEquals(2, entities.size());
+        } finally {
+            tx.rollback();
+        }
 
     }
 

@@ -34,51 +34,51 @@ public class CronSchedule implements Serializable {
     }
 
     public CronSchedule(String hour, String minute, String dayOfMonth, String month,
-	    String dayOfWeek) {
-	this.hour = hour;
-	this.minute = minute;
-	this.dayOfMonth = dayOfMonth;
-	this.month = month;
-	this.dayOfWeek = dayOfWeek;
+            String dayOfWeek) {
+        this.hour = hour;
+        this.minute = minute;
+        this.dayOfMonth = dayOfMonth;
+        this.month = month;
+        this.dayOfWeek = dayOfWeek;
     }
 
     public String getDayOfMonth() {
-	return dayOfMonth;
+        return dayOfMonth;
     }
 
     public void setDayOfMonth(String dayOfMonth) {
-	this.dayOfMonth = dayOfMonth;
+        this.dayOfMonth = dayOfMonth;
     }
 
     public String getDayOfWeek() {
-	return dayOfWeek;
+        return dayOfWeek;
     }
 
     public void setDayOfWeek(String dayOfWeek) {
-	this.dayOfWeek = dayOfWeek;
+        this.dayOfWeek = dayOfWeek;
     }
 
     public String getHour() {
-	return hour;
+        return hour;
     }
 
     public void setHour(String hour) {
-	this.hour = hour;
+        this.hour = hour;
     }
 
     public String getMinute() {
-	return minute;
+        return minute;
     }
 
     public void setMinute(String minute) {
-	this.minute = minute;
+        this.minute = minute;
     }
 
     public String getMonth() {
-	return month;
+        return month;
     }
 
     public void setMonth(String month) {
-	this.month = month;
+        this.month = month;
     }
 }

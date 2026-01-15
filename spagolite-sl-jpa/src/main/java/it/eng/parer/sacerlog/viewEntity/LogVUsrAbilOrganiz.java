@@ -30,8 +30,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "LOG_V_USR_ABIL_ORGANIZ", schema = "SACER_LOG")
 @NamedQueries({
-	@NamedQuery(name = "LogVUsrAbilOrganiz.findAll", query = "SELECT u FROM LogVUsrAbilOrganiz u"),
-	@NamedQuery(name = "LogVUsrAbilOrganiz.findByApplicAndUser", query = "SELECT u FROM LogVUsrAbilOrganiz u WHERE u.nmApplic = :nmApplic AND u.logVUsrAbilOrganizId.idUserIam = :idUserIam ORDER BY u.dlCompositoOrganiz"), })
+        @NamedQuery(name = "LogVUsrAbilOrganiz.findAll", query = "SELECT u FROM LogVUsrAbilOrganiz u"),
+        @NamedQuery(name = "LogVUsrAbilOrganiz.findByApplicAndUser", query = "SELECT u FROM LogVUsrAbilOrganiz u WHERE u.nmApplic = :nmApplic AND u.logVUsrAbilOrganizId.idUserIam = :idUserIam ORDER BY u.dlCompositoOrganiz"), })
 public class LogVUsrAbilOrganiz implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,134 +54,134 @@ public class LogVUsrAbilOrganiz implements Serializable {
     }
 
     public LogVUsrAbilOrganiz(BigDecimal idOrganizIam, BigDecimal idOrganizApplic) {
-	this.logVUsrAbilOrganizId = new LogVUsrAbilOrganizId();
-	logVUsrAbilOrganizId.setIdOrganizIam(idOrganizIam);
-	this.idOrganizApplic = idOrganizApplic;
+        this.logVUsrAbilOrganizId = new LogVUsrAbilOrganizId();
+        logVUsrAbilOrganizId.setIdOrganizIam(idOrganizIam);
+        this.idOrganizApplic = idOrganizApplic;
     }
 
     @EmbeddedId
     public LogVUsrAbilOrganizId getLogVUsrAbilOrganizId() {
-	return logVUsrAbilOrganizId;
+        return logVUsrAbilOrganizId;
     }
 
     public void setLogVUsrAbilOrganizId(LogVUsrAbilOrganizId logVUsrAbilOrganizId) {
-	this.logVUsrAbilOrganizId = logVUsrAbilOrganizId;
+        this.logVUsrAbilOrganizId = logVUsrAbilOrganizId;
     }
 
     @Column(name = "DL_COMPOSITO_ORGANIZ")
     public String getDlCompositoOrganiz() {
-	return this.dlCompositoOrganiz;
+        return this.dlCompositoOrganiz;
     }
 
     public void setDlCompositoOrganiz(String dlCompositoOrganiz) {
-	this.dlCompositoOrganiz = dlCompositoOrganiz;
+        this.dlCompositoOrganiz = dlCompositoOrganiz;
     }
 
     @Column(name = "DL_PATH_ID_ORGANIZ_IAM")
     public String getDlPathIdOrganizIam() {
-	return this.dlPathIdOrganizIam;
+        return this.dlPathIdOrganizIam;
     }
 
     public void setDlPathIdOrganizIam(String dlPathIdOrganizIam) {
-	this.dlPathIdOrganizIam = dlPathIdOrganizIam;
+        this.dlPathIdOrganizIam = dlPathIdOrganizIam;
     }
 
     @Column(name = "DS_ORGANIZ")
     public String getDsOrganiz() {
-	return this.dsOrganiz;
+        return this.dsOrganiz;
     }
 
     public void setDsOrganiz(String dsOrganiz) {
-	this.dsOrganiz = dsOrganiz;
+        this.dsOrganiz = dsOrganiz;
     }
 
     @Column(name = "FL_ATTIVO", columnDefinition = "char")
     public String getFlAttivo() {
-	return this.flAttivo;
+        return this.flAttivo;
     }
 
     public void setFlAttivo(String flAttivo) {
-	this.flAttivo = flAttivo;
+        this.flAttivo = flAttivo;
     }
 
     @Column(name = "ID_APPLIC")
     public BigDecimal getIdApplic() {
-	return this.idApplic;
+        return this.idApplic;
     }
 
     public void setIdApplic(BigDecimal idApplic) {
-	this.idApplic = idApplic;
+        this.idApplic = idApplic;
     }
 
     @Column(name = "ID_DICH_ABIL_ORGANIZ")
     public BigDecimal getIdDichAbilOrganiz() {
-	return this.idDichAbilOrganiz;
+        return this.idDichAbilOrganiz;
     }
 
     public void setIdDichAbilOrganiz(BigDecimal idDichAbilOrganiz) {
-	this.idDichAbilOrganiz = idDichAbilOrganiz;
+        this.idDichAbilOrganiz = idDichAbilOrganiz;
     }
 
     @Column(name = "ID_ORGANIZ_APPLIC")
     public BigDecimal getIdOrganizApplic() {
-	return this.idOrganizApplic;
+        return this.idOrganizApplic;
     }
 
     public void setIdOrganizApplic(BigDecimal idOrganizApplic) {
-	this.idOrganizApplic = idOrganizApplic;
+        this.idOrganizApplic = idOrganizApplic;
     }
 
     @Column(name = "ID_ORGANIZ_IAM_PADRE")
     public BigDecimal getIdOrganizIamPadre() {
-	return this.idOrganizIamPadre;
+        return this.idOrganizIamPadre;
     }
 
     public void setIdOrganizIamPadre(BigDecimal idOrganizIamPadre) {
-	this.idOrganizIamPadre = idOrganizIamPadre;
+        this.idOrganizIamPadre = idOrganizIamPadre;
     }
 
     @Column(name = "ID_TIPO_ORGANIZ")
     public BigDecimal getIdTipoOrganiz() {
-	return this.idTipoOrganiz;
+        return this.idTipoOrganiz;
     }
 
     public void setIdTipoOrganiz(BigDecimal idTipoOrganiz) {
-	this.idTipoOrganiz = idTipoOrganiz;
+        this.idTipoOrganiz = idTipoOrganiz;
     }
 
     @Column(name = "ID_USO_USER_APPLIC")
     public BigDecimal getIdUsoUserApplic() {
-	return this.idUsoUserApplic;
+        return this.idUsoUserApplic;
     }
 
     public void setIdUsoUserApplic(BigDecimal idUsoUserApplic) {
-	this.idUsoUserApplic = idUsoUserApplic;
+        this.idUsoUserApplic = idUsoUserApplic;
     }
 
     @Column(name = "NM_APPLIC")
     public String getNmApplic() {
-	return this.nmApplic;
+        return this.nmApplic;
     }
 
     public void setNmApplic(String nmApplic) {
-	this.nmApplic = nmApplic;
+        this.nmApplic = nmApplic;
     }
 
     @Column(name = "NM_ORGANIZ")
     public String getNmOrganiz() {
-	return this.nmOrganiz;
+        return this.nmOrganiz;
     }
 
     public void setNmOrganiz(String nmOrganiz) {
-	this.nmOrganiz = nmOrganiz;
+        this.nmOrganiz = nmOrganiz;
     }
 
     @Column(name = "NM_TIPO_ORGANIZ")
     public String getNmTipoOrganiz() {
-	return this.nmTipoOrganiz;
+        return this.nmTipoOrganiz;
     }
 
     public void setNmTipoOrganiz(String nmTipoOrganiz) {
-	this.nmTipoOrganiz = nmTipoOrganiz;
+        this.nmTipoOrganiz = nmTipoOrganiz;
     }
 }

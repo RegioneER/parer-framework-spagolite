@@ -28,62 +28,62 @@ public class Radio<O> extends SingleValueField<O> {
     private String elementGroup;
 
     public Radio(Component parent, String name, String description, String alias, Enum type,
-	    String format, boolean required, boolean hidden, boolean readonly, boolean trigger,
-	    String elementGroup) {
-	super(parent, name, description, alias, type, format, required, hidden, readonly, trigger);
-	this.elementGroup = elementGroup;
+            String format, boolean required, boolean hidden, boolean readonly, boolean trigger,
+            String elementGroup) {
+        super(parent, name, description, alias, type, format, required, hidden, readonly, trigger);
+        this.elementGroup = elementGroup;
     }
 
     @Override
     public void setValue(String value) {
-	if (CheckBox.valueChecked.equalsIgnoreCase(value)) {
-	    super.setValue(CheckBox.valueChecked);
-	} else {
-	    super.setValue(CheckBox.valueUnchecked);
-	}
+        if (CheckBox.valueChecked.equalsIgnoreCase(value)) {
+            super.setValue(CheckBox.valueChecked);
+        } else {
+            super.setValue(CheckBox.valueUnchecked);
+        }
     }
 
     public boolean isChecked() {
-	return CheckBox.valueChecked.equalsIgnoreCase(getValue());
+        return CheckBox.valueChecked.equalsIgnoreCase(getValue());
     }
 
     public void setChecked(boolean checked) {
-	setValue(checked ? CheckBox.valueChecked : CheckBox.valueUnchecked);
+        setValue(checked ? CheckBox.valueChecked : CheckBox.valueUnchecked);
     }
 
     @Override
     public JSONObject asJSON() throws EMFError {
-	String value = ((getValue() == null) ? "" : getValue());
-	JSONObject json = super.asJSON();
-	try {
-	    json.put("value", value);
-	    json.put("elementGroup", getElementGroup());
-	    json.put("type", "Radio");
-	} catch (JSONException e) {
-	    throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
-	}
-	return json;
+        String value = ((getValue() == null) ? "" : getValue());
+        JSONObject json = super.asJSON();
+        try {
+            json.put("value", value);
+            json.put("elementGroup", getElementGroup());
+            json.put("type", "Radio");
+        } catch (JSONException e) {
+            throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
+        }
+        return json;
     }
 
     @Override
     public void post(HttpServletRequest servletRequest) {
-	if (!isReadonly() && isEditMode()) {
-	    String elementGroupValue = servletRequest.getParameter(getElementGroup());
-	    setChecked(getName().equalsIgnoreCase(elementGroupValue));
-	}
+        if (!isReadonly() && isEditMode()) {
+            String elementGroupValue = servletRequest.getParameter(getElementGroup());
+            setChecked(getName().equalsIgnoreCase(elementGroupValue));
+        }
     }
 
     public String getElementGroup() {
-	return elementGroup;
+        return elementGroup;
     }
 
     public void setElementGroup(String elementGroup) {
-	this.elementGroup = elementGroup;
+        this.elementGroup = elementGroup;
     }
 
     @Override
     public void reset() {
-	this.setChecked(false);
+        this.setChecked(false);
     }
 
 }

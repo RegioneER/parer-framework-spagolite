@@ -47,97 +47,97 @@ public class LoginAction extends ActionBase {
 
     @Override
     public String getControllerName() {
-	return "Login.html";
+        return "Login.html";
     }
 
     @Override
     protected String getDefaultPublsherName() {
-	return "/home";
+        return "/home";
     }
 
     @Override
     public void process() throws EMFError {
-	User utente = (User) SessionManager.getUser(getSession());
-	if (utente != null) {
-	    logger.info("Login già effettuato per l'utente " + utente.getUsername());
-	    if (!getRequest().getServletPath().startsWith("/detail")) {
-		redirectToAction("SceltaOrganizzazione.html?clearhistory=true");
-	    }
-	} else {
-	    try {
-		utente = authenticator.doLogin(getSession());
-		if (utente != null && !getRequest().getServletPath().startsWith("/detail")) {
-		    redirectToAction("SceltaOrganizzazione.html?clearhistory=true");
-		} else if (utente == null) {
-		    forwardToPublisher("/login/notAuthorized");
-		}
-	    } catch (SOAPFaultException ex) {
-		getMessageBox().addFatal(ex.getMessage());
-	    }
-	}
+        User utente = (User) SessionManager.getUser(getSession());
+        if (utente != null) {
+            logger.info("Login già effettuato per l'utente " + utente.getUsername());
+            if (!getRequest().getServletPath().startsWith("/detail")) {
+                redirectToAction("SceltaOrganizzazione.html?clearhistory=true");
+            }
+        } else {
+            try {
+                utente = authenticator.doLogin(getSession());
+                if (utente != null && !getRequest().getServletPath().startsWith("/detail")) {
+                    redirectToAction("SceltaOrganizzazione.html?clearhistory=true");
+                } else if (utente == null) {
+                    forwardToPublisher("/login/notAuthorized");
+                }
+            } catch (SOAPFaultException ex) {
+                getMessageBox().addFatal(ex.getMessage());
+            }
+        }
     }
 
     public void logout() {
-	IUser utente = SessionManager.currentUserDetails();
-	if (utente != null) {
-	    getMessageBox().addInfo("L'utente " + utente.getUsername() + " ha richiesto il logout");
-	    if (utente.getUserType() != null
-		    && utente.getUserType().equals(IUser.UserType.SPID_FEDERA)) {
-		logger.debug("Richiesto SAML LOCAL LOGOUT per l'utente "
-			+ IUser.UserType.SPID_FEDERA.name());
-		Cookie cookie = new Cookie("shib_idp_session", "");
-		cookie.setMaxAge(0);
-		cookie.setPath("/idp");
-		cookie.setSecure(true);
-		cookie.setHttpOnly(true);
-		getResponse().addCookie(cookie);
+        IUser utente = SessionManager.currentUserDetails();
+        if (utente != null) {
+            getMessageBox().addInfo("L'utente " + utente.getUsername() + " ha richiesto il logout");
+            if (utente.getUserType() != null
+                    && utente.getUserType().equals(IUser.UserType.SPID_FEDERA)) {
+                logger.debug("Richiesto SAML LOCAL LOGOUT per l'utente "
+                        + IUser.UserType.SPID_FEDERA.name());
+                Cookie cookie = new Cookie("shib_idp_session", "");
+                cookie.setMaxAge(0);
+                cookie.setPath("/idp");
+                cookie.setSecure(true);
+                cookie.setHttpOnly(true);
+                getResponse().addCookie(cookie);
 
-		cookie = new Cookie(JSESSIONID, "");
-		cookie.setMaxAge(0);
-		cookie.setPath("/wayf");
-		cookie.setSecure(true);
-		cookie.setHttpOnly(true);
-		getResponse().addCookie(cookie);
+                cookie = new Cookie(JSESSIONID, "");
+                cookie.setMaxAge(0);
+                cookie.setPath("/wayf");
+                cookie.setSecure(true);
+                cookie.setHttpOnly(true);
+                getResponse().addCookie(cookie);
 
-		cookie = new Cookie(JSESSIONID, "");
-		cookie.setMaxAge(0);
-		cookie.setPath("/idp");
-		cookie.setSecure(true);
-		cookie.setHttpOnly(true);
-		getResponse().addCookie(cookie);
+                cookie = new Cookie(JSESSIONID, "");
+                cookie.setMaxAge(0);
+                cookie.setPath("/idp");
+                cookie.setSecure(true);
+                cookie.setHttpOnly(true);
+                getResponse().addCookie(cookie);
 
-		cookie = new Cookie(JSESSIONID, "");
-		cookie.setMaxAge(0);
-		cookie.setPath("/" + nomeApplicazione);
-		cookie.setSecure(true);
-		cookie.setHttpOnly(true);
-		getResponse().addCookie(cookie);
-		logger.info("Nome applicazione {}", nomeApplicazione);
+                cookie = new Cookie(JSESSIONID, "");
+                cookie.setMaxAge(0);
+                cookie.setPath("/" + nomeApplicazione);
+                cookie.setSecure(true);
+                cookie.setHttpOnly(true);
+                getResponse().addCookie(cookie);
+                logger.info("Nome applicazione {}", nomeApplicazione);
 
-		cookie = new Cookie("_saml_wayf_idp_", "");
-		cookie.setMaxAge(0);
-		cookie.setPath("/");
-		cookie.setSecure(true);
-		cookie.setHttpOnly(true);
-		getResponse().addCookie(cookie);
+                cookie = new Cookie("_saml_wayf_idp_", "");
+                cookie.setMaxAge(0);
+                cookie.setPath("/");
+                cookie.setSecure(true);
+                cookie.setHttpOnly(true);
+                getResponse().addCookie(cookie);
 
-		cookie = new Cookie("USENAV", "");
-		cookie.setMaxAge(0);
-		cookie.setSecure(true);
-		cookie.setHttpOnly(true);
-		getResponse().addCookie(cookie);
+                cookie = new Cookie("USENAV", "");
+                cookie.setMaxAge(0);
+                cookie.setSecure(true);
+                cookie.setHttpOnly(true);
+                getResponse().addCookie(cookie);
 
-		redirectToAction("/Logout.html?operation=success");
-	    } else {
-		logger.debug("Richiesto SAML GLOBAL LOGOUT");
-		forwardToPublisher("/login/logoutGlobale");
-	    }
-	}
+                redirectToAction("/Logout.html?operation=success");
+            } else {
+                logger.debug("Richiesto SAML GLOBAL LOGOUT");
+                forwardToPublisher("/login/logoutGlobale");
+            }
+        }
     }
 
     @Override
     protected boolean isAuthorized(String destination) {
-	return true;
+        return true;
     }
 
     @Override

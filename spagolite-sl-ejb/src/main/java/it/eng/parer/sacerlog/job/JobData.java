@@ -29,29 +29,29 @@ public class JobData implements Serializable {
     private String nomeJob = null;
 
     public JobData(String nomeJob, String nomeApplicazione) {
-	this.nomeJob = nomeJob;
-	this.nomeApplicazione = nomeApplicazione;
+        this.nomeJob = nomeJob;
+        this.nomeApplicazione = nomeApplicazione;
     }
 
     public String getNomeApplicazione() {
-	return nomeApplicazione;
+        return nomeApplicazione;
     }
 
     public void setNomeApplicazione(String nomeApplicazione) {
-	this.nomeApplicazione = nomeApplicazione;
+        this.nomeApplicazione = nomeApplicazione;
     }
 
     public String getNomeJob() {
-	return nomeJob;
+        return nomeJob;
     }
 
     public void setNomeJob(String nomeJob) {
-	this.nomeJob = nomeJob;
+        this.nomeJob = nomeJob;
     }
 
     @Override
     public String toString() {
-	return "JobData{" + "nomeApplicazione=" + nomeApplicazione + ", nomeJob=" + nomeJob + '}';
+        return "JobData{" + "nomeApplicazione=" + nomeApplicazione + ", nomeJob=" + nomeJob + '}';
     }
 
     /*
@@ -60,22 +60,22 @@ public class JobData implements Serializable {
      */
     @Override
     public boolean equals(Object obj) {
-	if (obj == null) {
-	    return false;
-	}
-	if (getClass() != obj.getClass()) {
-	    return false;
-	}
-	final JobData other = (JobData) obj;
-	if ((this.nomeApplicazione == null) ? (other.nomeApplicazione != null)
-		: !this.nomeApplicazione.equals(other.nomeApplicazione)) {
-	    return false;
-	}
-	if ((this.nomeJob == null) ? (other.nomeJob != null)
-		: !this.nomeJob.equals(other.nomeJob)) {
-	    return false;
-	}
-	return true;
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final JobData other = (JobData) obj;
+        if ((this.nomeApplicazione == null) ? (other.nomeApplicazione != null)
+                : !this.nomeApplicazione.equals(other.nomeApplicazione)) {
+            return false;
+        }
+        if ((this.nomeJob == null) ? (other.nomeJob != null)
+                : !this.nomeJob.equals(other.nomeJob)) {
+            return false;
+        }
+        return true;
     }
 
 }

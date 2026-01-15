@@ -1,3 +1,16 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna <p/> This program is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the License, or (at your option)
+ * any later version. <p/> This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Affero General Public License for more details. <p/> You should
+ * have received a copy of the GNU Affero General Public License along with this program. If not,
+ * see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.spagoLite.spring;
 
 import java.io.ByteArrayInputStream;
@@ -55,10 +68,10 @@ import it.eng.spagoCore.exceptions.MetadataRuntimeException;
  */
 @Component
 public class RefreshableRelyingPartyRegistrationRepository implements
-	RelyingPartyRegistrationRepository, Iterable<RelyingPartyRegistration>, Runnable {
+        RelyingPartyRegistrationRepository, Iterable<RelyingPartyRegistration>, Runnable {
 
     private static final Logger LOGGER = LoggerFactory
-	    .getLogger(RefreshableRelyingPartyRegistrationRepository.class);
+            .getLogger(RefreshableRelyingPartyRegistrationRepository.class);
 
     private final Map<String, RelyingPartyRegistration> relyingPartyRegistrations = new ConcurrentHashMap<>();
     private static final String FIRMA_NON_VALIDA = "Firma non valida!";
@@ -72,20 +85,20 @@ public class RefreshableRelyingPartyRegistrationRepository implements
     private String nomeApplicazione;
 
     public RefreshableRelyingPartyRegistrationRepository(String nomeApplicazione) {
-	this.nomeApplicazione = nomeApplicazione;
-	caricaCertificato();
-	// feccia subito il federation metadata alla costruzione dell'oggetto
-	fetchMetadata();
+        this.nomeApplicazione = nomeApplicazione;
+        caricaCertificato();
+        // feccia subito il federation metadata alla costruzione dell'oggetto
+        fetchMetadata();
     }
 
     @Override
     public RelyingPartyRegistration findByRegistrationId(String registrationId) {
-	return this.relyingPartyRegistrations.get(registrationId);
+        return this.relyingPartyRegistrations.get(registrationId);
     }
 
     @Override
     public Iterator<RelyingPartyRegistration> iterator() {
-	return this.relyingPartyRegistrations.values().iterator();
+        return this.relyingPartyRegistrations.values().iterator();
     }
 
     /*
@@ -93,61 +106,61 @@ public class RefreshableRelyingPartyRegistrationRepository implements
      * la firma e poi carica tutti gli IDP trovati nello stesso.
      */
     void fetchMetadata() {
-	LOGGER.debug("Fetching metadata da Keycloak...");
-	this.relyingPartyRegistrations.clear();
-	String fedMetadata = fetchAndCacheMetadata();
-	LOGGER.debug("FederationMetadata: {}", fedMetadata);
+        LOGGER.debug("Fetching metadata da Keycloak...");
+        this.relyingPartyRegistrations.clear();
+        String fedMetadata = fetchAndCacheMetadata();
+        LOGGER.debug("FederationMetadata: {}", fedMetadata);
 
-	String applicationEntityId = System.getProperty(nomeApplicazione + "-sp-identity-id");
-	if (applicationEntityId == null || applicationEntityId.isEmpty()) {
-	    LOGGER.warn("Non è stato definito il parametro {}-sp-identity-id in JBoss!",
-		    nomeApplicazione);
-	} else {
-	    LOGGER.debug(
-		    "L'entity ID configurato sul server nel parametro {}-sp-identity-id è [{}]",
-		    nomeApplicazione, applicationEntityId);
-	}
+        String applicationEntityId = System.getProperty(nomeApplicazione + "-sp-identity-id");
+        if (applicationEntityId == null || applicationEntityId.isEmpty()) {
+            LOGGER.warn("Non è stato definito il parametro {}-sp-identity-id in JBoss!",
+                    nomeApplicazione);
+        } else {
+            LOGGER.debug(
+                    "L'entity ID configurato sul server nel parametro {}-sp-identity-id è [{}]",
+                    nomeApplicazione, applicationEntityId);
+        }
 
-	// Tutti gli IdPs
-	try (InputStream in = org.apache.commons.io.IOUtils.toInputStream(fedMetadata,
-		StandardCharsets.UTF_8)) {
-	    String spEntityId = System.getProperty(nomeApplicazione + "-sp-identity-id");
-	    RelyingPartyRegistrations.collectionFromMetadata(in).forEach(builder -> {
-		builder.entityId(spEntityId).registrationId(nomeApplicazione)
-			.decryptionX509Credentials(c -> c
-				.add(Saml2X509Credential.decryption(chiavePrivata, certificato)))
-			.signingX509Credentials(
-				c -> c.add(Saml2X509Credential.signing(chiavePrivata, certificato)))
-			.singleLogoutServiceResponseLocation(
-				"{baseUrl}/saml/SingleLogout/alias/{registrationId}")
-			.assertionConsumerServiceLocation(
-				"{baseUrl}/saml/SSO/alias/{registrationId}");
+        // Tutti gli IdPs
+        try (InputStream in = org.apache.commons.io.IOUtils.toInputStream(fedMetadata,
+                StandardCharsets.UTF_8)) {
+            String spEntityId = System.getProperty(nomeApplicazione + "-sp-identity-id");
+            RelyingPartyRegistrations.collectionFromMetadata(in).forEach(builder -> {
+                builder.entityId(spEntityId).registrationId(nomeApplicazione)
+                        .decryptionX509Credentials(c -> c
+                                .add(Saml2X509Credential.decryption(chiavePrivata, certificato)))
+                        .signingX509Credentials(
+                                c -> c.add(Saml2X509Credential.signing(chiavePrivata, certificato)))
+                        .singleLogoutServiceResponseLocation(
+                                "{baseUrl}/saml/SingleLogout/alias/{registrationId}")
+                        .assertionConsumerServiceLocation(
+                                "{baseUrl}/saml/SSO/alias/{registrationId}");
 
-		RelyingPartyRegistration idpTemp = builder.build();
-		String idpFed = idpTemp.getAssertingPartyDetails().getEntityId();
-		/*
-		 * Deve generare un registrationId univoco per ogni associazione tra idp e sp.
-		 * Quello con nome "saceriam" è quello dell'associazione con keycloak vero sui
-		 * server e non il locale e nemmeno gli SPID
-		 */
-		String registrationId = nomeApplicazione;
-		if (idpFed.contains(".lepida")) {
-		    registrationId += "Lepida";
-		} else if (idpFed.contains("localhost")) {
-		    registrationId += "Localhost";
-		}
-		builder.registrationId(registrationId);
-		RelyingPartyRegistration idp = builder.build();
-		this.relyingPartyRegistrations.put(idp.getRegistrationId(), idp);
-		LOGGER.debug("IdP registrato {} per {}.", idp.getRegistrationId(),
-			idp.getAssertingPartyDetails().getEntityId());
-	    });
+                RelyingPartyRegistration idpTemp = builder.build();
+                String idpFed = idpTemp.getAssertingPartyDetails().getEntityId();
+                /*
+                 * Deve generare un registrationId univoco per ogni associazione tra idp e sp.
+                 * Quello con nome "saceriam" è quello dell'associazione con keycloak vero sui
+                 * server e non il locale e nemmeno gli SPID
+                 */
+                String registrationId = nomeApplicazione;
+                if (idpFed.contains(".lepida")) {
+                    registrationId += "Lepida";
+                } else if (idpFed.contains("localhost")) {
+                    registrationId += "Localhost";
+                }
+                builder.registrationId(registrationId);
+                RelyingPartyRegistration idp = builder.build();
+                this.relyingPartyRegistrations.put(idp.getRegistrationId(), idp);
+                LOGGER.debug("IdP registrato {} per {}.", idp.getRegistrationId(),
+                        idp.getAssertingPartyDetails().getEntityId());
+            });
 
-	} catch (IOException ex) {
-	    LOGGER.error("Errore nella lettura del file locale del federationMetadata", ex);
-	}
-	LOGGER.debug("IdPs registrati {} - {}.", this.relyingPartyRegistrations.size(),
-		this.relyingPartyRegistrations);
+        } catch (IOException ex) {
+            LOGGER.error("Errore nella lettura del file locale del federationMetadata", ex);
+        }
+        LOGGER.debug("IdPs registrati {} - {}.", this.relyingPartyRegistrations.size(),
+                this.relyingPartyRegistrations);
     }
 
     /*
@@ -155,66 +168,66 @@ public class RefreshableRelyingPartyRegistrationRepository implements
      * utilizza l'XML tenuto in cache scaricato in precedenza.
      */
     private String fetchAndCacheMetadata() {
-	String metadataUrl = System.getProperty("fed-metadata-url",
-		"[URL federationMetadata NON IMPOSTATO!]");
-	String fileTmp = System.getProperty(nomeApplicazione + "-temp-file",
-		"tmp-" + nomeApplicazione + "-federation.xml");
-	LOGGER.debug("URL federationMetadata: {}", metadataUrl);
-	RestTemplate t = getRestTemplate();
-	String metadata = null;
-	try {
-	    metadata = t.getForObject(metadataUrl, String.class);
-	    LOGGER.debug("Letto il federationMetadata da {}", metadataUrl);
-	    if (StringUtils.isBlank(metadata)) {
-		LOGGER.error("Il federationMetadata è vuoto!");
-		throw new MetadataRuntimeException("Il federationMetadata è vuoto!");
-	    }
-	    checkFirmaEIntegrita(metadata);
-	} catch (RestClientException ex) {
-	    LOGGER.error("Errore nel raggiungere il federationMetadata.", ex);
-	}
-	if (metadata != null) {
-	    try {
-		Files.writeString(Path.of(fileTmp), metadata, StandardOpenOption.CREATE);
-		LOGGER.debug("Scritto file del federationMetadata in {}", Path.of(fileTmp));
-	    } catch (IOException ex) {
-		LOGGER.error(
-			"Errore nello scrivere il file temporaneo del federationMetadata sotto {}",
-			Path.of(fileTmp), ex);
-	    }
-	} else {
-	    try {
-		metadata = Files.readString(Path.of(fileTmp));
-		LOGGER.debug("federationMetadata letto da file {}", fileTmp);
+        String metadataUrl = System.getProperty("fed-metadata-url",
+                "[URL federationMetadata NON IMPOSTATO!]");
+        String fileTmp = System.getProperty(nomeApplicazione + "-temp-file",
+                "tmp-" + nomeApplicazione + "-federation.xml");
+        LOGGER.debug("URL federationMetadata: {}", metadataUrl);
+        RestTemplate t = getRestTemplate();
+        String metadata = null;
+        try {
+            metadata = t.getForObject(metadataUrl, String.class);
+            LOGGER.debug("Letto il federationMetadata da {}", metadataUrl);
+            if (StringUtils.isBlank(metadata)) {
+                LOGGER.error("Il federationMetadata è vuoto!");
+                throw new MetadataRuntimeException("Il federationMetadata è vuoto!");
+            }
+            checkFirmaEIntegrita(metadata);
+        } catch (RestClientException ex) {
+            LOGGER.error("Errore nel raggiungere il federationMetadata.", ex);
+        }
+        if (metadata != null) {
+            try {
+                Files.writeString(Path.of(fileTmp), metadata, StandardOpenOption.CREATE);
+                LOGGER.debug("Scritto file del federationMetadata in {}", Path.of(fileTmp));
+            } catch (IOException ex) {
+                LOGGER.error(
+                        "Errore nello scrivere il file temporaneo del federationMetadata sotto {}",
+                        Path.of(fileTmp), ex);
+            }
+        } else {
+            try {
+                metadata = Files.readString(Path.of(fileTmp));
+                LOGGER.debug("federationMetadata letto da file {}", fileTmp);
 
-	    } catch (IOException ex) {
-		LOGGER.error(
-			"Errore nel leggere il file temporaneo del federationMetadata sotto {}",
-			Path.of(fileTmp), ex);
-	    }
-	}
-	return metadata;
+            } catch (IOException ex) {
+                LOGGER.error(
+                        "Errore nel leggere il file temporaneo del federationMetadata sotto {}",
+                        Path.of(fileTmp), ex);
+            }
+        }
+        return metadata;
     }
 
     /*
      * Carica dal keystore dell'applicazione specifica certificato e chiave privata.
      */
     private void caricaCertificato() {
-	String keystorePath = System.getProperty(nomeApplicazione + "-jks-path");
-	var keystorePassword = System.getProperty(nomeApplicazione + "-key-manager-pass");
-	try (FileInputStream keyStoreInputStream = new FileInputStream(keystorePath)) {
-	    KeyStore keyStore = KeyStore.getInstance("JKS");
-	    keyStore.load(keyStoreInputStream, keystorePassword.toCharArray());
-	    // carica il certificato della CA
-	    String storeKeyName = System.getProperty(nomeApplicazione + "-store-key-name");
-	    certificato = (X509Certificate) keyStore.getCertificate(storeKeyName);
-	    chiavePrivata = (RSAPrivateKey) keyStore.getKey(storeKeyName,
-		    keystorePassword.toCharArray());
-	} catch (IOException | KeyStoreException | NoSuchAlgorithmException | CertificateException
-		| UnrecoverableKeyException ex) {
-	    throw new MetadataRuntimeException(
-		    "Errore nel caricamento dei certificati dell'applicazione!", ex);
-	}
+        String keystorePath = System.getProperty(nomeApplicazione + "-jks-path");
+        var keystorePassword = System.getProperty(nomeApplicazione + "-key-manager-pass");
+        try (FileInputStream keyStoreInputStream = new FileInputStream(keystorePath)) {
+            KeyStore keyStore = KeyStore.getInstance("JKS");
+            keyStore.load(keyStoreInputStream, keystorePassword.toCharArray());
+            // carica il certificato della CA
+            String storeKeyName = System.getProperty(nomeApplicazione + "-store-key-name");
+            certificato = (X509Certificate) keyStore.getCertificate(storeKeyName);
+            chiavePrivata = (RSAPrivateKey) keyStore.getKey(storeKeyName,
+                    keystorePassword.toCharArray());
+        } catch (IOException | KeyStoreException | NoSuchAlgorithmException | CertificateException
+                | UnrecoverableKeyException ex) {
+            throw new MetadataRuntimeException(
+                    "Errore nel caricamento dei certificati dell'applicazione!", ex);
+        }
     }
 
     /*
@@ -223,71 +236,71 @@ public class RefreshableRelyingPartyRegistrationRepository implements
      * emesso dalla CA della federazione.
      */
     private boolean checkFirmaEIntegrita(String metadata) {
-	boolean isValid = false;
+        boolean isValid = false;
 
-	try (InputStream inputStream = new ByteArrayInputStream(
-		metadata.getBytes(StandardCharsets.UTF_8));) {
-	    Init.init();
+        try (InputStream inputStream = new ByteArrayInputStream(
+                metadata.getBytes(StandardCharsets.UTF_8));) {
+            Init.init();
 
-	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-	    dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-	    dbf.setNamespaceAware(true);
-	    Document doc = dbf.newDocumentBuilder().parse(inputStream);
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            dbf.setNamespaceAware(true);
+            Document doc = dbf.newDocumentBuilder().parse(inputStream);
 
-	    Element sigElement = (Element) doc
-		    .getElementsByTagNameNS(Constants.SignatureSpecNS, "Signature").item(0);
-	    XMLSignature signature = new XMLSignature(sigElement, "");
+            Element sigElement = (Element) doc
+                    .getElementsByTagNameNS(Constants.SignatureSpecNS, "Signature").item(0);
+            XMLSignature signature = new XMLSignature(sigElement, "");
 
-	    KeyInfo ki = signature.getKeyInfo();
-	    if (ki != null) {
-		PublicKey pk = ki.getPublicKey();
-		if (pk != null) {
-		    isValid = signature.checkSignatureValue(pk);
-		    LOGGER.debug("Firma federationMetadata VALIDA.");
-		    // Controlla validità  del certificato che ha firmato il metadata contro la CA
-		    // che lo ha emesso
-		    X509Certificate certificatoCheHaFirmatoLaFederazione = ki.getX509Certificate();
-		    String keystorePath = System.getProperty(nomeApplicazione + "-jks-path");
-		    var keystorePassword = System
-			    .getProperty(nomeApplicazione + "-key-manager-pass");
-		    FileInputStream keyStoreInputStream = new FileInputStream(keystorePath);
-		    KeyStore keyStore = KeyStore.getInstance("JKS");
-		    keyStore.load(keyStoreInputStream, keystorePassword.toCharArray());
-		    // carica il certificato della CA
-		    Certificate caCert = keyStore.getCertificate("federation_ca");
-		    PublicKey caPublicKey = caCert.getPublicKey();
-		    certificatoCheHaFirmatoLaFederazione.verify(caPublicKey);
-		    LOGGER.debug("Certificato emesso dalla CA della federazione ed è VALIDO.");
-		} else {
-		    LOGGER.warn(
-			    "Firma federationMetadata NON VALIDA perché non è stata trovata la chiave pubblica del firmatario.");
-		    throw new MetadataRuntimeException(FIRMA_NON_VALIDA);
-		}
-	    } else {
-		LOGGER.warn("No KeyInfo found in Signature");
-		LOGGER.warn(
-			"Firma federationMetadata NON VALIDA perché non è stata trovato l'elemento KeyInfo nella firma.");
-		throw new MetadataRuntimeException(FIRMA_NON_VALIDA);
-	    }
-	} catch (ParserConfigurationException | SAXException | IOException | SignatureException
-		| XMLSecurityException | NoSuchProviderException | NoSuchAlgorithmException
-		| InvalidKeyException | CertificateException | KeyStoreException ex) {
-	    throw new MetadataRuntimeException(FIRMA_NON_VALIDA, ex);
+            KeyInfo ki = signature.getKeyInfo();
+            if (ki != null) {
+                PublicKey pk = ki.getPublicKey();
+                if (pk != null) {
+                    isValid = signature.checkSignatureValue(pk);
+                    LOGGER.debug("Firma federationMetadata VALIDA.");
+                    // Controlla validità  del certificato che ha firmato il metadata contro la CA
+                    // che lo ha emesso
+                    X509Certificate certificatoCheHaFirmatoLaFederazione = ki.getX509Certificate();
+                    String keystorePath = System.getProperty(nomeApplicazione + "-jks-path");
+                    var keystorePassword = System
+                            .getProperty(nomeApplicazione + "-key-manager-pass");
+                    FileInputStream keyStoreInputStream = new FileInputStream(keystorePath);
+                    KeyStore keyStore = KeyStore.getInstance("JKS");
+                    keyStore.load(keyStoreInputStream, keystorePassword.toCharArray());
+                    // carica il certificato della CA
+                    Certificate caCert = keyStore.getCertificate("federation_ca");
+                    PublicKey caPublicKey = caCert.getPublicKey();
+                    certificatoCheHaFirmatoLaFederazione.verify(caPublicKey);
+                    LOGGER.debug("Certificato emesso dalla CA della federazione ed è VALIDO.");
+                } else {
+                    LOGGER.warn(
+                            "Firma federationMetadata NON VALIDA perché non è stata trovata la chiave pubblica del firmatario.");
+                    throw new MetadataRuntimeException(FIRMA_NON_VALIDA);
+                }
+            } else {
+                LOGGER.warn("No KeyInfo found in Signature");
+                LOGGER.warn(
+                        "Firma federationMetadata NON VALIDA perché non è stata trovato l'elemento KeyInfo nella firma.");
+                throw new MetadataRuntimeException(FIRMA_NON_VALIDA);
+            }
+        } catch (ParserConfigurationException | SAXException | IOException | SignatureException
+                | XMLSecurityException | NoSuchProviderException | NoSuchAlgorithmException
+                | InvalidKeyException | CertificateException | KeyStoreException ex) {
+            throw new MetadataRuntimeException(FIRMA_NON_VALIDA, ex);
 
-	}
-	return isValid;
+        }
+        return isValid;
     }
 
     /*
      * Crea un RestTemplate ad-hoc per la lettura con il timeout specifico per il metadata
      */
     private RestTemplate getRestTemplate() {
-	String timeout = System.getProperty(nomeApplicazione + "-timeout-metadata", "10000");
-	LOGGER.debug("Timeout per federationMetadata: {}", timeout);
-	SimpleClientHttpRequestFactory c = new SimpleClientHttpRequestFactory();
-	c.setReadTimeout(Integer.parseInt(timeout));
-	c.setConnectTimeout(Integer.parseInt(timeout));
-	return new RestTemplate(c);
+        String timeout = System.getProperty(nomeApplicazione + "-timeout-metadata", "10000");
+        LOGGER.debug("Timeout per federationMetadata: {}", timeout);
+        SimpleClientHttpRequestFactory c = new SimpleClientHttpRequestFactory();
+        c.setReadTimeout(Integer.parseInt(timeout));
+        c.setConnectTimeout(Integer.parseInt(timeout));
+        return new RestTemplate(c);
     }
 
     /*
@@ -295,7 +308,7 @@ public class RefreshableRelyingPartyRegistrationRepository implements
      */
     @Override
     public void run() {
-	LOGGER.debug("Lettura schedulata del federationMetadata.");
-	fetchMetadata();
+        LOGGER.debug("Lettura schedulata del federationMetadata.");
+        fetchMetadata();
     }
 }

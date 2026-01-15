@@ -33,51 +33,51 @@ public class Link extends MenuEntry {
     private boolean selected;
 
     public Link(String codice, String descr, String url) {
-	super(codice, descr);
-	this.url = url;
+        super(codice, descr);
+        this.url = url;
     }
 
     public String getUrl() {
-	return url;
+        return url;
     }
 
     public void setUrl(String url) {
-	this.url = url;
+        this.url = url;
     }
 
     @Override
     public boolean isSelected() {
-	return selected;
+        return selected;
     }
 
     @Override
     public void reset() {
-	this.selected = false;
+        this.selected = false;
     }
 
     @Override
     public boolean select(String codice) {
-	this.selected = codice.equals(getCodice());
-	return this.selected;
+        this.selected = codice.equals(getCodice());
+        return this.selected;
     }
 
     @Override
     public List<MenuEntry> getSelectedPath(String codice) {
-	List<MenuEntry> result = new ArrayList<MenuEntry>();
-	if (isSelected()) {
-	    result.add(this);
-	}
+        List<MenuEntry> result = new ArrayList<MenuEntry>();
+        if (isSelected()) {
+            result.add(this);
+        }
 
-	return result;
+        return result;
     }
 
     @Override
     public Element asXml() {
-	Element element = super.asXml();
-	element.addAttribute("url", getUrl());
-	element.addAttribute("selected", isSelected() + "");
+        Element element = super.asXml();
+        element.addAttribute("url", getUrl());
+        element.addAttribute("selected", isSelected() + "");
 
-	return element;
+        return element;
     }
 
 }

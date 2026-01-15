@@ -48,34 +48,34 @@ public class JbossTimerNodeInterceptor {
      */
     @AroundInvoke
     public Object executeOnJbossNode(InvocationContext inv) throws Exception {
-	final String logPrefix = "[" + service.getApplicationName()
-		+ " Jboss Timer Interceptor executeOnJbossNode] -";
-	if (service.isStandalone()) {
-	    log.debug(String.format("%s Modalità standalone. Procedo con l'interceptor successivo.",
-		    logPrefix));
-	    return inv.proceed();
-	}
-	Object result = null;
+        final String logPrefix = "[" + service.getApplicationName()
+                + " Jboss Timer Interceptor executeOnJbossNode] -";
+        if (service.isStandalone()) {
+            log.debug(String.format("%s Modalità standalone. Procedo con l'interceptor successivo.",
+                    logPrefix));
+            return inv.proceed();
+        }
+        Object result = null;
 
-	JbossJobTimer target = (JbossJobTimer) inv.getTarget();
-	String jobName = target.getJobName();
+        JbossJobTimer target = (JbossJobTimer) inv.getTarget();
+        String jobName = target.getJobName();
 
-	String nodeName = service.getCurrentNode();
-	JobTable job = service.getJob(jobName);
+        String nodeName = service.getCurrentNode();
+        JobTable job = service.getJob(jobName);
 
-	if (job != null && nodeName != null && nodeName.equals(job.getNmNodoAssegnato())
-		&& job.getTiStatoTimer() != null) {
-	    log.info(String.format(
-		    "%s Procedo all'esecuzione del job %s nel nodo %s con lo stato %s", logPrefix,
-		    jobName, nodeName, job.getTiStatoTimer()));
-	    result = inv.proceed();
-	} else {
-	    String applicNodeName = job != null ? job.getNmNodoAssegnato() : "undefined";
-	    log.debug(String.format(
-		    "%s Il job %s non può essere eseguito nel nodo %s. E' stato configurato per essere eseguito sul nodo %s ",
-		    logPrefix, jobName, nodeName, applicNodeName));
-	}
-	return result;
+        if (job != null && nodeName != null && nodeName.equals(job.getNmNodoAssegnato())
+                && job.getTiStatoTimer() != null) {
+            log.info(String.format(
+                    "%s Procedo all'esecuzione del job %s nel nodo %s con lo stato %s", logPrefix,
+                    jobName, nodeName, job.getTiStatoTimer()));
+            result = inv.proceed();
+        } else {
+            String applicNodeName = job != null ? job.getNmNodoAssegnato() : "undefined";
+            log.debug(String.format(
+                    "%s Il job %s non può essere eseguito nel nodo %s. E' stato configurato per essere eseguito sul nodo %s ",
+                    logPrefix, jobName, nodeName, applicNodeName));
+        }
+        return result;
     }
 
 }

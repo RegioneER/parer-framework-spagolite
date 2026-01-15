@@ -20,7 +20,7 @@ public class BaseElement extends BaseComponent {
     private static final long serialVersionUID = 1L;
 
     public BaseElement(Component parent, String name, String description) {
-	super(parent, name, description);
+        super(parent, name, description);
     }
 
 }

@@ -31,78 +31,78 @@ public class ListNavBarDetailTag extends AbstractListNavBarTag {
 
     @Override
     public int doStartTag() throws JspException {
-	if (getName() != null) {
+        if (getName() != null) {
 
-	    BaseTableInterface<?> table = getComponent().getTable();
+            BaseTableInterface<?> table = getComponent().getTable();
 
-	    if (table != null) {
-		if (table.size() == 0) {
-		    return SKIP_BODY;
-		}
-		writeln("<div class=\"listToolBar\">");
-		calculateAuthorization();
+            if (table != null) {
+                if (table.size() == 0) {
+                    return SKIP_BODY;
+                }
+                writeln("<div class=\"listToolBar\">");
+                calculateAuthorization();
 
-		// Pulsanti di modifica/salvataggio
-		if (!getComponent().isReadOnly() && !isHideOperationButton()) {
-		    if ((isEditAction() && !getComponent().isHideUpdateButton())
-			    || ((isInsertAction())
-				    && (!((List) getComponent()).isHideInsertButton()))) {
-			debugAuthorization(insertAction);
-			debugAuthorization(editAction);
-			writeDetailSave();
-		    }
-		    if (isEditAction() && !getComponent().isHideUpdateButton()) {
-			debugAuthorization(editAction);
-			writeDetailUpdate();
-			writeDetailCancel();
-		    }
-		    if (isDeleteAction() && !getComponent().isHideDeleteButton()) {
-			debugAuthorization(deleteAction);
-			writeDetailDelete();
-		    }
-		}
+                // Pulsanti di modifica/salvataggio
+                if (!getComponent().isReadOnly() && !isHideOperationButton()) {
+                    if ((isEditAction() && !getComponent().isHideUpdateButton())
+                            || ((isInsertAction())
+                                    && (!((List) getComponent()).isHideInsertButton()))) {
+                        debugAuthorization(insertAction);
+                        debugAuthorization(editAction);
+                        writeDetailSave();
+                    }
+                    if (isEditAction() && !getComponent().isHideUpdateButton()) {
+                        debugAuthorization(editAction);
+                        writeDetailUpdate();
+                        writeDetailCancel();
+                    }
+                    if (isDeleteAction() && !getComponent().isHideDeleteButton()) {
+                        debugAuthorization(deleteAction);
+                        writeDetailDelete();
+                    }
+                }
 
-		// Pulsanti di navigazione
-		writeElenco();
-		writePrev();
-		writeRecordCounter();
-		writeNext();
+                // Pulsanti di navigazione
+                writeElenco();
+                writePrev();
+                writeRecordCounter();
+                writeNext();
 
-	    }
-	} else {
-	    writeln("<div class=\"listToolBar\">");
-	    writeln(getLink("navBarBackLink", ListAction.NE_ELENCO, "", "Indietro", "Indietro", -1,
-		    false, true));
-	}
+            }
+        } else {
+            writeln("<div class=\"listToolBar\">");
+            writeln(getLink("navBarBackLink", ListAction.NE_ELENCO, "", "Indietro", "Indietro", -1,
+                    false, true));
+        }
 
-	return EVAL_BODY_INCLUDE;
+        return EVAL_BODY_INCLUDE;
     }
 
     @Override
     public int doEndTag() throws JspException {
-	writeln("</div>");
-	return super.doEndTag();
+        writeln("</div>");
+        return super.doEndTag();
     }
 
     @Override
     public int doAfterBody() throws JspException {
-	// TODO Auto-generated method stub
-	return super.doAfterBody();
+        // TODO Auto-generated method stub
+        return super.doAfterBody();
     }
 
     public boolean isHideOperationButton() {
-	return hideOperationButton;
+        return hideOperationButton;
     }
 
     public void setHideOperationButton(boolean hideOperationButton) {
-	this.hideOperationButton = hideOperationButton;
+        this.hideOperationButton = hideOperationButton;
     }
 
     private void calculateAuthorization() {
 
-	setEditAction(isUserAuthorized(editAction));
-	setDeleteAction(isUserAuthorized(deleteAction));
-	setInsertAction(isUserAuthorized(insertAction));
+        setEditAction(isUserAuthorized(editAction));
+        setDeleteAction(isUserAuthorized(deleteAction));
+        setInsertAction(isUserAuthorized(insertAction));
     }
 
 }

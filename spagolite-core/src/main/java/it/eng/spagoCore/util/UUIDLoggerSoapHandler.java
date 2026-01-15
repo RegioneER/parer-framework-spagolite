@@ -36,19 +36,19 @@ public class UUIDLoggerSoapHandler implements SOAPHandler<SOAPMessageContext> {
 
     @Override
     public boolean handleFault(SOAPMessageContext context) {
-	return true;
+        return true;
     }
 
     @Override
     public boolean handleMessage(SOAPMessageContext context) {
-	// LOG UUID
-	UUIDMdcLogUtil.genUuid();
-	return true;
+        // LOG UUID
+        UUIDMdcLogUtil.genUuid();
+        return true;
     }
 
     @Override
     public Set<QName> getHeaders() {
-	return null;
+        return null;
     }
 
 }

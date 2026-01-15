@@ -27,11 +27,11 @@ public class EntityConstraints {
     public static final String VALORE_NULL_DS_KEY_OGGETTO = "null";
 
     public enum TipoAzione {
-	AZIONE_PAGINA, AZIONE_JOB
+        AZIONE_PAGINA, AZIONE_JOB
     }
 
     public enum TipoOrigineAgente {
-	UTENTE, COMPONENTE_SW
+        UTENTE, COMPONENTE_SW
     }
 
 }

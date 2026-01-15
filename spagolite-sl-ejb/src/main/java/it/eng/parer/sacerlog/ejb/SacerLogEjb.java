@@ -90,191 +90,191 @@ public class SacerLogEjb {
      * successivamente per le varie loggate "correlate"
      */
     public TransactionLogContext getNewTransactionLogContext() {
-	TransactionLogContext ctx = new TransactionLogContext(sacerLogHelper.getNewTransactionId());
-	log.debug("TID [{}] Nuova generazione del transaction ID", ctx);
-	return ctx;
+        TransactionLogContext ctx = new TransactionLogContext(sacerLogHelper.getNewTransactionId());
+        log.debug("TID [{}] Nuova generazione del transaction ID", ctx);
+        return ctx;
     }
 
     protected LogEvento log(TransactionLogContext ctx, boolean isTrigger, String nmTipoEvento,
-	    String nmApplic, LogVLogAgente agente, String nmAzione, String nmTipoOggetto,
-	    BigDecimal idOggetto, String nmComponente, String tipoRuoloPremisAgenteEvento,
-	    String tipoRuoloPremisEventoOggetto, Calendar momentoAttuale,
-	    boolean hasToCheckScriptExistance) {
+            String nmApplic, LogVLogAgente agente, String nmAzione, String nmTipoOggetto,
+            BigDecimal idOggetto, String nmComponente, String tipoRuoloPremisAgenteEvento,
+            String tipoRuoloPremisEventoOggetto, Calendar momentoAttuale,
+            boolean hasToCheckScriptExistance) {
 
-	LogEvento logEvento = null;
-	/*
-	 * Se l'ID di transazione viene fornito dall'esterno usa quello altrimenti ne ricava uno
-	 * nuovo dalla sequence su DB.
-	 */
-	if (ctx == null) {
-	    ctx = getNewTransactionLogContext();
-	}
-	// verifica se il logging e' abilitato sulla tabella dei parametri
-	// dell'applicazione
-	if (sacerLogHelper.isLoggingEnabled()
-		|| sacerLogHelper.isLoggingEnabledForThisNomeAzione(nmAzione)) {
-	    /*
-	     * Gestione defaults
-	     */
-	    tipoRuoloPremisAgenteEvento = tipoRuoloPremisAgenteEvento == null
-		    ? PremisEnums.TipoAgenteEvento.IMPLEMENTER
-		    : tipoRuoloPremisAgenteEvento;
-	    tipoRuoloPremisEventoOggetto = tipoRuoloPremisEventoOggetto == null
-		    ? PremisEnums.TipoEventoOggetto.OUTCOME
-		    : tipoRuoloPremisEventoOggetto;
+        LogEvento logEvento = null;
+        /*
+         * Se l'ID di transazione viene fornito dall'esterno usa quello altrimenti ne ricava uno
+         * nuovo dalla sequence su DB.
+         */
+        if (ctx == null) {
+            ctx = getNewTransactionLogContext();
+        }
+        // verifica se il logging e' abilitato sulla tabella dei parametri
+        // dell'applicazione
+        if (sacerLogHelper.isLoggingEnabled()
+                || sacerLogHelper.isLoggingEnabledForThisNomeAzione(nmAzione)) {
+            /*
+             * Gestione defaults
+             */
+            tipoRuoloPremisAgenteEvento = tipoRuoloPremisAgenteEvento == null
+                    ? PremisEnums.TipoAgenteEvento.IMPLEMENTER
+                    : tipoRuoloPremisAgenteEvento;
+            tipoRuoloPremisEventoOggetto = tipoRuoloPremisEventoOggetto == null
+                    ? PremisEnums.TipoEventoOggetto.OUTCOME
+                    : tipoRuoloPremisEventoOggetto;
 
-	    AplVLogTiEvn tipo = null;
-	    AplVLogTiEvnConOrigine tipoConOrigine = null;
-	    BigDecimal idTipoEvento = null;
-	    BigDecimal idApplic = null;
-	    if (isTrigger) {
-		tipo = sacerLogHelper.getTipoEventoByApplicTipoEvento(nmApplic, nmTipoEvento);
-		idTipoEvento = tipo.getIdTipoEvento();
-		idApplic = tipo.getIdApplic();
-	    } else {
-		tipoConOrigine = sacerLogHelper.getTipoEventoByApplicFinestraAzione(nmApplic,
-			nmComponente, nmAzione);
-		idTipoEvento = tipoConOrigine.getAplVLogTiEvnConOrigineId().getIdTipoEvento();
-		idApplic = tipoConOrigine.getAplVLogTiEvnConOrigineId().getIdApplic();
-	    }
-	    AplVLogTiOgg tiOgg = sacerLogHelper.getTipoOggettoByNome(nmApplic, nmTipoOggetto);
+            AplVLogTiEvn tipo = null;
+            AplVLogTiEvnConOrigine tipoConOrigine = null;
+            BigDecimal idTipoEvento = null;
+            BigDecimal idApplic = null;
+            if (isTrigger) {
+                tipo = sacerLogHelper.getTipoEventoByApplicTipoEvento(nmApplic, nmTipoEvento);
+                idTipoEvento = tipo.getIdTipoEvento();
+                idApplic = tipo.getIdApplic();
+            } else {
+                tipoConOrigine = sacerLogHelper.getTipoEventoByApplicFinestraAzione(nmApplic,
+                        nmComponente, nmAzione);
+                idTipoEvento = tipoConOrigine.getAplVLogTiEvnConOrigineId().getIdTipoEvento();
+                idApplic = tipoConOrigine.getAplVLogTiEvnConOrigineId().getIdApplic();
+            }
+            AplVLogTiOgg tiOgg = sacerLogHelper.getTipoOggettoByNome(nmApplic, nmTipoOggetto);
 
-	    // Gestisci log da script solo se non lo si sta facendo dall'interno del metodo
-	    // di gestione evento script
-	    // stesso
-	    if (hasToCheckScriptExistance) {
-		// Fa si che venga generato un nuovo transactionId internamente passandogli
-		// null!
-		gestisciLogEventoScript(null, nmApplic, nmTipoOggetto, tiOgg.getIdTipoOggetto(),
-			idOggetto);
-	    }
+            // Gestisci log da script solo se non lo si sta facendo dall'interno del metodo
+            // di gestione evento script
+            // stesso
+            if (hasToCheckScriptExistance) {
+                // Fa si che venga generato un nuovo transactionId internamente passandogli
+                // null!
+                gestisciLogEventoScript(null, nmApplic, nmTipoOggetto, tiOgg.getIdTipoOggetto(),
+                        idOggetto);
+            }
 
-	    AplVLogFotoTiEvnOgg evnOgg = sacerLogHelper.getFotoByEventoOggetto(idTipoEvento,
-		    tiOgg.getIdTipoOggetto());
-	    String foto = sacerLogHelper.getFotoXml(evnOgg.getBlQueryTipoOggetto(), idOggetto,
-		    evnOgg.getNmQueryTipoOggetto());
+            AplVLogFotoTiEvnOgg evnOgg = sacerLogHelper.getFotoByEventoOggetto(idTipoEvento,
+                    tiOgg.getIdTipoOggetto());
+            String foto = sacerLogHelper.getFotoXml(evnOgg.getBlQueryTipoOggetto(), idOggetto,
+                    evnOgg.getNmQueryTipoOggetto());
 
-	    /*
-	     * Scrittuta del log sul DB
-	     */
-	    // Evento
-	    logEvento = new LogEvento();
-	    logEvento.setIdApplic(idApplic);
-	    logEvento.setIdTipoEvento(idTipoEvento);
-	    logEvento.setDtRegEvento(momentoAttuale);
-	    logEvento.setTipoAzione(agente.getTipoOrigineAgente()
-		    .equals(EntityConstraints.TipoOrigineAgente.COMPONENTE_SW.name())
-			    ? EntityConstraints.TipoAzione.AZIONE_JOB.name()
-			    : EntityConstraints.TipoAzione.AZIONE_PAGINA.name());
-	    logEvento.setNmGeneratoreAzione(nmComponente);
-	    logEvento.setNmAzione(nmAzione);
-	    logEvento.setIdTransazione(ctx.getTransactionId());
+            /*
+             * Scrittuta del log sul DB
+             */
+            // Evento
+            logEvento = new LogEvento();
+            logEvento.setIdApplic(idApplic);
+            logEvento.setIdTipoEvento(idTipoEvento);
+            logEvento.setDtRegEvento(momentoAttuale);
+            logEvento.setTipoAzione(agente.getTipoOrigineAgente()
+                    .equals(EntityConstraints.TipoOrigineAgente.COMPONENTE_SW.name())
+                            ? EntityConstraints.TipoAzione.AZIONE_JOB.name()
+                            : EntityConstraints.TipoAzione.AZIONE_PAGINA.name());
+            logEvento.setNmGeneratoreAzione(nmComponente);
+            logEvento.setNmAzione(nmAzione);
+            logEvento.setIdTransazione(ctx.getTransactionId());
 
-	    // Agenti Evento
-	    ArrayList<LogAgenteEvento> agentiEvento = new ArrayList<>();
-	    LogAgenteEvento logAgenteEvento = new LogAgenteEvento();
-	    logAgenteEvento.setIdAgente(agente.getIdAgente());
-	    logAgenteEvento.setTiRuoloAgenteEvento(tipoRuoloPremisAgenteEvento);
-	    logAgenteEvento.setLogEvento(logEvento);
-	    agentiEvento.add(logAgenteEvento);
-	    logEvento.setLogAgenteEventos(agentiEvento);
+            // Agenti Evento
+            ArrayList<LogAgenteEvento> agentiEvento = new ArrayList<>();
+            LogAgenteEvento logAgenteEvento = new LogAgenteEvento();
+            logAgenteEvento.setIdAgente(agente.getIdAgente());
+            logAgenteEvento.setTiRuoloAgenteEvento(tipoRuoloPremisAgenteEvento);
+            logAgenteEvento.setLogEvento(logEvento);
+            agentiEvento.add(logAgenteEvento);
+            logEvento.setLogAgenteEventos(agentiEvento);
 
-	    // Oggetto Evento
-	    ArrayList<LogOggettoEvento> oggettiEvento = new ArrayList<>();
-	    LogOggettoEvento logOggettoEvento = new LogOggettoEvento();
-	    logOggettoEvento.setIdOggetto(idOggetto);
-	    logOggettoEvento.setIdTipoOggetto(tiOgg.getIdTipoOggetto());
-	    logOggettoEvento.setTiRuoloOggettoEvento(tipoRuoloPremisEventoOggetto);
+            // Oggetto Evento
+            ArrayList<LogOggettoEvento> oggettiEvento = new ArrayList<>();
+            LogOggettoEvento logOggettoEvento = new LogOggettoEvento();
+            logOggettoEvento.setIdOggetto(idOggetto);
+            logOggettoEvento.setIdTipoOggetto(tiOgg.getIdTipoOggetto());
+            logOggettoEvento.setTiRuoloOggettoEvento(tipoRuoloPremisEventoOggetto);
 
-	    logOggettoEvento.setDsKeyOggetto(getChiaveRecordFoto(foto));
-	    logOggettoEvento.setLogEvento(logEvento);
-	    oggettiEvento.add(logOggettoEvento);
-	    logEvento.setLogOggettoEventos(oggettiEvento);
+            logOggettoEvento.setDsKeyOggetto(getChiaveRecordFoto(foto));
+            logOggettoEvento.setLogEvento(logEvento);
+            oggettiEvento.add(logOggettoEvento);
+            logEvento.setLogOggettoEventos(oggettiEvento);
 
-	    // Verifica esistenza chiavi di accesso
-	    ArrayList<LogChiaveAccessoEvento> aChiave = new ArrayList<>();
-	    if (tiOgg.getIdTipoOggettoPadre() != null) {
-		List<AplVLogChiaveTiOgg> lChiavi = sacerLogHelper
-			.getChiaviAccessoByIdTipoOggetto(tiOgg.getIdTipoOggetto());
-		if (lChiavi != null && !lChiavi.isEmpty()) {
-		    BigDecimal idOggettoFiglio = idOggetto;
-		    LogChiaveAccessoEvento logChiave = null;
-		    for (AplVLogChiaveTiOgg chiave : lChiavi) {
-			logChiave = new LogChiaveAccessoEvento();
-			logChiave.setIdApplic(idApplic);
-			logChiave.setIdTipoOggetto(tiOgg.getIdTipoOggettoPadre());
-			logChiave.setLogEvento(logEvento);
-			logChiave.setDtRegEvento(momentoAttuale);
-			List<BigDecimal> lChiaviPadre = sacerLogHelper
-				.findAllChiaviAccessoByIdOggetto(chiave.getBlQueryTipoOggetto(),
-					idOggettoFiglio);
-			if (lChiaviPadre != null && !lChiaviPadre.isEmpty()) {
-			    logChiave.setIdOggetto(lChiaviPadre.iterator().next());
-			    aChiave.add(logChiave);
-			}
-		    }
-		}
-	    }
-	    // Gestione della chiave accesso di se stesso creata per ridondanza
-	    LogChiaveAccessoEvento logChiaveRidonadante = new LogChiaveAccessoEvento();
-	    logChiaveRidonadante.setIdApplic(idApplic);
-	    logChiaveRidonadante.setIdTipoOggetto(tiOgg.getIdTipoOggetto());
-	    logChiaveRidonadante.setIdOggetto(idOggetto);
-	    logChiaveRidonadante.setDtRegEvento(momentoAttuale);
-	    logChiaveRidonadante.setLogEvento(logEvento);
-	    aChiave.add(logChiaveRidonadante);
-	    logEvento.setLogChiaveAccessoEventos(aChiave);
+            // Verifica esistenza chiavi di accesso
+            ArrayList<LogChiaveAccessoEvento> aChiave = new ArrayList<>();
+            if (tiOgg.getIdTipoOggettoPadre() != null) {
+                List<AplVLogChiaveTiOgg> lChiavi = sacerLogHelper
+                        .getChiaviAccessoByIdTipoOggetto(tiOgg.getIdTipoOggetto());
+                if (lChiavi != null && !lChiavi.isEmpty()) {
+                    BigDecimal idOggettoFiglio = idOggetto;
+                    LogChiaveAccessoEvento logChiave = null;
+                    for (AplVLogChiaveTiOgg chiave : lChiavi) {
+                        logChiave = new LogChiaveAccessoEvento();
+                        logChiave.setIdApplic(idApplic);
+                        logChiave.setIdTipoOggetto(tiOgg.getIdTipoOggettoPadre());
+                        logChiave.setLogEvento(logEvento);
+                        logChiave.setDtRegEvento(momentoAttuale);
+                        List<BigDecimal> lChiaviPadre = sacerLogHelper
+                                .findAllChiaviAccessoByIdOggetto(chiave.getBlQueryTipoOggetto(),
+                                        idOggettoFiglio);
+                        if (lChiaviPadre != null && !lChiaviPadre.isEmpty()) {
+                            logChiave.setIdOggetto(lChiaviPadre.iterator().next());
+                            aChiave.add(logChiave);
+                        }
+                    }
+                }
+            }
+            // Gestione della chiave accesso di se stesso creata per ridondanza
+            LogChiaveAccessoEvento logChiaveRidonadante = new LogChiaveAccessoEvento();
+            logChiaveRidonadante.setIdApplic(idApplic);
+            logChiaveRidonadante.setIdTipoOggetto(tiOgg.getIdTipoOggetto());
+            logChiaveRidonadante.setIdOggetto(idOggetto);
+            logChiaveRidonadante.setDtRegEvento(momentoAttuale);
+            logChiaveRidonadante.setLogEvento(logEvento);
+            aChiave.add(logChiaveRidonadante);
+            logEvento.setLogChiaveAccessoEventos(aChiave);
 
-	    // SCRITTURA FINALE LOG
-	    entityManager.persist(logEvento);
-	    entityManager.flush();
-	    BigDecimal idFoto = new BigDecimal(sacerLogHelper
-		    .inserisciFoto(logOggettoEvento.getIdOggettoEvento(), foto, momentoAttuale));
-	    Date dataInizio = new Date();
-	    sacerLogHelper.scriviDelta(logOggettoEvento.getIdOggettoEvento(), momentoAttuale);
-	    Date dataFine = new Date();
-	    log.debug("TID [{}] elapsed DELTA_FOTO [{}][{}] {} millis.", ctx, nmTipoOggetto,
-		    idOggetto, dataFine.getTime() - dataInizio.getTime());
+            // SCRITTURA FINALE LOG
+            entityManager.persist(logEvento);
+            entityManager.flush();
+            BigDecimal idFoto = new BigDecimal(sacerLogHelper
+                    .inserisciFoto(logOggettoEvento.getIdOggettoEvento(), foto, momentoAttuale));
+            Date dataInizio = new Date();
+            sacerLogHelper.scriviDelta(logOggettoEvento.getIdOggettoEvento(), momentoAttuale);
+            Date dataFine = new Date();
+            log.debug("TID [{}] elapsed DELTA_FOTO [{}][{}] {} millis.", ctx, nmTipoOggetto,
+                    idOggetto, dataFine.getTime() - dataInizio.getTime());
 
-	    // Verifica esistenza ed esecuzione dei trigger
-	    List<AplVLogTrigTiEvnOgg> trigList = sacerLogHelper
-		    .getTriggersByIdEventoOggetto(evnOgg.getIdTipoEventoOggetto());
-	    if (trigList != null && !trigList.isEmpty()) {
-		// per ogni trigger che trova...
-		for (AplVLogTrigTiEvnOgg trigger : trigList) {
-		    if (sacerLogHelper.isThereATrigger(trigger.getBlQueryTipoOggettoTrig(),
-			    idFoto)) {
-			log.debug("TID [{}] Deve scattare il trigger per l'entita' [{}]", ctx,
-				idOggetto);
-			List<BigDecimal> l = sacerLogHelper.findAllObjectIdFromTrigger(
-				trigger.getBlQueryTipoOggettoSel(), idOggetto);
-			if (l != null) {
-			    for (Iterator<BigDecimal> iterator1 = l.iterator(); iterator1
-				    .hasNext();) {
-				BigDecimal oggId = iterator1.next();
-				log.debug(
-					"TID [{}] Deve scattare la nuova FOTO TRIGGERATA per l'entita' [{}]",
-					ctx, oggId);
-				// Logga l'oggetto triggerato ricorsivamente
-				log(ctx, true, trigger.getNmTipoEventoTrig(),
-					trigger.getNmApplicTrig(), agente, nmAzione,
-					trigger.getNmTipoOggettoTrig(), oggId, nmComponente,
-					tipoRuoloPremisAgenteEvento, tipoRuoloPremisEventoOggetto,
-					momentoAttuale, true);
-			    }
-			}
-		    }
-		}
-	    } else {
-		log.debug("TID [{}] Nessun trigger da eseguire per l'idEventoOggetto {}", ctx,
-			evnOgg.getIdTipoEventoOggetto());
-	    }
-	    log.debug("TID [{}] OGG LOGGATO: {}-{}-{}-{}-{}-{}-{}-{}.", ctx, nmApplic,
-		    agente.getNmAgente(), nmAzione, nmTipoOggetto, idOggetto, nmComponente,
-		    tipoRuoloPremisAgenteEvento, tipoRuoloPremisEventoOggetto);
-	    log.debug("TID [{}] FOTO LOGGATA {}", ctx, foto);
-	}
-	return logEvento;
+            // Verifica esistenza ed esecuzione dei trigger
+            List<AplVLogTrigTiEvnOgg> trigList = sacerLogHelper
+                    .getTriggersByIdEventoOggetto(evnOgg.getIdTipoEventoOggetto());
+            if (trigList != null && !trigList.isEmpty()) {
+                // per ogni trigger che trova...
+                for (AplVLogTrigTiEvnOgg trigger : trigList) {
+                    if (sacerLogHelper.isThereATrigger(trigger.getBlQueryTipoOggettoTrig(),
+                            idFoto)) {
+                        log.debug("TID [{}] Deve scattare il trigger per l'entita' [{}]", ctx,
+                                idOggetto);
+                        List<BigDecimal> l = sacerLogHelper.findAllObjectIdFromTrigger(
+                                trigger.getBlQueryTipoOggettoSel(), idOggetto);
+                        if (l != null) {
+                            for (Iterator<BigDecimal> iterator1 = l.iterator(); iterator1
+                                    .hasNext();) {
+                                BigDecimal oggId = iterator1.next();
+                                log.debug(
+                                        "TID [{}] Deve scattare la nuova FOTO TRIGGERATA per l'entita' [{}]",
+                                        ctx, oggId);
+                                // Logga l'oggetto triggerato ricorsivamente
+                                log(ctx, true, trigger.getNmTipoEventoTrig(),
+                                        trigger.getNmApplicTrig(), agente, nmAzione,
+                                        trigger.getNmTipoOggettoTrig(), oggId, nmComponente,
+                                        tipoRuoloPremisAgenteEvento, tipoRuoloPremisEventoOggetto,
+                                        momentoAttuale, true);
+                            }
+                        }
+                    }
+                }
+            } else {
+                log.debug("TID [{}] Nessun trigger da eseguire per l'idEventoOggetto {}", ctx,
+                        evnOgg.getIdTipoEventoOggetto());
+            }
+            log.debug("TID [{}] OGG LOGGATO: {}-{}-{}-{}-{}-{}-{}-{}.", ctx, nmApplic,
+                    agente.getNmAgente(), nmAzione, nmTipoOggetto, idOggetto, nmComponente,
+                    tipoRuoloPremisAgenteEvento, tipoRuoloPremisEventoOggetto);
+            log.debug("TID [{}] FOTO LOGGATA {}", ctx, foto);
+        }
+        return logEvento;
     }
 
     /*
@@ -285,75 +285,75 @@ public class SacerLogEjb {
      * nome tipo oggetto per chiamare correttamente l'API di logging.
      */
     public void gestisciLogEventoScript(TransactionLogContext ctx, String nomeApplicazione,
-	    String nomeTipoOggetto, BigDecimal idTipoOggetto, BigDecimal idOggetto) {
-	List<LogEventoByScript> eventoList = sacerLogHelper
-		.getLogEventoScriptByTipoOggettoIdLocked(idTipoOggetto, idOggetto);
-	if (eventoList != null && !eventoList.isEmpty()) {
-	    /*
-	     * Se l'ID di transazione viene fornito dall'esterno usa quello altrimenti ne ricava uno
-	     * nuovo dalla sequence su DB.
-	     */
-	    if (ctx == null) {
-		ctx = getNewTransactionLogContext();
-	    }
-	    /*
-	     * Prende un'altra istanza di se stesso per effettuare una loggata in una nuova
-	     * transazione. Fa così perché altrimenti se fa una foto delle modifiche dello script
-	     * nella stessa transazione fotografa l'oggetto che è già stato modificato dalla
-	     * transazione attuale da interfaccia e quindi tutte le modifiche collassano nell'unico
-	     * evento di script.
-	     */
-	    SacerLogEjb meStesso = context.getBusinessObject(SacerLogEjb.class);
+            String nomeTipoOggetto, BigDecimal idTipoOggetto, BigDecimal idOggetto) {
+        List<LogEventoByScript> eventoList = sacerLogHelper
+                .getLogEventoScriptByTipoOggettoIdLocked(idTipoOggetto, idOggetto);
+        if (eventoList != null && !eventoList.isEmpty()) {
+            /*
+             * Se l'ID di transazione viene fornito dall'esterno usa quello altrimenti ne ricava uno
+             * nuovo dalla sequence su DB.
+             */
+            if (ctx == null) {
+                ctx = getNewTransactionLogContext();
+            }
+            /*
+             * Prende un'altra istanza di se stesso per effettuare una loggata in una nuova
+             * transazione. Fa così perché altrimenti se fa una foto delle modifiche dello script
+             * nella stessa transazione fotografa l'oggetto che è già stato modificato dalla
+             * transazione attuale da interfaccia e quindi tutte le modifiche collassano nell'unico
+             * evento di script.
+             */
+            SacerLogEjb meStesso = context.getBusinessObject(SacerLogEjb.class);
 
-	    TransactionLogContext ctxEffettivo;
+            TransactionLogContext ctxEffettivo;
 
-	    for (LogEventoByScript logEventoByScript : eventoList) {
-		LogVLogAgente logAgente = sacerLogHelper
-			.getAgenteByIdAgente(logEventoByScript.getIdAgente());
-		// 29592 - recupero l'azione da loggare, che può essere riferita ad un
-		// componente sw o ad una pagina web
-		BigDecimal idAzione = logEventoByScript.getIdAzionePagina() == null
-			? logEventoByScript.getIdAzioneCompSw()
-			: logEventoByScript.getIdAzionePagina();
-		AplVLogTiEvnConOrigine evn = sacerLogHelper
-			.getAplVLogTiEvnConOrigineByApplicIdAzioneCompSw(nomeApplicazione,
-				idAzione);
-		Calendar momentoAttuale = Calendar.getInstance();
-		momentoAttuale.setTimeInMillis(logEventoByScript.getDtRegEvento().getTime());
+            for (LogEventoByScript logEventoByScript : eventoList) {
+                LogVLogAgente logAgente = sacerLogHelper
+                        .getAgenteByIdAgente(logEventoByScript.getIdAgente());
+                // 29592 - recupero l'azione da loggare, che può essere riferita ad un
+                // componente sw o ad una pagina web
+                BigDecimal idAzione = logEventoByScript.getIdAzionePagina() == null
+                        ? logEventoByScript.getIdAzioneCompSw()
+                        : logEventoByScript.getIdAzionePagina();
+                AplVLogTiEvnConOrigine evn = sacerLogHelper
+                        .getAplVLogTiEvnConOrigineByApplicIdAzioneCompSw(nomeApplicazione,
+                                idAzione);
+                Calendar momentoAttuale = Calendar.getInstance();
+                momentoAttuale.setTimeInMillis(logEventoByScript.getDtRegEvento().getTime());
 
-		// 29592 - Se in logEventoByScript è presente un id transazione (relativo a
-		// logging asincrono), creo un
-		// contesto con quell'id
-		// per avere il riferimento alla stessa transazione nei record asincroni loggati
-		if (logEventoByScript.getIdTransazione() != null) {
-		    ctxEffettivo = new TransactionLogContext(logEventoByScript.getIdTransazione());
-		} else {
-		    ctxEffettivo = ctx;
-		}
+                // 29592 - Se in logEventoByScript è presente un id transazione (relativo a
+                // logging asincrono), creo un
+                // contesto con quell'id
+                // per avere il riferimento alla stessa transazione nei record asincroni loggati
+                if (logEventoByScript.getIdTransazione() != null) {
+                    ctxEffettivo = new TransactionLogContext(logEventoByScript.getIdTransazione());
+                } else {
+                    ctxEffettivo = ctx;
+                }
 
-		meStesso.logInNewTransaction(ctxEffettivo, false, null, nomeApplicazione, logAgente,
-			evn.getNmAzionePaginaCompSw(), nomeTipoOggetto, idOggetto,
-			evn.getNmPaginaCompSw(), logEventoByScript.getTiRuoloAgenteEvento(),
-			logEventoByScript.getTiRuoloOggettoEvento(), momentoAttuale, false,
-			logEventoByScript.getDsMotivoScript());
-		// Cancella il record logEventoByScript appena loggato per non riprocessarlo
-		// successivamente
-		sacerLogHelper.removeEntity(logEventoByScript, true);
-	    }
-	}
+                meStesso.logInNewTransaction(ctxEffettivo, false, null, nomeApplicazione, logAgente,
+                        evn.getNmAzionePaginaCompSw(), nomeTipoOggetto, idOggetto,
+                        evn.getNmPaginaCompSw(), logEventoByScript.getTiRuoloAgenteEvento(),
+                        logEventoByScript.getTiRuoloOggettoEvento(), momentoAttuale, false,
+                        logEventoByScript.getDsMotivoScript());
+                // Cancella il record logEventoByScript appena loggato per non riprocessarlo
+                // successivamente
+                sacerLogHelper.removeEntity(logEventoByScript, true);
+            }
+        }
     }
 
     /*
      * Metodo da utilizzare per le loggate da azioni tipo componente software con idTransazione
      */
     public LogEvento log(TransactionLogContext ctx, String nmApplic, String nmAgente,
-	    String nmAzione, String nmTipoOggetto, BigDecimal idOggetto, String nmComponente,
-	    String tipoRuoloPremisAgenteEvento, String tipoRuoloPremisEventoOggetto) {
-	LogVLogAgente agente = sacerLogHelper.getAgenteByNomeAgente(nmAgente);
-	Calendar momentoAttuale = Calendar.getInstance();
-	return log(ctx, false, null, nmApplic, agente, nmAzione, nmTipoOggetto, idOggetto,
-		nmComponente, tipoRuoloPremisAgenteEvento, tipoRuoloPremisEventoOggetto,
-		momentoAttuale, true);
+            String nmAzione, String nmTipoOggetto, BigDecimal idOggetto, String nmComponente,
+            String tipoRuoloPremisAgenteEvento, String tipoRuoloPremisEventoOggetto) {
+        LogVLogAgente agente = sacerLogHelper.getAgenteByNomeAgente(nmAgente);
+        Calendar momentoAttuale = Calendar.getInstance();
+        return log(ctx, false, null, nmApplic, agente, nmAzione, nmTipoOggetto, idOggetto,
+                nmComponente, tipoRuoloPremisAgenteEvento, tipoRuoloPremisEventoOggetto,
+                momentoAttuale, true);
     }
 
     /*
@@ -361,22 +361,22 @@ public class SacerLogEjb {
      * ruolo Premis Evento Oggetto è a default su PremisEnums.TipoEventoOggetto.OUTCOME
      */
     public LogEvento log(TransactionLogContext ctx, String nmApplic, String nmAgente,
-	    String nmAzione, String nmTipoOggetto, BigDecimal idOggetto, String nmComponente,
-	    String tipoRuoloPremisAgenteEvento) {
-	LogVLogAgente agente = sacerLogHelper.getAgenteByNomeAgente(nmAgente);
-	Calendar momentoAttuale = Calendar.getInstance();
-	return log(ctx, false, null, nmApplic, agente, nmAzione, nmTipoOggetto, idOggetto,
-		nmComponente, tipoRuoloPremisAgenteEvento, PremisEnums.TipoEventoOggetto.OUTCOME,
-		momentoAttuale, true);
+            String nmAzione, String nmTipoOggetto, BigDecimal idOggetto, String nmComponente,
+            String tipoRuoloPremisAgenteEvento) {
+        LogVLogAgente agente = sacerLogHelper.getAgenteByNomeAgente(nmAgente);
+        Calendar momentoAttuale = Calendar.getInstance();
+        return log(ctx, false, null, nmApplic, agente, nmAzione, nmTipoOggetto, idOggetto,
+                nmComponente, tipoRuoloPremisAgenteEvento, PremisEnums.TipoEventoOggetto.OUTCOME,
+                momentoAttuale, true);
     }
 
     /*
      * Metodo da utilizzare per le loggate da azioni tipo azione pagina con idTransazione
      */
     public LogEvento log(TransactionLogContext ctx, String nmApplic, String nmAgente,
-	    String nmAzione, String nmTipoOggetto, BigDecimal idOggetto, String nmComponente) {
-	return log(ctx, nmApplic, nmAgente, nmAzione, nmTipoOggetto, idOggetto, nmComponente, null,
-		null);
+            String nmAzione, String nmTipoOggetto, BigDecimal idOggetto, String nmComponente) {
+        return log(ctx, nmApplic, nmAgente, nmAzione, nmTipoOggetto, idOggetto, nmComponente, null,
+                null);
     }
 
     /*
@@ -384,8 +384,8 @@ public class SacerLogEjb {
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public LogEvento logInNewTx(TransactionLogContext ctx, String nmApplic, String nmAgente,
-	    String nmAzione, String nmTipoOggetto, BigDecimal idOggetto, String nmComponente) {
-	return log(ctx, nmApplic, nmAgente, nmAzione, nmTipoOggetto, idOggetto, nmComponente);
+            String nmAzione, String nmTipoOggetto, BigDecimal idOggetto, String nmComponente) {
+        return log(ctx, nmApplic, nmAgente, nmAzione, nmTipoOggetto, idOggetto, nmComponente);
     }
 
     /*
@@ -393,23 +393,23 @@ public class SacerLogEjb {
      * idTransazione.
      */
     public List<LogEvento> log(TransactionLogContext ctx, String nmApplic, String nmAgente,
-	    String nmAzione, String nmTipoOggetto, Set<BigDecimal> idsOggetto,
-	    String nmComponente) {
-	List<LogEvento> l = new ArrayList<>();
-	if (idsOggetto != null && !idsOggetto.isEmpty()) {
-	    /*
-	     * Se l'ID di transazione viene fornito dall'esterno usa quello altrimenti ne ricava uno
-	     * nuovo dalla sequence su DB.
-	     */
-	    if (ctx == null) {
-		ctx = getNewTransactionLogContext();
-	    }
-	    for (BigDecimal idOggetto : idsOggetto) {
-		l.add(log(ctx, nmApplic, nmAgente, nmAzione, nmTipoOggetto, idOggetto, nmComponente,
-			null, null));
-	    }
-	}
-	return l;
+            String nmAzione, String nmTipoOggetto, Set<BigDecimal> idsOggetto,
+            String nmComponente) {
+        List<LogEvento> l = new ArrayList<>();
+        if (idsOggetto != null && !idsOggetto.isEmpty()) {
+            /*
+             * Se l'ID di transazione viene fornito dall'esterno usa quello altrimenti ne ricava uno
+             * nuovo dalla sequence su DB.
+             */
+            if (ctx == null) {
+                ctx = getNewTransactionLogContext();
+            }
+            for (BigDecimal idOggetto : idsOggetto) {
+                l.add(log(ctx, nmApplic, nmAgente, nmAzione, nmTipoOggetto, idOggetto, nmComponente,
+                        null, null));
+            }
+        }
+        return l;
     }
 
     /*
@@ -417,9 +417,9 @@ public class SacerLogEjb {
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public List<LogEvento> logInNewTx(TransactionLogContext ctx, String nmApplic, String nmAgente,
-	    String nmAzione, String nmTipoOggetto, Set<BigDecimal> idsOggetto,
-	    String nmComponente) {
-	return log(ctx, nmApplic, nmAgente, nmAzione, nmTipoOggetto, idsOggetto, nmComponente);
+            String nmAzione, String nmTipoOggetto, Set<BigDecimal> idsOggetto,
+            String nmComponente) {
+        return log(ctx, nmApplic, nmAgente, nmAzione, nmTipoOggetto, idsOggetto, nmComponente);
     }
 
     /*
@@ -454,72 +454,72 @@ public class SacerLogEjb {
      * contiene il nome del tipo di oggetto ed una lista di idOggetto.
      */
     public List<ObjectsToLogBefore> logBefore(TransactionLogContext ctx, String nmApplic,
-	    String nmAgente, String nmAzione, String nmTipoOggetto, BigDecimal idOggetto,
-	    String nmComponente) {
+            String nmAgente, String nmAzione, String nmTipoOggetto, BigDecimal idOggetto,
+            String nmComponente) {
 
-	if (ctx == null) {
-	    throw SacerLogRuntimeException.builder().category(SacerLogErrorCategory.LOGGER_ERROR)
-		    .message(ERR_MSG_ID_TRANSAZIONE_NULLO).build();
-	}
-	// LogVLogAgente agente = sacerLogHelper.getAgenteByNomeAgente(nmAgente);
-	List<ObjectsToLogBefore> listaOggettiDaLoggare = null;
-	// verifica se il logging e' abilitato sulla tabella dei parametri
-	// dell'applicazione
-	if (sacerLogHelper.isLoggingEnabled()
-		|| sacerLogHelper.isLoggingEnabledForThisNomeAzione(nmAzione)) {
-	    // Gestione defaults
-	    AplVLogTiEvnConOrigine tipoConOrigine = sacerLogHelper
-		    .getTipoEventoByApplicFinestraAzione(nmApplic, nmComponente, nmAzione);
-	    BigDecimal idTipoEvento = tipoConOrigine.getAplVLogTiEvnConOrigineId()
-		    .getIdTipoEvento();
+        if (ctx == null) {
+            throw SacerLogRuntimeException.builder().category(SacerLogErrorCategory.LOGGER_ERROR)
+                    .message(ERR_MSG_ID_TRANSAZIONE_NULLO).build();
+        }
+        // LogVLogAgente agente = sacerLogHelper.getAgenteByNomeAgente(nmAgente);
+        List<ObjectsToLogBefore> listaOggettiDaLoggare = null;
+        // verifica se il logging e' abilitato sulla tabella dei parametri
+        // dell'applicazione
+        if (sacerLogHelper.isLoggingEnabled()
+                || sacerLogHelper.isLoggingEnabledForThisNomeAzione(nmAzione)) {
+            // Gestione defaults
+            AplVLogTiEvnConOrigine tipoConOrigine = sacerLogHelper
+                    .getTipoEventoByApplicFinestraAzione(nmApplic, nmComponente, nmAzione);
+            BigDecimal idTipoEvento = tipoConOrigine.getAplVLogTiEvnConOrigineId()
+                    .getIdTipoEvento();
 
-	    AplVLogTiOgg tiOgg = sacerLogHelper.getTipoOggettoByNome(nmApplic, nmTipoOggetto);
-	    AplVLogFotoTiEvnOgg evnOgg = sacerLogHelper.getFotoByEventoOggetto(idTipoEvento,
-		    tiOgg.getIdTipoOggetto());
+            AplVLogTiOgg tiOgg = sacerLogHelper.getTipoOggettoByNome(nmApplic, nmTipoOggetto);
+            AplVLogFotoTiEvnOgg evnOgg = sacerLogHelper.getFotoByEventoOggetto(idTipoEvento,
+                    tiOgg.getIdTipoOggetto());
 
-	    /*
-	     * Verifica esistenza ed esecuzione dei trigger BEFORE Effettua una query sulla
-	     * APL_V_LOG_TRIG_TI_EVN_OGG estraendo per ID_TIPO_EVENTO_OGGETTO tutti i trigger che
-	     * non hanno alcuna query di verifica se scatenare o no un trigger
-	     * (ID_QUERY_TIPO_OGGETTO_TRIG)
-	     */
-	    List<AplVLogTrigTiEvnOgg> trigList = sacerLogHelper
-		    .getTriggersBeforeByIdEventoOggetto(evnOgg.getIdTipoEventoOggetto());
-	    if (trigList != null && !trigList.isEmpty()) {
-		listaOggettiDaLoggare = new ArrayList<>();
-		// per ogni trigger che trova...
-		for (AplVLogTrigTiEvnOgg trigger : trigList) {
-		    /*
-		     * esegue la query di selezione di tutti gli oggetti da fotografare per
-		     * l'idOggetto specificato. Per esempio l'idOggetto potrebbe essere quello del
-		     * TipoUD e la select degli oggetti estrae per questo TipoUD tutti i Registri
-		     * collegati
-		     */
-		    List<BigDecimal> idsList = sacerLogHelper.findAllObjectIdFromTrigger(
-			    trigger.getBlQueryTipoOggettoSel(), idOggetto);
-		    if (idsList != null && !idsList.isEmpty()) {
-			// ...estrae il tipo oggetto ed il tipo evento degli oggetti i cui ID si
-			// estrarranno nella
-			// successiva query...
-			ObjectsToLogBefore obj = new ObjectsToLogBefore(trigger.getNmApplicTrig(),
-				trigger.getNmTipoOggettoTrig(), trigger.getNmTipoEventoTrig(),
-				trigger.getTipoClasseEventoTrig());
-			listaOggettiDaLoggare.add(obj);
-			log.debug("TID [{}] Deve scattare il trigger per l'entita' [{}]", ctx,
-				obj.getTipoOggetto());
-			for (BigDecimal oggId : idsList) {
-			    // Inserisco l'ID dell'oggetto nell'array degli oggetti da fotografare
-			    // in futuro
-			    obj.getIdOggetto().add(oggId);
-			}
-		    }
-		}
-	    } else {
-		log.debug("TID [{}] Nessun trigger da eseguire per l'idEventoOggetto {}", ctx,
-			evnOgg.getIdTipoEventoOggetto());
-	    }
-	}
-	return listaOggettiDaLoggare;
+            /*
+             * Verifica esistenza ed esecuzione dei trigger BEFORE Effettua una query sulla
+             * APL_V_LOG_TRIG_TI_EVN_OGG estraendo per ID_TIPO_EVENTO_OGGETTO tutti i trigger che
+             * non hanno alcuna query di verifica se scatenare o no un trigger
+             * (ID_QUERY_TIPO_OGGETTO_TRIG)
+             */
+            List<AplVLogTrigTiEvnOgg> trigList = sacerLogHelper
+                    .getTriggersBeforeByIdEventoOggetto(evnOgg.getIdTipoEventoOggetto());
+            if (trigList != null && !trigList.isEmpty()) {
+                listaOggettiDaLoggare = new ArrayList<>();
+                // per ogni trigger che trova...
+                for (AplVLogTrigTiEvnOgg trigger : trigList) {
+                    /*
+                     * esegue la query di selezione di tutti gli oggetti da fotografare per
+                     * l'idOggetto specificato. Per esempio l'idOggetto potrebbe essere quello del
+                     * TipoUD e la select degli oggetti estrae per questo TipoUD tutti i Registri
+                     * collegati
+                     */
+                    List<BigDecimal> idsList = sacerLogHelper.findAllObjectIdFromTrigger(
+                            trigger.getBlQueryTipoOggettoSel(), idOggetto);
+                    if (idsList != null && !idsList.isEmpty()) {
+                        // ...estrae il tipo oggetto ed il tipo evento degli oggetti i cui ID si
+                        // estrarranno nella
+                        // successiva query...
+                        ObjectsToLogBefore obj = new ObjectsToLogBefore(trigger.getNmApplicTrig(),
+                                trigger.getNmTipoOggettoTrig(), trigger.getNmTipoEventoTrig(),
+                                trigger.getTipoClasseEventoTrig());
+                        listaOggettiDaLoggare.add(obj);
+                        log.debug("TID [{}] Deve scattare il trigger per l'entita' [{}]", ctx,
+                                obj.getTipoOggetto());
+                        for (BigDecimal oggId : idsList) {
+                            // Inserisco l'ID dell'oggetto nell'array degli oggetti da fotografare
+                            // in futuro
+                            obj.getIdOggetto().add(oggId);
+                        }
+                    }
+                }
+            } else {
+                log.debug("TID [{}] Nessun trigger da eseguire per l'idEventoOggetto {}", ctx,
+                        evnOgg.getIdTipoEventoOggetto());
+            }
+        }
+        return listaOggettiDaLoggare;
     }
 
     /*
@@ -528,26 +528,26 @@ public class SacerLogEjb {
      * correlati una volta che l'entita' e' stata cancellata.
      */
     public void logAfter(TransactionLogContext ctx, String nmApplic, String nmAgente,
-	    String nmAzione, List<ObjectsToLogBefore> listaOggetti, String nmComponente) {
+            String nmAzione, List<ObjectsToLogBefore> listaOggetti, String nmComponente) {
 
-	if (ctx == null) {
-	    throw SacerLogRuntimeException.builder().category(SacerLogErrorCategory.LOGGER_ERROR)
-		    .message(ERR_MSG_ID_TRANSAZIONE_NULLO).build();
-	}
-	if (listaOggetti != null) {
-	    LogVLogAgente agente = sacerLogHelper.getAgenteByNomeAgente(nmAgente);
-	    Calendar momentoAttuale = Calendar.getInstance();
-	    for (ObjectsToLogBefore objectsToLogBefore : listaOggetti) {
-		log.debug("TID [{}] LOG AFTER per l'oggetto {}", ctx,
-			objectsToLogBefore.getTipoOggetto());
-		for (BigDecimal idOgg : objectsToLogBefore.getIdOggetto()) {
-		    this.log(ctx, true, objectsToLogBefore.getTipoEvento(),
-			    objectsToLogBefore.getNomeApplicazione(), agente, nmAzione,
-			    objectsToLogBefore.getTipoOggetto(), idOgg, nmComponente, null, null,
-			    momentoAttuale, true);
-		}
-	    }
-	}
+        if (ctx == null) {
+            throw SacerLogRuntimeException.builder().category(SacerLogErrorCategory.LOGGER_ERROR)
+                    .message(ERR_MSG_ID_TRANSAZIONE_NULLO).build();
+        }
+        if (listaOggetti != null) {
+            LogVLogAgente agente = sacerLogHelper.getAgenteByNomeAgente(nmAgente);
+            Calendar momentoAttuale = Calendar.getInstance();
+            for (ObjectsToLogBefore objectsToLogBefore : listaOggetti) {
+                log.debug("TID [{}] LOG AFTER per l'oggetto {}", ctx,
+                        objectsToLogBefore.getTipoOggetto());
+                for (BigDecimal idOgg : objectsToLogBefore.getIdOggetto()) {
+                    this.log(ctx, true, objectsToLogBefore.getTipoEvento(),
+                            objectsToLogBefore.getNomeApplicazione(), agente, nmAzione,
+                            objectsToLogBefore.getTipoOggetto(), idOgg, nmComponente, null, null,
+                            momentoAttuale, true);
+                }
+            }
+        }
     }
 
     /*
@@ -558,15 +558,15 @@ public class SacerLogEjb {
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public LogEvento logInNewTransaction(TransactionLogContext ctx, boolean isTrigger,
-	    String nmTipoEvento, String nmApplic, LogVLogAgente agente, String nmAzione,
-	    String nmTipoOggetto, BigDecimal idOggetto, String nmComponente,
-	    String tipoRuoloPremisAgenteEvento, String tipoRuoloPremisEventoOggetto,
-	    Calendar momentoAttuale, boolean hasToCheckScriptExistance, String motivazioneScript) {
-	LogEvento ev = log(ctx, isTrigger, nmTipoEvento, nmApplic, agente, nmAzione, nmTipoOggetto,
-		idOggetto, nmComponente, tipoRuoloPremisAgenteEvento, tipoRuoloPremisEventoOggetto,
-		momentoAttuale, hasToCheckScriptExistance);
-	ev.setDsMotivoScript(motivazioneScript);
-	return ev;
+            String nmTipoEvento, String nmApplic, LogVLogAgente agente, String nmAzione,
+            String nmTipoOggetto, BigDecimal idOggetto, String nmComponente,
+            String tipoRuoloPremisAgenteEvento, String tipoRuoloPremisEventoOggetto,
+            Calendar momentoAttuale, boolean hasToCheckScriptExistance, String motivazioneScript) {
+        LogEvento ev = log(ctx, isTrigger, nmTipoEvento, nmApplic, agente, nmAzione, nmTipoOggetto,
+                idOggetto, nmComponente, tipoRuoloPremisAgenteEvento, tipoRuoloPremisEventoOggetto,
+                momentoAttuale, hasToCheckScriptExistance);
+        ev.setDsMotivoScript(motivazioneScript);
+        return ev;
     }
 
     /*
@@ -575,42 +575,42 @@ public class SacerLogEjb {
      * chiave che della tilde
      */
     public String getChiaveRecordFoto(String xml) {
-	if (xml == null) {
-	    return null;
-	}
-	String chiave = "";
-	XPathFactory xpathFactory = XPathFactory.newInstance();
-	XPath xpath = xpathFactory.newXPath();
-	InputSource source = new InputSource(new StringReader(xml));
-	try {
-	    NodeList nodes = (NodeList) xpath.evaluate(CHIAVE_FOTO_QUERY_XPATH, source,
-		    XPathConstants.NODESET);
-	    if (nodes != null) {
-		Node fratelloPrecedente = null;
-		for (int i = 0; i < nodes.getLength(); i++) {
-		    if (i == (nodes.getLength() - 1)) {
-			if (nodes.item(i) != null && !nodes.item(i)
-				.equals(EntityConstraints.VALORE_NULL_DS_KEY_OGGETTO)) {
-			    fratelloPrecedente = nodes.item(i).getParentNode().getPreviousSibling();
-			    chiave += fratelloPrecedente.getTextContent() + "="
-				    + nodes.item(i).getNodeValue();
-			}
-		    } else {
-			if (nodes.item(i) != null && !nodes.item(i)
-				.equals(EntityConstraints.VALORE_NULL_DS_KEY_OGGETTO)) {
-			    fratelloPrecedente = nodes.item(i).getParentNode().getPreviousSibling();
-			    chiave += fratelloPrecedente.getTextContent() + "="
-				    + nodes.item(i).getNodeValue()
-				    + EntityConstraints.SEPARATORE_DS_KEY_OGGETTO;
-			}
-		    }
-		}
-	    }
-	} catch (Exception e) {
-	    log.error("Errore nel processamento dell'XML", e);
-	}
+        if (xml == null) {
+            return null;
+        }
+        String chiave = "";
+        XPathFactory xpathFactory = XPathFactory.newInstance();
+        XPath xpath = xpathFactory.newXPath();
+        InputSource source = new InputSource(new StringReader(xml));
+        try {
+            NodeList nodes = (NodeList) xpath.evaluate(CHIAVE_FOTO_QUERY_XPATH, source,
+                    XPathConstants.NODESET);
+            if (nodes != null) {
+                Node fratelloPrecedente = null;
+                for (int i = 0; i < nodes.getLength(); i++) {
+                    if (i == (nodes.getLength() - 1)) {
+                        if (nodes.item(i) != null && !nodes.item(i)
+                                .equals(EntityConstraints.VALORE_NULL_DS_KEY_OGGETTO)) {
+                            fratelloPrecedente = nodes.item(i).getParentNode().getPreviousSibling();
+                            chiave += fratelloPrecedente.getTextContent() + "="
+                                    + nodes.item(i).getNodeValue();
+                        }
+                    } else {
+                        if (nodes.item(i) != null && !nodes.item(i)
+                                .equals(EntityConstraints.VALORE_NULL_DS_KEY_OGGETTO)) {
+                            fratelloPrecedente = nodes.item(i).getParentNode().getPreviousSibling();
+                            chiave += fratelloPrecedente.getTextContent() + "="
+                                    + nodes.item(i).getNodeValue()
+                                    + EntityConstraints.SEPARATORE_DS_KEY_OGGETTO;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.error("Errore nel processamento dell'XML", e);
+        }
 
-	return chiave;
+        return chiave;
     }
 
 }

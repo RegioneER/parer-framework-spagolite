@@ -27,95 +27,95 @@ public class NestedListWriter {
     private NestedList list;
 
     public NestedListWriter(NestedList fields) {
-	this.list = fields;
+        this.list = fields;
     }
 
     public void write(Writer writer) throws IOException {
 
-	writer.write("  public static class " + ClassUtil.getClassName(list.getName())
-		+ " extends NestedList<SingleValueField<?>> {\n");
-	writer.write("\n");
-	writer.write("    public static String NAME = \"" + ClassUtil.getClassName(list.getName())
-		+ "\";\n");
-	writer.write("    public static String DESCRIPTION = \"" + list.getDescription() + "\";\n");
+        writer.write("  public static class " + ClassUtil.getClassName(list.getName())
+                + " extends NestedList<SingleValueField<?>> {\n");
+        writer.write("\n");
+        writer.write("    public static String NAME = \"" + ClassUtil.getClassName(list.getName())
+                + "\";\n");
+        writer.write("    public static String DESCRIPTION = \"" + list.getDescription() + "\";\n");
 
-	writeConstants(writer);
+        writeConstants(writer);
 
-	writer.write("\n");
-	writer.write("    public " + ClassUtil.getClassName(list.getName()) + "() {\n");
-	writer.write("      super(null, NAME, DESCRIPTION);\n");
+        writer.write("\n");
+        writer.write("    public " + ClassUtil.getClassName(list.getName()) + "() {\n");
+        writer.write("      super(null, NAME, DESCRIPTION);\n");
 
-	if (list.isSetPrimaryTableFields()) {
-	    writer.write(
-		    "      this.setPrimaryTableFields(" + list.getPrimaryTableFields() + ");\n");
-	}
+        if (list.isSetPrimaryTableFields()) {
+            writer.write(
+                    "      this.setPrimaryTableFields(" + list.getPrimaryTableFields() + ");\n");
+        }
 
-	if (list.isSetSecondaryTableFields()) {
-	    writer.write("      this.setSecondaryTableFields(" + list.getSecondaryTableFields()
-		    + ");\n");
-	}
+        if (list.isSetSecondaryTableFields()) {
+            writer.write("      this.setSecondaryTableFields(" + list.getSecondaryTableFields()
+                    + ");\n");
+        }
 
-	if (list.isSetMasterList()) {
-	    writer.write("      this.setMasterList(true);\n");
-	}
+        if (list.isSetMasterList()) {
+            writer.write("      this.setMasterList(true);\n");
+        }
 
-	if (StringUtils.isNotBlank(list.getTitle())) {
-	    writer.write("      setTitle(\"" + list.getTitle() + "\");\n");
-	}
-	writeAdds(writer);
-	writer.write("    }\n");
-	writer.write("\n");
+        if (StringUtils.isNotBlank(list.getTitle())) {
+            writer.write("      setTitle(\"" + list.getTitle() + "\");\n");
+        }
+        writeAdds(writer);
+        writer.write("    }\n");
+        writer.write("\n");
 
-	writeGets(writer);
+        writeGets(writer);
 
-	writer.write("  }\n");
+        writer.write("  }\n");
     }
 
     private void writeConstants(Writer writer) throws IOException {
-	writer.write("\n");
+        writer.write("\n");
 
-	try (XmlCursor cursor = list.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeConstant(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        try (XmlCursor cursor = list.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeConstant(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
 
-	writer.write("\n");
+        writer.write("\n");
 
-	try (XmlCursor cursor = list.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeConstantFull(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        try (XmlCursor cursor = list.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeConstantFull(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
     }
 
     private void writeAdds(Writer writer) throws IOException {
-	writer.write("\n");
-	try (XmlCursor cursor = list.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeAdd(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        writer.write("\n");
+        try (XmlCursor cursor = list.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeAdd(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
     }
 
     private void writeGets(Writer writer) throws IOException {
-	writer.write("\n");
-	try (XmlCursor cursor = list.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeGet(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        writer.write("\n");
+        try (XmlCursor cursor = list.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeGet(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
     }
 }

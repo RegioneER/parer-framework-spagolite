@@ -35,78 +35,78 @@ public class Semaphore extends SingleValueField<String> {
     public State.Enum state;
 
     public Semaphore(Component parent, String name, String description, String alias, Enum type,
-	    String format, boolean required, boolean hidden, boolean readonly, boolean trigger,
-	    State.Enum state) {
-	super(parent, name, description, alias, type, format, required, hidden, readonly, trigger);
-	this.state = state;
+            String format, boolean required, boolean hidden, boolean readonly, boolean trigger,
+            State.Enum state) {
+        super(parent, name, description, alias, type, format, required, hidden, readonly, trigger);
+        this.state = state;
 
     }
 
     @Override
     public JSONObject asJSON() throws EMFError {
-	JSONObject result = new JSONObject();
-	try {
-	    result.put("name", getName());
-	    result.put("description", getDescription());
-	    result.put("state", getState());
-	    result.put("type", "Semaphore");
-	} catch (JSONException e) {
-	    throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
-	}
-	return result;
+        JSONObject result = new JSONObject();
+        try {
+            result.put("name", getName());
+            result.put("description", getDescription());
+            result.put("state", getState());
+            result.put("type", "Semaphore");
+        } catch (JSONException e) {
+            throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
+        }
+        return result;
     }
 
     public String getHtmlValue() throws EMFError {
-	String name = JavaScript.stringToHTMLString(getName());
-	StringBuilder result = new StringBuilder("<span id=\"" + name + "\" >");
-	String state = "<img src=\"" + GRAY_URL
-		+ "\" alt=\"Non definito\" title=\"Non definito\" />&nbsp;";
-	if (this.state.equals(State.GREEN)) {
-	    state = "<img src=\"" + GREEN_URL + "\" alt=\"Valido\" title=\"Valido\" />&nbsp;";
-	} else if (this.state.equals(State.YELLOW)) {
-	    state = "<img src=\"" + YELLOW_URL
-		    + "\" alt=\"Da validare\" title=\"Da validare\" />&nbsp;";
-	} else if (this.state.equals(State.RED)) {
-	    state = "<img src=\"" + RED_URL + "\" alt=\"Inserito\" title=\"Inserito\" />&nbsp;";
-	}
+        String name = JavaScript.stringToHTMLString(getName());
+        StringBuilder result = new StringBuilder("<span id=\"" + name + "\" >");
+        String state = "<img src=\"" + GRAY_URL
+                + "\" alt=\"Non definito\" title=\"Non definito\" />&nbsp;";
+        if (this.state.equals(State.GREEN)) {
+            state = "<img src=\"" + GREEN_URL + "\" alt=\"Valido\" title=\"Valido\" />&nbsp;";
+        } else if (this.state.equals(State.YELLOW)) {
+            state = "<img src=\"" + YELLOW_URL
+                    + "\" alt=\"Da validare\" title=\"Da validare\" />&nbsp;";
+        } else if (this.state.equals(State.RED)) {
+            state = "<img src=\"" + RED_URL + "\" alt=\"Inserito\" title=\"Inserito\" />&nbsp;";
+        }
 
-	result.append(state);
-	result.append("</span>");
-	return result.toString();
+        result.append(state);
+        result.append("</span>");
+        return result.toString();
     }
 
     @Override
     public void setValue(String value) {
-	super.setValue(value);
-	if ("V".equals(value))
-	    this.state = State.GREEN;
-	if ("G".equals(value))
-	    this.state = State.YELLOW;
-	if ("R".equals(value))
-	    this.state = State.RED;
+        super.setValue(value);
+        if ("V".equals(value))
+            this.state = State.GREEN;
+        if ("G".equals(value))
+            this.state = State.YELLOW;
+        if ("R".equals(value))
+            this.state = State.RED;
     }
 
     public State.Enum getState() {
-	return state;
+        return state;
     }
 
     public void setState(State.Enum state) {
-	this.state = state;
+        this.state = state;
     }
 
     public static class Factory {
 
-	public static String getImageUrl(String value) {
-	    if ("V".equals(value)) {
-		return GREEN_URL;
-	    } else if ("G".equals(value)) {
-		return YELLOW_URL;
-	    } else if ("R".equals(value)) {
-		return RED_URL;
-	    } else {
-		return GRAY_URL;
-	    }
-	}
+        public static String getImageUrl(String value) {
+            if ("V".equals(value)) {
+                return GREEN_URL;
+            } else if ("G".equals(value)) {
+                return YELLOW_URL;
+            } else if ("R".equals(value)) {
+                return RED_URL;
+            } else {
+                return GRAY_URL;
+            }
+        }
 
     }
 

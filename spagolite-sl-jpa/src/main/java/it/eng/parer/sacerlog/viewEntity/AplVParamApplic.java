@@ -41,39 +41,39 @@ public class AplVParamApplic implements Serializable {
 
     @Column(name = "DS_PARAM_APPLIC")
     public String getDsParamApplic() {
-	return this.dsParamApplic;
+        return this.dsParamApplic;
     }
 
     public void setDsParamApplic(String dsParamApplic) {
-	this.dsParamApplic = dsParamApplic;
+        this.dsParamApplic = dsParamApplic;
     }
 
     @Column(name = "DS_VALORE_PARAM_APPLIC")
     public String getDsValoreParamApplic() {
-	return this.dsValoreParamApplic;
+        return this.dsValoreParamApplic;
     }
 
     public void setDsValoreParamApplic(String dsValoreParamApplic) {
-	this.dsValoreParamApplic = dsValoreParamApplic;
+        this.dsValoreParamApplic = dsValoreParamApplic;
     }
 
     @Id
     @Column(name = "NM_PARAM_APPLIC")
     public String getNmParamApplic() {
-	return this.nmParamApplic;
+        return this.nmParamApplic;
     }
 
     public void setNmParamApplic(String nmParamApplic) {
-	this.nmParamApplic = nmParamApplic;
+        this.nmParamApplic = nmParamApplic;
     }
 
     @Column(name = "TI_PARAM_APPLIC")
     public String getTiParamApplic() {
-	return this.tiParamApplic;
+        return this.tiParamApplic;
     }
 
     public void setTiParamApplic(String tiParamApplic) {
-	this.tiParamApplic = tiParamApplic;
+        this.tiParamApplic = tiParamApplic;
     }
 
 }

@@ -35,66 +35,66 @@ public class LazyQuery implements Serializable {
 
     // MEV #39292 - Costruttore originale per query JPQL. Mantiene la retrocompatibilità.
     public LazyQuery(String queryString, String countQueryString, Map<String, Object> queryParams) {
-	this.queryString = queryString;
-	this.countQueryString = countQueryString;
-	this.queryParams = queryParams;
-	this.criteriaQuery = null;
-	this.countCriteriaQuery = null;
+        this.queryString = queryString;
+        this.countQueryString = countQueryString;
+        this.queryParams = queryParams;
+        this.criteriaQuery = null;
+        this.countCriteriaQuery = null;
 
-	// Per default, le query create con questo costruttore non sono native.
-	this.nativeQuery = false;
-	this.resultSetMappingName = null;
+        // Per default, le query create con questo costruttore non sono native.
+        this.nativeQuery = false;
+        this.resultSetMappingName = null;
     }
 
     // MEV #39292 - NUOVO COSTRUTTORE: Specifico per gestire sia JPQL che query native.
     public LazyQuery(String queryString, String countQueryString, Map<String, Object> queryParams,
-	    boolean isNative, String resultSetMappingName) {
-	this.queryString = queryString;
-	this.countQueryString = countQueryString;
-	this.queryParams = queryParams;
-	this.criteriaQuery = null;
-	this.countCriteriaQuery = null;
+            boolean isNative, String resultSetMappingName) {
+        this.queryString = queryString;
+        this.countQueryString = countQueryString;
+        this.queryParams = queryParams;
+        this.criteriaQuery = null;
+        this.countCriteriaQuery = null;
 
-	// Memorizza le nuove informazioni
-	this.nativeQuery = isNative;
-	this.resultSetMappingName = resultSetMappingName;
+        // Memorizza le nuove informazioni
+        this.nativeQuery = isNative;
+        this.resultSetMappingName = resultSetMappingName;
     }
 
     // MEV #39292 - Costruttore originale per query JPQL. Mantiene la retrocompatibilità.
     public LazyQuery(CriteriaQuery<?> criteriaQuery, CriteriaQuery<Long> countCriteriaQuery) {
-	this.queryString = null;
-	this.countQueryString = null;
-	this.queryParams = null;
-	this.criteriaQuery = criteriaQuery;
-	this.countCriteriaQuery = countCriteriaQuery;
+        this.queryString = null;
+        this.countQueryString = null;
+        this.queryParams = null;
+        this.criteriaQuery = criteriaQuery;
+        this.countCriteriaQuery = countCriteriaQuery;
 
-	// Le CriteriaQuery non sono mai "native" in questo contesto.
-	this.nativeQuery = false;
-	this.resultSetMappingName = null;
+        // Le CriteriaQuery non sono mai "native" in questo contesto.
+        this.nativeQuery = false;
+        this.resultSetMappingName = null;
     }
 
     public String getQueryString() {
-	return queryString;
+        return queryString;
     }
 
     public Map<String, Object> getQueryParams() {
-	return queryParams;
+        return queryParams;
     }
 
     public String getCountQueryString() {
-	return countQueryString;
+        return countQueryString;
     }
 
     public CriteriaQuery<?> getCriteriaQuery() {
-	return criteriaQuery;
+        return criteriaQuery;
     }
 
     public CriteriaQuery<Long> getCountCriteriaQuery() {
-	return countCriteriaQuery;
+        return countCriteriaQuery;
     }
 
     public boolean isCriteriaQuery() {
-	return criteriaQuery != null;
+        return criteriaQuery != null;
     }
 
     // ===================================================================================
@@ -105,7 +105,7 @@ public class LazyQuery implements Serializable {
      * @return true se la query è una query SQL nativa, false se è JPQL.
      */
     public boolean isNativeQuery() {
-	return nativeQuery;
+        return nativeQuery;
     }
 
     /**
@@ -113,6 +113,6 @@ public class LazyQuery implements Serializable {
      *         specificato.
      */
     public String getResultSetMappingName() {
-	return resultSetMappingName;
+        return resultSetMappingName;
     }
 }

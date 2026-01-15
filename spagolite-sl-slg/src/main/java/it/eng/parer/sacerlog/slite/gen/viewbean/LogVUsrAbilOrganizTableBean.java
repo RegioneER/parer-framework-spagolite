@@ -32,19 +32,19 @@ public class LogVUsrAbilOrganizTableBean extends AbstractBaseTable<LogVUsrAbilOr
     public static LogVUsrAbilOrganizTableDescriptor TABLE_DESCRIPTOR = new LogVUsrAbilOrganizTableDescriptor();
 
     public LogVUsrAbilOrganizTableBean() {
-	super();
+        super();
     }
 
     protected LogVUsrAbilOrganizRowBean createRow() {
-	return new LogVUsrAbilOrganizRowBean();
+        return new LogVUsrAbilOrganizRowBean();
     }
 
     public TableDescriptor getTableDescriptor() {
-	return TABLE_DESCRIPTOR;
+        return TABLE_DESCRIPTOR;
     }
 
     @Deprecated
     public Iterator<LogVUsrAbilOrganizRowBean> getRowsIterator() {
-	return iterator();
+        return iterator();
     }
 }

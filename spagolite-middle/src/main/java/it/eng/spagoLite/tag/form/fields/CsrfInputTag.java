@@ -33,8 +33,8 @@ public class CsrfInputTag extends BaseFormTag<Fields<Field>> {
 
     @Override
     public int doEndTag() throws JspException {
-	writeln(CsrfHelper.getCsrfInputToken((HttpServletRequest) this.pageContext.getRequest()));
-	return EVAL_PAGE;
+        writeln(CsrfHelper.getCsrfInputToken((HttpServletRequest) this.pageContext.getRequest()));
+        return EVAL_PAGE;
     }
 
 }

@@ -38,11 +38,11 @@ public class Parse {
      * @return string parsata
      */
     public static String parseString(String string) {
-	if (StringUtils.isBlank(string)) {
-	    return null;
-	}
+        if (StringUtils.isBlank(string)) {
+            return null;
+        }
 
-	return string;
+        return string;
     }
 
     /**
@@ -57,21 +57,21 @@ public class Parse {
      * @throws ParseException
      */
     private static BigDecimal parseNumber(String value, String format, DecimalFormatSymbols symbols)
-	    throws ParseException {
-	if (StringUtils.isBlank(value)) {
-	    return null;
-	}
+            throws ParseException {
+        if (StringUtils.isBlank(value)) {
+            return null;
+        }
 
-	if (format == null) {
-	    format = Format.DECIMAL_FORMAT;
-	}
-	if (symbols == null) {
-	    symbols = Format.SYMBOLS;
-	}
+        if (format == null) {
+            format = Format.DECIMAL_FORMAT;
+        }
+        if (symbols == null) {
+            symbols = Format.SYMBOLS;
+        }
 
-	DecimalFormat decimalFormat = new DecimalFormat(format, symbols);
+        DecimalFormat decimalFormat = new DecimalFormat(format, symbols);
 
-	return new BigDecimal(decimalFormat.parse(value).toString());
+        return new BigDecimal(decimalFormat.parse(value).toString());
     }
 
     /**
@@ -85,7 +85,7 @@ public class Parse {
      * @throws ParseException eccezione generica
      */
     public static BigDecimal parseDecimal(String value, String format) throws ParseException {
-	return parseNumber(value, format, Format.SYMBOLS);
+        return parseNumber(value, format, Format.SYMBOLS);
     }
 
     /**
@@ -98,7 +98,7 @@ public class Parse {
      * @throws ParseException eccezione generica
      */
     public static BigDecimal parseDecimal(String value) throws ParseException {
-	return parseDecimal(value, Format.DECIMAL_FORMAT);
+        return parseDecimal(value, Format.DECIMAL_FORMAT);
     }
 
     /**
@@ -111,7 +111,7 @@ public class Parse {
      * @throws ParseException eccezione generica
      */
     public static BigDecimal parseInteger(String value) throws ParseException {
-	return parseDecimal(value, Format.INTEGER_FORMAT);
+        return parseDecimal(value, Format.INTEGER_FORMAT);
     }
 
     /**
@@ -126,13 +126,13 @@ public class Parse {
      * @throws ParseException eccezione generica
      */
     public static BigDecimal parseCurrency(String value, String format, String currencySymbol)
-	    throws ParseException {
-	DecimalFormatSymbols decimalFormatSymbols = (DecimalFormatSymbols) Format.SYMBOLS.clone();
-	if (currencySymbol != null) {
-	    decimalFormatSymbols.setCurrencySymbol(currencySymbol);
-	}
+            throws ParseException {
+        DecimalFormatSymbols decimalFormatSymbols = (DecimalFormatSymbols) Format.SYMBOLS.clone();
+        if (currencySymbol != null) {
+            decimalFormatSymbols.setCurrencySymbol(currencySymbol);
+        }
 
-	return parseNumber(value, format, decimalFormatSymbols);
+        return parseNumber(value, format, decimalFormatSymbols);
     }
 
     /**
@@ -146,8 +146,8 @@ public class Parse {
      * @throws ParseException eccezione generica
      */
     public static BigDecimal parseCurrency(String value, String currencySymbol)
-	    throws ParseException {
-	return parseCurrency(value, Format.CURRENCY_FORMAT, currencySymbol);
+            throws ParseException {
+        return parseCurrency(value, Format.CURRENCY_FORMAT, currencySymbol);
     }
 
     /**
@@ -160,11 +160,11 @@ public class Parse {
      * @throws ParseException eccezione generica
      */
     public static BigDecimal parseCurrency(String value) throws ParseException {
-	try {
-	    return parseDecimal(value, Format.CURRENCY_FORMAT);
-	} catch (ParseException e) {
-	    return parseDecimal(value, Format.DECIMAL_FORMAT);
-	}
+        try {
+            return parseDecimal(value, Format.CURRENCY_FORMAT);
+        } catch (ParseException e) {
+            return parseDecimal(value, Format.DECIMAL_FORMAT);
+        }
     }
 
     /**
@@ -178,19 +178,19 @@ public class Parse {
      * @throws ParseException eccezione generica
      */
     public static Timestamp parseDate(String date, String format) throws ParseException {
-	if (StringUtils.isBlank(date)) {
-	    return null;
-	}
+        if (StringUtils.isBlank(date)) {
+            return null;
+        }
 
-	if (format == null) {
-	    format = Format.DATE_FORMAT.DAY_FORMAT.format();
-	}
+        if (format == null) {
+            format = Format.DATE_FORMAT.DAY_FORMAT.format();
+        }
 
-	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.ITALY);
-	simpleDateFormat.setLenient(false);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.ITALY);
+        simpleDateFormat.setLenient(false);
 
-	Date date2 = simpleDateFormat.parse(date);
-	return new Timestamp(date2.getTime());
+        Date date2 = simpleDateFormat.parse(date);
+        return new Timestamp(date2.getTime());
     }
 
     /**
@@ -203,7 +203,7 @@ public class Parse {
      * @throws ParseException eccezione generica
      */
     public static Timestamp parseDate(String date) throws ParseException {
-	return parseDate(date, Format.DATE_FORMAT.DAY_FORMAT.format());
+        return parseDate(date, Format.DATE_FORMAT.DAY_FORMAT.format());
     }
 
     /**
@@ -216,7 +216,7 @@ public class Parse {
      * @throws ParseException eccezione generica
      */
     public static Timestamp parseDateTime(String date) throws ParseException {
-	return parseDate(date, Format.DATE_FORMAT.SECOND_FORMAT.format());
+        return parseDate(date, Format.DATE_FORMAT.SECOND_FORMAT.format());
     }
 
     /**
@@ -229,7 +229,7 @@ public class Parse {
      * @throws ParseException eccezione generica
      */
     public static Timestamp parseTime(String date) throws ParseException {
-	return parseDate(date, Format.DATE_FORMAT.TIME_FORMAT.format());
+        return parseDate(date, Format.DATE_FORMAT.TIME_FORMAT.format());
     }
 
     /**
@@ -242,7 +242,7 @@ public class Parse {
      * @throws ParseException eccezione generica
      */
     public static Timestamp parseMonth(String date) throws ParseException {
-	return parseDate(date, Format.DATE_FORMAT.MONTH_FORMAT.format());
+        return parseDate(date, Format.DATE_FORMAT.MONTH_FORMAT.format());
     }
 
     /**
@@ -255,130 +255,130 @@ public class Parse {
      * @throws ParseException eccezione generica
      */
     public static Timestamp parseYear(String date) throws ParseException {
-	return parseDate(date, Format.DATE_FORMAT.YEAR_FORMAT.format());
+        return parseDate(date, Format.DATE_FORMAT.YEAR_FORMAT.format());
     }
 
     public static String parseCodiceFiscale(String codiceFiscale) throws ParseException {
-	if (StringUtils.isBlank(codiceFiscale)) {
-	    return null;
-	}
+        if (StringUtils.isBlank(codiceFiscale)) {
+            return null;
+        }
 
-	if (!checkCodiceFiscale(codiceFiscale)) {
-	    throw new ParseException("Codice fiscale non valido", 0);
-	}
+        if (!checkCodiceFiscale(codiceFiscale)) {
+            throw new ParseException("Codice fiscale non valido", 0);
+        }
 
-	return codiceFiscale.toUpperCase();
+        return codiceFiscale.toUpperCase();
     }
 
     public static String parseMailAddress(String mailAddress) throws ParseException {
-	if (StringUtils.isBlank(mailAddress)) {
-	    return null;
-	}
+        if (StringUtils.isBlank(mailAddress)) {
+            return null;
+        }
 
-	if (!checkMailAddress(mailAddress)) {
-	    throw new ParseException("Indirizzo mail non valido", 0);
-	}
+        if (!checkMailAddress(mailAddress)) {
+            throw new ParseException("Indirizzo mail non valido", 0);
+        }
 
-	return mailAddress;
+        return mailAddress;
     }
 
     public static Object parseObject(String value, String dataType, String format,
-	    String currencySymbol) throws ParseException {
-	if (DataTypes.STRING.equalsIgnoreCase(dataType)) {
-	    return parseString(value);
-	} else if (DataTypes.CODICEFISCALE.equalsIgnoreCase(dataType)) {
-	    return parseCodiceFiscale(value);
-	} else if (DataTypes.MAIL.equalsIgnoreCase(dataType)) {
-	    return parseMailAddress(value);
-	} else if (DataTypes.DECIMAL.equalsIgnoreCase(dataType)) {
-	    return parseDecimal(value, format);
-	} else if (DataTypes.INTEGER.equalsIgnoreCase(dataType)) {
-	    return parseInteger(value);
-	} else if (DataTypes.CURRENCY.equalsIgnoreCase(dataType)) {
-	    return parseCurrency(value, currencySymbol);
-	} else if (DataTypes.DATE.equalsIgnoreCase(dataType)) {
-	    return parseDate(value, format);
-	} else if (DataTypes.DATE_TIME.equalsIgnoreCase(dataType)) {
-	    return parseDateTime(value);
-	} else if (DataTypes.TIME.equalsIgnoreCase(dataType)) {
-	    return parseTime(value);
-	} else if (DataTypes.MONTH.equalsIgnoreCase(dataType)) {
-	    return parseMonth(value);
-	} else if (DataTypes.YEAR.equalsIgnoreCase(dataType)) {
-	    return parseYear(value);
-	} else {
-	    return parseString((String) value);
-	}
+            String currencySymbol) throws ParseException {
+        if (DataTypes.STRING.equalsIgnoreCase(dataType)) {
+            return parseString(value);
+        } else if (DataTypes.CODICEFISCALE.equalsIgnoreCase(dataType)) {
+            return parseCodiceFiscale(value);
+        } else if (DataTypes.MAIL.equalsIgnoreCase(dataType)) {
+            return parseMailAddress(value);
+        } else if (DataTypes.DECIMAL.equalsIgnoreCase(dataType)) {
+            return parseDecimal(value, format);
+        } else if (DataTypes.INTEGER.equalsIgnoreCase(dataType)) {
+            return parseInteger(value);
+        } else if (DataTypes.CURRENCY.equalsIgnoreCase(dataType)) {
+            return parseCurrency(value, currencySymbol);
+        } else if (DataTypes.DATE.equalsIgnoreCase(dataType)) {
+            return parseDate(value, format);
+        } else if (DataTypes.DATE_TIME.equalsIgnoreCase(dataType)) {
+            return parseDateTime(value);
+        } else if (DataTypes.TIME.equalsIgnoreCase(dataType)) {
+            return parseTime(value);
+        } else if (DataTypes.MONTH.equalsIgnoreCase(dataType)) {
+            return parseMonth(value);
+        } else if (DataTypes.YEAR.equalsIgnoreCase(dataType)) {
+            return parseYear(value);
+        } else {
+            return parseString((String) value);
+        }
     }
 
     public static Object parseObject(String value, String dataType, String format)
-	    throws ParseException {
-	return parseObject(value, dataType, format, Format.CURRENCY_SYMBOL);
+            throws ParseException {
+        return parseObject(value, dataType, format, Format.CURRENCY_SYMBOL);
     }
 
     public static Object parseObject(String value, String dataType) throws ParseException {
-	return parseObject(value, dataType, null);
+        return parseObject(value, dataType, null);
     }
 
     public static boolean checkString(String string) {
-	return true;
+        return true;
     }
 
     public static boolean checkCodiceFiscale(String codiceFiscale) {
-	return codiceFiscale.matches(RE_CODICE_FISCALE);
+        return codiceFiscale.matches(RE_CODICE_FISCALE);
     }
 
     public static boolean checkMailAddress(String mailAddress) {
-	return mailAddress.matches(RE_MAIL_ADDRESS);
+        return mailAddress.matches(RE_MAIL_ADDRESS);
     }
 
     private static boolean checkNumber(String value, String format, DecimalFormatSymbols symbols) {
-	try {
-	    parseNumber(value, format, symbols);
-	} catch (ParseException e) {
-	    return false;
-	}
+        try {
+            parseNumber(value, format, symbols);
+        } catch (ParseException e) {
+            return false;
+        }
 
-	return true;
+        return true;
     }
 
     public static boolean checkDecimal(String value, String format) {
-	return checkNumber(value, format, Format.SYMBOLS);
+        return checkNumber(value, format, Format.SYMBOLS);
     }
 
     public static boolean checkDecimal(String value) {
-	return checkDecimal(value, Format.DECIMAL_FORMAT);
+        return checkDecimal(value, Format.DECIMAL_FORMAT);
     }
 
     public static boolean checkInteger(String value) {
-	return checkDecimal(value, Format.INTEGER_FORMAT);
+        return checkDecimal(value, Format.INTEGER_FORMAT);
     }
 
     public static boolean checkCurrency(String value, String format, String currencySymbol) {
-	DecimalFormatSymbols decimalFormatSymbols = (DecimalFormatSymbols) Format.SYMBOLS.clone();
-	if (currencySymbol != null) {
-	    decimalFormatSymbols.setCurrencySymbol(currencySymbol);
-	}
+        DecimalFormatSymbols decimalFormatSymbols = (DecimalFormatSymbols) Format.SYMBOLS.clone();
+        if (currencySymbol != null) {
+            decimalFormatSymbols.setCurrencySymbol(currencySymbol);
+        }
 
-	return checkNumber(value, format, decimalFormatSymbols);
+        return checkNumber(value, format, decimalFormatSymbols);
     }
 
     public static boolean checkCurrency(String value, String currencySymbol) {
-	return checkCurrency(value, Format.CURRENCY_FORMAT, currencySymbol);
+        return checkCurrency(value, Format.CURRENCY_FORMAT, currencySymbol);
     }
 
     public static boolean checkCurrency(String value) {
-	try {
-	    parseDecimal(value, Format.CURRENCY_FORMAT);
-	} catch (ParseException e) {
-	    try {
-		parseDecimal(value, Format.DECIMAL_FORMAT);
-	    } catch (ParseException e1) {
-		return false;
-	    }
-	}
+        try {
+            parseDecimal(value, Format.CURRENCY_FORMAT);
+        } catch (ParseException e) {
+            try {
+                parseDecimal(value, Format.DECIMAL_FORMAT);
+            } catch (ParseException e1) {
+                return false;
+            }
+        }
 
-	return true;
+        return true;
     }
 
 }

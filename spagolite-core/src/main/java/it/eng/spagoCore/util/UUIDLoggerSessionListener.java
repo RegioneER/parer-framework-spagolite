@@ -28,14 +28,14 @@ public class UUIDLoggerSessionListener implements HttpSessionListener {
 
     @Override
     public void sessionCreated(HttpSessionEvent hse) {
-	// LOG UUID
-	UUIDMdcLogUtil.genUuid();
+        // LOG UUID
+        UUIDMdcLogUtil.genUuid();
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
-	// metodo deliberatamente vuoto.
-	// non ho alcun interesse ad intercettare questo evento, per ora.
+        // metodo deliberatamente vuoto.
+        // non ho alcun interesse ad intercettare questo evento, per ora.
     }
 
 }

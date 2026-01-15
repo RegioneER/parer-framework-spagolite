@@ -29,9 +29,9 @@ import org.hibernate.annotations.Immutable;
 @Table(name = "PIG_AMBIENTE_VERS")
 @Immutable
 @NamedQueries({
-	@NamedQuery(name = "PigAmbienteVers.findAll", query = "SELECT v FROM PigAmbienteVers v ORDER BY v.nmAmbienteVers ASC"),
+        @NamedQuery(name = "PigAmbienteVers.findAll", query = "SELECT v FROM PigAmbienteVers v ORDER BY v.nmAmbienteVers ASC"),
 
-	@NamedQuery(name = "PigAmbienteVers.findGreaterThanId", query = "SELECT v FROM PigAmbienteVers v WHERE v.idAmbienteVers > :idAmbienteVers ORDER BY v.nmAmbienteVers ASC") })
+        @NamedQuery(name = "PigAmbienteVers.findGreaterThanId", query = "SELECT v FROM PigAmbienteVers v WHERE v.idAmbienteVers > :idAmbienteVers ORDER BY v.nmAmbienteVers ASC") })
 public class PigAmbienteVers {
 
     @Id
@@ -42,10 +42,10 @@ public class PigAmbienteVers {
     private String nmAmbienteVers;
 
     public Long getIdAmbienteVers() {
-	return idAmbienteVers;
+        return idAmbienteVers;
     }
 
     public String getNmAmbienteVers() {
-	return nmAmbienteVers;
+        return nmAmbienteVers;
     }
 }

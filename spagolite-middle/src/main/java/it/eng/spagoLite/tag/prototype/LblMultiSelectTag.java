@@ -25,17 +25,17 @@ public class LblMultiSelectTag extends AbstractLblSelectTag implements Iteration
     private static final long serialVersionUID = 1L;
 
     protected void writeControl() throws JspException {
-	String className = ContainerTag.LEFT.equalsIgnoreCase(getLabelPosition())
-		? "slText " + getControlwidth()
-		: "slTextRight " + getControlwidth();
+        String className = ContainerTag.LEFT.equalsIgnoreCase(getLabelPosition())
+                ? "slText " + getControlwidth()
+                : "slTextRight " + getControlwidth();
 
-	if (isEditable()) {
-	    writeln(" <select multiple=\"multiple\" id=\"" + getId() + "\" name=\"" + getId()
-		    + "\" class=\"" + className + "\" style=\"height: 10em;\">" + getOption()
-		    + "</select>");
-	} else {
-	    writeln(" <div class=\"" + className + "\" ></div>");
-	}
+        if (isEditable()) {
+            writeln(" <select multiple=\"multiple\" id=\"" + getId() + "\" name=\"" + getId()
+                    + "\" class=\"" + className + "\" style=\"height: 10em;\">" + getOption()
+                    + "</select>");
+        } else {
+            writeln(" <div class=\"" + className + "\" ></div>");
+        }
     }
 
 }

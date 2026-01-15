@@ -26,79 +26,79 @@ public class FieldsWriter {
     private Fields fields;
 
     public FieldsWriter(Fields fields) {
-	this.fields = fields;
+        this.fields = fields;
     }
 
     public void write(Writer writer) throws IOException {
-	writer.write("  public static class " + ClassUtil.getClassName(fields.getName())
-		+ " extends Fields<Field> {\n");
-	writer.write("\n");
-	writer.write("    public static String NAME = \"" + ClassUtil.getClassName(fields.getName())
-		+ "\";\n");
-	writer.write(
-		"    public static String DESCRIPTION = \"" + fields.getDescription() + "\";\n");
+        writer.write("  public static class " + ClassUtil.getClassName(fields.getName())
+                + " extends Fields<Field> {\n");
+        writer.write("\n");
+        writer.write("    public static String NAME = \"" + ClassUtil.getClassName(fields.getName())
+                + "\";\n");
+        writer.write(
+                "    public static String DESCRIPTION = \"" + fields.getDescription() + "\";\n");
 
-	writeConstants(writer);
+        writeConstants(writer);
 
-	writer.write("\n");
-	writer.write("    public " + ClassUtil.getClassName(fields.getName()) + "() {\n");
-	writer.write("      super(null, NAME, DESCRIPTION);\n");
+        writer.write("\n");
+        writer.write("    public " + ClassUtil.getClassName(fields.getName()) + "() {\n");
+        writer.write("      super(null, NAME, DESCRIPTION);\n");
 
-	writeAdds(writer);
-	writer.write("    }\n");
-	writer.write("\n");
+        writeAdds(writer);
+        writer.write("    }\n");
+        writer.write("\n");
 
-	writeGets(writer);
+        writeGets(writer);
 
-	writer.write("  }\n");
+        writer.write("  }\n");
     }
 
     private void writeConstants(Writer writer) throws IOException {
-	writer.write("\n");
+        writer.write("\n");
 
-	try (XmlCursor cursor = fields.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeConstant(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        try (XmlCursor cursor = fields.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeConstant(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
 
-	writer.write("\n");
+        writer.write("\n");
 
-	try (XmlCursor cursor = fields.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeConstantFull(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        try (XmlCursor cursor = fields.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeConstantFull(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
     }
 
     private void writeAdds(Writer writer) throws IOException {
-	writer.write("\n");
-	try (XmlCursor cursor = fields.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeAdd(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        writer.write("\n");
+        try (XmlCursor cursor = fields.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeAdd(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
     }
 
     private void writeGets(Writer writer) throws IOException {
-	writer.write("\n");
-	try (XmlCursor cursor = fields.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeGet(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        writer.write("\n");
+        try (XmlCursor cursor = fields.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeGet(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
     }
 
 }

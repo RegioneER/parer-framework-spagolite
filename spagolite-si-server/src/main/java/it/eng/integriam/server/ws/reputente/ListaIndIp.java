@@ -31,15 +31,15 @@ public class ListaIndIp implements Iterable<String> {
     private List<String> indIp;
 
     public List<String> getIndIp() {
-	return indIp;
+        return indIp;
     }
 
     public void setIndIp(List<String> indIp) {
-	this.indIp = indIp;
+        this.indIp = indIp;
     }
 
     @Override
     public Iterator<String> iterator() {
-	return indIp.iterator();
+        return indIp.iterator();
     }
 }

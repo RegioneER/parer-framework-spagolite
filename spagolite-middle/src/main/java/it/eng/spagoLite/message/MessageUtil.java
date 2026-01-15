@@ -26,21 +26,21 @@ import java.time.LocalTime;
 public class MessageUtil {
 
     private MessageUtil() {
-	//
+        //
     }
 
     public static String getSalutoPerOrario() {
-	String ritorno = "";
-	LocalTime adesso = LocalTime.now();
-	LocalTime pomeriggio = LocalTime.parse("12:59:59");
-	LocalTime sera = LocalTime.parse("16:59:59");
-	if (adesso.isAfter(pomeriggio) && adesso.isBefore(sera)) {
-	    ritorno = "Buon pomeriggio";
-	} else if (adesso.isAfter(sera)) {
-	    ritorno = "Buonasera";
-	} else if (adesso.isBefore(pomeriggio)) {
-	    ritorno = "Buongiorno";
-	}
-	return ritorno;
+        String ritorno = "";
+        LocalTime adesso = LocalTime.now();
+        LocalTime pomeriggio = LocalTime.parse("12:59:59");
+        LocalTime sera = LocalTime.parse("16:59:59");
+        if (adesso.isAfter(pomeriggio) && adesso.isBefore(sera)) {
+            ritorno = "Buon pomeriggio";
+        } else if (adesso.isAfter(sera)) {
+            ritorno = "Buonasera";
+        } else if (adesso.isBefore(pomeriggio)) {
+            ritorno = "Buongiorno";
+        }
+        return ritorno;
     }
 }

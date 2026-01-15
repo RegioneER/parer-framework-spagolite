@@ -25,27 +25,27 @@ public class StepTag extends BaseFormTag<Step> {
 
     @Override
     public int doStartTag() throws JspException {
-	Step step = getComponent();
+        Step step = getComponent();
 
-	if (!step.isHidden()) {
+        if (!step.isHidden()) {
 
-	    writeln("<div class=\"step\">");
-	    writeln("  <!-- Step " + step.getDescription() + "-->");
+            writeln("<div class=\"step\">");
+            writeln("  <!-- Step " + step.getDescription() + "-->");
 
-	    if (AbstractWizardTag.showContent((Wizard) getComponent().getParent(), step)) {
-		return EVAL_BODY_INCLUDE;
-	    }
-	}
+            if (AbstractWizardTag.showContent((Wizard) getComponent().getParent(), step)) {
+                return EVAL_BODY_INCLUDE;
+            }
+        }
 
-	return SKIP_BODY;
+        return SKIP_BODY;
     }
 
     @Override
     public int doEndTag() throws JspException {
-	if (!getComponent().isHidden()) {
-	    writeln("</div>");
-	}
+        if (!getComponent().isHidden()) {
+            writeln("</div>");
+        }
 
-	return EVAL_PAGE;
+        return EVAL_PAGE;
     }
 }

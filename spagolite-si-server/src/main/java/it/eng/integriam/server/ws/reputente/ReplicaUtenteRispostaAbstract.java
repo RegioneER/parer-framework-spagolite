@@ -26,27 +26,27 @@ public class ReplicaUtenteRispostaAbstract {
     private String dsErr;
 
     public EsitoServizio getCdEsito() {
-	return cdEsito;
+        return cdEsito;
     }
 
     public void setCdEsito(EsitoServizio cdEsito) {
-	this.cdEsito = cdEsito;
+        this.cdEsito = cdEsito;
     }
 
     public String getCdErr() {
-	return cdErr;
+        return cdErr;
     }
 
     public void setCdErr(String cdErr) {
-	this.cdErr = cdErr;
+        this.cdErr = cdErr;
     }
 
     public String getDsErr() {
-	return dsErr;
+        return dsErr;
     }
 
     public void setDsErr(String dsErr) {
-	this.dsErr = dsErr;
+        this.dsErr = dsErr;
     }
 
 }

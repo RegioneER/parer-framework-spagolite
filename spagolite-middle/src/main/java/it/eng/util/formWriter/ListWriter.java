@@ -27,106 +27,106 @@ public class ListWriter {
     private List list;
 
     public ListWriter(List fields) {
-	this.list = fields;
+        this.list = fields;
     }
 
     public void write(Writer writer) throws IOException {
 
-	writer.write("  public static class " + ClassUtil.getClassName(list.getName())
-		+ " extends List<SingleValueField<?>> {\n");
-	writer.write("\n");
-	writer.write("    public static String NAME = \"" + ClassUtil.getClassName(list.getName())
-		+ "\";\n");
-	writer.write("    public static String DESCRIPTION = \"" + list.getDescription() + "\";\n");
+        writer.write("  public static class " + ClassUtil.getClassName(list.getName())
+                + " extends List<SingleValueField<?>> {\n");
+        writer.write("\n");
+        writer.write("    public static String NAME = \"" + ClassUtil.getClassName(list.getName())
+                + "\";\n");
+        writer.write("    public static String DESCRIPTION = \"" + list.getDescription() + "\";\n");
 
-	writeConstants(writer);
+        writeConstants(writer);
 
-	writer.write("\n");
-	writer.write("    public " + ClassUtil.getClassName(list.getName()) + "() {\n");
-	String visibility = list.getVisibilityProperty() == null ? ", null"
-		: " , \"" + list.getVisibilityProperty() + "\"";
-	String filterValidRecords = list.isSetFilterValidRecords()
-		? String.valueOf(list.getFilterValidRecords())
-		: "null";
-	String goToPageNavigation = list.isSetGoToPageNavigation()
-		? String.valueOf(list.getGoToPageNavigation())
-		: "null";
-	String excelFileName = list.isSetExcelFileName() ? String.valueOf(list.getExcelFileName())
-		: "null";
-	writer.write("      super(null, NAME, DESCRIPTION,Status.view,DESCRIPTION,null,false,"
-		+ list.isSetHideDetailButton() + "," + list.isSetHideUpdateButton() + ","
-		+ list.isSetHideDeleteButton() + "," + list.isSetHideInsertButton() + ","
-		+ list.isSetEditable() + visibility + "," + filterValidRecords + "," + excelFileName
-		+ "," + goToPageNavigation + ");\n");
+        writer.write("\n");
+        writer.write("    public " + ClassUtil.getClassName(list.getName()) + "() {\n");
+        String visibility = list.getVisibilityProperty() == null ? ", null"
+                : " , \"" + list.getVisibilityProperty() + "\"";
+        String filterValidRecords = list.isSetFilterValidRecords()
+                ? String.valueOf(list.getFilterValidRecords())
+                : "null";
+        String goToPageNavigation = list.isSetGoToPageNavigation()
+                ? String.valueOf(list.getGoToPageNavigation())
+                : "null";
+        String excelFileName = list.isSetExcelFileName() ? String.valueOf(list.getExcelFileName())
+                : "null";
+        writer.write("      super(null, NAME, DESCRIPTION,Status.view,DESCRIPTION,null,false,"
+                + list.isSetHideDetailButton() + "," + list.isSetHideUpdateButton() + ","
+                + list.isSetHideDeleteButton() + "," + list.isSetHideInsertButton() + ","
+                + list.isSetEditable() + visibility + "," + filterValidRecords + "," + excelFileName
+                + "," + goToPageNavigation + ");\n");
 
-	// writer.write(" super(null, NAME, DESCRIPTION);\n");
-	if (list.isSetEditable()) {
-	    writer.write("      this.setEditable(true);\n");
-	}
-	if (list.isSetMasterList()) {
-	    writer.write("      this.setMasterList(true);\n");
-	}
-	if (list.isSetReadOnly()) {
-	    writer.write("      this.setReadOnly(true);\n");
-	}
+        // writer.write(" super(null, NAME, DESCRIPTION);\n");
+        if (list.isSetEditable()) {
+            writer.write("      this.setEditable(true);\n");
+        }
+        if (list.isSetMasterList()) {
+            writer.write("      this.setMasterList(true);\n");
+        }
+        if (list.isSetReadOnly()) {
+            writer.write("      this.setReadOnly(true);\n");
+        }
 
-	if (StringUtils.isNotBlank(list.getTitle())) {
-	    writer.write("      setTitle(\"" + list.getTitle() + "\");\n");
-	}
-	writeAdds(writer);
-	writer.write("    }\n");
-	writer.write("\n");
+        if (StringUtils.isNotBlank(list.getTitle())) {
+            writer.write("      setTitle(\"" + list.getTitle() + "\");\n");
+        }
+        writeAdds(writer);
+        writer.write("    }\n");
+        writer.write("\n");
 
-	writeGets(writer);
+        writeGets(writer);
 
-	writer.write("  }\n");
+        writer.write("  }\n");
     }
 
     private void writeConstants(Writer writer) throws IOException {
-	writer.write("\n");
+        writer.write("\n");
 
-	try (XmlCursor cursor = list.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeConstant(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        try (XmlCursor cursor = list.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeConstant(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
 
-	writer.write("\n");
+        writer.write("\n");
 
-	try (XmlCursor cursor = list.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeConstantFull(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        try (XmlCursor cursor = list.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeConstantFull(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
     }
 
     private void writeAdds(Writer writer) throws IOException {
-	writer.write("\n");
-	try (XmlCursor cursor = list.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeAdd(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        writer.write("\n");
+        try (XmlCursor cursor = list.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeAdd(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
     }
 
     private void writeGets(Writer writer) throws IOException {
-	writer.write("\n");
-	try (XmlCursor cursor = list.newCursor()) {
-	    if (cursor.toFirstChild()) {
-		do {
-		    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
-		    fieldWriter.writeGet(writer);
-		} while (cursor.toNextSibling());
-	    }
-	}
+        writer.write("\n");
+        try (XmlCursor cursor = list.newCursor()) {
+            if (cursor.toFirstChild()) {
+                do {
+                    FieldWriter fieldWriter = new FieldWriter((Field) cursor.getObject());
+                    fieldWriter.writeGet(writer);
+                } while (cursor.toNextSibling());
+            }
+        }
     }
 }

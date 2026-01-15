@@ -38,10 +38,10 @@ public class UUIDLoggerFilter implements Filter {
      * javax.servlet.ServletResponse, javax.servlet.FilterChain)
      */
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain next)
-	    throws IOException, ServletException {
-	// LOG UUID
-	UUIDMdcLogUtil.genUuid();
-	next.doFilter(request, response);
+            throws IOException, ServletException {
+        // LOG UUID
+        UUIDMdcLogUtil.genUuid();
+        next.doFilter(request, response);
     }
 
     /*

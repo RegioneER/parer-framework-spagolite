@@ -31,53 +31,53 @@ public class BaseElements<T extends Component> extends BaseComponent implements 
     private Map<String, T> map;
 
     public enum Status {
-	view, update, insert, delete
+        view, update, insert, delete
     };
 
     public BaseElements(Component parent, String name, String description) {
-	super(parent, name, description);
-	map = new LinkedHashMap<String, T>();
+        super(parent, name, description);
+        map = new LinkedHashMap<String, T>();
     }
 
     // @Override
     @SuppressWarnings("unchecked")
     public T getComponent(String name) {
-	int indexOf = name.indexOf(".");
-	if (indexOf > 0) {
-	    return ((Elements<T>) map.get(name.substring(0, indexOf)))
-		    .getComponent(name.substring(indexOf + 1));
-	} else {
-	    return map.get(name.toLowerCase());
-	}
+        int indexOf = name.indexOf(".");
+        if (indexOf > 0) {
+            return ((Elements<T>) map.get(name.substring(0, indexOf)))
+                    .getComponent(name.substring(indexOf + 1));
+        } else {
+            return map.get(name.toLowerCase());
+        }
     }
 
     // @Override
     public T addComponent(T element) {
-	map.put(element.getName().toLowerCase(), element);
-	return element;
+        map.put(element.getName().toLowerCase(), element);
+        return element;
     }
 
     // @Override
     public List<T> getComponentList() {
-	return new ArrayList<T>(map.values());
+        return new ArrayList<T>(map.values());
     }
 
     public Iterator<T> iterator() {
-	return map.values().iterator();
+        return map.values().iterator();
     }
 
     @Override
     public Element asXml() {
-	Element element = super.asXml();
-	for (T baseElement : this) {
-	    element.add(baseElement.asXml());
-	}
+        Element element = super.asXml();
+        for (T baseElement : this) {
+            element.add(baseElement.asXml());
+        }
 
-	return element;
+        return element;
     }
 
     // Delegate method
     public int size() {
-	return map.size();
+        return map.size();
     }
 }

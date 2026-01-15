@@ -26,57 +26,57 @@ public class Pagina extends ProfileElement<Azione> {
     private List<MenuDips> menuDips;
 
     public Pagina(String name, String description) {
-	super(name, description);
-	this.checked = false;
-	this.helpAvailable = false;
-	this.menuDips = new ArrayList<>();
+        super(name, description);
+        this.checked = false;
+        this.helpAvailable = false;
+        this.menuDips = new ArrayList<>();
     }
 
     public Pagina(String name, String description, List<MenuDips> menuDips) {
-	super(name, description);
-	this.checked = false;
-	this.helpAvailable = false;
-	this.menuDips = menuDips;
+        super(name, description);
+        this.checked = false;
+        this.helpAvailable = false;
+        this.menuDips = menuDips;
     }
 
     public boolean isChecked() {
-	return checked;
+        return checked;
     }
 
     public void setChecked(boolean checked) {
-	this.checked = checked;
+        this.checked = checked;
     }
 
     public boolean isHelpAvailable() {
-	return helpAvailable;
+        return helpAvailable;
     }
 
     public void setHelpAvailable(boolean helpAvailable) {
-	this.helpAvailable = helpAvailable;
+        this.helpAvailable = helpAvailable;
     }
 
     public List<MenuDips> getMenuDips() {
-	return menuDips;
+        return menuDips;
     }
 
     public void setMenuDips(List<MenuDips> menuDips) {
-	this.menuDips = menuDips;
+        this.menuDips = menuDips;
     }
 
     /*
      * Torna TRUE se il menu passato come parametro esiste tra i menu associati alla pagina.
      */
     public boolean containsMenu(String nmMenu) {
-	boolean esiste = false;
-	Iterator<MenuDips> it = menuDips.iterator();
-	while (it.hasNext()) {
-	    MenuDips next = it.next();
-	    if (next.getName().equals(nmMenu)) {
-		esiste = true;
-		break;
-	    }
-	}
-	return esiste;
+        boolean esiste = false;
+        Iterator<MenuDips> it = menuDips.iterator();
+        while (it.hasNext()) {
+            MenuDips next = it.next();
+            if (next.getName().equals(nmMenu)) {
+                esiste = true;
+                break;
+            }
+        }
+        return esiste;
     }
 
 }

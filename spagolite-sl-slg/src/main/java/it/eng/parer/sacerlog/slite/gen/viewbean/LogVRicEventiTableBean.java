@@ -24,7 +24,7 @@ import it.eng.spagoLite.db.oracle.bean.column.TableDescriptor;
  *
  */
 public class LogVRicEventiTableBean<T extends ILogVRicEventi>
-	extends AbstractBaseTable<LogVRicEventiRowBean> {
+        extends AbstractBaseTable<LogVRicEventiRowBean> {
 
     /*
      * @Generated( value = "it.eg.dbtool.db.oracle.beangen.Oracle4JPAClientBeanGen$ViewBeanWriter",
@@ -34,19 +34,19 @@ public class LogVRicEventiTableBean<T extends ILogVRicEventi>
     public static LogVRicEventiTableDescriptor TABLE_DESCRIPTOR = new LogVRicEventiTableDescriptor();
 
     public LogVRicEventiTableBean() {
-	super();
+        super();
     }
 
     protected LogVRicEventiRowBean createRow() {
-	return new LogVRicEventiRowBean();
+        return new LogVRicEventiRowBean();
     }
 
     public TableDescriptor getTableDescriptor() {
-	return TABLE_DESCRIPTOR;
+        return TABLE_DESCRIPTOR;
     }
 
     @Deprecated
     public Iterator<LogVRicEventiRowBean> getRowsIterator() {
-	return iterator();
+        return iterator();
     }
 }

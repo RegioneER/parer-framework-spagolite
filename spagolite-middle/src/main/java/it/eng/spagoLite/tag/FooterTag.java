@@ -32,65 +32,65 @@ public class FooterTag extends BaseSpagoLiteTag {
 
     @Override
     public int doStartTag() throws JspException {
-	writeln("<!--Footer-->");
-	writeln("<div class=\"footer\">");
-	writeln(renderFooterInfo(this.getContextPath()));
-	return SKIP_BODY;
+        writeln("<!--Footer-->");
+        writeln("<div class=\"footer\">");
+        writeln(renderFooterInfo(this.getContextPath()));
+        return SKIP_BODY;
 
     }
 
     @Override
     public int doEndTag() throws JspException {
-	writeln("</div>");
-	return EVAL_PAGE;
+        writeln("</div>");
+        return EVAL_PAGE;
     }
 
     private String renderFooterInfo(String contextPath) {
-	ConfigSingleton configSingleton = ConfigSingleton.getInstance();
+        ConfigSingleton configSingleton = ConfigSingleton.getInstance();
 
-	StringBuilder img2 = new StringBuilder();
-	img2.append("<img src=\"");
-	img2.append(contextPath).append(configSingleton.getStringValue(LOGO_2_RELATIVE.name()));
-	img2.append("\" alt=\"");
-	img2.append(configSingleton.getStringValue(LOGO_2_ALT.name()));
-	img2.append("\"/>");
+        StringBuilder img2 = new StringBuilder();
+        img2.append("<img src=\"");
+        img2.append(contextPath).append(configSingleton.getStringValue(LOGO_2_RELATIVE.name()));
+        img2.append("\" alt=\"");
+        img2.append(configSingleton.getStringValue(LOGO_2_ALT.name()));
+        img2.append("\"/>");
 
-	StringBuilder img3 = new StringBuilder();
-	img3.append("<img src=\"");
-	img3.append(contextPath).append(configSingleton.getStringValue(LOGO_3_RELATIVE.name()));
-	img3.append("\" alt=\"");
-	img3.append(configSingleton.getStringValue(LOGO_3_ALT.name()));
-	img3.append("\"/>");
+        StringBuilder img3 = new StringBuilder();
+        img3.append("<img src=\"");
+        img3.append(contextPath).append(configSingleton.getStringValue(LOGO_3_RELATIVE.name()));
+        img3.append("\" alt=\"");
+        img3.append(configSingleton.getStringValue(LOGO_3_ALT.name()));
+        img3.append("\"/>");
 
-	StringBuilder footer = new StringBuilder();
-	footer.append("<div class=\"left\">");
-	if (StringUtils.isNotBlank(configSingleton.getStringValue(LOGO_2_URL.name()))) {
-	    footer.append("<a href=\"").append(configSingleton.getStringValue(LOGO_2_URL.name()))
-		    .append("\"  title=\"")
-		    .append(configSingleton.getStringValue(LOGO_2_TITLE.name())).append("\">");
+        StringBuilder footer = new StringBuilder();
+        footer.append("<div class=\"left\">");
+        if (StringUtils.isNotBlank(configSingleton.getStringValue(LOGO_2_URL.name()))) {
+            footer.append("<a href=\"").append(configSingleton.getStringValue(LOGO_2_URL.name()))
+                    .append("\"  title=\"")
+                    .append(configSingleton.getStringValue(LOGO_2_TITLE.name())).append("\">");
 
-	    footer.append(img2.toString());
+            footer.append(img2.toString());
 
-	    footer.append("</a>");
-	} else {
-	    footer.append(img2.toString());
-	}
-	footer.append("</div>\n");
+            footer.append("</a>");
+        } else {
+            footer.append(img2.toString());
+        }
+        footer.append("</div>\n");
 
-	footer.append("<div class=\"right\">");
-	if (StringUtils.isNotBlank(configSingleton.getStringValue(LOGO_3_URL.name()))) {
-	    footer.append("<a href=\"").append(configSingleton.getStringValue(LOGO_2_URL.name()))
-		    .append("\"  title=\"")
-		    .append(configSingleton.getStringValue(LOGO_3_TITLE.name())).append("\">");
+        footer.append("<div class=\"right\">");
+        if (StringUtils.isNotBlank(configSingleton.getStringValue(LOGO_3_URL.name()))) {
+            footer.append("<a href=\"").append(configSingleton.getStringValue(LOGO_2_URL.name()))
+                    .append("\"  title=\"")
+                    .append(configSingleton.getStringValue(LOGO_3_TITLE.name())).append("\">");
 
-	    footer.append(img3.toString());
+            footer.append(img3.toString());
 
-	    footer.append("</a>");
-	} else {
-	    footer.append(img3.toString());
-	}
-	footer.append("</div>");
+            footer.append("</a>");
+        } else {
+            footer.append(img3.toString());
+        }
+        footer.append("</div>");
 
-	return footer.toString();
+        return footer.toString();
     }
 }

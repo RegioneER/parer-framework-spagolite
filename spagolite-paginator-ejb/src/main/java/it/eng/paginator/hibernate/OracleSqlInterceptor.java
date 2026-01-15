@@ -20,6 +20,6 @@ public class OracleSqlInterceptor extends EmptyInterceptor {
 
     @Override
     public String onPrepareStatement(String sql) {
-	return QueryUtils.fixOracleMultiColumnDistinct(sql);
+        return QueryUtils.fixOracleMultiColumnDistinct(sql);
     }
 }

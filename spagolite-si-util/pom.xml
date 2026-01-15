@@ -14,7 +14,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>7.1.5-SNAPSHOT</version>
+        <version>7.2.1-SNAPSHOT</version>
     </parent>
     <build>
         <plugins>

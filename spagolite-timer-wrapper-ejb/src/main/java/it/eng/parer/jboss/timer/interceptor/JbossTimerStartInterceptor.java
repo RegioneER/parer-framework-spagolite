@@ -51,19 +51,19 @@ public class JbossTimerStartInterceptor {
      */
     @AroundInvoke
     public Object start(InvocationContext inv) throws Exception {
-	final String logPrefix = "[" + service.getApplicationName()
-		+ " Jboss Timer Interceptor start] -";
-	if (service.isStandalone()) {
-	    log.debug(String.format("%s Modalità standalone. Procedo con l'interceptor successivo.",
-		    logPrefix));
-	    return inv.proceed();
-	}
-	JbossJobTimer target = (JbossJobTimer) inv.getTarget();
-	String jobName = target.getJobName();
-	log.debug(String.format("%s Start del job %s ", logPrefix, jobName));
-	Object result = inv.proceed();
-	service.setDataProssimaAttivazione(jobName,
-		target.getNextElaboration(service.getApplicationName()));
-	return result;
+        final String logPrefix = "[" + service.getApplicationName()
+                + " Jboss Timer Interceptor start] -";
+        if (service.isStandalone()) {
+            log.debug(String.format("%s Modalità standalone. Procedo con l'interceptor successivo.",
+                    logPrefix));
+            return inv.proceed();
+        }
+        JbossJobTimer target = (JbossJobTimer) inv.getTarget();
+        String jobName = target.getJobName();
+        log.debug(String.format("%s Start del job %s ", logPrefix, jobName));
+        Object result = inv.proceed();
+        service.setDataProssimaAttivazione(jobName,
+                target.getNextElaboration(service.getApplicationName()));
+        return result;
     }
 }

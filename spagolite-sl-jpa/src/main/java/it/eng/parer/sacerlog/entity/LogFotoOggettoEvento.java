@@ -55,42 +55,42 @@ public class LogFotoOggettoEvento implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_FOTO_OGGETTO_EVENTO_IDFOTOOGGETTOEVENTO_GENERATOR")
     @Column(name = "ID_FOTO_OGGETTO_EVENTO")
     public long getIdFotoOggettoEvento() {
-	return this.idFotoOggettoEvento;
+        return this.idFotoOggettoEvento;
     }
 
     public void setIdFotoOggettoEvento(long idFotoOggettoEvento) {
-	this.idFotoOggettoEvento = idFotoOggettoEvento;
+        this.idFotoOggettoEvento = idFotoOggettoEvento;
     }
 
     @Column(name = "DT_REG_EVENTO")
     @Temporal(TemporalType.TIMESTAMP)
     public Calendar getDtRegEvento() {
-	return this.dtRegEvento;
+        return this.dtRegEvento;
     }
 
     public void setDtRegEvento(Calendar dtRegEvento) {
-	this.dtRegEvento = dtRegEvento;
+        this.dtRegEvento = dtRegEvento;
     }
 
     @ColumnTransformer(read = "to_clob(columnName)", write = "?")
     @Column(name = "BL_FOTO_OGGETTO", columnDefinition = "XMLType")
     public String getBlFotoOggetto() {
-	return this.blFotoOggetto;
+        return this.blFotoOggetto;
     }
 
     public void setBlFotoOggetto(String blFotoOggetto) {
-	this.blFotoOggetto = blFotoOggetto;
+        this.blFotoOggetto = blFotoOggetto;
     }
 
     // bi-directional many-to-one association to LogOggettoEvento
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_OGGETTO_EVENTO")
     public LogOggettoEvento getLogOggettoEvento() {
-	return this.logOggettoEvento;
+        return this.logOggettoEvento;
     }
 
     public void setLogOggettoEvento(LogOggettoEvento logOggettoEvento) {
-	this.logOggettoEvento = logOggettoEvento;
+        this.logOggettoEvento = logOggettoEvento;
     }
 
 }

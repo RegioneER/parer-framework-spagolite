@@ -28,11 +28,11 @@ public class NavigationValidator {
     MessageBox messageBox = null;
 
     public NavigationValidator(MessageBox messageBox) {
-	this.messageBox = messageBox;
+        this.messageBox = messageBox;
     }
 
     public MessageBox getMessageBox() {
-	return this.messageBox;
+        return this.messageBox;
     }
 
     /**
@@ -48,70 +48,70 @@ public class NavigationValidator {
      *         valido o è fuori dal range.
      */
     public Integer getValidNavigationInteger(HttpServletRequest request, int maxVal,
-	    String nomeLista) {
-	// Recupero il parametro in servletRequest relativo al numero di pagina
-	// impostato il cui nome sarà numPag +
-	// nome_lista.
-	// Mi recupero un array perchè potrei avere più di una barra di scorrimento (una
-	// sopra e una sotto la lista)
-	String[] str = (String[]) request.getParameterValues("numPag" + nomeLista);
+            String nomeLista) {
+        // Recupero il parametro in servletRequest relativo al numero di pagina
+        // impostato il cui nome sarà numPag +
+        // nome_lista.
+        // Mi recupero un array perchè potrei avere più di una barra di scorrimento (una
+        // sopra e una sotto la lista)
+        String[] str = (String[]) request.getParameterValues("numPag" + nomeLista);
 
-	String valoreNumeroPagina = "";
+        String valoreNumeroPagina = "";
 
-	// 1. Verifico di aver inserito un solo valore in caso l'array sia maggiore di 1
-	if (str.length > 2) {
-	    getMessageBox().addError(
-		    "Attenzione: sono presenti più di 2 barre di scorrimento per la stessa lista, operazione non consentita");
-	}
+        // 1. Verifico di aver inserito un solo valore in caso l'array sia maggiore di 1
+        if (str.length > 2) {
+            getMessageBox().addError(
+                    "Attenzione: sono presenti più di 2 barre di scorrimento per la stessa lista, operazione non consentita");
+        }
 
-	if (str.length == 2) {
-	    if (str[0].equals(str[1])) {
-		valoreNumeroPagina = str[0]; // Gestisce sia il caso di entrambi vuoti sia il caso
-					     // di entrambi uguali
-	    } else if (str[1].equals("")) {
-		valoreNumeroPagina = str[0];
-	    } else if (str[0].equals("")) {
-		valoreNumeroPagina = str[1];
-	    } else {
-		getMessageBox().addError(
-			"Attenzione: sono stati inseriti valori diversi nel campo per selezionare la pagina desiderata");
-		return null;
-	    }
-	}
+        if (str.length == 2) {
+            if (str[0].equals(str[1])) {
+                valoreNumeroPagina = str[0]; // Gestisce sia il caso di entrambi vuoti sia il caso
+                // di entrambi uguali
+            } else if (str[1].equals("")) {
+                valoreNumeroPagina = str[0];
+            } else if (str[0].equals("")) {
+                valoreNumeroPagina = str[1];
+            } else {
+                getMessageBox().addError(
+                        "Attenzione: sono stati inseriti valori diversi nel campo per selezionare la pagina desiderata");
+                return null;
+            }
+        }
 
-	if (str.length == 1) {
-	    valoreNumeroPagina = str[0];
-	}
+        if (str.length == 1) {
+            valoreNumeroPagina = str[0];
+        }
 
-	if (valoreNumeroPagina == null || valoreNumeroPagina.isEmpty()) {
-	    getMessageBox().addError("Numero di pagina non indicato");
-	    return null; // Stringa nulla o vuota non è un intero valido
-	}
+        if (valoreNumeroPagina == null || valoreNumeroPagina.isEmpty()) {
+            getMessageBox().addError("Numero di pagina non indicato");
+            return null; // Stringa nulla o vuota non è un intero valido
+        }
 
-	try {
-	    // 1. Tentativo di convertire la stringa in un intero
-	    int num = Integer.parseInt(valoreNumeroPagina);
+        try {
+            // 1. Tentativo di convertire la stringa in un intero
+            int num = Integer.parseInt(valoreNumeroPagina);
 
-	    // 2. Controllo del range
-	    if (num <= 0 || num > maxVal) {
-		getMessageBox().addError("Numero di pagina al di fuori del range consentito");
-		return null; // Fuori dal range consentito
-	    }
+            // 2. Controllo del range
+            if (num <= 0 || num > maxVal) {
+                getMessageBox().addError("Numero di pagina al di fuori del range consentito");
+                return null; // Fuori dal range consentito
+            }
 
-	    // 3. Se arriviamo qui, la stringa è un intero valido nel range
-	    return num; // Restituisci l'Integer
-	} catch (NumberFormatException e) {
-	    getMessageBox().addError(
-		    "Attenzione: il numero fornito per selezionare la pagina desiderata non è formalmente corretto");
-	    // L'eccezione NumberFormatException viene lanciata se la stringa non può essere
-	    // convertita in un intero.
-	    return null; // La stringa non rappresenta un intero valido
-	} catch (Exception e) {
-	    // Gestione di altre eccezioni impreviste (raro, ma per completezza).
-	    logger.error("Errore inatteso durante la validazione del numero di paginazione lista: "
-		    + e.getMessage()); // Log
-				       // dell'errore
-	    return null; // Considera l'input non valido in caso di errore inatteso
-	}
+            // 3. Se arriviamo qui, la stringa è un intero valido nel range
+            return num; // Restituisci l'Integer
+        } catch (NumberFormatException e) {
+            getMessageBox().addError(
+                    "Attenzione: il numero fornito per selezionare la pagina desiderata non è formalmente corretto");
+            // L'eccezione NumberFormatException viene lanciata se la stringa non può essere
+            // convertita in un intero.
+            return null; // La stringa non rappresenta un intero valido
+        } catch (Exception e) {
+            // Gestione di altre eccezioni impreviste (raro, ma per completezza).
+            logger.error("Errore inatteso durante la validazione del numero di paginazione lista: "
+                    + e.getMessage()); // Log
+            // dell'errore
+            return null; // Considera l'input non valido in caso di errore inatteso
+        }
     }
 }

@@ -31,7 +31,7 @@ public class PaginatorImpl extends AbstractPaginator {
 
     @Override
     protected BaseTableInterface<?> invoke(LazyListInterface llBean) {
-	return lazyListHelper.getTableBean((LazyListBean) llBean);
+        return lazyListHelper.getTableBean((LazyListBean) llBean);
     }
 
 }

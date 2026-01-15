@@ -24,18 +24,18 @@ public class PaginatorInterceptor {
 
     @AroundInvoke
     public Object storeInvocation(InvocationContext inv) throws Exception {
-	return invoke(inv);
+        return invoke(inv);
     }
 
     private Object invoke(InvocationContext inv) throws Exception {
-	return inv.proceed();
+        return inv.proceed();
     }
 
     public static LazyListBean getLazyListBean() {
-	return tLocalLazyList.get();
+        return tLocalLazyList.get();
     }
 
     public static void setLazyListBean(LazyListBean llBean) {
-	tLocalLazyList.set(llBean);
+        tLocalLazyList.set(llBean);
     }
 }

@@ -39,63 +39,63 @@ public final class ConfigSingleton implements Serializable {
     }
 
     public static ConfigSingleton getInstance() {
-	return INSTANCE;
+        return INSTANCE;
     }
 
     public String getContextPath() {
-	return contextPath;
+        return contextPath;
     }
 
     public void setContextPath(String contextPath) {
-	this.contextPath = contextPath;
+        this.contextPath = contextPath;
     }
 
     public void setConfigCache(Map<String, String> configCache) {
-	this.configCache = configCache;
+        this.configCache = configCache;
     }
 
     public URI getUriValue(String propName) {
-	return URI.create(configCache.get(propName));
+        return URI.create(configCache.get(propName));
     }
 
     public long getLongValue(String propName) {
-	return Long.parseLong(configCache.get(propName));
+        return Long.parseLong(configCache.get(propName));
     }
 
     public boolean getBooleanValue(String propName) {
-	return Boolean.parseBoolean(configCache.get(propName));
+        return Boolean.parseBoolean(configCache.get(propName));
     }
 
     public String getStringValue(String propName) {
-	return configCache.get(propName);
+        return configCache.get(propName);
     }
 
     public int getIntValue(String propName) {
-	return Integer.parseInt(configCache.get(propName));
+        return Integer.parseInt(configCache.get(propName));
     }
 
     public String getAppName() {
-	return appName;
+        return appName;
     }
 
     public void setAppName(String appName) {
-	this.appName = appName;
+        this.appName = appName;
     }
 
     public String getAppVersion() {
-	return appVersion;
+        return appVersion;
     }
 
     public void setAppVersion(String appVersion) {
-	this.appVersion = appVersion;
+        this.appVersion = appVersion;
     }
 
     public String getAppBuildDate() {
-	return appBuildDate;
+        return appBuildDate;
     }
 
     public void setAppBuildDate(String appBuildDate) {
-	this.appBuildDate = appBuildDate;
+        this.appBuildDate = appBuildDate;
     }
 
 }

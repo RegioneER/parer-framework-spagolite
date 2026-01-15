@@ -28,7 +28,7 @@ import org.dom4j.Element;
  *
  */
 public class ProfileElement<T extends ProfileElement<?>> extends FrameElement
-	implements Iterable<T> {
+        implements Iterable<T> {
 
     private static final long serialVersionUID = 1L;
     private String name;
@@ -37,52 +37,52 @@ public class ProfileElement<T extends ProfileElement<?>> extends FrameElement
     private final Map<String, T> childs;
 
     public ProfileElement(String name, String description) {
-	this.name = name;
-	this.description = description;
-	// this.childs = new LinkedHashMap<String, T>();
-	this.childs = new CaseInsensitiveMap();
+        this.name = name;
+        this.description = description;
+        // this.childs = new LinkedHashMap<String, T>();
+        this.childs = new CaseInsensitiveMap<>();
     }
 
     public String getName() {
-	return name;
+        return name;
     }
 
     public void setName(String name) {
-	this.name = name;
+        this.name = name;
     }
 
     public String getDescription() {
-	return description;
+        return description;
     }
 
     public void setDescription(String description) {
-	this.description = description;
+        this.description = description;
     }
 
     @Override
     public Iterator<T> iterator() {
-	return childs.values().iterator();
+        return childs.values().iterator();
     }
 
     public void addChild(T profileElement) {
-	childs.put(profileElement.getName(), profileElement);
+        childs.put(profileElement.getName(), profileElement);
     }
 
     public T getChild(String name) {
-	return childs.get(name);
+        return childs.get(name);
     }
 
     @Override
     public Element asXml() {
-	Element element = super.asXml();
+        Element element = super.asXml();
 
-	element.addAttribute("name", name);
-	element.addAttribute("description", description);
-	for (T profileElement : this) {
-	    element.add(profileElement.asXml());
-	}
+        element.addAttribute("name", name);
+        element.addAttribute("description", description);
+        for (T profileElement : this) {
+            element.add(profileElement.asXml());
+        }
 
-	return super.asXml();
+        return super.asXml();
     }
 
 }

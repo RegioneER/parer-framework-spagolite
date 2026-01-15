@@ -25,45 +25,45 @@ public class GridRow {
     private int livello;
 
     public GridRow(int livello) {
-	this.cellList = new ArrayList<GridCell>();
-	this.livello = livello;
+        this.cellList = new ArrayList<GridCell>();
+        this.livello = livello;
     }
 
     public List<GridCell> getCellList() {
-	return cellList;
+        return cellList;
     }
 
     public GridCell addCell(GridCell gridCell) {
-	cellList.add(gridCell);
-	return gridCell;
+        cellList.add(gridCell);
+        return gridCell;
     }
 
     public GridCell addCell(SingleValueField field, BaseRowInterface row) throws EMFError {
-	GridCell gridCell = new GridCell(field, row);
-	cellList.add(gridCell);
-	return gridCell;
+        GridCell gridCell = new GridCell(field, row);
+        cellList.add(gridCell);
+        return gridCell;
     }
 
     public int getLivello() {
-	return livello;
+        return livello;
     }
 
     public void setLivello(int livello) {
-	this.livello = livello;
+        this.livello = livello;
     }
 
     @Override
     public String toString() {
-	StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
 
-	stringBuilder.append(" <row livello=\"" + getLivello() + "\">\n");
+        stringBuilder.append(" <row livello=\"" + getLivello() + "\">\n");
 
-	for (GridCell gridCell : cellList) {
-	    stringBuilder.append(gridCell.toString());
-	}
+        for (GridCell gridCell : cellList) {
+            stringBuilder.append(gridCell.toString());
+        }
 
-	stringBuilder.append(" </row>\n");
-	return stringBuilder.toString();
+        stringBuilder.append(" </row>\n");
+        return stringBuilder.toString();
     }
 
 }

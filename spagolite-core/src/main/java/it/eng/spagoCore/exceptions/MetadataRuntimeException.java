@@ -24,22 +24,22 @@ public class MetadataRuntimeException extends RuntimeException {
     private static final long serialVersionUID = 5015771412184277789L;
 
     public MetadataRuntimeException() {
-	super();
+        super();
     }
 
     public MetadataRuntimeException(String message, Throwable throwable) {
-	super(message, throwable);
+        super(message, throwable);
     }
 
     public MetadataRuntimeException(Throwable throwable) {
-	super(throwable);
+        super(throwable);
     }
 
     public MetadataRuntimeException(String message) {
-	super(message);
+        super(message);
     }
 
     public MetadataRuntimeException(String message, Object... args) {
-	super(String.format(message, args));
+        super(String.format(message, args));
     }
 }

@@ -22,51 +22,51 @@ public class ColumnDescriptor {
     private final boolean notnull;
 
     public ColumnDescriptor(String name, int type) {
-	this(name, type, 0, false);
+        this(name, type, 0, false);
     }
 
     public ColumnDescriptor(String name, int type, int length, boolean notnull) {
-	this.name = name;
-	this.type = type;
-	this.length = length;
-	this.notnull = notnull;
+        this.name = name;
+        this.type = type;
+        this.length = length;
+        this.notnull = notnull;
     }
 
     /**
      * @return Il nome della colonna
      */
     public String getName() {
-	return this.name;
+        return this.name;
     }
 
     /**
      * @return Il tipo della colonna
      */
     public int getType() {
-	return this.type;
+        return this.type;
     }
 
     /**
      * @return La lunghezza massima consentita della colonna
      */
     public int getLength() {
-	return this.length;
+        return this.length;
     }
 
     public final boolean isNotnull() {
-	return this.notnull;
+        return this.notnull;
     }
 
     public String getBaseFilter() {
-	return getName() + " = ?";
+        return getName() + " = ?";
     }
 
     public String toString() {
-	return this.name + ": " + toStringType();
+        return this.name + ": " + toStringType();
     }
 
     public String toStringType() {
-	return SqlTypesName.getName(this.type) + (this.length > 0 ? " (" + getLength() + ")" : "")
-		+ (this.notnull ? " NOT NULL" : "");
+        return SqlTypesName.getName(this.type) + (this.length > 0 ? " (" + getLength() + ")" : "")
+                + (this.notnull ? " NOT NULL" : "");
     }
 }

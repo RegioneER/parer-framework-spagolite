@@ -48,21 +48,21 @@ public class JbossTimerResetStatusInterceptor {
      */
     @AroundInvoke
     public Object resetStatus(InvocationContext inv) throws Exception {
-	final String logPrefix = "[" + service.getApplicationName()
-		+ " Jboss Timer Interceptor resetStatus] -";
-	if (service.isStandalone()) {
-	    log.debug(String.format("%s Modalità standalone. Procedo con l'interceptor successivo.",
-		    logPrefix));
-	    return inv.proceed();
-	}
-	JbossJobTimer target = (JbossJobTimer) inv.getTarget();
-	String jobName = target.getJobName();
+        final String logPrefix = "[" + service.getApplicationName()
+                + " Jboss Timer Interceptor resetStatus] -";
+        if (service.isStandalone()) {
+            log.debug(String.format("%s Modalità standalone. Procedo con l'interceptor successivo.",
+                    logPrefix));
+            return inv.proceed();
+        }
+        JbossJobTimer target = (JbossJobTimer) inv.getTarget();
+        String jobName = target.getJobName();
 
-	JobTable job = service.getJob(jobName);
+        JobTable job = service.getJob(jobName);
 
-	log.debug(String.format("%s Reset dello stato per il job %s", logPrefix, jobName));
-	service.resetStatus(job.getNmJob());
-	return inv.proceed();
+        log.debug(String.format("%s Reset dello stato per il job %s", logPrefix, jobName));
+        service.resetStatus(job.getNmJob());
+        return inv.proceed();
     }
 
 }

@@ -28,21 +28,21 @@ public class ValueTag extends BaseFormTag<SingleValueField<?>> {
 
     @Override
     public int doStartTag() throws JspException {
-	String str = getComponent().getValue();
-	if (escapeJavaScript) {
-	    str = StringEscapeUtils.escapeJava(str);
-	}
+        String str = getComponent().getValue();
+        if (escapeJavaScript) {
+            str = StringEscapeUtils.escapeJava(str);
+        }
 
-	write(JavaScript.stringToHTMLString(str));
-	return SKIP_BODY;
+        write(JavaScript.stringToHTMLString(str));
+        return SKIP_BODY;
     }
 
     public boolean isEscapeJavaScript() {
-	return escapeJavaScript;
+        return escapeJavaScript;
     }
 
     public void setEscapeJavaScript(boolean escapeJavaScript) {
-	this.escapeJavaScript = escapeJavaScript;
+        this.escapeJavaScript = escapeJavaScript;
     }
 
 }

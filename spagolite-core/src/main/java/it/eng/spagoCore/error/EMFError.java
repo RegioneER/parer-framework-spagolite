@@ -40,41 +40,41 @@ public class EMFError extends Exception implements Serializable {
     private final Throwable throwable;
 
     public EMFError(String severity, String description, Throwable throwable) {
-	this.severity = severity;
-	this.description = description;
-	this.throwable = throwable;
+        this.severity = severity;
+        this.description = description;
+        this.throwable = throwable;
     }
 
     public EMFError(String severity, String description) {
-	this(severity, description, null);
+        this(severity, description, null);
     }
 
     public EMFError(String severity, Throwable throwable) {
-	this(severity, null, throwable);
+        this(severity, null, throwable);
     }
 
     public String getSeverity() {
-	return severity;
+        return severity;
     }
 
     public String getDescription() {
-	return description;
+        return description;
     }
 
     public Throwable getThrowable() {
-	return throwable;
+        return throwable;
     }
 
     public boolean isOk(String serverity) {
-	if (getSeverity() == null) {
-	    return true;
-	}
+        if (getSeverity() == null) {
+            return true;
+        }
 
-	if (getSeverity().equalsIgnoreCase(serverity)) {
-	    return true;
-	} else {
-	    return false;
-	}
+        if (getSeverity().equalsIgnoreCase(serverity)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

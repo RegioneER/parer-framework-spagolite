@@ -41,37 +41,37 @@ public class ParamApplicHelper {
 
     @SuppressWarnings("unchecked")
     protected AplVParamApplic getParamApplicValue(String nmParamApplic) {
-	Query query = entityManager.createNamedQuery("AplVParamApplic.findByNmParamApplic",
-		AplVParamApplic.class);
-	query.setParameter("nmParamApplic", nmParamApplic);
-	// AplVParamApplic p = (AplVParamApplic) query.getSingleResult();
-	AplVParamApplic p = null;
-	List<AplVParamApplic> result = query.getResultList();
-	if (result != null && !result.isEmpty()) {
-	    p = result.get(0);
-	}
-	return p;
+        Query query = entityManager.createNamedQuery("AplVParamApplic.findByNmParamApplic",
+                AplVParamApplic.class);
+        query.setParameter("nmParamApplic", nmParamApplic);
+        // AplVParamApplic p = (AplVParamApplic) query.getSingleResult();
+        AplVParamApplic p = null;
+        List<AplVParamApplic> result = query.getResultList();
+        if (result != null && !result.isEmpty()) {
+            p = result.get(0);
+        }
+        return p;
     }
 
     public AplVParamApplic getServerNameSystemProperty() {
-	return getParamApplicValue(Constants.NmParamApplic.SERVER_NAME_SYSTEM_PROPERTY.name());
+        return getParamApplicValue(Constants.NmParamApplic.SERVER_NAME_SYSTEM_PROPERTY.name());
     }
 
     public AplVParamApplic getApplicationName() {
-	return getParamApplicValue(Constants.NmParamApplic.NM_APPLIC.name());
+        return getParamApplicValue(Constants.NmParamApplic.NM_APPLIC.name());
     }
 
     public Integer getMaxResultRicercaLogEventiValue() {
-	Integer valore = null;
-	AplVParamApplic apl = getParamApplicValue(
-		Constants.NmParamApplic.MAX_RESULT_RICERCA_LOG_EVENTI.name());
-	if (apl != null) {
-	    String val = apl.getDsValoreParamApplic();
-	    if (val != null) {
-		valore = Integer.valueOf(val);
-	    }
-	}
-	return valore;
+        Integer valore = null;
+        AplVParamApplic apl = getParamApplicValue(
+                Constants.NmParamApplic.MAX_RESULT_RICERCA_LOG_EVENTI.name());
+        if (apl != null) {
+            String val = apl.getDsValoreParamApplic();
+            if (val != null) {
+                valore = Integer.valueOf(val);
+            }
+        }
+        return valore;
     }
 
 }

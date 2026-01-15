@@ -31,8 +31,8 @@ import javax.persistence.Table;
 @Entity
 @Table(schema = "SACER_LOG", name = "LOG_V_LIS_EVENTO_BY_SCRIPT")
 @NamedQueries({
-	@NamedQuery(name = "LogVLisEventoByScript.findByTipoOggettoId", query = "SELECT l FROM LogVLisEventoByScript l WHERE l.idTipoOggetto = :idTipoOggetto AND l.idOggetto = :idOggetto"),
-	@NamedQuery(name = "LogVLisEventoByScript.findDistinctByNmApplic", query = "SELECT DISTINCT l.idTipoOggetto, l.idOggetto, l.nmTipoOggetto FROM LogVLisEventoByScript l WHERE l.nmApplic = :nmApplic") })
+        @NamedQuery(name = "LogVLisEventoByScript.findByTipoOggettoId", query = "SELECT l FROM LogVLisEventoByScript l WHERE l.idTipoOggetto = :idTipoOggetto AND l.idOggetto = :idOggetto"),
+        @NamedQuery(name = "LogVLisEventoByScript.findDistinctByNmApplic", query = "SELECT DISTINCT l.idTipoOggetto, l.idOggetto, l.nmTipoOggetto FROM LogVLisEventoByScript l WHERE l.nmApplic = :nmApplic") })
 public class LogVLisEventoByScript implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,102 +53,102 @@ public class LogVLisEventoByScript implements Serializable {
 
     @Column(name = "DT_REG_EVENTO")
     public Timestamp getDtRegEvento() {
-	return this.dtRegEvento;
+        return this.dtRegEvento;
     }
 
     public void setDtRegEvento(Timestamp dtRegEvento) {
-	this.dtRegEvento = dtRegEvento;
+        this.dtRegEvento = dtRegEvento;
     }
 
     @Column(name = "ID_AGENTE")
     public BigDecimal getIdAgente() {
-	return this.idAgente;
+        return this.idAgente;
     }
 
     public void setIdAgente(BigDecimal idAgente) {
-	this.idAgente = idAgente;
+        this.idAgente = idAgente;
     }
 
     @Column(name = "ID_APPLIC")
     public BigDecimal getIdApplic() {
-	return this.idApplic;
+        return this.idApplic;
     }
 
     public void setIdApplic(BigDecimal idApplic) {
-	this.idApplic = idApplic;
+        this.idApplic = idApplic;
     }
 
     @Column(name = "ID_AZIONE_COMP_SW")
     public BigDecimal getIdAzioneCompSw() {
-	return this.idAzioneCompSw;
+        return this.idAzioneCompSw;
     }
 
     public void setIdAzioneCompSw(BigDecimal idAzioneCompSw) {
-	this.idAzioneCompSw = idAzioneCompSw;
+        this.idAzioneCompSw = idAzioneCompSw;
     }
 
     @Id
     @Column(name = "ID_EVENTO_BY_SCRIPT")
     public BigDecimal getIdEventoByScript() {
-	return this.idEventoByScript;
+        return this.idEventoByScript;
     }
 
     public void setIdEventoByScript(BigDecimal idEventoByScript) {
-	this.idEventoByScript = idEventoByScript;
+        this.idEventoByScript = idEventoByScript;
     }
 
     @Column(name = "ID_OGGETTO")
     public BigDecimal getIdOggetto() {
-	return this.idOggetto;
+        return this.idOggetto;
     }
 
     public void setIdOggetto(BigDecimal idOggetto) {
-	this.idOggetto = idOggetto;
+        this.idOggetto = idOggetto;
     }
 
     @Column(name = "ID_TIPO_OGGETTO")
     public BigDecimal getIdTipoOggetto() {
-	return this.idTipoOggetto;
+        return this.idTipoOggetto;
     }
 
     public void setIdTipoOggetto(BigDecimal idTipoOggetto) {
-	this.idTipoOggetto = idTipoOggetto;
+        this.idTipoOggetto = idTipoOggetto;
     }
 
     @Column(name = "NM_APPLIC")
     public String getNmApplic() {
-	return this.nmApplic;
+        return this.nmApplic;
     }
 
     public void setNmApplic(String nmApplic) {
-	this.nmApplic = nmApplic;
+        this.nmApplic = nmApplic;
     }
 
     @Column(name = "NM_TIPO_OGGETTO")
     public String getNmTipoOggetto() {
-	return this.nmTipoOggetto;
+        return this.nmTipoOggetto;
     }
 
     public void setNmTipoOggetto(String nmTipoOggetto) {
-	this.nmTipoOggetto = nmTipoOggetto;
+        this.nmTipoOggetto = nmTipoOggetto;
     }
 
     @Column(name = "TI_RUOLO_AGENTE_EVENTO")
     public String getTiRuoloAgenteEvento() {
-	return this.tiRuoloAgenteEvento;
+        return this.tiRuoloAgenteEvento;
     }
 
     public void setTiRuoloAgenteEvento(String tiRuoloAgenteEvento) {
-	this.tiRuoloAgenteEvento = tiRuoloAgenteEvento;
+        this.tiRuoloAgenteEvento = tiRuoloAgenteEvento;
     }
 
     @Column(name = "TI_RUOLO_OGGETTO_EVENTO")
     public String getTiRuoloOggettoEvento() {
-	return this.tiRuoloOggettoEvento;
+        return this.tiRuoloOggettoEvento;
     }
 
     public void setTiRuoloOggettoEvento(String tiRuoloOggettoEvento) {
-	this.tiRuoloOggettoEvento = tiRuoloOggettoEvento;
+        this.tiRuoloOggettoEvento = tiRuoloOggettoEvento;
     }
 
 }

@@ -24,23 +24,23 @@ public class EndPage extends BaseComponent implements WizardElement {
     private boolean current;
 
     public EndPage(Component parent, String name, String description, boolean hideBar) {
-	super(parent, name, description);
-	this.hideBar = hideBar;
+        super(parent, name, description);
+        this.hideBar = hideBar;
     }
 
     public boolean isHideBar() {
-	return hideBar;
+        return hideBar;
     }
 
     public void setHideBar(boolean hideBar) {
-	this.hideBar = hideBar;
+        this.hideBar = hideBar;
     }
 
     public boolean isCurrent() {
-	return current;
+        return current;
     }
 
     public void setCurrent(boolean current) {
-	this.current = current;
+        this.current = current;
     }
 }

@@ -22,17 +22,17 @@ public class LogoutAction extends ActionBase {
 
     @Override
     public String getControllerName() {
-	return "Logout.html";
+        return "Logout.html";
     }
 
     @Override
     public void process() throws EMFError {
-	redirectToAction("Login.html?operation=logout");
+        redirectToAction("Login.html?operation=logout");
     }
 
     @Override
     protected boolean isAuthorized(String destination) {
-	return true;
+        return true;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class LogoutAction extends ActionBase {
     }
 
     public void success() {
-	forwardToPublisher(getDefaultPublsherName());
+        forwardToPublisher(getDefaultPublsherName());
     }
 
     /*
@@ -51,6 +51,6 @@ public class LogoutAction extends ActionBase {
      */
     @Override
     protected String getDefaultPublsherName() {
-	return "/login/logout";
+        return "/login/logout";
     }
 }

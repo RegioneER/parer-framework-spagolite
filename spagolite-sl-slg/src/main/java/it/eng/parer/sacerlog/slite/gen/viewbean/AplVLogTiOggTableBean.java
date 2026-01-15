@@ -32,19 +32,19 @@ public class AplVLogTiOggTableBean extends AbstractBaseTable<AplVLogTiOggRowBean
     public static AplVLogTiOggTableDescriptor TABLE_DESCRIPTOR = new AplVLogTiOggTableDescriptor();
 
     public AplVLogTiOggTableBean() {
-	super();
+        super();
     }
 
     protected AplVLogTiOggRowBean createRow() {
-	return new AplVLogTiOggRowBean();
+        return new AplVLogTiOggRowBean();
     }
 
     public TableDescriptor getTableDescriptor() {
-	return TABLE_DESCRIPTOR;
+        return TABLE_DESCRIPTOR;
     }
 
     @Deprecated
     public Iterator<AplVLogTiOggRowBean> getRowsIterator() {
-	return iterator();
+        return iterator();
     }
 }

@@ -28,18 +28,18 @@ public class AbstractPanelTag extends BaseFormTag<List<SingleValueField<?>>> {
     public static final String AJAX = "ajax";
 
     protected String getLink(String navigationEvent, String additionalInfo) {
-	if (navigationEvent != null) {
-	    if (additionalInfo == null) {
-		return getOperationUrl("panelNavigationOnClick",
-			"panel=" + getName() + "&amp;navigationEvent=" + navigationEvent);
-	    } else {
-		return getOperationUrl("panelNavigationOnClick",
-			"panel=" + getName() + "&amp;navigationEvent=" + navigationEvent) + "&amp;"
-			+ additionalInfo;
-	    }
-	}
+        if (navigationEvent != null) {
+            if (additionalInfo == null) {
+                return getOperationUrl("panelNavigationOnClick",
+                        "panel=" + getName() + "&amp;navigationEvent=" + navigationEvent);
+            } else {
+                return getOperationUrl("panelNavigationOnClick",
+                        "panel=" + getName() + "&amp;navigationEvent=" + navigationEvent) + "&amp;"
+                        + additionalInfo;
+            }
+        }
 
-	return "#";
+        return "#";
     }
 
 }

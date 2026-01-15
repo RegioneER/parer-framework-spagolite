@@ -42,138 +42,138 @@ public class BaseUser<T extends Profile> implements IUser<T> {
     private String email = null;
 
     public BaseUser(String codice, String descr) {
-	this.menu = new Menu(codice, descr);
-	this.profile = null;
-	this.applicazioni = new ArrayList<String>();
+        this.menu = new Menu(codice, descr);
+        this.profile = null;
+        this.applicazioni = new ArrayList<String>();
     }
 
     @Override
     public Menu getMenu() {
-	return menu;
+        return menu;
     }
 
     @Override
     public void setMenu(Menu menu) {
-	this.menu = menu;
+        this.menu = menu;
     }
 
     @Override
     public String getUsername() {
-	return username;
+        return username;
     }
 
     @Override
     public void setUsername(String username) {
-	this.username = username;
+        this.username = username;
     }
 
     @Override
     public String getCognome() {
-	return cognome;
+        return cognome;
     }
 
     @Override
     public void setCognome(String cognome) {
-	this.cognome = cognome;
+        this.cognome = cognome;
     }
 
     @Override
     public String getNome() {
-	return nome;
+        return nome;
     }
 
     @Override
     public void setNome(String nome) {
-	this.nome = nome;
+        this.nome = nome;
     }
 
     @Override
     public T getProfile() {
-	return profile;
+        return profile;
     }
 
     @Override
     public void setProfile(T profile) {
-	this.profile = profile;
+        this.profile = profile;
     }
 
     @Override
     public long getIdUtente() {
-	return idUtente;
+        return idUtente;
     }
 
     @Override
     public void setIdUtente(long idUtente) {
-	this.idUtente = idUtente;
+        this.idUtente = idUtente;
     }
 
     @Override
     public boolean isAttivo() {
 
-	return attivo;
+        return attivo;
     }
 
     @Override
     public void setAttivo(boolean attivo) {
-	this.attivo = attivo;
+        this.attivo = attivo;
     }
 
     @Override
     public Date getScadenzaPwd() {
-	// TODO Auto-generated method stub
-	return scadenzaPwd;
+        // TODO Auto-generated method stub
+        return scadenzaPwd;
     }
 
     @Override
     public void setScadenzaPwd(Date scadenzaPwd) {
-	this.scadenzaPwd = scadenzaPwd;
+        this.scadenzaPwd = scadenzaPwd;
     }
 
     @Override
     public List<String> getApplicazioni() {
-	// TODO Auto-generated method stub
-	return applicazioni;
+        // TODO Auto-generated method stub
+        return applicazioni;
     }
 
     @Override
     public void setApplicazioni(List<String> applicazioni) {
-	this.applicazioni = applicazioni;
+        this.applicazioni = applicazioni;
     }
 
     @Override
     public Map<String, String> getOrganizzazioneMap() {
-	// TODO Auto-generated method stub
-	return null;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     // ***** Aggiunti per la gestione dei diversi tipi di IDP
     @Override
     public UserType getUserType() {
-	return userType;
+        return userType;
     }
 
     @Override
     public void setUserType(UserType userType) {
-	this.userType = userType;
+        this.userType = userType;
     }
 
     @Override
     public String getExternalId() {
-	return externalId;
+        return externalId;
     }
 
     @Override
     public void setExternalId(String externalId) {
-	this.externalId = externalId;
+        this.externalId = externalId;
     }
 
     @Override
     public String getEmail() {
-	return email;
+        return email;
     }
 
     @Override
     public void setEmail(String email) {
-	this.email = email;
+        this.email = email;
     }
 }

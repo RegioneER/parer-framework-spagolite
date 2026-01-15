@@ -21,7 +21,7 @@ public class Message extends FrameElement {
 
     // con riferimento al type Oracle presente in LogMessages si sisanagstrutt
     public enum MessageLevel {
-	INF, WAR, ERR, FATAL
+        INF, WAR, ERR, FATAL
     };
 
     private MessageLevel messageLevel;
@@ -29,51 +29,51 @@ public class Message extends FrameElement {
     private Throwable throwable;
 
     public Message() {
-	this(MessageLevel.INF, "");
+        this(MessageLevel.INF, "");
     }
 
     public Message(MessageLevel messageLevel, String text, Throwable throwable) {
-	this.messageLevel = messageLevel;
-	this.text = text;
-	this.throwable = throwable;
+        this.messageLevel = messageLevel;
+        this.text = text;
+        this.throwable = throwable;
     }
 
     public Message(MessageLevel messageLevel, String text) {
-	this(messageLevel, text, null);
+        this(messageLevel, text, null);
     }
 
     public MessageLevel getMessageLevel() {
-	return messageLevel;
+        return messageLevel;
     }
 
     public void setMessageLevel(MessageLevel messageLevel) {
-	this.messageLevel = messageLevel;
+        this.messageLevel = messageLevel;
     }
 
     public String getText() {
-	return text;
+        return text;
     }
 
     public void setText(String text) {
-	this.text = text;
+        this.text = text;
     }
 
     public Throwable getThrowable() {
-	return throwable;
+        return throwable;
     }
 
     public void setThrowable(Throwable throwable) {
-	this.throwable = throwable;
+        this.throwable = throwable;
     }
 
     @Override
     public Element asXml() {
-	Element element = super.asXml();
+        Element element = super.asXml();
 
-	element.addAttribute("messageLevel", getMessageLevel().toString());
-	element.addAttribute("text", getText());
+        element.addAttribute("messageLevel", getMessageLevel().toString());
+        element.addAttribute("text", getText());
 
-	return element;
+        return element;
     }
 
 }

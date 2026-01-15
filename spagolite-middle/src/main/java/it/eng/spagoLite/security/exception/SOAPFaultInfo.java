@@ -36,24 +36,24 @@ public class SOAPFaultInfo implements Serializable {
     }
 
     public SOAPFaultInfo(CodiceErrore faultCode, String faultString) {
-	this.faultCode = faultCode;
-	this.faultString = faultString;
+        this.faultCode = faultCode;
+        this.faultString = faultString;
     }
 
     public CodiceErrore getFaultCode() {
-	return faultCode;
+        return faultCode;
     }
 
     public void setFaultCode(CodiceErrore faultCode) {
-	this.faultCode = faultCode;
+        this.faultCode = faultCode;
     }
 
     public String getFaultString() {
-	return faultString;
+        return faultString;
     }
 
     public void setFaultString(String faultString) {
-	this.faultString = faultString;
+        this.faultString = faultString;
     }
 
 }

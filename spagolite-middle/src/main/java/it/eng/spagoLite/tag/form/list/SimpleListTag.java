@@ -32,85 +32,85 @@ public class SimpleListTag extends AbstractListTag {
 
     @Override
     public int doStartTag() throws JspException {
-	try {
-	    List<SingleValueField<?>> fields = getComponent();
-	    BaseTableInterface<?> table = getComponent().getTable();
+        try {
+            List<SingleValueField<?>> fields = getComponent();
+            BaseTableInterface<?> table = getComponent().getTable();
 
-	    if (table != null) {
-		if (table.size() == 0) {
-		    writeln("  <div class=\"slLabel\" ><i>Nessun elemento trovato</i></div>");
-		    return SKIP_BODY;
-		}
+            if (table != null) {
+                if (table.size() == 0) {
+                    writeln("  <div class=\"slLabel\" ><i>Nessun elemento trovato</i></div>");
+                    return SKIP_BODY;
+                }
 
-		writeln("");
-		writeln("<!-- Lista: " + getName() + " -->");
-		String title = "";
-		if (StringUtils.isNotBlank(getTitle())) {
-		    title = " title=\"" + getTitle() + "\"";
-		}
-		String styleClass = "list";
-		if (fields.isHidden()) {
-		    styleClass += " displayNone";
-		}
-		writeln("<table id=\"" + getName() + "\" class=\"" + styleClass + "\" " + title
-			+ " summary=\"" + fields.getDescription() + "\">");
-		writeln(" <tbody>");
-		writeln("  <tr>");
+                writeln("");
+                writeln("<!-- Lista: " + getName() + " -->");
+                String title = "";
+                if (StringUtils.isNotBlank(getTitle())) {
+                    title = " title=\"" + getTitle() + "\"";
+                }
+                String styleClass = "list";
+                if (fields.isHidden()) {
+                    styleClass += " displayNone";
+                }
+                writeln("<table id=\"" + getName() + "\" class=\"" + styleClass + "\" " + title
+                        + " summary=\"" + fields.getDescription() + "\">");
+                writeln(" <tbody>");
+                writeln("  <tr>");
 
-		// Intestazione
-		for (SingleValueField<?> field : fields) {
-		    if (!field.isHidden()) {
-			writeln("    <th>" + field.getHtmlDescription() + "</th>");
-		    }
-		}
-		writeln("  </tr>");
+                // Intestazione
+                for (SingleValueField<?> field : fields) {
+                    if (!field.isHidden()) {
+                        writeln("    <th>" + field.getHtmlDescription() + "</th>");
+                    }
+                }
+                writeln("  </tr>");
 
-		// Righe
-		int i = 0;
+                // Righe
+                int i = 0;
 
-		for (Object object : table) {
-		    if (table.getPageSize() <= 0 || (i >= table.getFirstRowPageIndex()
-			    && i <= table.getLastRowPageIndex())) {
-			BaseRowInterface row = (BaseRowInterface) object;
-			writeln("  <tr>");
+                for (Object object : table) {
+                    if (table.getPageSize() <= 0 || (i >= table.getFirstRowPageIndex()
+                            && i <= table.getLastRowPageIndex())) {
+                        BaseRowInterface row = (BaseRowInterface) object;
+                        writeln("  <tr>");
 
-			String className = (i % 2 == 0) ? "rigaPari" : "rigaDispari";
-			for (SingleValueField<?> field : fields) {
-			    field.format(row);
+                        String className = (i % 2 == 0) ? "rigaPari" : "rigaDispari";
+                        for (SingleValueField<?> field : fields) {
+                            field.format(row);
 
-			    String strValue = "";
+                            String strValue = "";
 
-			    if (field instanceof ComboBox) {
-				strValue = ((ComboBox<?>) field).getHtmlDecodedValue();
-			    } else if (field instanceof CheckBox) {
-				String imageSrc = (((CheckBox<?>) field).isChecked())
-					? FieldTag.IMG_CHECKBOX_CHECKED
-					: FieldTag.IMG_CHECKBOX_UNCHECKED;
-				String alt = (((CheckBox<?>) field).isChecked()) ? "Selezionato"
-					: "Non selezionato";
-				strValue = "<img src=\"" + imageSrc + "\" alt=\"" + alt + "\"/>";
-			    } else {
-				strValue = field.getHtmlValue();
-			    }
+                            if (field instanceof ComboBox) {
+                                strValue = ((ComboBox<?>) field).getHtmlDecodedValue();
+                            } else if (field instanceof CheckBox) {
+                                String imageSrc = (((CheckBox<?>) field).isChecked())
+                                        ? FieldTag.IMG_CHECKBOX_CHECKED
+                                        : FieldTag.IMG_CHECKBOX_UNCHECKED;
+                                String alt = (((CheckBox<?>) field).isChecked()) ? "Selezionato"
+                                        : "Non selezionato";
+                                strValue = "<img src=\"" + imageSrc + "\" alt=\"" + alt + "\"/>";
+                            } else {
+                                strValue = field.getHtmlValue();
+                            }
 
-			    if (!field.isHidden()) {
-				writeln("   <td class=\"" + className + "\">" + strValue + "</td>");
-			    }
+                            if (!field.isHidden()) {
+                                writeln("   <td class=\"" + className + "\">" + strValue + "</td>");
+                            }
 
-			}
+                        }
 
-			writeln("  </tr>");
-		    }
-		    i++;
-		}
+                        writeln("  </tr>");
+                    }
+                    i++;
+                }
 
-		writeln(" </tbody>");
-		writeln("</table>");
-	    }
-	} catch (EMFError e) {
-	    throw new JspException(e);
-	}
+                writeln(" </tbody>");
+                writeln("</table>");
+            }
+        } catch (EMFError e) {
+            throw new JspException(e);
+        }
 
-	return SKIP_BODY;
+        return SKIP_BODY;
     }
 }

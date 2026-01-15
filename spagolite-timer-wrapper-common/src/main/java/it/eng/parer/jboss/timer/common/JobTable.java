@@ -28,7 +28,7 @@ public interface JobTable extends Serializable {
      * Stato del timer.
      */
     public enum STATO_TIMER {
-	INATTIVO, ATTIVO, ESECUZIONE_SINGOLA
+        INATTIVO, ATTIVO, ESECUZIONE_SINGOLA
     };
 
     /**

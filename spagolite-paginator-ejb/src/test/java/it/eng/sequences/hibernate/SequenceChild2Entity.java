@@ -54,46 +54,46 @@ public class SequenceChild2Entity implements Serializable {
 
     @Id
     @GenericGenerator(name = "TSEQUENCE_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
-	    @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "TSEQUENCE2"),
-	    @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "TSEQUENCE2"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TSEQUENCE_GENERATOR")
     @Column(name = "ID")
     public Long getId() {
-	return id;
+        return id;
     }
 
     public void setId(Long id) {
-	this.id = id;
+        this.id = id;
     }
 
     @Column(name = "CAMPO", nullable = true)
     public String getCampo() {
-	return campo;
+        return campo;
     }
 
     public void setCampo(String campo) {
-	this.campo = campo;
+        this.campo = campo;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CHILD")
     public SequenceChildEntity getSequenceChildEntity() {
-	return sequenceChildEntity;
+        return sequenceChildEntity;
     }
 
     public void setSequenceChildEntity(SequenceChildEntity sequenceChildEntity) {
-	this.sequenceChildEntity = sequenceChildEntity;
+        this.sequenceChildEntity = sequenceChildEntity;
     }
 
     @OneToMany(mappedBy = "sequenceChild2Entity"
     // , cascade = { CascadeType.PERSIST, CascadeType.MERGE }
     )
     public List<SequenceChild3Entity> getChild3Entitys() {
-	return child3Entitys;
+        return child3Entitys;
     }
 
     public void setChild3Entitys(List<SequenceChild3Entity> child3Entitys) {
-	this.child3Entitys = child3Entitys;
+        this.child3Entitys = child3Entitys;
     }
 
 }

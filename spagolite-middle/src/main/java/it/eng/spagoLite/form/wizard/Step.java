@@ -25,35 +25,35 @@ public class Step extends BaseComponent implements WizardElement {
     private boolean hidden;
 
     public Step(Component parent, String name, String description, boolean summary, boolean current,
-	    boolean hidden) {
-	super(parent, name, description);
-	this.summary = summary;
-	this.current = current;
-	this.hidden = hidden;
+            boolean hidden) {
+        super(parent, name, description);
+        this.summary = summary;
+        this.current = current;
+        this.hidden = hidden;
     }
 
     public boolean isSummary() {
-	return summary;
+        return summary;
     }
 
     public void setSummary(boolean summary) {
-	this.summary = summary;
+        this.summary = summary;
     }
 
     public boolean isCurrent() {
-	return current;
+        return current;
     }
 
     public void setCurrent(boolean current) {
-	this.current = current;
+        this.current = current;
     }
 
     public boolean isHidden() {
-	return hidden;
+        return hidden;
     }
 
     public void setHidden(boolean hidden) {
-	this.hidden = hidden;
+        this.hidden = hidden;
     }
 
 }

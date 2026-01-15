@@ -35,104 +35,104 @@ public class CheckBox<O> extends SingleValueField<O> {
     private String tooltip;
 
     public CheckBox(Component parent, String name, String description, String alias, Enum type,
-	    String format, boolean required, boolean hidden, boolean readonly, boolean trigger,
-	    String tooltip) {
-	super(parent, name, description, alias, type, format, required, hidden, readonly, trigger);
-	this.tooltip = tooltip;
+            String format, boolean required, boolean hidden, boolean readonly, boolean trigger,
+            String tooltip) {
+        super(parent, name, description, alias, type, format, required, hidden, readonly, trigger);
+        this.tooltip = tooltip;
     }
 
     public CheckBox(Component parent, String name, String description, String alias, Enum type,
-	    String format, boolean required, boolean hidden, boolean readonly, boolean trigger,
-	    String defaultValue, String tooltip) {
-	this(parent, name, description, alias, type, format, required, hidden, readonly, trigger,
-		tooltip);
-	this.defaultValue = defaultValue;
-	setValue(defaultValue);
-	this.tooltip = tooltip;
+            String format, boolean required, boolean hidden, boolean readonly, boolean trigger,
+            String defaultValue, String tooltip) {
+        this(parent, name, description, alias, type, format, required, hidden, readonly, trigger,
+                tooltip);
+        this.defaultValue = defaultValue;
+        setValue(defaultValue);
+        this.tooltip = tooltip;
     }
 
     @Override
     public void setValue(String value) {
-	if (valueChecked.equalsIgnoreCase(value)) {
-	    super.setValue(valueChecked);
-	} else if (valueWarning.equalsIgnoreCase(value)) {
-	    super.setValue(valueWarning);
-	} else {
-	    super.setValue(valueUnchecked);
-	}
+        if (valueChecked.equalsIgnoreCase(value)) {
+            super.setValue(valueChecked);
+        } else if (valueWarning.equalsIgnoreCase(value)) {
+            super.setValue(valueWarning);
+        } else {
+            super.setValue(valueUnchecked);
+        }
     }
 
     public boolean isChecked() {
-	return valueChecked.equalsIgnoreCase(getValue());
+        return valueChecked.equalsIgnoreCase(getValue());
     }
 
     public boolean isWarning() {
-	return valueWarning.equalsIgnoreCase(getValue());
+        return valueWarning.equalsIgnoreCase(getValue());
     }
 
     public void setChecked(boolean checked) {
-	setValue(checked ? valueChecked : valueUnchecked);
+        setValue(checked ? valueChecked : valueUnchecked);
     }
 
     public void setWarningChecked() {
-	setValue(valueWarning);
+        setValue(valueWarning);
     }
 
     public String getDefaultValue() {
-	return defaultValue;
+        return defaultValue;
     }
 
     public void setDefaultValue(String defaultValue) {
-	this.defaultValue = defaultValue;
+        this.defaultValue = defaultValue;
     }
 
     @Override
     public JSONObject asJSON() throws EMFError {
-	JSONObject json = super.asJSON();
-	try {
-	    json.put("type", "CheckBox");
-	    JSONObject son = new JSONObject();
-	    son.put("valueChecked", valueChecked);
-	    son.put("valueUnchecked", valueUnchecked);
-	    son.put("valueWarning", valueWarning);
-	    json.put("map", son);
-	} catch (JSONException e) {
-	    throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
-	}
-	return json;
+        JSONObject json = super.asJSON();
+        try {
+            json.put("type", "CheckBox");
+            JSONObject son = new JSONObject();
+            son.put("valueChecked", valueChecked);
+            son.put("valueUnchecked", valueUnchecked);
+            son.put("valueWarning", valueWarning);
+            json.put("map", son);
+        } catch (JSONException e) {
+            throw new EMFError(EMFError.ERROR, "Eccezione nella crezione dell'oggetto JSON", e);
+        }
+        return json;
 
     }
 
     @Override
     public void reset() {
-	this.setChecked(false);
+        this.setChecked(false);
     }
 
     @Override
     public void clear() {
-	if (StringUtils.isNotBlank(defaultValue)) {
-	    setValue(defaultValue);
-	} else {
-	    setValue(null);
-	}
+        if (StringUtils.isNotBlank(defaultValue)) {
+            setValue(defaultValue);
+        } else {
+            setValue(null);
+        }
     }
 
     @Override
     public void post(HttpServletRequest servletRequest) {
-	if (!isReadonly() && isEditMode()) {
-	    clear();
-	    if (StringUtils.isNotBlank(servletRequest.getParameter(getName()))) {
-		setChecked(true);
-	    }
-	}
+        if (!isReadonly() && isEditMode()) {
+            clear();
+            if (StringUtils.isNotBlank(servletRequest.getParameter(getName()))) {
+                setChecked(true);
+            }
+        }
     }
 
     public String getTooltip() {
-	return tooltip;
+        return tooltip;
     }
 
     public void setTooltip(String tooltip) {
-	this.tooltip = tooltip;
+        this.tooltip = tooltip;
     }
 
 }

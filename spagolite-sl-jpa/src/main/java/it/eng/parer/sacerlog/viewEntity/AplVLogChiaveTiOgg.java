@@ -31,8 +31,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "APL_V_LOG_CHIAVE_TI_OGG", schema = "SACER_IAM")
 @NamedQueries({
-	@NamedQuery(name = "AplVLogChiaveTiOgg.findAll", query = "SELECT a FROM AplVLogChiaveTiOgg a"),
-	@NamedQuery(name = "AplVLogChiaveTiOgg.findByIdTipoOggetto", query = "SELECT a FROM AplVLogChiaveTiOgg a WHERE a.idTipoOggetto = :idTipoOggetto") })
+        @NamedQuery(name = "AplVLogChiaveTiOgg.findAll", query = "SELECT a FROM AplVLogChiaveTiOgg a"),
+        @NamedQuery(name = "AplVLogChiaveTiOgg.findByIdTipoOggetto", query = "SELECT a FROM AplVLogChiaveTiOgg a WHERE a.idTipoOggetto = :idTipoOggetto") })
 public class AplVLogChiaveTiOgg implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,57 +49,57 @@ public class AplVLogChiaveTiOgg implements Serializable {
     @Lob
     @Column(name = "BL_QUERY_TIPO_OGGETTO")
     public String getBlQueryTipoOggetto() {
-	return this.blQueryTipoOggetto;
+        return this.blQueryTipoOggetto;
     }
 
     public void setBlQueryTipoOggetto(String blQueryTipoOggetto) {
-	this.blQueryTipoOggetto = blQueryTipoOggetto;
+        this.blQueryTipoOggetto = blQueryTipoOggetto;
     }
 
     @Id
     @Column(name = "ID_QUERY_TIPO_OGGETTO")
     public BigDecimal getIdQueryTipoOggetto() {
-	return this.idQueryTipoOggetto;
+        return this.idQueryTipoOggetto;
     }
 
     public void setIdQueryTipoOggetto(BigDecimal idQueryTipoOggetto) {
-	this.idQueryTipoOggetto = idQueryTipoOggetto;
+        this.idQueryTipoOggetto = idQueryTipoOggetto;
     }
 
     @Column(name = "ID_TIPO_OGGETTO")
     public BigDecimal getIdTipoOggetto() {
-	return this.idTipoOggetto;
+        return this.idTipoOggetto;
     }
 
     public void setIdTipoOggetto(BigDecimal idTipoOggetto) {
-	this.idTipoOggetto = idTipoOggetto;
+        this.idTipoOggetto = idTipoOggetto;
     }
 
     @Column(name = "ID_TIPO_OGGETTO_CHIAVE")
     public BigDecimal getIdTipoOggettoChiave() {
-	return this.idTipoOggettoChiave;
+        return this.idTipoOggettoChiave;
     }
 
     public void setIdTipoOggettoChiave(BigDecimal idTipoOggettoChiave) {
-	this.idTipoOggettoChiave = idTipoOggettoChiave;
+        this.idTipoOggettoChiave = idTipoOggettoChiave;
     }
 
     @Column(name = "NM_QUERY_TIPO_OGGETTO")
     public String getNmQueryTipoOggetto() {
-	return this.nmQueryTipoOggetto;
+        return this.nmQueryTipoOggetto;
     }
 
     public void setNmQueryTipoOggetto(String nmQueryTipoOggetto) {
-	this.nmQueryTipoOggetto = nmQueryTipoOggetto;
+        this.nmQueryTipoOggetto = nmQueryTipoOggetto;
     }
 
     @Column(name = "NM_TIPO_OGGETTO_CHIAVE")
     public String getNmTipoOggettoChiave() {
-	return this.nmTipoOggettoChiave;
+        return this.nmTipoOggettoChiave;
     }
 
     public void setNmTipoOggettoChiave(String nmTipoOggettoChiave) {
-	this.nmTipoOggettoChiave = nmTipoOggettoChiave;
+        this.nmTipoOggettoChiave = nmTipoOggettoChiave;
     }
 
 }

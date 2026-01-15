@@ -58,19 +58,19 @@ public class JbossTimerEjb {
      * @return true se siamo in standalone mode.
      */
     public boolean isStandalone() {
-	/*
-	 * boolean standalone = true; try { MBeanServer server =
-	 * ManagementFactory.getPlatformMBeanServer(); ObjectName query = new
-	 * ObjectName("jboss.as:core-service=server-environment"); String attribute = (String)
-	 * server.getAttribute(query, "launchType"); if (attribute != null &&
-	 * attribute.equalsIgnoreCase("DOMAIN")) { standalone = false; }
-	 * log.debug(String.format("%s Operazione eseguita in ambiente %s", logPrefix(),
-	 * attribute)); } catch (Exception e) { log.warn(String.
-	 * format("%s Errore durante l'individuazione del launchType dell'AS (STANDALONE o DOMAIN)"
-	 * , logPrefix()), e); } return standalone;
-	 */
-	// voglio sempre che usi il DB per sincronizzarsi e lanciare i job
-	return false;
+        /*
+         * boolean standalone = true; try { MBeanServer server =
+         * ManagementFactory.getPlatformMBeanServer(); ObjectName query = new
+         * ObjectName("jboss.as:core-service=server-environment"); String attribute = (String)
+         * server.getAttribute(query, "launchType"); if (attribute != null &&
+         * attribute.equalsIgnoreCase("DOMAIN")) { standalone = false; }
+         * log.debug(String.format("%s Operazione eseguita in ambiente %s", logPrefix(),
+         * attribute)); } catch (Exception e) { log.warn(String.
+         * format("%s Errore durante l'individuazione del launchType dell'AS (STANDALONE o DOMAIN)"
+         * , logPrefix()), e); } return standalone;
+         */
+        // voglio sempre che usi il DB per sincronizzarsi e lanciare i job
+        return false;
     }
 
     /**
@@ -80,16 +80,16 @@ public class JbossTimerEjb {
      * @param jobName nome del job
      */
     public void stop(String jobName) {
-	try {
-	    if (isStandalone()) {
-		JbossJobTimer timer = helper.getTimer(jobName);
-		timer.stop(helper.getApplicationName());
-	    } else {
-		helper.setJobInattivo(jobName);
-	    }
-	} catch (TimerNotFoundException ex) {
-	    log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
-	}
+        try {
+            if (isStandalone()) {
+                JbossJobTimer timer = helper.getTimer(jobName);
+                timer.stop(helper.getApplicationName());
+            } else {
+                helper.setJobInattivo(jobName);
+            }
+        } catch (TimerNotFoundException ex) {
+            log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
+        }
     }
 
     /**
@@ -100,20 +100,20 @@ public class JbossTimerEjb {
      * @param nodeName nome del nodo. Viene preso in considerazione solo se non nullo.
      */
     public void start(String jobName, String nodeName) {
-	try {
-	    if (isStandalone()) {
-		JbossJobTimer timer = helper.getTimer(jobName);
-		CronSchedule schedule = helper.getSchedule(jobName);
-		timer.startCronScheduled(schedule, helper.getApplicationName());
-	    } else {
-		helper.setJobAttivo(jobName);
-		if (nodeName != null) {
-		    helper.changeNode(jobName, nodeName);
-		}
-	    }
-	} catch (TimerNotFoundException ex) {
-	    log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
-	}
+        try {
+            if (isStandalone()) {
+                JbossJobTimer timer = helper.getTimer(jobName);
+                CronSchedule schedule = helper.getSchedule(jobName);
+                timer.startCronScheduled(schedule, helper.getApplicationName());
+            } else {
+                helper.setJobAttivo(jobName);
+                if (nodeName != null) {
+                    helper.changeNode(jobName, nodeName);
+                }
+            }
+        } catch (TimerNotFoundException ex) {
+            log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
+        }
     }
 
     /**
@@ -124,19 +124,19 @@ public class JbossTimerEjb {
      * @param nodeName nome del nodo. Viene preso in considerazione solo se non nullo.
      */
     public void esecuzioneSingola(String jobName, String nodeName) {
-	try {
-	    if (isStandalone()) {
-		JbossJobTimer timer = helper.getTimer(jobName);
-		timer.startSingleAction(helper.getApplicationName());
-	    } else {
-		helper.setJobEsecuzioneSingola(jobName);
-		if (nodeName != null) {
-		    helper.changeNode(jobName, nodeName);
-		}
-	    }
-	} catch (TimerNotFoundException ex) {
-	    log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
-	}
+        try {
+            if (isStandalone()) {
+                JbossJobTimer timer = helper.getTimer(jobName);
+                timer.startSingleAction(helper.getApplicationName());
+            } else {
+                helper.setJobEsecuzioneSingola(jobName);
+                if (nodeName != null) {
+                    helper.changeNode(jobName, nodeName);
+                }
+            }
+        } catch (TimerNotFoundException ex) {
+            log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
+        }
     }
 
     /**
@@ -148,27 +148,27 @@ public class JbossTimerEjb {
      * @return null o la data della prossima attivazioen del job
      */
     public Date getDataProssimaAttivazione(String jobName) {
-	Date result = null;
-	try {
-	    if (isStandalone()) {
-		JbossJobTimer timer = helper.getTimer(jobName);
-		result = timer.getNextElaboration(helper.getApplicationName());
-	    } else {
-		result = helper.getDataProssimaAttivazione(jobName);
-	    }
-	} catch (EJBException e) {
-	    if (e.getCause() != null && e.getCause() instanceof NoMoreTimeoutsException) {
-		log.warn(String.format("%s Errore nel timer %s (modalità standalone)", logPrefix(),
-			e.getMessage()));
-	    } else {
-		log.warn(String.format("%s Errore generico %s (modalità standalone)", logPrefix(),
-			e.getMessage()));
-	    }
+        Date result = null;
+        try {
+            if (isStandalone()) {
+                JbossJobTimer timer = helper.getTimer(jobName);
+                result = timer.getNextElaboration(helper.getApplicationName());
+            } else {
+                result = helper.getDataProssimaAttivazione(jobName);
+            }
+        } catch (EJBException e) {
+            if (e.getCause() != null && e.getCause() instanceof NoMoreTimeoutsException) {
+                log.warn(String.format("%s Errore nel timer %s (modalità standalone)", logPrefix(),
+                        e.getMessage()));
+            } else {
+                log.warn(String.format("%s Errore generico %s (modalità standalone)", logPrefix(),
+                        e.getMessage()));
+            }
 
-	} catch (TimerNotFoundException ex) {
-	    log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
-	}
-	return result;
+        } catch (TimerNotFoundException ex) {
+            log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
+        }
+        return result;
     }
 
     /**
@@ -180,17 +180,17 @@ public class JbossTimerEjb {
      * @return true se la risposta è sì, false altrimenti
      */
     public boolean isDataProssimaAttivazioneAccurata(String jobName) {
-	if (isStandalone()) {
-	    return true;
-	}
+        if (isStandalone()) {
+            return true;
+        }
 
-	boolean result = false;
-	try {
-	    result = helper.isDataAccurata(jobName);
-	} catch (TimerNotFoundException ex) {
-	    log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
-	}
-	return result;
+        boolean result = false;
+        try {
+            result = helper.isDataAccurata(jobName);
+        } catch (TimerNotFoundException ex) {
+            log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
+        }
+        return result;
     }
 
     /**
@@ -199,7 +199,7 @@ public class JbossTimerEjb {
      * @return lista di nomi di timer
      */
     public Set<String> getApplicationTimerNames() {
-	return helper.getApplicationTimerNames();
+        return helper.getApplicationTimerNames();
     }
 
     /**
@@ -209,21 +209,21 @@ public class JbossTimerEjb {
      * @param stato   stato del timer
      */
     public void setStatoJob(String jobName, STATO_TIMER stato) {
-	try {
-	    if (stato == STATO_TIMER.ATTIVO) {
-		helper.setJobAttivo(jobName);
-		return;
-	    }
-	    if (stato == STATO_TIMER.ESECUZIONE_SINGOLA) {
-		helper.setJobEsecuzioneSingola(jobName);
-		return;
-	    }
-	    if (stato == STATO_TIMER.INATTIVO) {
-		helper.setJobInattivo(jobName);
-	    }
-	} catch (TimerNotFoundException ex) {
-	    log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
-	}
+        try {
+            if (stato == STATO_TIMER.ATTIVO) {
+                helper.setJobAttivo(jobName);
+                return;
+            }
+            if (stato == STATO_TIMER.ESECUZIONE_SINGOLA) {
+                helper.setJobEsecuzioneSingola(jobName);
+                return;
+            }
+            if (stato == STATO_TIMER.INATTIVO) {
+                helper.setJobInattivo(jobName);
+            }
+        } catch (TimerNotFoundException ex) {
+            log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
+        }
     }
 
     /**
@@ -233,7 +233,7 @@ public class JbossTimerEjb {
      * @return lista di job
      */
     public List<JobTable> getJobs() {
-	return helper.getJobs();
+        return helper.getJobs();
     }
 
     /**
@@ -244,11 +244,11 @@ public class JbossTimerEjb {
      * @return lista di job
      */
     public List<JobTable> getJobs(String nodoAssegnato) {
-	List<JobTable> jobs = helper.getJobs(nodoAssegnato);
-	if (jobs == null) {
-	    return new ArrayList<>();
-	}
-	return jobs;
+        List<JobTable> jobs = helper.getJobs(nodoAssegnato);
+        if (jobs == null) {
+            return new ArrayList<>();
+        }
+        return jobs;
     }
 
     /**
@@ -261,13 +261,13 @@ public class JbossTimerEjb {
      * @return istanza del timer
      */
     public JbossJobTimer getTimer(String jobName) {
-	JbossJobTimer timer = null;
-	try {
-	    timer = helper.getTimer(jobName);
-	} catch (TimerNotFoundException ex) {
-	    log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
-	}
-	return timer;
+        JbossJobTimer timer = null;
+        try {
+            timer = helper.getTimer(jobName);
+        } catch (TimerNotFoundException ex) {
+            log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
+        }
+        return timer;
     }
 
     /**
@@ -277,7 +277,7 @@ public class JbossTimerEjb {
      * @return il nome dell'applicazione chiamante.
      */
     public String getApplicationName() {
-	return helper.getApplicationName();
+        return helper.getApplicationName();
     }
 
     /**
@@ -288,13 +288,13 @@ public class JbossTimerEjb {
      * @return entity oppure null
      */
     public JobTable getJob(String jobName) {
-	JobTable job = null;
-	try {
-	    job = helper.getJob(jobName);
-	} catch (TimerNotFoundException ex) {
-	    log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
-	}
-	return job;
+        JobTable job = null;
+        try {
+            job = helper.getJob(jobName);
+        } catch (TimerNotFoundException ex) {
+            log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
+        }
+        return job;
     }
 
     /**
@@ -303,11 +303,11 @@ public class JbossTimerEjb {
      * @return nome del nodo corrente oppure "undefined".
      */
     public String getCurrentNode() {
-	String nodeName = System.getProperty("jboss.node.name");
-	if (nodeName == null || nodeName.isEmpty()) {
-	    nodeName = "undefined";
-	}
-	return nodeName;
+        String nodeName = System.getProperty("jboss.node.name");
+        if (nodeName == null || nodeName.isEmpty()) {
+            nodeName = "undefined";
+        }
+        return nodeName;
     }
 
     /**
@@ -316,11 +316,11 @@ public class JbossTimerEjb {
      * @param jobName nome del job
      */
     public void resetStatus(String jobName) {
-	try {
-	    helper.resetStatus(jobName);
-	} catch (TimerNotFoundException ex) {
-	    log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
-	}
+        try {
+            helper.resetStatus(jobName);
+        } catch (TimerNotFoundException ex) {
+            log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
+        }
     }
 
     /**
@@ -330,11 +330,11 @@ public class JbossTimerEjb {
      * @param newDate nuova data
      */
     public void setDataProssimaAttivazione(String jobName, Date newDate) {
-	try {
-	    helper.setDataProssimaAttivazione(jobName, newDate);
-	} catch (TimerNotFoundException ex) {
-	    log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
-	}
+        try {
+            helper.setDataProssimaAttivazione(jobName, newDate);
+        } catch (TimerNotFoundException ex) {
+            log.warn(String.format("%s %s", logPrefix(), ex.getMessage()));
+        }
     }
 
     /**
@@ -345,12 +345,12 @@ public class JbossTimerEjb {
      * @return true se l'operazione non è stata ancora eseguita
      */
     public boolean isEsecuzioneInCorso(String jobName) {
-	// In standalone mode non è necessario aspettare il prossimo timeout
-	if (isStandalone()) {
-	    return false;
-	}
-	JobTable job = getJob(jobName);
-	return (job != null && job.getTiStatoTimer() != null);
+        // In standalone mode non è necessario aspettare il prossimo timeout
+        if (isStandalone()) {
+            return false;
+        }
+        JobTable job = getJob(jobName);
+        return (job != null && job.getTiStatoTimer() != null);
     }
 
     /**
@@ -359,7 +359,7 @@ public class JbossTimerEjb {
      * @return [NOME APPLICAZIONE Jboss Timer Ejb] -
      */
     private String logPrefix() {
-	return "[" + helper.getApplicationName() + " Jboss Timer Ejb] -";
+        return "[" + helper.getApplicationName() + " Jboss Timer Ejb] -";
     }
 
 }

@@ -34,86 +34,86 @@ public class ObjectsToLogBefore {
     private List<BigDecimal> idOggetto = new ArrayList();
 
     public ObjectsToLogBefore(String nomeApplicazione, String tipoOggetto, String tipoEvento,
-	    String classeEvento) {
-	this.nomeApplicazione = nomeApplicazione;
-	this.tipoOggetto = tipoOggetto;
-	this.tipoEvento = tipoEvento;
-	this.classeEvento = classeEvento;
+            String classeEvento) {
+        this.nomeApplicazione = nomeApplicazione;
+        this.tipoOggetto = tipoOggetto;
+        this.tipoEvento = tipoEvento;
+        this.classeEvento = classeEvento;
     }
 
     public String getNomeApplicazione() {
-	return nomeApplicazione;
+        return nomeApplicazione;
     }
 
     public void setNomeApplicazione(String nomeApplicazione) {
-	this.nomeApplicazione = nomeApplicazione;
+        this.nomeApplicazione = nomeApplicazione;
     }
 
     public String getTipoOggetto() {
-	return tipoOggetto;
+        return tipoOggetto;
     }
 
     public void setTipoOggetto(String tipoOggetto) {
-	this.tipoOggetto = tipoOggetto;
+        this.tipoOggetto = tipoOggetto;
     }
 
     public String getTipoEvento() {
-	return tipoEvento;
+        return tipoEvento;
     }
 
     public void setTipoEvento(String tipoEvento) {
-	this.tipoEvento = tipoEvento;
+        this.tipoEvento = tipoEvento;
     }
 
     public String getClasseEvento() {
-	return classeEvento;
+        return classeEvento;
     }
 
     public void setClasseEvento(String classeEvento) {
-	this.classeEvento = classeEvento;
+        this.classeEvento = classeEvento;
     }
 
     public List<BigDecimal> getIdOggetto() {
-	return idOggetto;
+        return idOggetto;
     }
 
     public void setIdOggetto(List<BigDecimal> idOggetto) {
-	this.idOggetto = idOggetto;
+        this.idOggetto = idOggetto;
     }
 
     /*
      * Filra gli oggetti aventi come classe evento "CANCELLAZIONE"
      */
     public static List<ObjectsToLogBefore> filterObjectsForDeletion(
-	    List<ObjectsToLogBefore> sourceList) {
-	ArrayList<ObjectsToLogBefore> destList = null;
-	if (sourceList != null) {
-	    destList = new ArrayList();
-	    for (ObjectsToLogBefore source : sourceList) {
-		if (source.getClasseEvento()
-			.equals(PremisEnums.TipoClasseEvento.CANCELLAZIONE.name())) {
-		    destList.add(source);
-		}
-	    }
-	}
-	return destList;
+            List<ObjectsToLogBefore> sourceList) {
+        ArrayList<ObjectsToLogBefore> destList = null;
+        if (sourceList != null) {
+            destList = new ArrayList();
+            for (ObjectsToLogBefore source : sourceList) {
+                if (source.getClasseEvento()
+                        .equals(PremisEnums.TipoClasseEvento.CANCELLAZIONE.name())) {
+                    destList.add(source);
+                }
+            }
+        }
+        return destList;
     }
 
     /*
      * Filra gli oggetti aventi come classe evento "MODIFICA"
      */
     public static List<ObjectsToLogBefore> filterObjectsForModifying(
-	    List<ObjectsToLogBefore> sourceList) {
-	ArrayList<ObjectsToLogBefore> destList = null;
-	if (sourceList != null) {
-	    destList = new ArrayList();
-	    for (ObjectsToLogBefore source : sourceList) {
-		if (source.getClasseEvento().equals(PremisEnums.TipoClasseEvento.MODIFICA.name())) {
-		    destList.add(source);
-		}
-	    }
-	}
-	return destList;
+            List<ObjectsToLogBefore> sourceList) {
+        ArrayList<ObjectsToLogBefore> destList = null;
+        if (sourceList != null) {
+            destList = new ArrayList();
+            for (ObjectsToLogBefore source : sourceList) {
+                if (source.getClasseEvento().equals(PremisEnums.TipoClasseEvento.MODIFICA.name())) {
+                    destList.add(source);
+                }
+            }
+        }
+        return destList;
     }
 
 }

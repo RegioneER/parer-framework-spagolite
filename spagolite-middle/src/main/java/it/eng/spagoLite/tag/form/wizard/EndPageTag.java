@@ -25,23 +25,23 @@ public class EndPageTag extends BaseFormTag<EndPage> {
 
     @Override
     public int doStartTag() throws JspException {
-	writeln("<div class=\"endPage\">");
+        writeln("<div class=\"endPage\">");
 
-	EndPage endPage = getComponent();
-	writeln("  <!-- EndPage " + endPage.getDescription() + "-->");
+        EndPage endPage = getComponent();
+        writeln("  <!-- EndPage " + endPage.getDescription() + "-->");
 
-	if (AbstractWizardTag.showContent((Wizard) getComponent().getParent(), endPage)) {
-	    return EVAL_BODY_INCLUDE;
-	} else {
-	    writeln("  <!-- EndPage " + endPage.getName() + " non visible-->");
-	    return SKIP_BODY;
-	}
+        if (AbstractWizardTag.showContent((Wizard) getComponent().getParent(), endPage)) {
+            return EVAL_BODY_INCLUDE;
+        } else {
+            writeln("  <!-- EndPage " + endPage.getName() + " non visible-->");
+            return SKIP_BODY;
+        }
 
     }
 
     @Override
     public int doEndTag() throws JspException {
-	writeln("</div>");
-	return EVAL_PAGE;
+        writeln("</div>");
+        return EVAL_PAGE;
     }
 }

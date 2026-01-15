@@ -24,13 +24,13 @@ public class Constants {
     public static final Date DATE_ANNUL_INIT;
 
     static {
-	Calendar cal = Calendar.getInstance();
-	cal.set(2011, 12, 1);
-	DATE_INITIAL_PARER = cal.getTime();
+        Calendar cal = Calendar.getInstance();
+        cal.set(2011, 12, 1);
+        DATE_INITIAL_PARER = cal.getTime();
 
-	// Init value of the field ARO_UNITA_DOC.DT_ANNUL
-	cal.set(2444, 12, 31);
-	DATE_ANNUL_INIT = cal.getTime();
+        // Init value of the field ARO_UNITA_DOC.DT_ANNUL
+        cal.set(2444, 12, 31);
+        DATE_ANNUL_INIT = cal.getTime();
     }
 
     // JOB CONTANTS
@@ -38,16 +38,16 @@ public class Constants {
     public static final String FILE_JOB_PROPERTIES = "/sacerlog.properties";
 
     public enum JobEnum {
-	SACER_LOG
+        SACER_LOG
     }
 
     public enum tiEvento {
 
-	INIZIO_SCHEDULAZIONE, FINE_SCHEDULAZIONE, ERRORE;
+        INIZIO_SCHEDULAZIONE, FINE_SCHEDULAZIONE, ERRORE;
     }
 
     public enum NomiJob {
-	INIZIALIZZAZIONE_LOG, ALLINEAMENTO_LOG
+        INIZIALIZZAZIONE_LOG, ALLINEAMENTO_LOG
     }
 
 }
