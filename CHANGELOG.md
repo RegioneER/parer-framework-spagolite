@@ -1,4 +1,9 @@
 
+## 7.3.0 (10-02-2026)
+
+### Novità: 1
+- [#40069](https://parermine.regione.emilia-romagna.it/issues/40069) Patch di sicurezza per interventi legati a CVE
+
 ## 7.2.0 (14-01-2026)
 
 ### Novità: 2
