@@ -22,6 +22,7 @@ import it.eng.spagoLite.form.fields.impl.Input;
 import it.eng.spagoLite.message.Message;
 import it.eng.spagoLite.message.Message.MessageLevel;
 import it.eng.spagoLite.message.MessageBox;
+import it.eng.spagoLite.security.exception.FileSizeExceededException;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -33,6 +34,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase.FileSizeLimitExceededException;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -57,7 +59,7 @@ public class Fields<T extends Field> extends BaseElements<T> {
     public void post(HttpServletRequest servletRequest) {
         if (ServletFileUpload.isMultipartContent(servletRequest)) {
             throw new IllegalArgumentException(
-                    "La request è di tipo multipart/form-data utilizzare il metodo postMultipart(HttpServletRequest servletRequest)");
+                    "La request ï¿½ di tipo multipart/form-data utilizzare il metodo postMultipart(HttpServletRequest servletRequest)");
         }
         for (Field field : this) {
             field.post(servletRequest);
@@ -73,7 +75,7 @@ public class Fields<T extends Field> extends BaseElements<T> {
      *
      * @return risultato elaborazione
      *
-     * @throws FileUploadException se la dimensione massima del file è stata raggiunta o si è
+     * @throws FileUploadException se la dimensione massima del file ï¿½ stata raggiunta o si ï¿½
      *                             verificato un errore di I/O.
      *
      */
@@ -86,13 +88,13 @@ public class Fields<T extends Field> extends BaseElements<T> {
     /**
      *
      * @param servletRequest    Http request
-     * @param tempDirRepository Folder temporanea su cui avviene il deposito dei file più grandi di
+     * @param tempDirRepository Folder temporanea su cui avviene il deposito dei file piï¿½ grandi di
      *                          1 MB
      * @param maxFileSize       Sets the maximum allowed size of a single uploaded file
      *
      * @return risultato elaborazione
      *
-     * @throws FileUploadException se la dimensione massima del file è stata raggiunta o si è
+     * @throws FileUploadException se la dimensione massima del file ï¿½ stata raggiunta o si ï¿½
      *                             verificato un errore di I/O.
      *
      */
@@ -100,7 +102,7 @@ public class Fields<T extends Field> extends BaseElements<T> {
             long maxFileSize) throws FileUploadException {
         if (!ServletFileUpload.isMultipartContent(servletRequest)) {
             throw new IllegalArgumentException(
-                    "La request non è di tipo multipart/form-data utilizzare il metodo post(HttpServletRequest servletRequest)");
+                    "La request non ï¿½ di tipo multipart/form-data utilizzare il metodo post(HttpServletRequest servletRequest)");
         }
         String[] paramReturn = null;
         Map<String, String> paramMap = new HashMap<>();
@@ -112,22 +114,42 @@ public class Fields<T extends Field> extends BaseElements<T> {
         // maximum size before a FileUploadException will be thrown
         upload.setFileSizeMax(maxFileSize);
 
-        for (FileItem item : upload.parseRequest(servletRequest)) {
-            if (item.isFormField()) {
-                String value = new String(item.get(),
-                        Charset.forName(StandardCharsets.UTF_8.name()));
-                paramMap.put(item.getFieldName(), value);
-                if (item.getFieldName().toLowerCase().startsWith("operation")) {
-                    String[] tmp = StringUtils.split(item.getFieldName(), "_");
-                    paramReturn = Arrays.copyOfRange(tmp, 1, tmp.length);
-                }
-            } else {
-                String filename = item.getName();
-                if (!StringUtils.isEmpty(filename)) {
-                    paramMap.put(item.getFieldName(), filename);
-                    fileMap.put(item.getFieldName(), item);
+        try {
+            for (FileItem item : upload.parseRequest(servletRequest)) {
+                if (item.isFormField()) {
+                    String value = new String(item.get(),
+                            Charset.forName(StandardCharsets.UTF_8.name()));
+                    paramMap.put(item.getFieldName(), value);
+                    if (item.getFieldName().toLowerCase().startsWith("operation")) {
+                        String[] tmp = StringUtils.split(item.getFieldName(), "_");
+                        paramReturn = Arrays.copyOfRange(tmp, 1, tmp.length);
+                    }
+                } else {
+                    String filename = item.getName();
+                    if (!StringUtils.isEmpty(filename)) {
+                        paramMap.put(item.getFieldName(), filename);
+                        fileMap.put(item.getFieldName(), item);
+                    }
                 }
             }
+        } catch (FileSizeLimitExceededException e) {
+            // Determina il nome del file che ha superato il limite
+            String fileName = "unknown";
+            try {
+                for (FileItem item : upload.parseRequest(servletRequest)) {
+                    if (!item.isFormField()) {
+                        fileName = item.getName();
+                        break;
+                    }
+                }
+            } catch (Exception ex) {
+                // Ignora errori durante il tentativo di recuperare il nome del file
+            }
+            throw new FileSizeExceededException(
+                    String.format(
+                            "Il file '%s' supera la dimensione massima consentita di %d bytes",
+                            fileName, maxFileSize),
+                    e, e.getActualSize(), e.getPermittedSize(), fileName);
         }
 
         for (Field field : this) {
