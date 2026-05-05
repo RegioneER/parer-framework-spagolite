@@ -8,7 +8,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>7.4.1-SNAPSHOT</version>
+        <version>7.5.0</version>
     </parent>
     <build>
         <plugins>
@@ -49,13 +49,18 @@
                     <repackage>it.eng.parer.spagolite.metadata</repackage>
                     <name>middle</name>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.logging.log4j</groupId>
-                        <artifactId>log4j-core</artifactId>
-						<version>${log4j.version}</version>
-                    </dependency>
-                </dependencies>
+				<dependencies>
+				        <dependency>
+				            <groupId>org.apache.logging.log4j</groupId>
+				            <artifactId>log4j-api</artifactId>
+				            <version>${log4j.version}</version>
+				        </dependency>
+				        <dependency>
+				            <groupId>org.apache.logging.log4j</groupId>
+				            <artifactId>log4j-core</artifactId>
+				            <version>${log4j.version}</version>
+				        </dependency>
+				    </dependencies>
             </plugin>
         </plugins>
     </build>
@@ -151,6 +156,10 @@
             <artifactId>commons-text</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-saml2-service-provider</artifactId>
+        </dependency>                 
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <scope>test</scope>
@@ -170,27 +179,6 @@
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-saml2-service-provider</artifactId>
-            <scope>provided</scope>
-        </dependency> 
-        <dependency>
-            <groupId>org.opensaml</groupId>
-            <artifactId>opensaml-core</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.opensaml</groupId>
-            <artifactId>opensaml-saml-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.opensaml</groupId>
-            <artifactId>opensaml-saml-impl</artifactId>
-            <scope>provided</scope>
-        </dependency>   
-               
+        </dependency>               
     </dependencies>
 </project>

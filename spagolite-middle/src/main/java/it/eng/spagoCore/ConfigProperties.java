@@ -32,6 +32,7 @@ public class ConfigProperties {
     private static final String ONEGB = "1000000000";
     private static final String ONEMB = "10000000";
     private static final String TWENTYMB = "20000000";
+    private static final String ONEKB = "1024";
 
     // Percorsi interni su cui verranno mappate le risorse esterne
 
@@ -62,10 +63,13 @@ public class ConfigProperties {
         WS_STAGING_UPLOAD_DIR("ws.upload.directory", System.getProperty("java.io.tmpdir")),
         VERSAMENTO_SYNC_SAVE_LOG_SESSION("versamentoSync.saveLogSession", Boolean.TRUE.toString()),
         VERSAMENTO_SYNC_MAX_REQUEST_SIZE("versamentoSync.maxRequestSize", ONEGB),
+        VERSAMENTO_SYNC_MAX_HEADERPART_SIZE("versamentoSync.maxHeaderPartSize", ONEKB),
         VERSAMENTO_SYNC_MAX_FILE_SIZE("versamentoSync.maxFileSize", ONEGB),
+        VERSAMENTO_UPD_MAX_HEADERPART_SIZE("versamentoUpd.maxHeaderPartSize", ONEKB),
         AGG_ALLEGATI_SAVE_LOG_SESSION("aggAllegati.saveLogSession", Boolean.TRUE.toString()),
         AGG_ALLEGATI_MAX_REQUEST_SIZE("aggAllegati.maxRequestSize", ONEGB),
         AGG_ALLEGATI_MAX_FILE_SIZE("aggAllegati.maxFileSize", ONEGB),
+        AGG_ALLEGATI_MAX_HEADERPART_SIZE("aggAllegati.maxHeaderPartSize", ONEKB),
         PROFILER_APP_UPLOAD_DIR("profilerApp.upload.directory",
                 System.getProperty("java.io.tmpdir")),
         PROFILER_APP_MAX_REQUEST_SIZE("profilerApp.maxRequestSize", ONEGB),

@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spagofat</artifactId>
-    <version>7.4.1-SNAPSHOT</version>
+    <version>7.5.0</version>
     <packaging>pom</packaging>
     <name>Spagolite</name>
     <description>Framework utilizzato dalle applicazioni web, si tratta di uno strato software comune contenente anche le dipendenze di terze parti ed ereditato come bom.</description>
@@ -38,7 +38,7 @@
         <hibernate-jpamodelgen-version>5.3.36.Final-redhat-00001</hibernate-jpamodelgen-version>
         <keycloak-filter.version>24.0.5</keycloak-filter.version>
         <xml-apis.version>1.4.01</xml-apis.version>
-        <xmlbeans.version>5.2.1</xmlbeans.version>
+        <xmlbeans.version>5.3.0</xmlbeans.version>
         <!-- webjars (framework spago) -->
         <jquery.version>3.7.1</jquery.version>
         <jquery-ui.version>1.13.3</jquery-ui.version>
@@ -46,14 +46,14 @@
         <chosen.version>1.8.7</chosen.version>
         <select2.version>4.0.13</select2.version>
         <font-awesome.version>6.4.0</font-awesome.version>
-        <highlightjs.version>11.5.0</highlightjs.version>
+        <highlightjs.version>11.11.1</highlightjs.version>
         <highlightjs-line-numbers.js.version>2.8.0</highlightjs-line-numbers.js.version>
         <!-- MIT project forked from original: https://github.com/sinattieng/highlightjs-badgejs -->
-        <highlightjs-badgejs.version>0.0.5</highlightjs-badgejs.version>
+        <highlightjs-badgejs.version>0.0.6</highlightjs-badgejs.version>
         <commons-beanutils.version>1.11.0</commons-beanutils.version>
         <velocity-engine-core.version>2.3</velocity-engine-core.version>
         <javax.activation.version>1.2.0</javax.activation.version>
-        <log4j.version>2.23.1</log4j.version> 
+        <log4j.version>2.25.4</log4j.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -494,7 +494,12 @@
                 <groupId>org.opensaml</groupId>
                 <artifactId>opensaml-saml-impl</artifactId>
                 <version>${opensaml.version}</version>
-            </dependency>                                   
+            </dependency>
+			<dependency>
+			    <groupId>org.apache.logging.log4j</groupId>
+			    <artifactId>log4j-api</artifactId>
+			    <version>${log4j.version}</version>
+			</dependency>            
         </dependencies>
     </dependencyManagement>
     <dependencies />

@@ -88,8 +88,8 @@ public class Fields<T extends Field> extends BaseElements<T> {
     /**
      *
      * @param servletRequest    Http request
-     * @param tempDirRepository Folder temporanea su cui avviene il deposito dei file pi� grandi di
-     *                          1 MB
+     * @param tempDirRepository Folder temporanea su cui avviene il deposito dei file pi� grandi
+     *                          di 1 MB
      * @param maxFileSize       Sets the maximum allowed size of a single uploaded file
      *
      * @return risultato elaborazione

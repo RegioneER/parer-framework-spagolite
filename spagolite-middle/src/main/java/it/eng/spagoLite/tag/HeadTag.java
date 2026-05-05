@@ -110,7 +110,7 @@ public class HeadTag extends BaseSpagoLiteTag {
                 + "/webjars/font-awesome/6.4.0/css/all.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
 
         css.append("  <link href=\"" + contextPath
-                + "/webjars/highlightjs/11.5.0/styles/vs.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
+                + "/webjars/highlightjs/11.11.1/styles/vs.min.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
 
         /**
          * Custom
@@ -122,7 +122,7 @@ public class HeadTag extends BaseSpagoLiteTag {
                 + "/css/custom/chosen/1.8.7/chosen.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
 
         css.append("  <link href=\"" + contextPath
-                + "/css/custom/highlightjs/11.5.0/highlightjs.custom.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
+                + "/css/custom/highlightjs/11.11.1/highlightjs.custom.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
 
         css.append("  <link href=\"" + contextPath
                 + "/css/custom/select2/4.0.13/select2.custom.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />\n");
@@ -209,13 +209,13 @@ public class HeadTag extends BaseSpagoLiteTag {
          *
          */
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
-                + "/webjars/highlightjs/11.5.0/highlight.min.js\"></script>\n");
+                + "/webjars/highlightjs/11.11.1/highlight.min.js\"></script>\n");
 
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
                 + "/webjars/highlightjs-line-numbers.js/2.8.0/dist/highlightjs-line-numbers.min.js\"></script>\n");
 
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
-                + "/webjars/highlightjs-badgejs/0.0.5/highlightjs-badgejs.min.js\"></script>\n");
+                + "/webjars/highlightjs-badgejs/0.0.6/highlightjs-badgejs.min.js\"></script>\n");
 
         // Internal script
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath

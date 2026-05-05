@@ -24,6 +24,17 @@
                         of: window
                     }
                 });
+
+                $("form").on("submit", function () {
+                    /* Bisogna disabilitare il tasto non in maniera sincrona ma asincrona per
+                     * permettere alla submit di partire e immediatamente dopo disabilitare il tasto
+                     * senno' la submit si blocca!
+                     */
+                    setTimeout(() => {
+                        $('button[name="operation__confirmDelete"]').prop("disabled", true);
+                      }, 0);
+                });
+                
             });
         </script>
     </sl:head>
