@@ -25,7 +25,7 @@
                                         <c:if test="${fn:contains(b.idpEntityId, '.lepida.it')}">
                                             <div style="border: 1px solid grey; border-radius: 5px; border-opacity: 0.6;">
                                                 <a href="<c:url value="${b.link}" />">
-                                                    <img src="<%=request.getContextPath()%>/img/EntraConSpid.png" alt="Logo" width="340px" height="85px"/>
+                                                    <img src="<%=request.getContextPath()%>/img/EntraConSpidCie.png" alt="Logo" width="340px" height="85px"/>
                                                 </a>
                                             </div>
                                         </c:if>
@@ -34,7 +34,7 @@
                                             <c:if test="${fn:contains(b.idpEntityId, '.lepida.it')}">
                                                 <div style="border: 1px solid grey; border-radius: 5px; border-opacity: 0.6;">
                                                     <a href="<c:url value="${b.link}"/>?<%=ParerSecurityConfiguration.PARAMETRO_MODALITA_SPID_PROFESSIONALE%>=<%=ParerSecurityConfiguration.MODALITA_SPID_PROFESSIONALE%>">
-                                                        <img src="<%=request.getContextPath()%>/img/EntraConSpid-PX.png" alt="Logo" width="340px" height="85px"/>
+                                                        <img src="<%=request.getContextPath()%>/img/EntraConSpid-PX-Nuovo.png" alt="Logo" width="340px" height="85px"/>
                                                     </a>
                                                 </div>
                                             </c:if>

@@ -64,17 +64,31 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
     protected static final String SPID_PUGLIA_COGNOME = "familyName";
     protected static final String SPID_PUGLIA_CODICE_FISCALE = "fiscalNumber";
     protected static final String SPID_PUGLIA_EMAIL = "email"; // DA VERIFICARE !!! Inserito
+    // Costanti per l'accesso tramite CIE -LEPIDA
+    protected static final String CIE_CODICE_FISCALE_FEDERA = "CodiceFiscale";
+    protected static final String CIE_NOME_FEDERA = "nome";
+    protected static final String CIE_COGNOME_FEDERA = "cognome";
+    // Costanti per l'accesso tramite CIE -PUGLIA
+    protected static final String CIE_CODICE_FISCALE_PUGLIA = "fiscalNumber";
+    protected static final String CIE_NOME_PUGLIA = "name";
+    protected static final String CIE_COGNOME_PUGLIA = "familyName";
+    // EXTERNAL_ID fisso per la CIE
+    protected static final String CIE_EXTERNAL_ID = "CIE_ID";
+
     // leggendo il documento di
     // specifiche di integrazione SPID Puglia
 
     // Messaggi utilizzabili nelle classi derivate nella funziona
     // verificaEsistenzaUtente()
-    protected static final String MSG_TROPPE_OCCORRENZE_UTENTE = "Gentile %s %s, non ï¿½ autorizzato ad accedere ai nostri sistemi tramite utente SPID con codice fiscale %s, sono state rilevate piï¿½ occorrenze nel database";
-    protected static final String MSG_UTENTE_NON_AUTORIZZATO = "Gentile %s %s, non ï¿½ autorizzato ad accedere ai nostri sistemi tramite utente SPID con codice fiscale %s";
-    protected static final String MSG_UTENTE_LIVELLO_AUTH_INADEGUATO = "Gentile %s %s, non ï¿½ autorizzato ad accedere ai nostri sistemi con codice fiscale %s e livello di autorizzazione %s";
-    protected static final String MSG_UTENTE_SPID_NON_VALIDO = "Gentile %s %s, non ï¿½ autorizzato ad accedere ai nostri sistemi con questo utente SPID senza codice fiscale";
+    protected static final String MSG_TROPPE_OCCORRENZE_UTENTE_SPID = "Gentile %s %s, non è autorizzato ad accedere ai nostri sistemi tramite utente SPID con codice fiscale %s, sono state rilevate piï¿½ occorrenze nel database";
+    protected static final String MSG_TROPPE_OCCORRENZE_UTENTE_CIE = "Gentile %s %s, non è autorizzato ad accedere ai nostri sistemi tramite utente CIE con codice fiscale %s, sono state rilevate piï¿½ occorrenze nel database";
+    protected static final String MSG_UTENTE_NON_AUTORIZZATO_SPID = "Gentile %s %s, non è autorizzato ad accedere ai nostri sistemi tramite utente SPID con codice fiscale %s";
+    protected static final String MSG_UTENTE_NON_AUTORIZZATO_CIE = "Gentile %s %s, non è autorizzato ad accedere ai nostri sistemi tramite utente CIE con codice fiscale %s";
+    protected static final String MSG_UTENTE_LIVELLO_AUTH_INADEGUATO = "Gentile %s %s, non è autorizzato ad accedere ai nostri sistemi con codice fiscale %s e livello di autorizzazione %s";
+    protected static final String MSG_UTENTE_SPID_NON_VALIDO = "Gentile %s %s, non è autorizzato ad accedere ai nostri sistemi con questo utente SPID senza codice fiscale";
+    protected static final String MSG_UTENTE_CIE_NON_VALIDO = "Gentile %s %s, non è autorizzato ad accedere ai nostri sistemi con questo utente CIE senza codice fiscale";
     protected static final String MSG_UTENTE_AGGIUNTIVO_RER = ", contatti helpdeskparer@regione.emilia-romagna.it per accedere.";
-    // Inizializza la proprietÃ Â di sistema abilita-livello-1-spid sull AppServer
+    // Inizializza la proprietà  di sistema abilita-livello-1-spid sull AppServer
     protected static boolean abilitaLivello1Spid = System
             .getProperty("abilita-livello-1-spid", "false").equals("true");
 
@@ -89,10 +103,12 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
         // Estrai gli attributi SAML
         Map<String, List<Object>> attributes = principal.getAttributes();
         log.debug("--CONTEXT--{}", request.getContextPath());
+        // Logga tutti gli attributi SAML
+        logInfoUtenteSAML(principal.getAttributes());
         User u = new User();
         if (verificaSeUtenteSpidValido(principal, u)) {
             /**
-             * SI TRATTA DI UN UTENTE SPID VALIDO! Ed ho giï¿½ determinato se RER o PUGLIA
+             * SI TRATTA DI UN UTENTE SPID VALIDO! Ed ho già  determinato se RER o PUGLIA
              */
             List<UtenteDb> l = null;
             if (u.getUserType().equals(IUser.UserType.SPID_PUGLIA)) {
@@ -101,27 +117,49 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
                 l = findUtentiPerCodiceFiscale(u.getCodiceFiscale());
             }
             if (l.size() > 1) {
-                String msg = String.format(getMessaggioUtente(MSG_TROPPE_OCCORRENZE_UTENTE, u),
+                String msg = String.format(getMessaggioUtente(MSG_TROPPE_OCCORRENZE_UTENTE_SPID, u),
                         u.getNome(), u.getCognome(), u.getCodiceFiscale());
                 log.warn(msg);
                 throw new UsernameNotFoundException(msg);
             } else if (l.isEmpty()) {
                 /* Si tratta di utente SPID senza utenza parer su DB */
-                String msg = String.format(getMessaggioUtente(MSG_UTENTE_NON_AUTORIZZATO, u),
+                String msg = String.format(getMessaggioUtente(MSG_UTENTE_NON_AUTORIZZATO_SPID, u),
                         u.getNome(), u.getCognome(), u.getCodiceFiscale());
                 log.warn(msg);
-                u.setUtenteDaAssociare(true); // nella prossima action si verÃ Â  rediretti su IAM !
+                u.setUtenteDaAssociare(true); // nella prossima action si verÃ  rediretti su IAM !
             } else {
                 /*
                  * L'utente esiste sul db locale PARER recupero l'id dell'utente e lo setto
-                 * nell'oggetto utente e lo metto in sessione. Modifica fatta perchÃƒÂ¨ idp generici
+                 * nell'oggetto utente e lo metto in sessione. Modifica fatta perchÃ© idp generici
                  * non conoscono l'id dell'utente del db di iam.
                  */
                 UtenteDb ut = l.iterator().next();
                 u.setUsername(ut.getUsername());
                 u.setIdUtente(ut.getId());
-                // Logga tutti gli attributi dell'utente SPID
-                logInfoUtenteSAML(principal.getAttributes());
+            }
+        } else if (verificaSeUtenteCieValido(principal, u)) {
+            // SI TRATTA DI UN UTENTE CIE VALIDO!
+            List<UtenteDb> l = findUtentiPerCodiceFiscale(u.getCodiceFiscale());
+            if (l.size() > 1) {
+                String msg = String.format(getMessaggioUtente(MSG_TROPPE_OCCORRENZE_UTENTE_CIE, u),
+                        u.getNome(), u.getCognome(), u.getCodiceFiscale());
+                log.warn(msg);
+                throw new UsernameNotFoundException(msg);
+            } else if (l.isEmpty()) {
+                /* Si tratta di utente SPID senza utenza parer su DB */
+                String msg = String.format(getMessaggioUtente(MSG_UTENTE_NON_AUTORIZZATO_CIE, u),
+                        u.getNome(), u.getCognome(), u.getCodiceFiscale());
+                log.warn(msg);
+                u.setUtenteDaAssociare(true); // nella prossima action si verrà  rediretti su IAM !
+            } else {
+                /*
+                 * L'utente esiste sul db locale PARER recupero l'id dell'utente e lo setto
+                 * nell'oggetto utente e lo metto in sessione. Modifica fatta perchÃ© idp generici
+                 * non conoscono l'id dell'utente del db di iam.
+                 */
+                UtenteDb ut = l.iterator().next();
+                u.setUsername(ut.getUsername());
+                u.setIdUtente(ut.getId());
             }
         } else {
             /**
@@ -134,7 +172,7 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
                 if (NumberUtils.isCreatable(valore)) {
                     u.setIdUtente(Long.parseLong(att.get(0).toString()));
                 } else {
-                    log.info("Nell'attributo SAML [{}] non Ã¨ presente un dato numerico", USERID);
+                    log.info("Nell'attributo SAML [{}] non è presente un dato numerico", USERID);
                     u.setIdUtente(0);
                 }
                 log.info(STR_CARICATO, USERID, u.getIdUtente());
@@ -265,6 +303,57 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
         }
     }
 
+    /*
+     * Determina se un utente ï¿½ un utente CIE oppure un utente proveniente da un classico IDP
+     * normale. Inoltre controlla che esista il codice fiscale.
+     */
+    protected boolean verificaSeUtenteCieValido(Saml2AuthenticatedPrincipal principal, User u)
+            throws UsernameNotFoundException {
+        Map<String, List<Object>> attributes = principal.getAttributes();
+        /*
+         * per determinare se si tratta di un utente CIE si verifica che NON sia presente lo
+         * SPID_CODE che sia presente il codice fiscale e che NON essta un attributo tipico dell'IDP
+         * interno ovvero USERNAME. Tutto questo perché non è presente lo spidCode in caso di CIE.
+         */
+
+        log.info("spidCode:{}, CF Federa:{}, CF Puglia:{}, username:{} ",
+                getAttribute(attributes, SPID_CODE),
+                getAttribute(attributes, CIE_CODICE_FISCALE_FEDERA),
+                getAttribute(attributes, CIE_CODICE_FISCALE_PUGLIA),
+                getAttribute(attributes, USERNAME));
+        String codiceFiscaleLepida = getAttribute(attributes, CIE_CODICE_FISCALE_FEDERA);
+        String codiceFiscalePuglia = getAttribute(attributes, CIE_CODICE_FISCALE_PUGLIA);
+        if (getAttribute(attributes, SPID_CODE) == null &&
+                (codiceFiscaleLepida != null || codiceFiscalePuglia != null) &&
+                getAttribute(attributes, USERNAME) == null) {
+            // SE PROVIENE DA UN IDP CIE...
+            log.info("--- IDP CIE ---");
+            if (codiceFiscaleLepida != null) {
+                u.setCognome(getAttribute(attributes, CIE_COGNOME_FEDERA));
+                u.setNome(getAttribute(attributes, CIE_NOME_FEDERA));
+                u.setCodiceFiscale(codiceFiscaleLepida);
+                u.setUserType(IUser.UserType.CIE_FEDERA);
+            } else if (codiceFiscalePuglia != null) {
+                u.setCognome(getAttribute(attributes, CIE_COGNOME_PUGLIA));
+                u.setNome(getAttribute(attributes, CIE_NOME_PUGLIA));
+                u.setCodiceFiscale(codiceFiscalePuglia.substring(6)); // TOGLIE IL "TINIT-" iniziale
+                                                                      // che CIE mette davanti al CF
+                u.setUserType(IUser.UserType.CIE_PUGLIA);
+            } else { // Interrompe il flusso con un'eccezione!
+                String msg = String.format(getMessaggioUtente(MSG_UTENTE_CIE_NON_VALIDO, u),
+                        u.getNome(), u.getCognome());
+                log.warn(msg);
+                throw new UsernameNotFoundException(msg);
+            }
+            u.setExternalId(CIE_EXTERNAL_ID);
+            // USERNAME E ID UTENTE NON CI SONO!!
+            return true;
+        } else {
+            log.info("--- NON e' CIE !!!---");
+            return false;
+        }
+    }
+
     protected String getAttribute(Map<String, List<Object>> attributes, String nomeAttributo) {
         List<Object> att = attributes.get(nomeAttributo);
         if (att != null) {
@@ -279,7 +368,7 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
     }
 
     /*
-     * Restituisce u messaggio con accodato l'indirizzo mail RER a cui scrivere in caso di utente
+     * Restituisce un messaggio con accodato l'indirizzo mail RER a cui scrivere in caso di utente
      * SPID_FEDERA
      */
     protected String getMessaggioUtente(String mes, User u) {
@@ -355,6 +444,7 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
             List<Object> value = entry.getValue();
             str.append(key).append(": ");
             str.append(value);
+            str.append(" ");
         }
 
         if (isDebug) {
