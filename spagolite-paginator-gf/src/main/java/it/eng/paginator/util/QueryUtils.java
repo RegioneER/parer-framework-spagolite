@@ -151,8 +151,11 @@ public abstract class QueryUtils {
             originalSql = originalSql.substring(0, orderByIndex);
         }
 
-        // Trova l'inizio della clausola FROM
-        int fromIndex = originalSql.toUpperCase().indexOf(" FROM ");
+        // Trova l'inizio della clausola FROM principale al livello 0 di annidamento.
+        // Non si usa indexOf perché la SELECT potrebbe contenere subquery con FROM propri
+        // (es. colonne scalari come "(SELECT ... FROM ... ) alias"), che verrebbero
+        // erroneamente identificate come clausola FROM principale.
+        int fromIndex = findMainFromIndex(originalSql);
         if (fromIndex == -1) {
             throw new IllegalArgumentException(
                     "La query nativa non contiene una clausola FROM valida: " + nativeSqlString);
@@ -161,8 +164,8 @@ public abstract class QueryUtils {
         // Costruisce la parte COUNT
         String countClause;
         if (StringUtils.isNotBlank(countDistinctField)) {
-            // Nota: countDistinctField qui deve essere il nome della COLONNA SQL (es.
-            // "u.ID_UNITA_DOC")
+            // Nota: countDistinctField deve essere il nome della COLONNA SQL (es.
+            // "ud.id_unita_doc")
             countClause = "SELECT COUNT(DISTINCT " + countDistinctField + ") ";
         } else {
             countClause = "SELECT COUNT(*) ";
@@ -170,6 +173,29 @@ public abstract class QueryUtils {
 
         // Unisce la parte COUNT con il resto della query a partire dal FROM
         return countClause + originalSql.substring(fromIndex);
+    }
+
+    /**
+     * Trova l'indice della clausola FROM principale (al livello 0 di annidamento delle parentesi)
+     * nella query SQL. Necessario per gestire correttamente query con subquery scalari nella
+     * clausola SELECT che contengono a loro volta FROM propri.
+     */
+    private static int findMainFromIndex(String sql) {
+        String upperSql = sql.toUpperCase();
+        int depth = 0;
+        int len = upperSql.length();
+        for (int i = 0; i < len; i++) {
+            char c = upperSql.charAt(i);
+            if (c == '(') {
+                depth++;
+            } else if (c == ')') {
+                depth--;
+            } else if (depth == 0 && i + 6 <= len
+                    && " FROM ".equals(upperSql.substring(i, i + 6))) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     // ===================================================================================

@@ -1,4 +1,4 @@
-## 7.6.0 (04-06-2026)
+## 7.6.1 (26-06-2026)
 
-### Novità: 1
-- [#40646](https://parermine.regione.emilia-romagna.it/issues/40646) Modificare i criteri per determinare l'accesso con CIE/SPID e introdurre pulsante con nuova grafica
+### Bugfix: 1
+- [#40796](https://parermine.regione.emilia-romagna.it/issues/40796) Correzione generazione query di count nella funzionalità di paginazione del framework
