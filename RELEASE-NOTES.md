@@ -1,4 +1,4 @@
-## 7.6.1 (26-06-2026)
+## 7.7.0 (19-10-2026)
 
-### Bugfix: 1
-- [#40796](https://parermine.regione.emilia-romagna.it/issues/40796) Correzione generazione query di count nella funzionalità di paginazione del framework
+### Novità: 1
+- [#41221](https://parermine.regione.emilia-romagna.it/issues/41221) Patch di sicurezza (aggiornamenti Settembre 2026)

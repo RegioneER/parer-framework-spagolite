@@ -323,9 +323,9 @@ public abstract class CustomSaml2AuthenticationSuccessHandler
                 getAttribute(attributes, USERNAME));
         String codiceFiscaleLepida = getAttribute(attributes, CIE_CODICE_FISCALE_FEDERA);
         String codiceFiscalePuglia = getAttribute(attributes, CIE_CODICE_FISCALE_PUGLIA);
-        if (getAttribute(attributes, SPID_CODE) == null &&
-                (codiceFiscaleLepida != null || codiceFiscalePuglia != null) &&
-                getAttribute(attributes, USERNAME) == null) {
+        if (getAttribute(attributes, SPID_CODE) == null
+                && (codiceFiscaleLepida != null || codiceFiscalePuglia != null)
+                && getAttribute(attributes, USERNAME) == null) {
             // SE PROVIENE DA UN IDP CIE...
             log.info("--- IDP CIE ---");
             if (codiceFiscaleLepida != null) {

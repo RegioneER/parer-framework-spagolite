@@ -8,7 +8,7 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>spagofat</artifactId>
-        <version>7.6.2-SNAPSHOT</version>
+        <version>7.7.0</version>
     </parent>
     <build>
         <plugins>
@@ -150,6 +150,10 @@
                     <artifactId>spring-expression</artifactId>
                 </exclusion>
             </exclusions>            
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

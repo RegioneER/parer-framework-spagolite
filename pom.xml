@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spagofat</artifactId>
-    <version>7.6.2-SNAPSHOT</version>
+    <version>7.7.0</version>
     <packaging>pom</packaging>
     <name>Spagolite</name>
     <description>Framework utilizzato dalle applicazioni web, si tratta di uno strato software comune contenente anche le dipendenze di terze parti ed ereditato come bom.</description>
@@ -48,6 +48,7 @@
         <font-awesome.version>6.4.0</font-awesome.version>
         <highlightjs.version>11.11.1</highlightjs.version>
         <highlightjs-line-numbers.js.version>2.8.0</highlightjs-line-numbers.js.version>
+        <dompurify.version>3.4.15</dompurify.version>
         <!-- MIT project forked from original: https://github.com/sinattieng/highlightjs-badgejs -->
         <highlightjs-badgejs.version>0.0.6</highlightjs-badgejs.version>
         <commons-beanutils.version>1.11.0</commons-beanutils.version>
@@ -499,7 +500,12 @@
 			    <groupId>org.apache.logging.log4j</groupId>
 			    <artifactId>log4j-api</artifactId>
 			    <version>${log4j.version}</version>
-			</dependency>            
+			</dependency>
+			<dependency>
+			    <groupId>org.webjars.npm</groupId>
+			    <artifactId>dompurify</artifactId>
+			    <version>${dompurify.version}</version>
+			</dependency>			
         </dependencies>
     </dependencyManagement>
     <dependencies />

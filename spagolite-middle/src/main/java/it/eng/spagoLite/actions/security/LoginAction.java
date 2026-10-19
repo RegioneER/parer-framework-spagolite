@@ -82,13 +82,11 @@ public class LoginAction extends ActionBase {
         if (utente != null) {
             getMessageBox().addInfo("L'utente " + utente.getUsername() + " ha richiesto il logout");
             IUser.UserType tipoUte = utente.getUserType();
-            if (tipoUte != null
-                    && (tipoUte.equals(IUser.UserType.SPID_FEDERA) ||
-                            tipoUte.equals(IUser.UserType.CIE_FEDERA) ||
-                            tipoUte.equals(IUser.UserType.SPID_PUGLIA) ||
-                            tipoUte.equals(IUser.UserType.CIE_PUGLIA))) {
-                logger.debug("Richiesto SAML LOCAL LOGOUT per l'utente "
-                        + tipoUte.name());
+            if (tipoUte != null && (tipoUte.equals(IUser.UserType.SPID_FEDERA)
+                    || tipoUte.equals(IUser.UserType.CIE_FEDERA)
+                    || tipoUte.equals(IUser.UserType.SPID_PUGLIA)
+                    || tipoUte.equals(IUser.UserType.CIE_PUGLIA))) {
+                logger.debug("Richiesto SAML LOCAL LOGOUT per l'utente " + tipoUte.name());
                 Cookie cookie = new Cookie("shib_idp_session", "");
                 cookie.setMaxAge(0);
                 cookie.setPath("/idp");

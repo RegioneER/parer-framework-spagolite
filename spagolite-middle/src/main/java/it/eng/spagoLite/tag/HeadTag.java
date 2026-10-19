@@ -217,12 +217,24 @@ public class HeadTag extends BaseSpagoLiteTag {
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
                 + "/webjars/highlightjs-badgejs/0.0.6/highlightjs-badgejs.min.js\"></script>\n");
 
+        /*
+         * DOMPurify
+         *
+         */
+        js.append("  <script type=\"text/javascript\" src=\"" + contextPath
+                + "/webjars/dompurify/3.4.15/dist/purify.min.js\"></script>\n");
+
         // Internal script
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
                 + "/js/help/globalsetup.js\"></script>\n");
 
         js.append("  <script type=\"text/javascript\" src=\"" + contextPath
                 + "/js/help/help.js\"></script>\n");
+
+        // utility di sanitizzazione condivisa (basata su DOMPurify) usata dalle
+        // applicazioni per il rendering sicuro di contenuti HTML provenienti da input utente
+        js.append("  <script type=\"text/javascript\" src=\"" + contextPath
+                + "/js/help/sanitizeHtmlPreview.js\"></script>\n");
 
         return js.toString();
     }

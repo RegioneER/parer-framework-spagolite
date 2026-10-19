@@ -16,7 +16,11 @@ package it.eng.spagoLite.spring;
 import org.opensaml.core.xml.schema.XSAny;
 import org.opensaml.core.xml.schema.impl.XSAnyBuilder;
 import org.opensaml.saml.common.xml.SAMLConstants;
-import org.opensaml.saml.saml2.core.*;
+import org.opensaml.saml.saml2.core.AuthnContext;
+import org.opensaml.saml.saml2.core.AuthnContextClassRef;
+import org.opensaml.saml.saml2.core.AuthnContextComparisonTypeEnumeration;
+import org.opensaml.saml.saml2.core.Extensions;
+import org.opensaml.saml.saml2.core.RequestedAuthnContext;
 import org.opensaml.saml.saml2.core.impl.AuthnContextClassRefBuilder;
 import org.opensaml.saml.saml2.core.impl.ExtensionsBuilder;
 import org.opensaml.saml.saml2.core.impl.RequestedAuthnContextBuilder;
@@ -24,10 +28,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.saml2.provider.service.web.DefaultRelyingPartyRegistrationResolver;
 import org.springframework.security.saml2.provider.service.web.RelyingPartyRegistrationResolver;
 import org.springframework.security.saml2.provider.service.web.authentication.OpenSaml4AuthenticationRequestResolver;
 import org.springframework.security.saml2.provider.service.web.authentication.Saml2AuthenticationRequestResolver;
+import org.springframework.security.web.header.writers.CrossOriginEmbedderPolicyHeaderWriter.CrossOriginEmbedderPolicy;
+import org.springframework.security.web.header.writers.CrossOriginOpenerPolicyHeaderWriter.CrossOriginOpenerPolicy;
+import org.springframework.security.web.header.writers.CrossOriginResourcePolicyHeaderWriter.CrossOriginResourcePolicy;
 
 /**
  *
@@ -146,6 +154,40 @@ public class ParerSecurityConfiguration {
         });
 
         return authenticationRequestResolver;
+    }
+
+    /*
+     * Centralizza l'impostazione degli header di sicurezza HTTP (CSP, Permissions-Policy,
+     * Cross-Origin-Opener-Policy, Cross-Origin-Embedder-Policy, Cross-Origin-Resource-Policy) in
+     * modo che tutte le applicazioni che estendono questa classe abbiano lo stesso comportamento,
+     * personalizzabile tramite le rispettive system property. Cross-Origin-Opener-Policy di default
+     * e' "same-origin" (isola la finestra da window.opener cross-origin senza impattare il
+     * caricamento di risorse), Cross-Origin-Embedder-Policy di default e' "unsafe-none" (non
+     * richiede isolamento cross-origin, non essendo necessario SharedArrayBuffer/WASM a thread
+     * multipli) e Cross-Origin-Resource-Policy di default e' "cross-origin", perche' le
+     * applicazioni sono distribuite su piu' domini federati (*.regione.emilia-romagna.it,
+     * *.ente.regione.emr.it) che devono poter incorporare reciprocamente risorse pubbliche (es.
+     * immagini/loghi) senza che Firefox le blocchi con NS_ERROR_DOM_CORP_FAILED.
+     */
+    protected void applySecurityHeaders(HttpSecurity http) throws Exception {
+        http.headers().contentSecurityPolicy(System.getProperty(
+                "http.sec.header.content-security-policy",
+                "'default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'report-sample' *; style-src 'self' 'report-sample' 'unsafe-inline' *; img-src 'self' data: *;"));
+        http.headers().permissionsPolicy(
+                pol -> pol.policy(System.getProperty("http.sec.header.permissions-policy",
+                        "'cross-origin-isolated=*, vertical-scroll=*'")));
+        http.headers()
+                .crossOriginOpenerPolicy(coop -> coop.policy(CrossOriginOpenerPolicy
+                        .from(System.getProperty("http.sec.header.cross-origin-opener-policy",
+                                CrossOriginOpenerPolicy.SAME_ORIGIN.getPolicy()))));
+        http.headers()
+                .crossOriginEmbedderPolicy(coep -> coep.policy(CrossOriginEmbedderPolicy
+                        .from(System.getProperty("http.sec.header.cross-origin-embedder-policy",
+                                CrossOriginEmbedderPolicy.UNSAFE_NONE.getPolicy()))));
+        http.headers()
+                .crossOriginResourcePolicy(corp -> corp.policy(CrossOriginResourcePolicy
+                        .from(System.getProperty("http.sec.header.cross-origin-resource-policy",
+                                CrossOriginResourcePolicy.CROSS_ORIGIN.getPolicy()))));
     }
 
 }
