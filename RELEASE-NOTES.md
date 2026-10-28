@@ -1,4 +1,4 @@
-## 7.7.0 (19-10-2026)
+## 7.7.1 (28-10-2026)
 
-### Novità: 1
-- [#41221](https://parermine.regione.emilia-romagna.it/issues/41221) Patch di sicurezza (aggiornamenti Settembre 2026)
+### Bugfix: 1
+- [#41389](https://parermine.regione.emilia-romagna.it/issues/41389) Problema caratteri accentati sulla combo con campo di ricerca

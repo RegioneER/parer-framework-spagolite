@@ -193,7 +193,9 @@ public class FieldTag extends BaseFormTag<SingleValueField<?>> {
             String name = JavaScript.stringToHTMLString(field.getName());
             String className = ContainerTag.LEFT.equalsIgnoreCase(position) ? "slText " + width
                     : "slTextRight " + width;
-            String value = field.getHtmlValue();
+            // valore grezzo: va confrontato con le chiavi della DecodeMap, non con la versione
+            // già convertita in entità HTML
+            String value = field.getValue();
 
             DecodeMapIF combo = field.getDecodeMap();
 
@@ -209,11 +211,14 @@ public class FieldTag extends BaseFormTag<SingleValueField<?>> {
                     }
 
                     for (Object key : combo.keySet()) {
-                        String descrizione = JavaScript
-                                .stringToHTMLString(combo.getDescrizione(key));
-                        descrizione = org.apache.commons.text.StringEscapeUtils
-                                .escapeHtml4(descrizione);
-                        out.append("<option title=\"" + descrizione + "\" value=\"" + key + "\"");
+                        // un solo livello di escape: con il doppio escape select2 vede nel
+                        // testo dell'option "&#224;" invece di "à" e la ricerca non trova nulla
+                        String descrizione = org.apache.commons.text.StringEscapeUtils
+                                .escapeHtml4(combo.getDescrizione(key));
+                        out.append("<option title=\"" + descrizione + "\" value=\""
+                                + org.apache.commons.text.StringEscapeUtils
+                                        .escapeHtml4(key.toString())
+                                + "\"");
                         if (StringUtils.isNotBlank(value)) {
                             // FIXME: ATTENZIONE ALLE COMBO CHE HANNO TIPI DI
                             // DATO != da
